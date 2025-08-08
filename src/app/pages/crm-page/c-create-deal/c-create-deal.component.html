@@ -1,0 +1,183 @@
+<!-- Breadcrumb -->
+<div class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between">
+    <h5 class="mb-0">
+        Create Deal
+    </h5>
+    <ol class="breadcrumb list-unstyled mt-0 mb-0 pl-0">
+        <li class="breadcrumb-item position-relative">
+            <a routerLink="/" class="d-inline-block position-relative">
+                <i class="ri-home-8-line"></i>
+                Dashboard
+            </a>
+        </li>
+        <li class="breadcrumb-item position-relative">
+            E-Commerce
+        </li>
+        <li class="breadcrumb-item position-relative">
+            Deals
+        </li>
+        <li class="breadcrumb-item position-relative">
+            Create Deal
+        </li>
+    </ol>
+</div>
+
+<!-- Create Deal -->
+<mat-card
+    class="daxa-card create-deal-card mb-25 border-radius bg-white border-none d-block"
+    [class.rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-content>
+        <form>
+            <div class="row">
+                <div class="col-md-4 col-sm-6">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">
+                            Deal ID
+                        </label>
+                        <mat-form-field>
+                            <mat-label>
+                                Enter deal id
+                            </mat-label>
+                            <input matInput placeholder="E.g. #951">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">
+                            Company Name
+                        </label>
+                        <mat-form-field>
+                            <mat-label>
+                                Enter company name
+                            </mat-label>
+                            <input matInput placeholder="E.g. Tech Solutions">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">
+                            Contact Person
+                        </label>
+                        <mat-form-field>
+                            <mat-label>
+                                Enter contact person
+                            </mat-label>
+                            <input matInput placeholder="E.g. Shawn Kennedy">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">
+                            Amount
+                        </label>
+                        <mat-form-field>
+                            <mat-label>
+                                Enter amount
+                            </mat-label>
+                            <input matInput placeholder="E.g. $25,000.00">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">
+                            Stage
+                        </label>
+                        <mat-form-field>
+                            <mat-label>
+                                Select stage
+                            </mat-label>
+                            <mat-select>
+                                <mat-option value="option1">
+                                    Proposal
+                                </mat-option>
+                                <mat-option value="option2">
+                                    Presentation
+                                </mat-option>
+                                <mat-option value="option3">
+                                    Negotiation
+                                </mat-option>
+                                <mat-option value="option4">
+                                    Discovery
+                                </mat-option>
+                                <mat-option value="option5">
+                                    Contract Sent
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">
+                            Probability
+                        </label>
+                        <mat-form-field>
+                            <mat-label>
+                                Enter probability
+                            </mat-label>
+                            <input matInput placeholder="E.g. 80%">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">
+                            Close Date
+                        </label>
+                        <mat-form-field>
+                            <mat-label>
+                                Choose a date
+                            </mat-label>
+                            <input matInput [matDatepicker]="closeDate">
+                            <mat-datepicker-toggle matIconSuffix [for]="closeDate"></mat-datepicker-toggle>
+                            <mat-datepicker #closeDate></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">
+                            Created At
+                        </label>
+                        <mat-form-field>
+                            <mat-label>
+                                Choose a date
+                            </mat-label>
+                            <input matInput [matDatepicker]="createdAt">
+                            <mat-datepicker-toggle matIconSuffix [for]="createdAt"></mat-datepicker-toggle>
+                            <mat-datepicker #createdAt></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">
+                            Due Date
+                        </label>
+                        <mat-form-field>
+                            <mat-label>
+                                Choose a date
+                            </mat-label>
+                            <input matInput [matDatepicker]="dueDate">
+                            <mat-datepicker-toggle matIconSuffix [for]="dueDate"></mat-datepicker-toggle>
+                            <mat-datepicker #dueDate></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-box">
+                <button mat-button>
+                    Create Deal
+                </button>
+                <button mat-button>
+                    Cancel
+                </button>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>

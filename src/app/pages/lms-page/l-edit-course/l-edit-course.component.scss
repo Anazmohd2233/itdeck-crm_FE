@@ -1,0 +1,109 @@
+.mat-mdc-card {
+    &.daxa-card {
+        &.edit-course-card {
+            .mat-mdc-card-content {
+                .main-label {
+                    margin-bottom: 12px;
+                }
+            }
+        }
+    }
+}
+::ng-deep {
+    .mat-mdc-card {
+        &.daxa-card {
+            &.edit-course-card {
+                .mat-mdc-card-content {
+                    .file-uploader {
+                        min-height: 200px;
+                    }
+                    .btn-box {
+                        .mat-mdc-button {
+                            border: 0;
+                            height: auto;
+                            min-width: auto;
+                            min-height: auto;
+                            padding: 12px 35px;
+                            font-weight: normal;
+                            color: var(--whiteColor);
+                            font-size: 15px !important;
+                            border: 1px solid var(--daxaColor);
+                            background-color: var(--daxaColor);
+    
+                            &:not(:first-child) {
+                                border-color: #c2cada;
+                                color: var(--blackColor);
+                                background-color: transparent;
+                            }
+                        }
+                    }
+                }
+                &.component-dark-theme {
+                    .mat-mdc-card-content {
+                        .btn-box {
+                            .mat-mdc-button {
+                                &:not(:first-child) {
+                                    border-color: rgba(255, 255, 255, 0.09);
+                                    color: var(--whiteColor);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width : 767px) {
+
+    .mat-mdc-card {
+        &.daxa-card {
+            &.edit-course-card {
+                .mat-mdc-card-content {
+                    .main-label {
+                        margin-bottom: 10px;
+                    }
+                }
+            }
+        }
+    }
+    ::ng-deep {
+        .mat-mdc-card {
+            &.daxa-card {
+                &.edit-course-card {
+                    .mat-mdc-card-content {
+                        .btn-box {
+                            .mat-mdc-button {
+                                font-size: 14px !important;
+                                display: block;
+                                width: 100%;
+
+                                &:not(:first-child) {
+                                    margin-top: 15px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 576px to Max width 767px */
+@media only screen and (min-width : 576px) and (max-width : 767px) {}
+
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width : 768px) and (max-width : 991px) {}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width : 992px) and (max-width : 1199px) {}
+
+/* Min width 1200px to Max width 1399px */
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {}
+
+/* Min width 1600px */
+@media only screen and (min-width: 1600px) {}

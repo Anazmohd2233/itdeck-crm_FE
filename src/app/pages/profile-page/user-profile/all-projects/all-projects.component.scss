@@ -1,0 +1,174 @@
+.mat-mdc-card {
+    &.daxa-card {
+        &.all-projects-card {
+            .mat-mdc-card-content {
+                margin: {
+                    left: -20px;
+                    right: -20px;
+                };
+                .all-projects-table {
+                    .mat-mdc-table {
+                        .mat-mdc-header-cell {
+                            &:last-child {
+                                text-align: right;
+                            }
+                        }
+                        .mat-mdc-cell {
+                            &:last-child {
+                                text-align: right;
+                            }
+                        }
+                        .daxa-badge {
+                            color: var(--daxaColor);
+                            background: rgba(15, 121, 243, 0.10);
+
+                            &.in-progress {
+                                color: var(--warningColor);
+                                background: rgba(241, 179, 28, 0.10);
+                            }
+                            &.pending {
+                                color: var(--successColor);
+                                background: rgba(46, 212, 126, 0.10);
+                            }
+                            &.not-started {
+                                color: var(--dangerColor);
+                                background: rgba(231, 76, 60, 0.10);
+                            }
+                        }
+                    }
+                }
+            }
+            &.rtl-enabled {
+                .mat-mdc-card-content {
+                    .all-projects-table {
+                        .mat-mdc-table {
+                            .mat-mdc-header-cell {
+                                &:last-child {
+                                    text-align: left;
+                                }
+                            }
+                            .mat-mdc-cell {
+                                &:last-child {
+                                    text-align: left;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+::ng-deep {
+    .mat-mdc-card {
+        &.daxa-card {
+            &.all-projects-card {
+                .mat-mdc-card-content {
+                    .all-projects-table {
+                        .mat-mdc-paginator {
+                            padding: {
+                                top: 15px;
+                                left: 20px;
+                                right: 20px;
+                            };
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width : 767px) {
+
+    .mat-mdc-card {
+        &.daxa-card {
+            &.all-projects-card {
+                .mat-mdc-card-content {
+                    margin: {
+                        left: -15px;
+                        right: -15px;
+                    };
+                }
+            }
+        }
+    }
+    ::ng-deep {
+        .mat-mdc-card {
+            &.daxa-card {
+                &.all-projects-card {
+                    .mat-mdc-card-header {
+                        .mat-mdc-card-header-text {
+                            display: block;
+
+                            .mat-mdc-card-subtitle {
+                                margin-top: 12px;
+                            }
+                        }
+                    }
+                    .mat-mdc-card-content {
+                        .all-projects-table {
+                            .mat-mdc-paginator {
+                                padding: {
+                                    top: 10px;
+                                    left: 15px;
+                                    right: 15px;
+                                };
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 576px to Max width 767px */
+@media only screen and (min-width : 576px) and (max-width : 767px) {
+
+    .mat-mdc-card {
+        &.daxa-card {
+            &.all-projects-card {
+                .mat-mdc-card-content {
+                    margin: {
+                        left: -20px;
+                        right: -20px;
+                    };
+                }
+            }
+        }
+    }
+    ::ng-deep {
+        .mat-mdc-card {
+            &.daxa-card {
+                &.all-projects-card {
+                    .mat-mdc-card-content {
+                        .all-projects-table {
+                            .mat-mdc-paginator {
+                                padding: {
+                                    left: 20px;
+                                    right: 20px;
+                                };
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width : 768px) and (max-width : 991px) {}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width : 992px) and (max-width : 1199px) {}
+
+/* Min width 1200px to Max width 1399px */
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {}
+
+/* Min width 1600px */
+@media only screen and (min-width: 1600px) {}

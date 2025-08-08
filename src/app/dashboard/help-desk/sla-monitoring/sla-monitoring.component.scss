@@ -1,0 +1,226 @@
+.mat-mdc-card {
+    &.daxa-card {
+        &.sla-monitoring-card {
+            .mat-mdc-card-content {
+                margin: {
+                    left: -20px;
+                    right: -20px;
+                };
+                .sla-monitoring-table {
+                    .table-responsive {
+                        height: 332px;
+                        overflow: auto;
+
+                        &::-webkit-scrollbar {
+                            width: 8px;
+                            height: 8px;
+                        }
+                        &::-webkit-scrollbar-track {
+                            background-color: var(--whiteColor);
+                        }
+                        &::-webkit-scrollbar-thumb {
+                            background: #ebebeb;
+                        }
+                    }
+                    .mat-mdc-table {
+                        .mat-mdc-header-cell {
+                            padding: {
+                                top: 15px;
+                                bottom: 15px;
+                            };
+                            &:last-child {
+                                text-align: right;
+                            }
+                        }
+                        .mat-mdc-cell {
+                            padding: {
+                                top: 19.5px;
+                                bottom: 19.5px;
+                            };
+                            &:last-child {
+                                text-align: right;
+                            }
+                        }
+                    }
+                }
+            }
+            &.component-dark-theme {
+                .mat-mdc-card-content {
+                    .sla-monitoring-table {
+                        .table-responsive {
+                            &::-webkit-scrollbar-track {
+                                background-color: rgba(255, 255, 255, .10);
+                            }
+                            &::-webkit-scrollbar-thumb {
+                                background: var(--blackColor);
+                            }
+                        }
+                    }
+                }
+            }
+            &.rtl-enabled {
+                .mat-mdc-card-content {
+                    .sla-monitoring-table {
+                        .mat-mdc-table {
+                            .mat-mdc-header-cell {
+                                &:last-child {
+                                    text-align: left;
+                                }
+                            }
+                            .mat-mdc-cell {
+                                &:last-child {
+                                    text-align: left;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width : 767px) {
+
+    .mat-mdc-card {
+        &.daxa-card {
+            &.sla-monitoring-card {
+                .mat-mdc-card-content {
+                    margin: {
+                        left: -15px;
+                        right: -15px;
+                    };
+                    .sla-monitoring-table {
+                        .mat-mdc-table {
+                            .mat-mdc-header-cell {
+                                padding: {
+                                    top: 15px;
+                                    bottom: 15px;
+                                };
+                            }
+                            .mat-mdc-cell {
+                                padding: {
+                                    top: 15px;
+                                    bottom: 15px;
+                                };
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 576px to Max width 767px */
+@media only screen and (min-width : 576px) and (max-width : 767px) {
+
+    .mat-mdc-card {
+        &.daxa-card {
+            &.sla-monitoring-card {
+                .mat-mdc-card-content {
+                    margin: {
+                        left: -20px;
+                        right: -20px;
+                    };
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width : 768px) and (max-width : 991px) {}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width : 992px) and (max-width : 1199px) {
+
+    .mat-mdc-card {
+        &.daxa-card {
+            &.sla-monitoring-card {
+                .mat-mdc-card-content {
+                    .sla-monitoring-table {
+                        .mat-mdc-table {
+                            .mat-mdc-header-cell {
+                                padding: {
+                                    top: 14.5px;
+                                    bottom: 14.5px;
+                                };
+                            }
+                            .mat-mdc-cell {
+                                padding: {
+                                    top: 14px;
+                                    bottom: 14px;
+                                };
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 1200px to Max width 1399px */
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {
+
+    .mat-mdc-card {
+        &.daxa-card {
+            &.sla-monitoring-card {
+                .mat-mdc-card-content {
+                    .sla-monitoring-table {
+                        .mat-mdc-table {
+                            .mat-mdc-header-cell {
+                                padding: {
+                                    top: 16px;
+                                    bottom: 16px;
+                                };
+                            }
+                            .mat-mdc-cell {
+                                padding: {
+                                    top: 16px;
+                                    bottom: 16px;
+                                };
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 1600px */
+@media only screen and (min-width: 1600px) {
+
+    .mat-mdc-card {
+        &.daxa-card {
+            &.sla-monitoring-card {
+                .mat-mdc-card-content {
+                    .sla-monitoring-table {
+                        .mat-mdc-table {
+                            .mat-mdc-header-cell {
+                                padding: {
+                                    top: 18px;
+                                    bottom: 18px;
+                                };
+                            }
+                            .mat-mdc-cell {
+                                padding: {
+                                    top: 22px;
+                                    bottom: 22px;
+                                };
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}

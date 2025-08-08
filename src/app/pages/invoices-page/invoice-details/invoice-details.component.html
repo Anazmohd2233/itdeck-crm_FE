@@ -1,0 +1,409 @@
+<!-- <div class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between">
+    <h5 class="mb-0">
+        Payments Details
+    </h5>
+    <ol class="breadcrumb list-unstyled mt-0 mb-0 pl-0">
+        <li class="breadcrumb-item position-relative">
+            <a routerLink="/" class="d-inline-block position-relative">
+                <i class="ri-home-8-line"></i>
+                Dashboard
+            </a>
+        </li>
+        <li class="breadcrumb-item position-relative">
+            Payments
+        </li>
+        <li class="breadcrumb-item position-relative">
+            Payment List
+        </li>
+        <li class="breadcrumb-item position-relative">
+            Payment Details
+        </li>
+    </ol>
+</div>
+
+<mat-card
+    class="daxa-card invoice-details-card mb-25 border-radius bg-white border-none d-block"
+    [class.component-dark-theme]="themeService.isDark()"
+    [class.rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mb-0">
+                Payment Details
+            </h5>
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="invoice-info d-md-flex align-items-center justify-content-between">
+            <div>
+                <span class="title d-block text-body">
+                    Invoice Number: <span class="text-black">#1346</span>
+                </span>
+                <span class="d-block text-body">
+                    Invoice To:
+                </span>
+                <span class="d-block">
+                    Shannon Nelson
+                </span>
+                <span class="d-block">
+                    4545 Seth Street Ballinger, TX 78965
+                </span>
+                <span class="d-block">
+                    +1 444 556 8899
+                </span>
+            </div>
+            <div>
+                <img src="images/qr-code.png" alt="qr-code-image">
+            </div>
+            <div>
+                <span class="title d-block text-body">
+                    Date: <span class="text-black">Dec 01, 2024</span>
+                </span>
+                <span class="d-block text-body">
+                    Pay To:
+                </span>
+                <span class="d-block">
+                    Mercedes Foreman
+                </span>
+                <span class="d-block">
+                    458 Friendship Lane Walnut Creek, CA 5828
+                </span>
+                <span class="d-block">
+                    +1 444 888 0055
+                </span>
+            </div>
+        </div>
+        <div class="recent-orders-table table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col" class="fw-medium text-black">
+                            No
+                        </th>
+                        <th scope="col" class="fw-medium text-black">
+                            Item Description
+                        </th>
+                        <th scope="col" class="fw-medium text-black">
+                            Quantity
+                        </th>
+                        <th scope="col" class="fw-medium text-black">
+                            Price
+                        </th>
+                        <th scope="col" class="fw-medium text-black">
+                            Total
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="text-body">
+                            01
+                        </td>
+                        <td class="text-black fw-medium">
+                            High-performance laptop with the latest specifications
+                        </td>
+                        <td class="text-body">
+                            4
+                        </td>
+                        <td class="text-body">
+                            $80
+                        </td>
+                        <td class="text-body">
+                            $320
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-body">
+                            02
+                        </td>
+                        <td class="text-black fw-medium">
+                            Complete set of ergonomic office furniture including a desk and chair
+                        </td>
+                        <td class="text-body">
+                            3
+                        </td>
+                        <td class="text-body">
+                            $45
+                        </td>
+                        <td class="text-body">
+                            $135
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-body">
+                            03
+                        </td>
+                        <td class="text-black fw-medium">
+                            Custom web development services including design, coding, and testing
+                        </td>
+                        <td class="text-body">
+                            5
+                        </td>
+                        <td class="text-body">
+                            $30
+                        </td>
+                        <td class="text-body">
+                            $150
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-body">
+                            04
+                        </td>
+                        <td class="text-black fw-medium">
+                            Expert consultation for developing and executing marketing strategies
+                        </td>
+                        <td class="text-body">
+                            1
+                        </td>
+                        <td class="text-body">
+                            $56
+                        </td>
+                        <td class="text-body">
+                            $56
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-body">
+                            05
+                        </td>
+                        <td class="text-black fw-medium">
+                            Design services for creating logos, graphics, and promotional materials
+                        </td>
+                        <td class="text-body">
+                            4
+                        </td>
+                        <td class="text-body">
+                            $90
+                        </td>
+                        <td class="text-body">
+                            $360
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-body">
+                            06
+                        </td>
+                        <td class="text-black fw-medium">
+                            Purchase of networking equipment, including routers and switches
+                        </td>
+                        <td class="text-body">
+                            2
+                        </td>
+                        <td class="text-body">
+                            $75
+                        </td>
+                        <td class="text-body">
+                            $150
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="text-body">
+                            Sub total:
+                        </td>
+                        <td class="text-body">
+                            $1,171
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="text-body">
+                            Tax (5%)
+                        </td>
+                        <td class="text-body">
+                            $58.55
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="text-black fw-medium">
+                            Grand Total
+                        </td>
+                        <td class="text-black">
+                            $1,229.55
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="btn-box text-center">
+            <button mat-button>
+                Print
+            </button>
+            <button mat-button>
+                Download
+            </button>
+        </div>
+    </mat-card-content>
+</mat-card> -->
+
+<!-- Breadcrumb -->
+<div class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between">
+    <h5 class="mb-0">Payment Details</h5>
+    <ol class="breadcrumb list-unstyled mt-0 mb-0 pl-0">
+      <li class="breadcrumb-item position-relative">
+        <a routerLink="/" class="d-inline-block position-relative">
+          <i class="ri-home-8-line"></i> Dashboard
+        </a>
+      </li>
+      <li class="breadcrumb-item position-relative">Payments</li>
+      <li class="breadcrumb-item position-relative">Payment List</li>
+      <li class="breadcrumb-item position-relative">Payment Details</li>
+    </ol>
+  </div>
+  
+  <!-- Payment Details Card -->
+  <mat-card
+    class="daxa-card payment-details-card mb-25 border-radius bg-white border-none d-block"
+    [class.component-dark-theme]="themeService.isDark()"
+    [class.rtl-enabled]="themeService.isRTLEnabled()"
+  >
+    <mat-card-header>
+      <mat-card-title>
+        <h5 class="mb-0">Student Payment Details</h5>
+      </mat-card-title>
+    </mat-card-header>
+  
+    <mat-card-content>
+      <!-- <div class="payment-info d-md-flex align-items-start justify-content-between flex-wrap gap-4">
+        <div>
+          <span class="d-block text-body">Student Name:</span>
+          <span class="text-black fw-medium d-block mb-2">Shannon Nelson</span>
+  
+          <span class="d-block text-body">Email:</span>
+          <span class="text-black d-block mb-2">shannon&#64;example.com</span>
+  
+          <span class="d-block text-body">Course:</span>
+          <span class="text-black d-block mb-2">Angular Mastery</span>
+        </div>
+        <div>
+          <span class="d-block text-body">Course Fee:</span>
+          <span class="text-black fw-medium d-block mb-2">$1200</span>
+  
+          <span class="d-block text-body">Paid Amount:</span>
+          <span class="text-black d-block mb-2">$600</span>
+  
+          <span class="d-block text-body">Balance Amount:</span>
+          <span class="text-black d-block mb-2">$600</span>
+        </div>
+        <div>
+          <span class="d-block text-body">Next Installment Date:</span>
+          <span class="text-black d-block mb-2">Aug 01, 2025</span>
+  
+          <span class="d-block text-body">Total Installments:</span>
+          <span class="text-black d-block mb-2">4</span>
+        </div>
+      </div> -->
+      <div class="payment-info d-md-flex align-items-start justify-content-between flex-wrap gap-4">
+        <div>
+          <div class="info-row mb-2">
+            <span class="text-body">Student Name: </span>
+            <span class="text-black fw-medium">Shannon Nelson</span>
+          </div>
+          <div class="info-row mb-2">
+            <span class="text-body">Email: </span>
+            <span class="text-black">shannon&#64;example.com</span>
+          </div>
+          <div class="info-row mb-2">
+            <span class="text-body">Course: </span>
+            <span class="text-black">Angular Mastery</span>
+          </div>
+        </div>
+        <div>
+          <div class="info-row mb-2">
+            <span class="text-body">Course Fee: </span>
+            <span class="text-black fw-medium">$1200</span>
+          </div>
+          <div class="info-row mb-2">
+            <span class="text-body">Paid Amount: </span>
+            <span class="text-black">$600</span>
+          </div>
+          <div class="info-row mb-2">
+            <span class="text-body">Balance Amount: </span>
+            <span class="text-black">$600</span>
+          </div>
+        </div>
+        <div>
+          <div class="info-row mb-2">
+            <span class="text-body">Next Installment Date: </span>
+            <span class="text-black">Jul 30, 2025</span>
+          </div>
+          <div class="info-row mb-2">
+            <span class="text-body">Total Installments: </span>
+            <span class="text-black">4</span>
+          </div>
+        </div>
+      </div>
+      
+  
+      <!-- Installment Table -->
+      <mat-card
+      class="daxa-card payment-card mb-25 border-radius bg-white border-none d-block"
+      [class.component-dark-theme]="themeService.isDark()"
+      [class.rtl-enabled]="themeService.isRTLEnabled()"
+    >
+      <mat-card-content>
+        <div class="payment-table table-responsive">
+          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    
+            <!-- Example columns -->
+            <ng-container matColumnDef="no">
+              <th mat-header-cell *matHeaderCellDef>No</th>
+              <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
+            </ng-container>
+    
+            <ng-container matColumnDef="amount">
+              <th mat-header-cell *matHeaderCellDef>Amount</th>
+              <td mat-cell *matCellDef="let element">${{ element.amount }}</td>
+            </ng-container>
+    
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef>Status</th>
+              <td mat-cell *matCellDef="let element">
+                <span class="daxa-badge in-progress d-inline-block" *ngIf="element.status === 'Pending'">
+                    {{element.status}}
+                </span>
+                <span class="daxa-badge won d-inline-block" *ngIf="element.status !== 'Pending'">
+                    {{element.status}}
+                </span>
+              </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="date">
+              <th mat-header-cell *matHeaderCellDef>Due Date</th>
+              <td mat-cell *matCellDef="let element">{{ element.date | date: 'MMM dd, yyyy' }}</td>
+            </ng-container>
+    
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          </table>
+          <mat-paginator [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons></mat-paginator>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    
+  
+      <div class="btn-box text-center mt-4">
+        <button mat-button style="margin-right: 10px !important;">
+            <i class="material-symbols-outlined" style="font-size: 16px !important;">
+                print
+            </i>
+            Print
+        </button>
+        <button mat-button>
+            <i class="material-symbols-outlined" style="font-size: 16px !important;">
+                download
+            </i>
+            Download
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  

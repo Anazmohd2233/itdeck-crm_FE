@@ -1,0 +1,55 @@
+<!-- Breadcrumb -->
+<div class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between">
+    <h5 class="mb-0">
+        Settings
+    </h5>
+    <ol class="breadcrumb list-unstyled mt-0 mb-0 pl-0">
+        <li class="breadcrumb-item position-relative">
+            <a routerLink="/" class="d-inline-block position-relative">
+                <i class="ri-home-8-line"></i>
+                Dashboard
+            </a>
+        </li>
+        <li class="breadcrumb-item position-relative">
+            Settings
+        </li>
+    </ol>
+</div>
+
+<!-- Settings -->
+<mat-card
+    class="daxa-card settings-card mb-25 border-radius bg-white border-none d-block"
+    [class.component-dark-theme]="themeService.isDark()"
+    [class.rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-content>
+        <ul class="pl-0 mt-0 list-unstyled">
+            <li class="d-inline-block">
+                <a routerLink="/settings" mat-button routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                    Account Settings
+                </a>
+            </li>
+            <li class="d-inline-block">
+                <a routerLink="/settings/change-password" mat-button routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                    Change Password
+                </a>
+            </li>
+            <li class="d-inline-block">
+                <a routerLink="/settings/connections" mat-button routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                    Connections
+                </a>
+            </li>
+            <li class="d-inline-block">
+                <a routerLink="/settings/privacy-policy" mat-button routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                    Privacy Policy
+                </a>
+            </li>
+            <li class="d-inline-block">
+                <a routerLink="/settings/terms-conditions" mat-button routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                    Terms & Conditions
+                </a>
+            </li>
+        </ul>
+        <router-outlet />
+    </mat-card-content>
+</mat-card>

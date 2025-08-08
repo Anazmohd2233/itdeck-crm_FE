@@ -1,0 +1,436 @@
+<!-- Breadcrumb -->
+<div class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between">
+    <h5 class="mb-0">
+        Create Task
+    </h5>
+    <ol class="breadcrumb list-unstyled mt-0 mb-0 pl-0">
+        <li class="breadcrumb-item position-relative">
+            <a routerLink="/" class="d-inline-block position-relative">
+                <i class="ri-home-8-line"></i>
+                Dashboard
+            </a>
+        </li>
+        <li class="breadcrumb-item position-relative">
+            Task
+        </li>
+        <!-- <li class="breadcrumb-item position-relative">
+            Projects
+        </li> -->
+        <li class="breadcrumb-item position-relative">
+            Create Task
+        </li>
+    </ol>
+</div>
+
+<!-- Create Project -->
+<mat-card
+    class="daxa-card create-project-card mb-25 border-radius bg-white border-none d-block"
+    [class.rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mb-0">
+                Create New Task
+            </h5>
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <form>
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="mb-25">
+                                <label class="main-label d-block lh-1 text-black">
+                                    Task Title
+                                </label>
+                                <mat-form-field>
+                                    <mat-label>
+                                        Enter task title
+                                    </mat-label>
+                                    <input matInput placeholder="Enter task title">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="mb-25">
+                                <label class="main-label d-block lh-1 text-black">
+                                    Task Type
+                                </label>
+                                <mat-form-field>
+                                    <mat-label>
+                                        Select
+                                    </mat-label>
+                                    <mat-select>
+                                        <mat-option value="option1">
+                                            To-DO
+                                        </mat-option>
+                                        <mat-option value="option2">
+                                            Email
+                                        </mat-option>
+                                        <mat-option value="option3">
+                                            Call
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="mb-25">
+                                <label class="main-label d-block lh-1 text-black">
+                                    Contact
+                                </label>
+                                <mat-form-field>
+                                    <mat-label>
+                                        Select
+                                    </mat-label>
+                                    <mat-select>
+                                        @for (item of data; track item) {
+                                            <mat-option [value]="item.contact.name">
+                                                <div class="info d-flex align-items-center" routerLink="/crm-page/profile"  routerLink="/crm-page/profile"  style="cursor: pointer;">
+                                                    <div class="image team-members-list" style="margin-right: 5px !important;">
+                                                        <img [src]="item.contact.img" alt="contact-image">
+                                                    </div>
+                                                    <span class="d-block fw-medium">
+                                                        {{item.contact.name}}
+                                                    </span>
+                                                </div>
+                                                <!-- {{item.contact.name}} -->
+                                            </mat-option>
+                                        }
+                                        <!-- <mat-option value="option1">
+                                            Walter Frazier
+                                        </mat-option> -->
+                                        <!-- <mat-option value="option2">
+                                            Kimberly Anderson
+                                        </mat-option>
+                                        <mat-option value="option3">
+                                            Roscoe Guerrero
+                                        </mat-option>
+                                        <mat-option value="option4">
+                                            Robert Stewart
+                                        </mat-option>
+                                        <mat-option value="option4">
+                                            Dustin Fritch
+                                        </mat-option> -->
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <!-- <div class="mb-25">
+                                <label class="main-label d-block lh-1 text-black">
+                                    End Date
+                                </label>
+                                <mat-form-field>
+                                    <mat-label>
+                                        Choose a date
+                                    </mat-label>
+                                    <input matInput [matDatepicker]="endDate">
+                                    <mat-datepicker-toggle matIconSuffix [for]="endDate"></mat-datepicker-toggle>
+                                    <mat-datepicker #endDate></mat-datepicker>
+                                </mat-form-field>
+                            </div> -->
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="mb-25">
+                                <label class="main-label d-block lh-1 text-black">
+                                    Priority
+                                </label>
+                                <mat-form-field>
+                                    <mat-label>
+                                        Select
+                                    </mat-label>
+                                    <mat-select>
+                                        <mat-option value="option1">
+                                            None
+                                        </mat-option>
+                                        <mat-option value="option2">
+                                            Low
+                                        </mat-option>
+                                        <mat-option value="option3">
+                                            Medium
+                                        </mat-option>
+                                        <mat-option value="option4">
+                                            High
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <!-- <div class="mb-25">
+                                <label class="main-label d-block lh-1 text-black">
+                                    Start Date
+                                </label>
+                                <mat-form-field>
+                                    <mat-label>
+                                        Choose a date
+                                    </mat-label>
+                                    <input matInput [matDatepicker]="startDate">
+                                    <mat-datepicker-toggle matIconSuffix [for]="startDate"></mat-datepicker-toggle>
+                                    <mat-datepicker #startDate></mat-datepicker>
+                                </mat-form-field>
+                            </div> -->
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="mb-25">
+                                <label class="main-label d-block lh-1 text-black">
+                                    Assigned to
+                                </label>
+                                <mat-form-field>
+                                    <mat-label>
+                                        Select
+                                    </mat-label>
+                                    <mat-select>
+                                        <mat-option value="option1">
+                                            Walter Frazier
+                                        </mat-option>
+                                        <mat-option value="option2">
+                                            Kimberly Anderson
+                                        </mat-option>
+                                        <mat-option value="option3">
+                                            Roscoe Guerrero
+                                        </mat-option>
+                                        <mat-option value="option4">
+                                            Robert Stewart
+                                        </mat-option>
+                                        <mat-option value="option4">
+                                            Dustin Fritch
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <!-- <div class="mb-25">
+                                <label class="main-label d-block lh-1 text-black">
+                                    End Date
+                                </label>
+                                <mat-form-field>
+                                    <mat-label>
+                                        Choose a date
+                                    </mat-label>
+                                    <input matInput [matDatepicker]="endDate">
+                                    <mat-datepicker-toggle matIconSuffix [for]="endDate"></mat-datepicker-toggle>
+                                    <mat-datepicker #endDate></mat-datepicker>
+                                </mat-form-field>
+                            </div> -->
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="mb-25">
+                                <label class="main-label d-block lh-1 text-black">
+                                    Due date
+                                </label>
+                                <div class="row">
+                                    <div class="col-9">
+                                        <mat-form-field>
+                                            <mat-label>
+                                                Choose a date
+                                            </mat-label>
+                                            <input matInput [matDatepicker]="startDate">
+                                            <mat-datepicker-toggle matIconSuffix [for]="startDate"></mat-datepicker-toggle>
+                                            <mat-datepicker #startDate></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-3">
+                                        <mat-form-field appearance="fill">
+                                            <input matInput placeholder="12hr format" [ngxTimepicker]="picker">
+                                            <i class="material-symbols-outlined mr-15" matSuffix>
+                                                schedule
+                                            </i>
+                                            <ngx-material-timepicker #picker></ngx-material-timepicker>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div> 
+                            <!-- <div class="mb-25">
+                                <label class="main-label d-block lh-1 text-black">
+                                    Project Description
+                                </label>
+                                <div class="NgxEditor__Wrapper">
+                                    <ng-container *ngIf="editor">
+                                        <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"></ngx-editor-menu>
+                                        <ngx-editor [editor]="editor"></ngx-editor>
+                                    </ng-container>
+                                </div>
+                            </div> -->
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="mb-25">
+                                <label class="main-label d-block lh-1 text-black">
+                                    Notes
+                                </label>
+                                <div class="NgxEditor__Wrapper">
+                                    <ng-container *ngIf="editor">
+                                        <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"></ngx-editor-menu>
+                                        <ngx-editor [editor]="editor"></ngx-editor>
+                                    </ng-container>
+                                </div>
+                            </div> 
+                        </div>
+                        <!-- <div class="col-sm-6">
+                            <div class="mb-25">
+                                <label class="main-label d-block lh-1 text-black">
+                                    Priority Status
+                                </label>
+                                <mat-form-field>
+                                    <mat-label>
+                                        Select
+                                    </mat-label>
+                                    <mat-select>
+                                        <mat-option value="option1">
+                                            In Progress
+                                        </mat-option>
+                                        <mat-option value="option2">
+                                            Pending
+                                        </mat-option>
+                                        <mat-option value="option3">
+                                            Completed
+                                        </mat-option>
+                                        <mat-option value="option4">
+                                            Not Started
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="mb-25">
+                                <label class="main-label d-block lh-1 text-black">
+                                    Categories
+                                </label>
+                                <mat-form-field>
+                                    <mat-label>
+                                        Select
+                                    </mat-label>
+                                    <mat-select>
+                                        <mat-option value="option1">
+                                            Watch
+                                        </mat-option>
+                                        <mat-option value="option2">
+                                            Electronics
+                                        </mat-option>
+                                        <mat-option value="option3">
+                                            Sports
+                                        </mat-option>
+                                        <mat-option value="option4">
+                                            Fashion
+                                        </mat-option>
+                                        <mat-option value="option5">
+                                            Jewellery
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="mb-25">
+                                <label class="main-label d-block lh-1 text-black">
+                                    Project Manager
+                                </label>
+                                <mat-form-field>
+                                    <mat-label>
+                                        Select
+                                    </mat-label>
+                                    <mat-select>
+                                        <mat-option value="option1">
+                                            Walter Frazier
+                                        </mat-option>
+                                        <mat-option value="option2">
+                                            Kimberly Anderson
+                                        </mat-option>
+                                        <mat-option value="option3">
+                                            Roscoe Guerrero
+                                        </mat-option>
+                                        <mat-option value="option4">
+                                            Robert Stewart
+                                        </mat-option>
+                                        <mat-option value="option4">
+                                            Dustin Fritch
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="mb-25">
+                                <label class="main-label d-block lh-1 text-black">
+                                    Add Team Members
+                                </label>
+                                <mat-form-field>
+                                    <mat-label>
+                                        Select
+                                    </mat-label>
+                                    <mat-select multiple>
+                                        <mat-option value="option1">
+                                            Walter Frazier
+                                        </mat-option>
+                                        <mat-option value="option2">
+                                            Kimberly Anderson
+                                        </mat-option>
+                                        <mat-option value="option3">
+                                            Roscoe Guerrero
+                                        </mat-option>
+                                        <mat-option value="option4">
+                                            Robert Stewart
+                                        </mat-option>
+                                        <mat-option value="option5">
+                                            Dustin Fritch
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="mb-25">
+                                <label class="main-label d-block lh-1 text-black">
+                                    Project Tags
+                                </label>
+                                <mat-form-field>
+                                    <mat-label>
+                                        Select
+                                    </mat-label>
+                                    <mat-select multiple>
+                                        <mat-option value="option1">
+                                            Watch
+                                        </mat-option>
+                                        <mat-option value="option2">
+                                            Electronics
+                                        </mat-option>
+                                        <mat-option value="option3">
+                                            Sports
+                                        </mat-option>
+                                        <mat-option value="option4">
+                                            Fashion
+                                        </mat-option>
+                                        <mat-option value="option5">
+                                            Jewellery
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">
+                            Task Image
+                        </label>
+                        <file-upload class="file-uploader" [multiple]="multiple"></file-upload>
+                    </div>
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">
+                            Attached Files
+                        </label>
+                        <file-upload class="file-uploader" [multiple]="multiple"></file-upload>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-box">
+                <button mat-button>
+                    + Create Task
+                </button>
+                <button mat-button>
+                    Cancel
+                </button>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>

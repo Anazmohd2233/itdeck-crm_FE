@@ -1,0 +1,104 @@
+.mat-mdc-card {
+    &.daxa-card {
+        &.tickets-open-card {
+            .mat-mdc-card-content {
+                .title {
+                    font-size: 18px;
+                    margin-bottom: 9px;
+                }
+                .info {
+                    font-size: 14px;
+                    margin-top: 35px;
+                    padding-left: 23px;
+
+                    i {
+                        left: 0;
+                        top: 50%;
+                        font-size: 18px;
+                        position: absolute;
+                        transform: translateY(-50%);
+                    }
+                }
+                .chart {
+                    top: 50%;
+                    right: 15px;
+                    max-width: 180px;
+                    position: absolute;
+                    transform: translateY(-50%);
+                }
+            }
+            &.rtl-enabled {
+                .mat-mdc-card-content {
+                    .info {
+                        padding: {
+                            left: 0;
+                            right: 23px;
+                        };
+                        i {
+                            left: auto;
+                            right: 0;
+                        }
+                    }
+                    .chart {
+                        right: auto;
+                        left: 15px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width : 767px) {
+
+    .mat-mdc-card {
+        &.daxa-card {
+            &.tickets-open-card {
+                .mat-mdc-card-content {
+                    .title {
+                        font-size: 15px;
+                        margin-bottom: 10px;
+                    }
+                    .info {
+                        margin-top: 13px;
+                    }
+                    .chart {
+                        top: 0;
+                        right: 0;
+                        max-width: 100%;
+                        position: relative;
+                        transform: translateY(0);
+                        margin: {
+                            bottom: -20px;
+                            top: -10px;
+                        };
+                    }
+                }
+                &.rtl-enabled {
+                    .mat-mdc-card-content {
+                        .chart {
+                            left: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 576px to Max width 767px */
+@media only screen and (min-width : 576px) and (max-width : 767px) {}
+
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width : 768px) and (max-width : 991px) {}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width : 992px) and (max-width : 1199px) {}
+
+/* Min width 1200px to Max width 1399px */
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {}
+
+/* Min width 1600px */
+@media only screen and (min-width: 1600px) {}

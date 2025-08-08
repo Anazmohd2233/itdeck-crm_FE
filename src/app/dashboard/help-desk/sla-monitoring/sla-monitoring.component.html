@@ -1,0 +1,96 @@
+<mat-card
+    class="daxa-card sla-monitoring-card mb-25 border-radius bg-white border-none d-block"
+    [class.component-dark-theme]="themeService.isDark()"
+    [class.rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mb-0">
+                SLA Monitoring
+            </h5>
+        </mat-card-title>
+        <mat-card-subtitle>
+            <button type="button" mat-button class="card-header-menu-btn" [matMenuTriggerFor]="cardHeaderMenu">
+                Last Month
+            </button>
+            <mat-menu #cardHeaderMenu="matMenu" class="card-header-menu" xPosition="before">
+                <button mat-menu-item>
+                    Last Day
+                </button>
+                <button mat-menu-item>
+                    Last Week
+                </button>
+                <button mat-menu-item>
+                    Last Month
+                </button>
+                <button mat-menu-item>
+                    Last Year
+                </button>
+            </mat-menu>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="sla-monitoring-table">
+            <div class="table-responsive">
+                <table mat-table [dataSource]="dataSource">
+
+                    <!-- Ticket ID Column -->
+                    <ng-container matColumnDef="ticketID">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Ticket ID
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.ticketID}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Subject Column -->
+                    <ng-container matColumnDef="subject">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Subject
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            <a routerLink="/help-desk-page/ticket-details" class="d-inline-block fw-medium">
+                                {{element.subject}}
+                            </a>
+                        </td>
+                    </ng-container>
+
+                    <!-- Requester Column -->
+                    <ng-container matColumnDef="requester">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Requester
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.requester}}
+                        </td>
+                    </ng-container>
+
+                    <!-- SLA Due By Column -->
+                    <ng-container matColumnDef="slaDueBy">
+                        <th mat-header-cell *matHeaderCellDef>
+                            SLA Due By
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.slaDueBy}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Time Remaining Column -->
+                    <ng-container matColumnDef="timeRemaining">
+                        <th mat-header-cell *matHeaderCellDef>
+                            End Remaining
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.timeRemaining}}
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                </table>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

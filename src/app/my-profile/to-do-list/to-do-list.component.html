@@ -1,0 +1,306 @@
+<!-- To Do List -->
+<mat-card
+    class="daxa-card to-do-list-card mb-25 border-radius bg-white border-none d-block"
+    [class.rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mb-0">
+                To Do List
+            </h5>
+        </mat-card-title>
+        <mat-card-subtitle>
+            <form class="search-box position-relative">
+                <i class="material-symbols-outlined">
+                    search
+                </i>
+                <input type="text" class="input-search d-block w-100 border-none outline-0" placeholder="Search here..." (keyup)="applyFilter($event)" #input>
+            </form>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="to-do-list-table">
+            <div class="table-responsive">
+                <table mat-table [dataSource]="dataSource">
+
+                    <!-- Checkbox Column -->
+                    <ng-container matColumnDef="select">
+                        <th mat-header-cell *matHeaderCellDef>
+                            <mat-checkbox
+                                (change)="$event ? toggleAllRows() : null"
+                                [checked]="selection.hasValue() && isAllSelected()"
+                                [indeterminate]="selection.hasValue() && !isAllSelected()"
+                                [aria-label]="checkboxLabel()"
+                            >
+                            </mat-checkbox>
+                        </th>
+                        <td mat-cell *matCellDef="let row">
+                            <mat-checkbox
+                                (click)="$event.stopPropagation()"
+                                (change)="$event ? selection.toggle(row) : null"
+                                [checked]="selection.isSelected(row)"
+                                [aria-label]="checkboxLabel(row)"
+                            >
+                            </mat-checkbox>
+                        </td>
+                    </ng-container>
+
+                    <!-- Task ID Column -->
+                    <ng-container matColumnDef="taskID">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Task ID
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.taskID}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Task Name Column -->
+                    <ng-container matColumnDef="taskName">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Task Name
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.taskName}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Assigned To Column -->
+                    <ng-container matColumnDef="assignedTo">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Assigned To
+                        </th>
+                        <td mat-cell *matCellDef="let element" class="text-black">
+                            {{element.assignedTo}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Due Date Column -->
+                    <ng-container matColumnDef="dueDate">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Due Date
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.dueDate}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Priority Column -->
+                    <ng-container matColumnDef="priority">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Priority
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.priority}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Status Column -->
+                    <ng-container matColumnDef="status">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Status
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            <span class="daxa-badge in-progress d-inline-block" *ngIf="element.status.inProgress">
+                                {{element.status.inProgress}}
+                            </span>
+                            <span class="daxa-badge pending d-inline-block" *ngIf="element.status.pending">
+                                {{element.status.pending}}
+                            </span>
+                            <span class="daxa-badge completed d-inline-block" *ngIf="element.status.completed">
+                                {{element.status.completed}}
+                            </span>
+                            <span class="daxa-badge not-started d-inline-block" *ngIf="element.status.notStarted">
+                                {{element.status.notStarted}}
+                            </span>
+                        </td>
+                    </ng-container>
+
+                    <!-- Action Column -->
+                    <ng-container matColumnDef="action">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Action
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="action-info">
+                                <button type="button" mat-button matTooltip="View" matTooltipPosition="above">
+                                    <i class="material-symbols-outlined">
+                                        {{element.action.view}}
+                                    </i>
+                                </button>
+                                <button type="button" mat-button matTooltip="Edit" matTooltipPosition="above">
+                                    <i class="material-symbols-outlined">
+                                        {{element.action.edit}}
+                                    </i>
+                                </button>
+                                <button type="button" mat-button matTooltip="Delete" matTooltipPosition="above">
+                                    <i class="material-symbols-outlined">
+                                        {{element.action.delete}}
+                                    </i>
+                                </button>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    
+                    <!-- Row shown when there is no matching data. -->
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+        <div class="add-new-task-btn text-right">
+            <button
+                mat-button
+                (click)="toggleClass()"
+            >
+                + Add New Task
+            </button>
+        </div>
+    </mat-card-content>
+</mat-card>
+
+<!-- Popup -->
+<div
+    class="add-new-task-popup"
+    [class.active]="classApplied"
+    [class.rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <div class="popup-dialog">
+        <mat-card class="daxa-card mb-25 border-radius bg-white border-none d-block">
+            <mat-card-header>
+                <mat-card-title>
+                    <h5 class="mb-0">
+                        Add New Task
+                    </h5>
+                </mat-card-title>
+                <mat-card-subtitle>
+                    <button
+                        mat-button
+                        (click)="toggleClass()"
+                    >
+                        <i class="ri-close-fill"></i>
+                    </button>
+                </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label class="main-label d-block lh-1 text-black">
+                            Task Name
+                        </label>
+                        <mat-form-field>
+                            <mat-label>
+                                Task name
+                            </mat-label>
+                            <input matInput placeholder="E.g. Hand Watch">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="main-label d-block lh-1 text-black">
+                            Assigned To
+                        </label>
+                        <mat-form-field>
+                            <mat-label>
+                                Select
+                            </mat-label>
+                            <mat-select>
+                                <mat-option value="option1">
+                                    Shawn Kennedy
+                                </mat-option>
+                                <mat-option value="option2">
+                                    Roberto Cruz
+                                </mat-option>
+                                <mat-option value="option3">
+                                    Juli Johnson
+                                </mat-option>
+                                <mat-option value="option4">
+                                    Catalina Engles	
+                                </mat-option>
+                                <mat-option value="option5">
+                                    Louis Nagle
+                                </mat-option>
+                                <mat-option value="option6">
+                                    Michael Marquez
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="main-label d-block lh-1 text-black">
+                            Due Date
+                        </label>
+                        <mat-form-field class="date">
+                            <mat-label>
+                                Choose a date
+                            </mat-label>
+                            <input matInput [matDatepicker]="dueDate">
+                            <mat-datepicker-toggle matIconSuffix [for]="dueDate"></mat-datepicker-toggle>
+                            <mat-datepicker #dueDate></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="main-label d-block lh-1 text-black">
+                            Priority
+                        </label>
+                        <mat-form-field>
+                            <mat-label>
+                                Select
+                            </mat-label>
+                            <mat-select>
+                                <mat-option value="option1">
+                                    High
+                                </mat-option>
+                                <mat-option value="option2">
+                                    Medium
+                                </mat-option>
+                                <mat-option value="option3">
+                                    Low
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="main-label d-block lh-1 text-black">
+                            Status
+                        </label>
+                        <mat-form-field>
+                            <mat-label>
+                                Select
+                            </mat-label>
+                            <mat-select>
+                                <mat-option value="option1">
+                                    In Progress
+                                </mat-option>
+                                <mat-option value="option2">
+                                    Pending
+                                </mat-option>
+                                <mat-option value="option3">
+                                    Completed
+                                </mat-option>
+                                <mat-option value="option4">
+                                    Not Started
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="btn-box">
+                    <button
+                        mat-button
+                        (click)="toggleClass()"
+                    >
+                        Cancel
+                    </button>
+                    <button mat-button>
+                        Create
+                    </button>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

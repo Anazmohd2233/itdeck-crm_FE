@@ -1,0 +1,250 @@
+.mat-mdc-card {
+    &.daxa-card {
+        &.top-customers-card {
+            .mat-mdc-card-content {
+                .top-customers-table {
+                    .mat-mdc-table {
+                        .mat-mdc-cell {
+                            padding: {
+                                top: 16.3px;
+                                bottom: 16.3px;
+                            };
+                            &:first-child {
+                                padding-left: 0;
+                            }
+                            &:last-child {
+                                text-align: right;
+                                padding-right: 0;
+                            }
+                        }
+                        .mat-mdc-row {
+                            &:first-child {
+                                .mat-mdc-cell {
+                                    padding-top: 5px;
+                                }
+                            }
+                        }
+                        .user-info {
+                            .image {
+                                width: 50px;
+                                line-height: .01;
+                                
+                                img {
+                                    border-radius: 50%;
+                                }
+                            }
+                            .info {
+                                margin-left: 12px;
+
+                                .title {
+                                    margin-top: 0;
+                                    font-size: 18px;
+                                }
+                                span {
+                                    font-size: 14px;
+                                    margin-top: 4px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            &.rtl-enabled {
+                .mat-mdc-card-content {
+                    .top-customers-table {
+                        .mat-mdc-table {
+                            .mat-mdc-cell {
+                                &:first-child {
+                                    padding: {
+                                        left: 20px;
+                                        right: 0;
+                                    };
+                                }
+                                &:last-child {
+                                    text-align: left;
+                                    padding: {
+                                        right: 20px;
+                                        left: 0;
+                                    };
+                                }
+                            }
+                            .user-info {
+                                .info {
+                                    margin: {
+                                        left: 0;
+                                        right: 12px;
+                                    };
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+::ng-deep {
+    .mat-mdc-card {
+        &.daxa-card {
+            &.top-customers-card {
+                .mat-mdc-card-content {
+                    .top-customers-table {
+                        .mat-mdc-paginator {
+                            padding-top: 15px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width : 767px) {
+
+    .mat-mdc-card {
+        &.daxa-card {
+            &.top-customers-card {
+                .mat-mdc-card-content {
+                    .top-customers-table {
+                        .mat-mdc-table {
+                            .mat-mdc-cell {
+                                padding: {
+                                    top: 10px;
+                                    bottom: 10px;
+                                };
+                            }
+                            .mat-mdc-row {
+                                &:first-child {
+                                    .mat-mdc-cell {
+                                        padding-top: 0;
+                                    }
+                                }
+                            }
+                            .user-info {
+                                .image {
+                                    width: 50px;
+                                }
+                                .info {
+                                    margin-left: 8px;
+    
+                                    .title {
+                                        font-size: 16px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                &.rtl-enabled {
+                    .mat-mdc-card-content {
+                        .top-customers-table {
+                            .mat-mdc-table {
+                                .mat-mdc-cell {
+                                    &:first-child {
+                                        padding: {
+                                            left: 15px;
+                                        };
+                                    }
+                                    &:last-child {
+                                        padding: {
+                                            right: 15px;
+                                        };
+                                    }
+                                }
+                                .user-info {
+                                    .info {
+                                        margin: {
+                                            right: 8px;
+                                        };
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    ::ng-deep {
+        .mat-mdc-card {
+            &.daxa-card {
+                &.top-customers-card {
+                    .mat-mdc-card-content {
+                        .top-customers-table {
+                            .mat-mdc-paginator {
+                                padding-top: 10px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 576px to Max width 767px */
+@media only screen and (min-width : 576px) and (max-width : 767px) {
+
+    .mat-mdc-card {
+        &.daxa-card {
+            &.top-customers-card {
+                &.rtl-enabled {
+                    .mat-mdc-card-content {
+                        .top-customers-table {
+                            .mat-mdc-table {
+                                .mat-mdc-cell {
+                                    &:first-child {
+                                        padding: {
+                                            left: 20px;
+                                        };
+                                    }
+                                    &:last-child {
+                                        padding: {
+                                            right: 20px;
+                                        };
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width : 768px) and (max-width : 991px) {}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width : 992px) and (max-width : 1199px) {}
+
+/* Min width 1200px to Max width 1399px */
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {}
+
+/* Min width 1600px */
+@media only screen and (min-width: 1600px) {
+
+    .mat-mdc-card {
+        &.daxa-card {
+            &.top-customers-card {
+                .mat-mdc-card-content {
+                    .top-customers-table {
+                        .mat-mdc-table {
+                            .mat-mdc-cell {
+                                padding: {
+                                    top: 15px;
+                                    bottom: 15px;
+                                };
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}

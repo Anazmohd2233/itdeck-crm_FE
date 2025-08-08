@@ -1,0 +1,160 @@
+.stat-item {
+    padding-bottom: 50px;
+    border-color: #dae0ec;
+    border-right: 1px solid #dae0ec;
+
+    h5 {
+        margin-bottom: 10px;
+    }
+    .number {
+        font-size: 26px;
+        margin-bottom: 25px;
+    }
+    .chart {
+        top: 50%;
+        right: 15px;
+        max-width: 150px;
+        text-align: right;
+        margin-top: -30px;
+        position: absolute;
+        transform: translateY(-50%);
+
+        .title {
+            font-size: 14px;
+            margin: {
+                top: -5px;
+                right: 10px;
+            };
+        }
+    }
+    &.component-dark-theme {
+        border-color: rgba(255, 255, 255, 0.09);
+    }
+    &.rtl-enabled {
+        border: {
+            right-width: 0;
+            left-width: 1px;
+            left-style: solid;
+        };
+        .chart {
+            left: 15px;
+            right: auto;
+            text-align: left;
+    
+            .title {
+                margin: {
+                    left: 10px;
+                    right: 0;
+                };
+            }
+        }
+    }
+}
+::ng-deep {
+    .stat-item {
+        .apexcharts-tooltip-title {
+            display: none !important;
+        }
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width : 767px) {
+
+    .stat-item {
+        padding: 0 15px 15px;
+        border: {
+            right-width: 0;
+            bottom: 1px solid #dae0ec;
+        };
+        h5 {
+            margin-bottom: 7px;
+        }
+        .number {
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+        .chart {
+            top: 0;
+            right: 0;
+            max-width: 100%;
+            text-align: left;
+            position: relative;
+            transform: translateY(0);
+            margin: {
+                top: 0;
+                bottom: -30px;
+            };
+            .title {
+                left: 0;
+                top: 20px;
+                position: absolute;
+                margin: {
+                    top: 0;
+                    right: 0;
+                };
+            }
+        }
+        &.component-dark-theme {
+            border-color: rgba(255, 255, 255, 0.09);
+        }
+        &.rtl-enabled {
+            border: {
+                left-width: 0;
+            };
+            .chart {
+                left: 0;
+                right: auto;
+                text-align: right;
+                
+                .title {
+                    left: auto;
+                    right: 0;
+                    margin: {
+                        left: 0;
+                    };
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 576px to Max width 767px */
+@media only screen and (min-width : 576px) and (max-width : 767px) {}
+
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width : 768px) and (max-width : 991px) {
+
+    .stat-item {
+        padding-bottom: 30px;
+        
+        .chart {
+            margin-top: -35px;
+        
+            .title {
+                margin-top: -10px;
+            }
+        }
+    }
+
+}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width : 992px) and (max-width : 1199px) {}
+
+/* Min width 1200px to Max width 1399px */
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {}
+
+/* Min width 1600px */
+@media only screen and (min-width: 1600px) {
+
+    .stat-item {
+        padding-bottom: 0;
+
+        .chart {
+            margin-top: -12px;
+        }
+    }
+
+}

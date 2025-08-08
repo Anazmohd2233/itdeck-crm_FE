@@ -1,0 +1,598 @@
+.mat-mdc-card {
+    &.daxa-card {
+        &.invoice-details-card {
+            .mat-mdc-card-content {
+                .invoice-info {
+                    margin-bottom: 25px;
+                    
+                    span {
+                        font-size: 18px;
+                        margin-bottom: 5px;
+
+                        &.title {
+                            margin-bottom: 30px;
+                        }
+                        &:last-child {
+                            margin-bottom: 0;
+                        }
+                    }
+                    div {
+                        &:last-child {
+                            text-align: right;
+                        }
+                    }
+                }
+                .recent-orders-table {
+                    margin: {
+                        left: -20px;
+                        right: -20px;
+                        bottom: 25px;
+                    };
+                    table {
+                        width: 100%;
+                        border-spacing: 0;
+
+                        thead {
+                            tr {
+                                th {
+                                    text-align: left;
+                                    padding: 18px 20px;
+                                    white-space: nowrap;
+                                    background-color: #e7effd;
+                                    
+                                    &:first-child {
+                                        padding-right: 0;
+                                    }
+                                }
+                            }
+                        }
+                        tbody {
+                            tr {
+                                td {
+                                    border-bottom: 1px dashed #e0e0e0;
+                                    white-space: nowrap;
+                                    padding: 25px 20px;
+
+                                    &:first-child {
+                                        padding-right: 0;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                .btn-box {
+                    .mat-mdc-button {
+                        border: 0;
+                        height: auto;
+                        min-width: auto;
+                        min-height: auto;
+                        padding: 13px 40px;
+                        font-weight: normal;
+                        color: var(--whiteColor);
+                        background-color: var(--daxaColor);
+                        margin: {
+                            left: 5px;
+                            right: 5px;
+                        };
+                        &:not(:first-child) {
+                            background-color: var(--infoColor);
+                        }
+                    }
+                }
+            }
+            &.component-dark-theme {
+                .mat-mdc-card-content {
+                    .recent-orders-table {
+                        table {
+                            thead {
+                                tr {
+                                    th {
+                                        background-color: #131920;
+                                    }
+                                }
+                            }
+                            tbody {
+                                tr {
+                                    td {
+                                        border-color: rgba(255, 255, 255, 0.09);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            &.rtl-enabled {
+                .mat-mdc-card-content {
+                    .invoice-info {
+                        div {
+                            &:last-child {
+                                text-align: left;
+                            }
+                        }
+                    }
+                    .recent-orders-table {
+                        table {
+                            thead {
+                                tr {
+                                    th {
+                                        text-align: right;
+                                        
+                                        &:first-child {
+                                            padding: {
+                                                right: 20px;
+                                                left: 0;
+                                            };
+                                        }
+                                    }
+                                }
+                            }
+                            tbody {
+                                tr {
+                                    td {
+                                        &:first-child {
+                                            padding: {
+                                                right: 20px;
+                                                left: 0;
+                                            };
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width : 767px) {
+
+    .mat-mdc-card {
+        &.daxa-card {
+            &.invoice-details-card {
+                .mat-mdc-card-content {
+                    .invoice-info {
+                        margin-bottom: 15px;
+                        
+                        span {
+                            font-size: 15px;
+                            margin-bottom: 10px;
+    
+                            &.title {
+                                margin-bottom: 10px;
+                            }
+                        }
+                        img {
+                            margin: {
+                                top: 15px;
+                                bottom: 15px;
+                            };
+                        }
+                        div {
+                            &:last-child {
+                                text-align: left;
+                            }
+                        }
+                    }
+                    .recent-orders-table {
+                        margin: {
+                            left: -15px;
+                            right: -15px;
+                            bottom: 15px;
+                        };
+                        table {
+                            thead {
+                                tr {
+                                    th {
+                                        padding: 15px;
+                                    }
+                                }
+                            }
+                            tbody {
+                                tr {
+                                    td {
+                                        padding: 15px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    .btn-box {
+                        .mat-mdc-button {
+                            padding: 13px 30px;
+                            margin: {
+                                left: 5px;
+                                right: 5px;
+                            };
+                        }
+                    }
+                }
+                &.rtl-enabled {
+                    .mat-mdc-card-content {
+                        .invoice-info {
+                            div {
+                                &:last-child {
+                                    text-align: right;
+                                }
+                            }
+                        }
+                        .recent-orders-table {
+                            table {
+                                thead {
+                                    tr {
+                                        th {
+                                            &:first-child {
+                                                padding: {
+                                                    right: 15px;
+                                                };
+                                            }
+                                        }
+                                    }
+                                }
+                                tbody {
+                                    tr {
+                                        td {
+                                            &:first-child {
+                                                padding: {
+                                                    right: 15px;
+                                                };
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 576px to Max width 767px */
+@media only screen and (min-width : 576px) and (max-width : 767px) {
+
+    .mat-mdc-card {
+        &.daxa-card {
+            &.invoice-details-card {
+                .mat-mdc-card-content {
+                    .invoice-info {
+                        margin-bottom: 20px;
+                        
+                        img {
+                            margin: {
+                                top: 20px;
+                                bottom: 20px;
+                            };
+                        }
+                    }
+                    .recent-orders-table {
+                        margin: {
+                            left: -20px;
+                            right: -20px;
+                            bottom: 20px;
+                        };
+                        table {
+                            thead {
+                                tr {
+                                    th {
+                                        padding: {
+                                            left: 20px;
+                                            right: 20px;
+                                        };
+                                    }
+                                }
+                            }
+                            tbody {
+                                tr {
+                                    td {
+                                        padding: {
+                                            left: 20px;
+                                            right: 20px;
+                                        };
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                &.rtl-enabled {
+                    .mat-mdc-card-content {
+                        .recent-orders-table {
+                            table {
+                                thead {
+                                    tr {
+                                        th {
+                                            &:first-child {
+                                                padding: {
+                                                    right: 20px;
+                                                };
+                                            }
+                                        }
+                                    }
+                                }
+                                tbody {
+                                    tr {
+                                        td {
+                                            &:first-child {
+                                                padding: {
+                                                    right: 20px;
+                                                };
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width : 768px) and (max-width : 991px) {
+
+    .mat-mdc-card {
+        &.daxa-card {
+            &.invoice-details-card {
+                .mat-mdc-card-content {
+                    .invoice-info {
+                        margin-bottom: 20px;
+                        
+                        span {
+                            font-size: 16px;
+    
+                            &.title {
+                                margin-bottom: 20px;
+                            }
+                        }
+                    }
+                    .recent-orders-table {
+                        margin-bottom: 20px;
+
+                        table {
+                            thead {
+                                tr {
+                                    th {
+                                        padding: {
+                                            top: 17px;
+                                            bottom: 17px;
+                                        };
+                                    }
+                                }
+                            }
+                            tbody {
+                                tr {
+                                    td {
+                                        padding: {
+                                            top: 20px;
+                                            bottom: 20px;
+                                        };
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width : 992px) and (max-width : 1199px) {}
+
+/* Min width 1200px to Max width 1399px */
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {}
+
+/* Min width 1600px */
+@media only screen and (min-width: 1600px) {}
+
+// .mat-mdc-card {
+//     &.daxa-card {
+//       &.payment-card {
+//         .mat-mdc-card-content {
+//           margin: {
+//             left: -20px;
+//             right: -20px;
+//           };
+  
+//           .payment-table {
+//             .mat-mdc-table {
+//               .mat-mdc-header-cell,
+//               .mat-mdc-cell {
+//                 &:first-child {
+//                   padding-right: 0;
+//                 }
+  
+//                 &:last-child {
+//                   text-align: right;
+//                 }
+//               }
+//             }
+//           }
+//         }
+  
+//         &.rtl-enabled {
+//           .mat-mdc-card-content {
+//             .payment-table {
+//               .mat-mdc-table {
+//                 .mat-mdc-header-cell,
+//                 .mat-mdc-cell {
+//                   &:first-child {
+//                     padding: {
+//                       right: 20px;
+//                       left: 0;
+//                     };
+//                   }
+  
+//                   &:last-child {
+//                     text-align: left;
+//                   }
+//                 }
+//               }
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+  
+//   ::ng-deep {
+//     .mat-mdc-card {
+//       &.daxa-card {
+//         &.payment-card {
+//           .mat-mdc-card-content {
+//             .payment-table {
+//               .mat-mdc-paginator {
+//                 padding: {
+//                   top: 15px;
+//                   left: 20px;
+//                   right: 20px;
+//                 };
+//               }
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+  
+//   /* Max width 767px */
+//   @media only screen and (max-width: 767px) {
+//     .mat-mdc-card {
+//       &.daxa-card {
+//         &.payment-card {
+//           .mat-mdc-card-content {
+//             margin: {
+//               left: -15px;
+//               right: -15px;
+//             };
+  
+//             .payment-table {
+//               .mat-mdc-table {
+//                 .mat-mdc-header-cell,
+//                 .mat-mdc-cell {
+//                   &:first-child {
+//                     padding-right: 15px;
+//                   }
+//                 }
+//               }
+//             }
+//           }
+  
+//           &.rtl-enabled {
+//             .mat-mdc-card-content {
+//               .payment-table {
+//                 .mat-mdc-table {
+//                   .mat-mdc-header-cell,
+//                   .mat-mdc-cell {
+//                     &:first-child {
+//                       padding-right: 15px;
+//                     }
+//                   }
+//                 }
+//               }
+//             }
+//           }
+//         }
+//       }
+//     }
+  
+//     ::ng-deep {
+//       .mat-mdc-card {
+//         &.daxa-card {
+//           &.payment-card {
+//             .mat-mdc-card-content {
+//               .payment-table {
+//                 .mat-mdc-paginator {
+//                   padding: {
+//                     top: 10px;
+//                     left: 15px;
+//                     right: 15px;
+//                   };
+//                 }
+//               }
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+  
+//   /* Min width 576px to Max width 767px */
+//   @media only screen and (min-width: 576px) and (max-width: 767px) {
+//     .mat-mdc-card {
+//       &.daxa-card {
+//         &.payment-card {
+//           .mat-mdc-card-content {
+//             margin: {
+//               left: -20px;
+//               right: -20px;
+//             };
+//           }
+  
+//           &.rtl-enabled {
+//             .mat-mdc-card-content {
+//               .payment-table {
+//                 .mat-mdc-table {
+//                   .mat-mdc-header-cell,
+//                   .mat-mdc-cell {
+//                     &:first-child {
+//                       padding-right: 20px;
+//                     }
+//                   }
+//                 }
+//               }
+//             }
+//           }
+//         }
+//       }
+//     }
+  
+//     ::ng-deep {
+//       .mat-mdc-card {
+//         &.daxa-card {
+//           &.payment-card {
+//             .mat-mdc-card-content {
+//               .payment-table {
+//                 .mat-mdc-paginator {
+//                   padding: {
+//                     left: 20px;
+//                     right: 20px;
+//                   };
+//                 }
+//               }
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+.btn-box {
+    button {
+        color: var(--whiteColor);
+        background-color: var(--daxaColor);
+        width: 200px !important;
+    }
+}
+
+.payment-info .info-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  
+  .payment-info .info-row span {
+    line-height: 1.5;
+  }
+  

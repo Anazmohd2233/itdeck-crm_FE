@@ -1,0 +1,290 @@
+.mat-mdc-card {
+    &.daxa-card {
+        &.team-member-card {
+            .mat-mdc-card-header {
+                margin-bottom: 0;
+            }
+            .mat-mdc-card-content {
+                .icon {
+                    width: 100px;
+                    margin-right: 15px;
+
+                    img {
+                        margin-bottom: -4px;
+                    }
+                }
+                h5 {
+                    span {
+                        font-size: 15px;
+                        margin-top: 5px;
+                    }
+                }
+                ul {
+                    margin-top: 15px;
+
+                    li {
+                        margin-bottom: 12px;
+
+                        &:last-child {
+                            margin-bottom: 0;
+                        }
+                    }
+                }
+                .socials-link {
+                    margin-top: 15px;
+
+                    a {
+                        width: 24px;
+                        height: 24px;
+                        margin-right: 10px;
+                        position: relative;
+                        border-radius: 50%;
+                        text-align: center;
+                        display: inline-block;
+                        color: var(--whiteColor);
+                        background-color: var(--daxaColor);
+
+                        i {
+                            left: 0;
+                            right: 0;
+                            top: 50%;
+                            position: absolute;
+                            transform: translateY(-50%);
+                        }
+                        &:hover {
+                            transform: translateY(-4px);
+                        }
+                        &.facebook {
+                            background-color: #3a559f;
+                        }
+                        &.twitter {
+                            background-color: #03a9f4;
+                        }
+                        &.linkedin {
+                            background-color: #007ab9;
+                        }
+                        &.github {
+                            background-color: #000000;
+                        }
+                    }
+                }
+            }
+            &.rtl-enabled {
+                .mat-mdc-card-content {
+                    .icon {
+                        margin: {
+                            right: 0;
+                            left: 15px;
+                        };
+                    }
+                    ul {
+                        padding-right: 0;
+                    }
+                    .socials-link {
+                        a {
+                            margin: {
+                                right: 0;
+                                left: 10px;
+                            };
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+::ng-deep {
+    .mat-mdc-card {
+        &.daxa-card {
+            &.team-member-card {
+                .mat-mdc-card-header {
+                    .mat-mdc-card-header-text {
+                        .mat-mdc-card-subtitle {
+                            display: block;
+
+                            .search-box {
+                                margin-left: 0;
+                            }
+                            .mat-mdc-button {
+                                &.card-header-menu-btn {
+                                    top: 20px;
+                                    right: 20px;
+                                    position: absolute;
+        
+                                    &::after {
+                                        display: none;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                &.rtl-enabled {
+                    .mat-mdc-card-header {
+                        .mat-mdc-card-header-text {
+                            .mat-mdc-card-subtitle {
+                                .search-box {
+                                    margin: {
+                                        right: 0;
+                                    };
+                                }
+                                .mat-mdc-button {
+                                    &.card-header-menu-btn {
+                                        right: auto;
+                                        left: 20px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width : 767px) {
+
+    .mat-mdc-card {
+        &.daxa-card {
+            &.team-member-card {
+                .mat-mdc-card-header {
+                    .mat-mdc-button {
+                        &.add-new-btn {
+                            margin-bottom: 12px;
+                        }
+                    }
+                }
+                .mat-mdc-card-content {
+                    .icon {
+                        width: 85px;
+                        margin-right: 12px;
+                    }
+                }
+                &.rtl-enabled {
+                    .mat-mdc-card-content {
+                        .icon {
+                            margin: {
+                                right: 0;
+                                left: 12px;
+                            };
+                        }
+                    }
+                }
+            }
+        }
+    }
+    ::ng-deep {
+        .mat-mdc-card {
+            &.daxa-card {
+                &.team-member-card {
+                    .mat-mdc-card-header {
+                        .mat-mdc-card-header-text {
+                            display: block;
+
+                            .mat-mdc-card-subtitle {
+                                .search-box {
+                                    width: 100%;
+                                }
+                                .mat-mdc-button {
+                                    &.card-header-menu-btn {
+                                        top: 15px;
+                                        right: 15px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    &.rtl-enabled {
+                        .mat-mdc-card-header {
+                            .mat-mdc-card-header-text {
+                                .mat-mdc-card-subtitle {
+                                    .mat-mdc-button {
+                                        &.card-header-menu-btn {
+                                            right: auto;
+                                            left: 15px;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 576px to Max width 767px */
+@media only screen and (min-width : 576px) and (max-width : 767px) {
+
+    ::ng-deep {
+        .mat-mdc-card {
+            &.daxa-card {
+                &.team-member-card {
+                    .mat-mdc-card-header {
+                        .mat-mdc-card-header-text {
+                            .mat-mdc-card-subtitle {
+                                .mat-mdc-button {
+                                    &.card-header-menu-btn {
+                                        top: 20px;
+                                        right: 20px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    &.rtl-enabled {
+                        .mat-mdc-card-header {
+                            .mat-mdc-card-header-text {
+                                .mat-mdc-card-subtitle {
+                                    .mat-mdc-button {
+                                        &.card-header-menu-btn {
+                                            right: auto;
+                                            left: 20px;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width : 768px) and (max-width : 991px) {
+
+    ::ng-deep {
+        .mat-mdc-card {
+            &.daxa-card {
+                &.team-member-card {
+                    .mat-mdc-card-header {
+                        .mat-mdc-card-header-text {
+                            .mat-mdc-card-subtitle {
+                                .search-box {
+                                    width: 360px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width : 992px) and (max-width : 1199px) {}
+
+/* Min width 1200px to Max width 1399px */
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {}
+
+/* Min width 1600px */
+@media only screen and (min-width: 1600px) {}

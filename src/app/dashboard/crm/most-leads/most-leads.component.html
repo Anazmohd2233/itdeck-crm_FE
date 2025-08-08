@@ -1,0 +1,101 @@
+<mat-card
+    class="daxa-card most-leads-card mb-25 border-radius bg-white border-none d-block"
+    [class.component-dark-theme]="themeService.isDark()"
+    [class.rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mb-0">
+                Most Leads
+            </h5>
+        </mat-card-title>
+        <mat-card-subtitle>
+            <button type="button" mat-button class="card-header-menu-btn" [matMenuTriggerFor]="cardHeaderMenu">
+                This Month
+            </button>
+            <mat-menu #cardHeaderMenu="matMenu" class="card-header-menu" xPosition="before">
+                <button mat-menu-item>
+                    This Day
+                </button>
+                <button mat-menu-item>
+                    This Week
+                </button>
+                <button mat-menu-item>
+                    This Month
+                </button>
+                <button mat-menu-item>
+                    This Year
+                </button>
+            </mat-menu>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <div id="crm_most_leads_chart"></div>
+        <ul class="leads-list list-unstyled pl-0 mb-0">
+            <li class="d-flex align-items-center justify-content-between">
+                <div class="title d-flex align-items-center fw-medium">
+                    <div class="icon bg-gray text-center rounded-circle position-relative">
+                        <i class="material-symbols-outlined">
+                            share
+                        </i>
+                    </div>
+                    Social
+                </div>
+                <span class="d-block text-body">
+                    9,562
+                </span>
+                <span class="d-block text-body">
+                    30%
+                </span>
+            </li>
+            <li class="d-flex align-items-center justify-content-between">
+                <div class="title d-flex align-items-center fw-medium">
+                    <div class="icon bg-gray text-center rounded-circle position-relative">
+                        <i class="material-symbols-outlined">
+                            email
+                        </i>
+                    </div>
+                    Email
+                </div>
+                <span class="d-block text-body">
+                    18,426
+                </span>
+                <span class="d-block text-body">
+                    55%
+                </span>
+            </li>
+            <li class="d-flex align-items-center justify-content-between">
+                <div class="title d-flex align-items-center fw-medium">
+                    <div class="icon bg-gray text-center rounded-circle position-relative">
+                        <i class="material-symbols-outlined">
+                            call
+                        </i>
+                    </div>
+                    Call
+                </div>
+                <span class="d-block text-body">
+                    4,753
+                </span>
+                <span class="d-block text-body">
+                    10%
+                </span>
+            </li>
+            <li class="d-flex align-items-center justify-content-between">
+                <div class="title d-flex align-items-center fw-medium">
+                    <div class="icon bg-gray text-center rounded-circle position-relative">
+                        <i class="material-symbols-outlined">
+                            category
+                        </i>
+                    </div>
+                    Others
+                </div>
+                <span class="d-block text-body">
+                    2,657
+                </span>
+                <span class="d-block text-body">
+                    5%
+                </span>
+            </li>
+        </ul>
+    </mat-card-content>
+</mat-card>

@@ -1,0 +1,349 @@
+<!-- Breadcrumb -->
+<div class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between">
+    <h5 class="mb-0">
+        Users
+    </h5>
+    <ol class="breadcrumb list-unstyled mt-0 mb-0 pl-0">
+        <li class="breadcrumb-item position-relative">
+            <a routerLink="/" class="d-inline-block position-relative">
+                <i class="ri-home-8-line"></i>
+                Dashboard
+            </a>
+        </li>
+        <li class="breadcrumb-item position-relative">
+            Users
+        </li>
+        <!-- <li class="breadcrumb-item position-relative">
+            Leads
+        </li> -->
+    </ol>
+</div>
+
+<mat-card
+    class="daxa-card leads-card border-radius bg-white border-none d-block"
+    [class.rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-header>
+        <mat-card-title>
+            <form class="search-box position-relative">
+                <i class="material-symbols-outlined">
+                    search
+                </i>
+                <input type="text" class="input-search d-block w-100 border-none outline-0" placeholder="Search lead..." (keyup)="applyFilter($event)" #input>
+            </form>
+        </mat-card-title>
+        <mat-card-subtitle>
+            <a mat-button class="add-new-btn" (click)="openUserForm()">
+                + Add New User
+              </a>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="leads-table">
+            <div class="table-responsive">
+                <table mat-table [dataSource]="dataSource">
+
+                    <!-- Checkbox Column -->
+                    <ng-container matColumnDef="select">
+                        <th mat-header-cell *matHeaderCellDef>
+                            <mat-checkbox
+                                (change)="$event ? toggleAllRows() : null"
+                                [checked]="selection.hasValue() && isAllSelected()"
+                                [indeterminate]="selection.hasValue() && !isAllSelected()"
+                                [aria-label]="checkboxLabel()"
+                            >
+                            </mat-checkbox>
+                        </th>
+                        <td mat-cell *matCellDef="let row">
+                            <mat-checkbox
+                                (click)="$event.stopPropagation()"
+                                (change)="$event ? selection.toggle(row) : null"
+                                [checked]="selection.isSelected(row)"
+                                [aria-label]="checkboxLabel(row)"
+                            >
+                            </mat-checkbox>
+                        </td>
+                    </ng-container>
+
+                    <!-- ID Column -->
+                    <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef>
+                            ID
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.id}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Customer Column -->
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef>
+                            User
+                        </th>
+                        <td mat-cell *matCellDef="let element" class="text-black">
+                            <div class="info d-flex align-items-center" style="cursor: pointer;" routerLink="/crm-page/profile" >
+                                <div class="image">
+                                    <img [src]="element.image" alt="customer-image" onerror="this.src='images/users/user12.jpg';">
+                                </div>
+                                <span class="d-block fw-medium">
+                                    {{element.name}}
+                                </span>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <!-- Email Column -->
+                    <ng-container matColumnDef="email">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Email
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.email}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Phone Column -->
+                    <ng-container matColumnDef="phone">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Phone
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.phone}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Create Date Column -->
+                    <!-- <ng-container matColumnDef="created_at">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Create Date
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.created_at}}
+                        </td>
+                    </ng-container> -->
+
+                    <!-- Course Column -->
+                    <ng-container matColumnDef="designation">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Designation
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.designation}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Course Column -->
+                    <ng-container matColumnDef="role">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Role
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            <!-- @for (item of element.assignedTo; track item){
+                                <span>{{item + ', '}}</span>
+                            } -->
+                                {{element.role}}
+                        </td>
+                    </ng-container>
+                    
+                    <!-- Lead Source Column -->
+                    <ng-container matColumnDef="password">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Password
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.password}}
+                        </td>
+                    </ng-container>
+
+                    <!-- <ng-container matColumnDef="description" style="display: none;">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Description
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            <div [innerHTML]="element.description"></div>
+                        </td>
+                    </ng-container> -->
+
+                    <!-- Status Column -->
+                    <ng-container matColumnDef="status">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Status
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            <!-- <span class="daxa-badge new d-inline-block" *ngIf="element.status.new">
+                                {{element.status.new}}
+                            </span>
+                            <span class="daxa-badge in-progress d-inline-block" *ngIf="element.status.inProgress">
+                                {{element.status.inProgress}}
+                            </span> -->
+                            <span class="daxa-badge won d-inline-block" *ngIf="element.status === 'active'">
+                                {{element.status}}
+                            </span>
+                            <span class="daxa-badge lost d-inline-block" *ngIf="element.status !== 'active'">
+                                {{element.status}}
+                            </span>
+                        </td>
+                    </ng-container>
+
+                    <!-- Action Column -->
+                    <ng-container matColumnDef="action">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Action
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="action-info">
+                                <!-- <a routerLink="/crm-page/profile" mat-button matTooltip="View Lead" matTooltipPosition="above">
+                                    <i class="material-symbols-outlined">
+                                        {{element.action.view}}
+                                    </i>
+                                </a> -->
+                                <a mat-button  (click)="openUserForm(element)" matTooltip="Edit Lead" matTooltipPosition="above">
+                                    <i class="material-symbols-outlined">
+                                        {{element.action.edit}}
+                                    </i>
+                                </a>
+                                <a mat-button routerLink="/task/create-ticket" matTooltip="Create Task" matTooltipPosition="above">
+                                    <i class="material-symbols-outlined">
+                                        {{element.action.createTask}}
+                                    </i>
+                                </a>
+                                <button type="button" mat-button matTooltip="Delete" matTooltipPosition="above" (click)="openDeleteUser(element, confirmDialog)">
+                                    <i class="material-symbols-outlined">
+                                        {{element.action.delete}}
+                                    </i>
+                                </button>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell text-center" [attr.colspan]="displayedColumns.length">
+                            No users found
+                        </td>
+                    </tr>
+                    <!-- Row shown when there is no matching data. -->
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                    </tr>
+
+                </table>
+            </div>
+            <!-- <mat-paginator [pageSizeOptions]="[5, 10, 25, 50]" showFirstLastButtons></mat-paginator> -->
+            <mat-paginator [length]="userPaginator?.total || 0" [pageSize]="limit" [pageIndex]="page - 1" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        </div> 
+    </mat-card-content>
+</mat-card>
+
+<ng-template #userDialog>
+    <h2 mat-dialog-title>{{ isEdit ? 'Edit User' : 'Add New User' }}</h2>
+    <mat-dialog-content>
+      <form [formGroup]="userForm">
+        <!-- Name -->
+        <mat-form-field class="w-100" appearance="outline" style="margin-bottom: 10px !important;">
+          <mat-label>Name</mat-label>
+          <input matInput formControlName="name" />
+        </mat-form-field>
+  
+        <!-- Email -->
+        <mat-form-field class="w-100" appearance="outline" style="margin-bottom: 10px !important;">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" />
+        </mat-form-field>
+  
+        <!-- Phone -->
+        <mat-form-field class="w-100" appearance="outline" style="margin-bottom: 10px !important;">
+          <mat-label>Phone</mat-label>
+          <input matInput formControlName="phone" />
+        </mat-form-field>
+  
+        <!-- Designation -->
+        <mat-form-field class="w-100" appearance="outline" style="margin-bottom: 10px !important;">
+          <mat-label>Designation</mat-label>
+          <input matInput formControlName="designation" />
+        </mat-form-field>
+  
+        <!-- Role -->
+        <mat-form-field class="w-100" appearance="outline" style="margin-bottom: 10px !important;">
+          <mat-label>Role</mat-label>
+          <mat-select formControlName="role" aria-disabled="true">
+            <mat-option value="user">User</mat-option>
+            <mat-option value="admin">Admin</mat-option>
+          </mat-select>
+        </mat-form-field>
+  
+        <!-- Password -->
+        <mat-form-field class="w-100" appearance="outline" style="margin-bottom: 10px !important;">
+            <mat-label>Password</mat-label>
+            <input
+              matInput
+              [type]="hidePassword ? 'password' : 'text'"
+              formControlName="password"
+            />
+          
+            <button
+              mat-icon-button
+              matSuffix
+              (click)="hidePassword = !hidePassword"
+              type="button"
+            >
+              <i class="material-symbols-outlined">
+                {{ hidePassword ? 'visibility' : 'visibility_off' }}
+              </i>
+            </button>
+          </mat-form-field>
+          
+        <!-- <mat-form-field class="w-100" appearance="outline" style="margin-bottom: 10px !important;">
+          <mat-label>Password</mat-label>
+          <input matInput formControlName="password" type="password" />
+        </mat-form-field> -->
+  
+        <!-- Image Upload -->
+        <mat-form-field class="w-100" appearance="outline" style="margin-bottom: 10px !important;">
+            <mat-label>Upload Image</mat-label>
+            <input type="text" matInput [value]="imageName" placeholder="Choose file..." readonly>
+            <button mat-button matSuffix (click)="fileInput.click()">Browse</button>
+            <input #fileInput type="file" hidden accept="image/*"  (change)="onImageChange($event)">
+          </mat-form-field>
+          
+          <div *ngIf="imagePreview" style="margin-top: 10px;">
+            <img [src]="imagePreview" alt="preview" width="50" style="border-radius: 8px;" />
+          </div>
+  
+        <!-- Status -->
+        <mat-form-field class="w-100" appearance="outline" style="margin-bottom: 10px !important;">
+          <mat-label>Status</mat-label>
+          <mat-select formControlName="status">
+            <mat-option value="active">Active</mat-option>
+            <mat-option value="inactive">Inactive</mat-option>
+            <!-- <mat-option value="won">Won</mat-option>
+            <mat-option value="lost">Lost</mat-option> -->
+          </mat-select>
+        </mat-form-field>
+        <!-- <div class="NgxEditor__Wrapper" style="margin-bottom: 10px;">
+            <ng-container *ngIf="editor">
+              <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"></ngx-editor-menu>
+              <ngx-editor [editor]="editor" formControlName="description"></ngx-editor>
+            </ng-container>
+          </div> -->
+  
+      </form>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-button (click)="closeModal()">Cancel</button>
+      <button mat-flat-button color="primary" (click)="saveUser()" [disabled]="userForm.invalid">Save</button>
+    </mat-dialog-actions>
+  </ng-template>
+  
+  <ng-template #confirmDialog let-data>
+    <h2 mat-dialog-title>Confirm Delete</h2>
+    <mat-dialog-content>
+      Are you sure you want to delete <strong>{{ data.name }}</strong>?
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-button (click)="closeModal()">Cancel</button>
+      <button mat-flat-button color="warn" (click)="deleteUser()">Delete</button>
+    </mat-dialog-actions>
+  </ng-template>
+  

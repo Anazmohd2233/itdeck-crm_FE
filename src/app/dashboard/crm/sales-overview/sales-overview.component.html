@@ -1,0 +1,68 @@
+<mat-card class="daxa-card sales-overview-card mb-25 border-radius bg-primary border-none d-block">
+    <mat-card-content>
+        
+        <div class="d-flex justify-content-between align-items-center">
+            <h5 class="text-white">
+                Payment Status
+            </h5>
+            <div>
+                <button type="button" mat-button class="card-header-menu-btn" [matMenuTriggerFor]="cardHeaderMenu">
+                    {{ dateForm.value.start | date }} &nbsp;|&nbsp; {{ dateForm.value.end | date }}
+                </button>
+                <mat-menu #cardHeaderMenu="matMenu" class="card-header-menu w-25" xPosition="before" > 
+                    <form [formGroup]="dateForm" style="padding: 15px 5px !important;">
+                        <mat-form-field appearance="outline">
+                          <mat-label>Start Date</mat-label>
+                          <input matInput [matDatepicker]="pickerStart" formControlName="start">
+                          <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+                          <mat-datepicker #pickerStart></mat-datepicker>
+                        </mat-form-field><br><br>
+                      
+                        <mat-form-field appearance="outline" class="ms-2">
+                          <mat-label>End Date</mat-label>
+                          <input matInput [matDatepicker]="pickerEnd" formControlName="end">
+                          <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+                          <mat-datepicker #pickerEnd></mat-datepicker>
+                        </mat-form-field>
+                      </form>
+                      
+                      <p>Start Date: {{ dateForm.value.start | date }}</p>
+                      <p>End Date: {{ dateForm.value.end | date }}</p>
+                      
+                </mat-menu>                  
+            </div>
+        </div>
+        <div class="sales-overview-info d-flex align-items-center justify-content-between">
+            <div>
+                <span class="sub-title d-block text-white">
+                    Total Collection Due
+                </span>
+                <span class="number d-block text-white fw-medium lh-1">
+                    9,586
+                </span>
+            </div>
+            <div>
+                <span class="sub-title d-block text-white">
+                    Collected Amount
+                </span>
+                <span class="number d-block text-white fw-medium lh-1">
+                    3,507
+                </span>
+            </div>
+            <!-- <div>
+                <span class="sub-title d-block text-white">
+                    Today’s Sales
+                </span>
+                <span class="number d-block text-white fw-medium lh-1">
+                    357
+                </span>
+            </div> -->
+        </div>
+        <div class="progress-bar-container">
+            <div class="progress-bar" [style.width.%]="progress"></div>
+        </div>
+        <span class="info d-block text-white">
+            20% increase in last month
+        </span>
+    </mat-card-content>
+</mat-card>

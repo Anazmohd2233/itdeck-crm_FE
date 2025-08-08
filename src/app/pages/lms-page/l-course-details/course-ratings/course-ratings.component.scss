@@ -1,0 +1,271 @@
+.mat-mdc-card {
+    &.daxa-card {
+        &.course-ratings-card {
+            .mat-mdc-card-content {
+                .overall-ratings {
+                    margin-bottom: 30px;
+
+                    h5 {
+                        margin-bottom: 20px;
+                    }
+                    h3 {
+                        margin-bottom: 3px;
+                    }
+                    .all-ratings {
+                        margin-top: 9px;
+
+                        i {
+                            color: var(--warningColor);
+                            font-size: var(--fontSize);
+                            margin-right: 2px;
+                        }
+                        span {
+                            top: 1px;
+                            font-size: 14px;
+                            margin-left: 1px;
+                        }
+                    }
+                    .rating-item {
+                        margin-bottom: 25px;
+                        padding: {
+                            left: 153px;
+                            right: 41px;
+                        };
+                        .ratings {
+                            left: 0;
+                            top: 50%;
+                            position: absolute;
+                            transform: translateY(-50%);
+
+                            i {
+                                font-size: 15px;
+                                margin-right: 2px;
+                                color: var(--warningColor);
+                            }
+                            span {
+                                top: 1px;
+                                font-size: 14px;
+                                margin-left: 1px;
+                            }
+                        }
+                        .number {
+                            right: 0;
+                            top: 50%;
+                            font-size: 14px;
+                            position: absolute;
+                            transform: translateY(-50%);
+                        }
+                        &:last-child {
+                            margin-bottom: 0;
+                        }
+                    }
+                }
+                .review-item {
+                    margin-bottom: 20px;
+
+                    .user-info {
+                        margin-bottom: 10px;
+
+                        img {
+                            width: 50px;
+                            border-radius: 50%;
+                        }
+                        span {
+                            font-size: 18px;
+                            margin-left: 15px;
+                        }
+                    }
+                    .ratings {
+                        margin-bottom: 10px;
+
+                        i {
+                            color: var(--warningColor);
+                            font-size: var(--fontSize);
+                            margin-right: 2px;
+                        }
+                        span {
+                            top: 1px;
+                            font-size: 14px;
+                            margin-left: 1px;
+                        }
+                    }
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
+                }
+            }
+            &.rtl-enabled {
+                .mat-mdc-card-content {
+                    .overall-ratings {
+                        .all-ratings {
+                            i {
+                                margin: {
+                                    right: 0;
+                                    left: 2px;
+                                };
+                            }
+                            span {
+                                margin: {
+                                    left: 0;
+                                    right: 1px;
+                                };
+                            }
+                        }
+                        .rating-item {
+                            padding: {
+                                right: 153px;
+                                left: 41px;
+                            };
+                            .ratings {
+                                left: auto;
+                                right: 0;
+    
+                                i {
+                                    margin: {
+                                        right: 0;
+                                        left: 2px;
+                                    };
+                                }
+                                span {
+                                    margin: {
+                                        left: 0;
+                                        right: 1px;
+                                    };
+                                }
+                            }
+                            .number {
+                                right: auto;
+                                left: 0;
+                            }
+                        }
+                    }
+                    .review-item {
+                        .user-info {
+                            span {
+                                margin: {
+                                    left: 0;
+                                    right: 15px;
+                                };
+                            }
+                        }
+                        .ratings {
+                            i {
+                                margin: {
+                                    right: 0;
+                                    left: 2px;
+                                };
+                            }
+                            span {
+                                margin: {
+                                    left: 0;
+                                    right: 1px;
+                                };
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width : 767px) {
+
+    .mat-mdc-card {
+        &.daxa-card {
+            &.course-ratings-card {
+                .mat-mdc-card-content {
+                    .overall-ratings {
+                        margin-bottom: 25px;
+    
+                        h5 {
+                            margin-bottom: 7px;
+                        }
+                        h3 {
+                            margin-bottom: 4px;
+                        }
+                        .all-ratings {
+                            margin-bottom: 22px;
+
+                            i {
+                                font-size: 14px;
+                            }
+                        }
+                        .rating-item {
+                            padding: {
+                                left: 125px;
+                                right: 35px;
+                            };
+                            .ratings {
+                                i {
+                                    font-size: 14px;
+                                }
+                            }
+                            .number {
+                                font-size: 13px;
+                            }
+                        }
+                    }
+                    .review-item {
+                        margin-bottom: 15px;
+    
+                        .user-info {
+                            margin-bottom: 10px;
+
+                            span {
+                                font-size: 16px;
+                                margin-left: 12px;
+                            }
+                        }
+                        .ratings {
+                            margin-bottom: 10px;
+    
+                            i {
+                                font-size: 14px;
+                            }
+                        }
+                    }
+                }
+                &.rtl-enabled {
+                    .mat-mdc-card-content {
+                        .overall-ratings {
+                            .rating-item {
+                                padding: {
+                                    right: 125px;
+                                    left: 35px;
+                                };
+                            }
+                        }
+                        .review-item {
+                            .user-info {
+                                span {
+                                    margin: {
+                                        left: 0;
+                                        right: 12px;
+                                    };
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 576px to Max width 767px */
+@media only screen and (min-width : 576px) and (max-width : 767px) {}
+
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width : 768px) and (max-width : 991px) {}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width : 992px) and (max-width : 1199px) {}
+
+/* Min width 1200px to Max width 1399px */
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {}
+
+/* Min width 1600px */
+@media only screen and (min-width: 1600px) {}

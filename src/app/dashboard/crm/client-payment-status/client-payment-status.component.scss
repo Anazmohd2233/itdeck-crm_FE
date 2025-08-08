@@ -1,0 +1,40 @@
+.mat-mdc-card {
+    &.daxa-card {
+        &.client-payment-status-card {
+            .mat-mdc-card-content {
+                margin-bottom: -10px;
+            }
+        }
+    }
+}
+::ng-deep {
+    .mat-mdc-card {
+        &.daxa-card {
+            &.client-payment-status-card {
+                .mat-mdc-card-content {
+                    .apexcharts-legend {
+                        padding: 0;
+                        display: block;
+
+                        .apexcharts-legend-series {
+                            margin-bottom: 10px !important;
+
+                            &:last-child {
+                                margin-bottom: 0;
+                            }
+                        }
+                    }
+                    .apexcharts-text  {
+                        display: none;
+                    }
+                    .apexcharts-tooltip {
+                        .apexcharts-tooltip-series-group {
+                            padding-right: 12px;
+                            border-bottom: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,119 @@
+.mat-mdc-card {
+    &.daxa-card {
+        &.create-lead-card {
+            .mat-mdc-card-content {
+                .main-label {
+                    margin-bottom: 13px;
+                    font-size: 15px;
+                }
+            }
+        }
+    }
+}
+::ng-deep {
+    .mat-mdc-card {
+        &.daxa-card {
+            &.create-lead-card {
+                .mat-mdc-card-content {
+                    .btn-box {
+                        .mat-mdc-button {
+                            border: 0;
+                            height: auto;
+                            min-width: auto;
+                            min-height: auto;
+                            padding: 13px 40px;
+                            font-weight: normal;
+                            color: var(--whiteColor);
+                            background-color: var(--daxaColor);
+
+                            &:not(:first-child) {
+                                margin-left: 10px;
+                                background-color: var(--dangerColor);
+                            }
+                        }
+                    }
+                }
+                &.rtl-enabled {
+                    .mat-mdc-card-content {
+                        .btn-box {
+                            .mat-mdc-button {
+                                &:not(:first-child) {
+                                    margin: {
+                                        left: 0;
+                                        right: 10px;
+                                    };
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width : 767px) {
+
+    .mat-mdc-card {
+        &.daxa-card {
+            &.create-lead-card {
+                .mat-mdc-card-content {
+                    .main-label {
+                        margin-bottom: 10px;
+                        font-size: 14px;
+                    }
+                }
+            }
+        }
+    }
+    ::ng-deep {
+        .mat-mdc-card {
+            &.daxa-card {
+                &.create-lead-card {
+                    .mat-mdc-card-content {
+                        .btn-box {
+                            .mat-mdc-button {
+                                padding: 13px 18px;
+    
+                                &:not(:first-child) {
+                                    margin-left: 8px;
+                                }
+                            }
+                        }
+                    }
+                    &.rtl-enabled {
+                        .mat-mdc-card-content {
+                            .btn-box {
+                                .mat-mdc-button {
+                                    &:not(:first-child) {
+                                        margin: {
+                                            left: 0;
+                                            right: 8px;
+                                        };
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 576px to Max width 767px */
+@media only screen and (min-width : 576px) and (max-width : 767px) {}
+
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width : 768px) and (max-width : 991px) {}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width : 992px) and (max-width : 1199px) {}
+
+/* Min width 1200px to Max width 1399px */
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {}
+
+/* Min width 1600px */
+@media only screen and (min-width: 1600px) {}

@@ -1,0 +1,75 @@
+<!-- Breadcrumb -->
+<div class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between">
+    <h5 class="mb-0">
+        My Profile
+    </h5>
+    <ol class="breadcrumb list-unstyled mt-0 mb-0 pl-0">
+        <li class="breadcrumb-item position-relative">
+            <a routerLink="/" class="d-inline-block position-relative">
+                <i class="ri-home-8-line"></i>
+                Dashboard
+            </a>
+        </li>
+        <li class="breadcrumb-item position-relative">
+            My Profile
+        </li>
+    </ol>
+</div>
+
+<!-- My Profile -->
+<div class="row">
+    <div class="col-lg-12 col-xxxl-6">
+
+        <!-- Welcome -->
+        <app-welcome />
+
+    </div>
+    <div class="col-lg-12 col-xxxl-6">
+        <div class="row">
+            <div class="col-md-4">
+
+                <!-- Total Projects -->
+                <app-total-projects />
+
+            </div>
+            <div class="col-md-4">
+
+                <!-- Pending Projects -->
+                <app-total-orders />
+
+            </div>
+            <div class="col-md-4">
+
+                <!-- Total Revenue -->
+                <app-total-revenue />
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xxl-4 col-xxxl-3">
+
+        <!-- Profile Intro -->
+        <app-profile-intro />
+
+        <!-- Profile Information -->
+        <app-profile-information />
+
+        <!-- Additional Information -->
+        <app-additional-information />
+
+    </div>
+    <div class="col-xxl-8 col-xxxl-9">
+
+        <!-- Overview -->
+        <app-overview />
+
+        <!-- To Do List -->
+        <app-to-do-list />
+
+        <!-- Recent Activity -->
+        <app-recent-activity />
+        
+    </div>
+</div>

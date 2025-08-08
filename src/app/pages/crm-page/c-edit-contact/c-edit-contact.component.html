@@ -1,0 +1,207 @@
+<!-- Breadcrumb -->
+<div class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between">
+    <h5 class="mb-0">
+        Edit Contact
+    </h5>
+    <ol class="breadcrumb list-unstyled mt-0 mb-0 pl-0">
+        <li class="breadcrumb-item position-relative">
+            <a routerLink="/" class="d-inline-block position-relative">
+                <i class="ri-home-8-line"></i>
+                Dashboard
+            </a>
+        </li>
+        <li class="breadcrumb-item position-relative">
+            E-Commerce
+        </li>
+        <li class="breadcrumb-item position-relative">
+            Contacts
+        </li>
+        <li class="breadcrumb-item position-relative">
+            Edit Contact
+        </li>
+    </ol>
+</div>
+
+<!-- Edit Contact -->
+<mat-card class="daxa-card edit-contact-card mb-25 border-radius bg-white border-none d-block">
+    <mat-card-content>
+        <form>
+            <div class="row">
+                <div class="col-md-4 col-sm-6">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">
+                            Contact ID
+                        </label>
+                        <mat-form-field>
+                            <mat-label>
+                                Enter contact id
+                            </mat-label>
+                            <input matInput value="#ARP-1217">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">
+                            Customer Name
+                        </label>
+                        <mat-form-field>
+                            <mat-label>
+                                Enter customer name
+                            </mat-label>
+                            <input matInput value="Marcia Baker">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">
+                            Email Address
+                        </label>
+                        <mat-form-field>
+                            <mat-label>
+                                Enter email address
+                            </mat-label>
+                            <input matInput value="marcia@example.com">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">
+                            Phone Number
+                        </label>
+                        <mat-form-field>
+                            <mat-label>
+                                Enter phone number
+                            </mat-label>
+                            <input matInput value="+1 555-123-4567">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">
+                            Last Contacted Date
+                        </label>
+                        <mat-form-field>
+                            <mat-label>
+                                Enter last contacted date
+                            </mat-label>
+                            <input matInput value="Nov 10, 2024">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">
+                            Courses
+                        </label>
+                        <mat-form-field>
+                            <mat-label>
+                                Enter Course name
+                            </mat-label>
+                            <!-- <mat-form-field> -->
+                                <!-- <mat-label>
+                                    Select
+                                </mat-label> -->
+                                <mat-select multiple>
+                                    <mat-option value="option1">
+                                        Course 1
+                                    </mat-option>
+                                    <mat-option value="option2">
+                                        Course 2
+                                    </mat-option>
+                                    <mat-option value="option3">
+                                        Course 3
+                                    </mat-option>
+                                    <mat-option value="option4">
+                                        Course 4
+                                    </mat-option>
+                                    <mat-option value="option5">
+                                        Course 5
+                                    </mat-option>
+                                </mat-select>
+                            <!-- </mat-form-field> -->
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">
+                            Duration
+                        </label>
+                        <mat-form-field>
+                            <mat-label>
+                                Enter duration
+                            </mat-label>
+                            <input matInput value="50">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">
+                            Contact Status
+                        </label>
+                        <mat-form-field>
+                            <mat-label>
+                                Select contact status
+                            </mat-label>
+                            <mat-select [(value)]="contactStatusSelected">
+                                <mat-option value="option1">
+                                    Active
+                                </mat-option>
+                                <mat-option value="option2">
+                                    Deactive
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">
+                            Lead Source
+                        </label>
+                        <mat-form-field>
+                            <mat-label>
+                                Select lead source
+                            </mat-label>
+                            <mat-select>
+                                <mat-option value="option1">
+                                    Website
+                                </mat-option>
+                                <mat-option value="option2">
+                                    Referral
+                                </mat-option>
+                                <mat-option value="option3">
+                                    Cold Call
+                                </mat-option>
+                                <mat-option value="option4">
+                                    Email Campaign
+                                </mat-option>
+                                <mat-option value="option5">
+                                    Online Store
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-12 col-sm-12">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">
+                            Customer Image
+                        </label>
+                        <file-upload class="file-uploader" [multiple]="multiple"></file-upload>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-box">
+                <button mat-button>
+                    Save Changes
+                </button>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>

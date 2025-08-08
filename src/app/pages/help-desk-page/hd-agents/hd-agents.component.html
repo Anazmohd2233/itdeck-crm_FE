@@ -1,0 +1,150 @@
+<!-- Breadcrumb -->
+<div class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between">
+    <h5 class="mb-0">
+        Agents
+    </h5>
+    <ol class="breadcrumb list-unstyled mt-0 mb-0 pl-0">
+        <li class="breadcrumb-item position-relative">
+            <a routerLink="/" class="d-inline-block position-relative">
+                <i class="ri-home-8-line"></i>
+                Dashboard
+            </a>
+        </li>
+        <li class="breadcrumb-item position-relative">
+            Help Desk
+        </li>
+        <li class="breadcrumb-item position-relative">
+            Agents
+        </li>
+    </ol>
+</div>
+
+<!-- Agents -->
+<mat-card
+    class="daxa-card agents-card mb-25 border-radius bg-white border-none d-block"
+    [class.rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mb-0">
+                Agents
+            </h5>
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="agents-table">
+            <div class="table-responsive">
+                <table mat-table [dataSource]="dataSource">
+
+                    <!-- Agent ID Column -->
+                    <ng-container matColumnDef="agentID">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Agent ID
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.agentID}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Agent Column -->
+                    <ng-container matColumnDef="agent">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Agent
+                        </th>
+                        <td mat-cell *matCellDef="let element" class="text-black">
+                            <div class="info d-flex align-items-center">
+                                <div class="image">
+                                    <img [src]="element.agent.img" alt="customer-image">
+                                </div>
+                                <span class="d-block fw-medium">
+                                    {{element.agent.name}}
+                                </span>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <!-- Email Column -->
+                    <ng-container matColumnDef="email">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Email
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.email}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Role Column -->
+                    <ng-container matColumnDef="role">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Role
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.role}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Tickets Assigned Column -->
+                    <ng-container matColumnDef="ticketsAssigned">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Tickets Assigned
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.ticketsAssigned}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Tickets Resolved Column -->
+                    <ng-container matColumnDef="ticketsResolved">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Tickets Resolved
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.ticketsResolved}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Availability Column -->
+                    <ng-container matColumnDef="availability">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Availability
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.availability}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Action Column -->
+                    <ng-container matColumnDef="action">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Action
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="action-info">
+                                <button type="button" mat-button matTooltip="View Agent" matTooltipPosition="above">
+                                    <i class="material-symbols-outlined">
+                                        {{element.action.view}}
+                                    </i>
+                                </button>
+                                <button type="button" mat-button matTooltip="Edit Agent" matTooltipPosition="above">
+                                    <i class="material-symbols-outlined">
+                                        {{element.action.edit}}
+                                    </i>
+                                </button>
+                                <button type="button" mat-button matTooltip="Delete Agent" matTooltipPosition="above">
+                                    <i class="material-symbols-outlined">
+                                        {{element.action.delete}}
+                                    </i>
+                                </button>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                </table>
+            </div>
+            <mat-paginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons></mat-paginator>
+        </div>
+    </mat-card-content>
+</mat-card>

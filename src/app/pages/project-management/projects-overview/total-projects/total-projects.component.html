@@ -1,0 +1,31 @@
+<mat-card
+    class="daxa-card total-projects-card border-radius border-none d-block"
+    [class.component-dark-theme]="themeService.isDark()"
+>
+    <mat-card-content>
+        <div class="d-flex justify-content-between">
+            <div class="title">
+                <h5>
+                    Total Projects
+                </h5>
+                <div class="number fw-medium lh-1">
+                    705
+                </div>
+            </div>
+            <div class="icon text-center bg-daxa rounded-circle text-white position-relative">
+                <img src="images/icons/total-projects.svg" alt="total-projects-icon">
+            </div>
+        </div>
+        <div class="info d-flex align-items-center justify-content-between">
+            <span class="sub-title d-block text-body">
+                Projects this month
+            </span>
+            <span class="daxa-up-down-badge position-relative">
+                <i class="material-symbols-outlined">
+                    trending_up
+                </i>
+                0.75%
+            </span>
+        </div>
+    </mat-card-content>
+</mat-card>

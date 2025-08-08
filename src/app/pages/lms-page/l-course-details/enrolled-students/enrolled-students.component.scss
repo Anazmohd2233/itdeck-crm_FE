@@ -1,0 +1,189 @@
+.mat-mdc-card {
+    &.daxa-card {
+        &.enrolled-students-card {
+            .mat-mdc-card-content {
+                margin: {
+                    left: -20px;
+                    right: -20px;
+                };
+                .enrolled-students-table {
+                    .table-responsive {
+                        height: 481px;
+                        overflow: auto;
+                    }
+                    .mat-mdc-table {
+                        .info {
+                            .image {
+                                width: 35px;
+                                line-height: .01;
+                                margin-right: 12px;
+
+                                img {
+                                    border-radius: 50%;
+                                }
+                            }
+                        }
+                        .ratings {
+                            font-size: 14px;
+                            line-height: 1;
+
+                            i {
+                                color: var(--warningColor);
+                                font-size: var(--fontSize);
+                                position: relative;
+                                margin-right: 2px;
+                                top: -1px;
+                            }
+                        }
+                    }
+                }
+            }
+            &.rtl-enabled {
+                .mat-mdc-card-content {
+                    .enrolled-students-table {
+                        .mat-mdc-table {
+                            .info {
+                                .image {
+                                    margin: {
+                                        right: 0;
+                                        left: 12px;
+                                    };
+                                }
+                            }
+                            .ratings {
+                                i {
+                                    margin: {
+                                        right: 0;
+                                        left: 2px;
+                                    };
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width : 767px) {
+
+    .mat-mdc-card {
+        &.daxa-card {
+            &.enrolled-students-card {
+                .mat-mdc-card-content {
+                    margin: {
+                        left: -15px;
+                        right: -15px;
+                    };
+                    .enrolled-students-table {
+                        .mat-mdc-table {
+                            .info {
+                                .image {
+                                    width: 40px;
+                                    margin-right: 8px;
+                                }
+                            }
+                        }
+                    }
+                }
+                &.rtl-enabled {
+                    .mat-mdc-card-content {
+                        .enrolled-students-table {
+                            .mat-mdc-table {
+                                .info {
+                                    .image {
+                                        margin: {
+                                            right: 0;
+                                            left: 8px;
+                                        };
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 576px to Max width 767px */
+@media only screen and (min-width : 576px) and (max-width : 767px) {
+
+    .mat-mdc-card {
+        &.daxa-card {
+            &.enrolled-students-card {
+                .mat-mdc-card-content {
+                    margin: {
+                        left: -20px;
+                        right: -20px;
+                    };
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width : 768px) and (max-width : 991px) {}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width : 992px) and (max-width : 1199px) {
+
+    .mat-mdc-card {
+        &.daxa-card {
+            &.enrolled-students-card {
+                .mat-mdc-card-content {
+                    .enrolled-students-table {
+                        .table-responsive {
+                            height: 509px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 1200px to Max width 1399px */
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {
+
+    .mat-mdc-card {
+        &.daxa-card {
+            &.enrolled-students-card {
+                .mat-mdc-card-content {
+                    .enrolled-students-table {
+                        .table-responsive {
+                            height: 538px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 1600px */
+@media only screen and (min-width: 1600px) {
+
+    .mat-mdc-card {
+        &.daxa-card {
+            &.enrolled-students-card {
+                .mat-mdc-card-content {
+                    .enrolled-students-table {
+                        .table-responsive {
+                            height: 452px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}

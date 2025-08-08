@@ -1,0 +1,250 @@
+.mat-mdc-card {
+    &.daxa-card {
+        &.all-tickets-card {
+            .mat-mdc-card-content {
+                margin: {
+                    left: -20px;
+                    right: -20px;
+                };
+                .all-tickets-table {
+                    .mat-mdc-table {
+                        .mat-mdc-header-cell {
+                            &:last-child {
+                                text-align: right;
+                            }
+                        }
+                        .mat-mdc-cell {
+                            &:last-child {
+                                text-align: right;
+                            }
+                        }
+                        .daxa-badge {
+                            color: var(--successColor);
+                            background: rgba(46, 212, 126, 0.10);
+
+                            &.in-progress {
+                                color: var(--warningColor);
+                                background: rgba(241, 179, 28, 0.10);
+                            }
+                            &.pending {
+                                color: var(--daxaColor);
+                                background: rgba(15, 121, 243, 0.10);
+                            }
+                            &.closed {
+                                color: var(--dangerColor);
+                                background: rgba(231, 76, 60, 0.10);
+                            }
+                        }
+                        .team-members-list {
+                            img {
+                                width: 42px;
+                                border-radius: 50%;
+                                margin-right: -13px;
+                                border: 2px solid var(--whiteColor);
+                                
+                                &:last-child {
+                                    margin-right: 0;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            &.rtl-enabled {
+                .mat-mdc-card-content {
+                    .all-tickets-table {
+                        .mat-mdc-table {
+                            .mat-mdc-header-cell {
+                                &:last-child {
+                                    text-align: left;
+                                }
+                            }
+                            .mat-mdc-cell {
+                                &:last-child {
+                                    text-align: left;
+                                }
+                            }
+                            .team-members-list {
+                                img {
+                                    margin: {
+                                        right: 0;
+                                        left: -13px;
+                                    };
+                                    &:last-child {
+                                        margin-left: 0;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+::ng-deep {
+    .mat-mdc-card {
+        &.daxa-card {
+            &.all-tickets-card {
+                .mat-mdc-card-content {
+                    .all-tickets-table {
+                        .mat-mdc-paginator {
+                            padding: {
+                                top: 15px;
+                                left: 20px;
+                                right: 20px;
+                            };
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width : 767px) {
+
+    .mat-mdc-card {
+        &.daxa-card {
+            &.all-tickets-card {
+                .mat-mdc-card-content {
+                    margin: {
+                        left: -15px;
+                        right: -15px;
+                    };
+                }
+            }
+        }
+    }
+    ::ng-deep {
+        .mat-mdc-card {
+            &.daxa-card {
+                &.all-tickets-card {
+                    .mat-mdc-card-header {
+                        .mat-mdc-card-header-text {
+                            display: block;
+
+                            .mat-mdc-card-subtitle {
+                                margin-top: 12px;
+                            }
+                        }
+                    }
+                    .mat-mdc-card-content {
+                        .all-tickets-table {
+                            .mat-mdc-paginator {
+                                padding: {
+                                    top: 10px;
+                                    left: 15px;
+                                    right: 15px;
+                                };
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 576px to Max width 767px */
+@media only screen and (min-width : 576px) and (max-width : 767px) {
+
+    .mat-mdc-card {
+        &.daxa-card {
+            &.all-tickets-card {
+                .mat-mdc-card-content {
+                    margin: {
+                        left: -20px;
+                        right: -20px;
+                    };
+                }
+            }
+        }
+    }
+    ::ng-deep {
+        .mat-mdc-card {
+            &.daxa-card {
+                &.all-tickets-card {
+                    .mat-mdc-card-content {
+                        .all-tickets-table {
+                            .mat-mdc-paginator {
+                                padding: {
+                                    left: 20px;
+                                    right: 20px;
+                                };
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width : 768px) and (max-width : 991px) {}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width : 992px) and (max-width : 1199px) {}
+
+/* Min width 1200px to Max width 1399px */
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {}
+
+/* Min width 1600px */
+@media only screen and (min-width: 1600px) {}
+
+
+.small-form-field {
+    width: 150px;
+    margin-right: 8px;
+  
+    .mat-form-field-wrapper {
+      padding-bottom: 0;
+    }
+  
+    .mat-form-field-infix {
+      padding: 4px 0 !important;
+    }
+  
+    .mat-select-trigger,
+    .mat-input-element {
+      font-size: 13px;
+    }
+  
+    .mat-form-field-label {
+      font-size: 12px;
+    }
+  }
+  
+  // Responsive adjustments
+  @media (max-width: 1200px) {
+    .small-form-field {
+      width: 130px;
+    }
+  }
+  
+  @media (max-width: 992px) {
+    .small-form-field {
+      width: 100%;
+      margin-right: 0;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .filter-container {
+      flex-direction: column !important;
+      align-items: stretch !important;
+  
+      .small-form-field,
+      button,
+      a.add-new-btn {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 8px;
+      }
+    }
+  }
+  

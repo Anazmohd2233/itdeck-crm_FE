@@ -1,0 +1,124 @@
+<mat-card
+    class="daxa-card chat-projects-user-card mb-25 border-radius bg-white border-none d-block"
+    [class.component-dark-theme]="themeService.isDark()"
+    [class.rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mb-0">
+                Chat Projects User
+            </h5>
+        </mat-card-title>
+        <mat-card-subtitle>
+            <button type="button" mat-button class="card-header-menu-btn" [matMenuTriggerFor]="cardHeaderMenu">
+                Russell Colon
+            </button>
+            <mat-menu #cardHeaderMenu="matMenu" class="card-header-menu" xPosition="before">
+                <button mat-menu-item>
+                    Mark Stjohn
+                </button>
+                <button mat-menu-item>
+                    Juana Thatcher
+                </button>
+                <button mat-menu-item>
+                    Raymond Nguyen
+                </button>
+                <button mat-menu-item>
+                    Frank Mele
+                </button>
+            </mat-menu>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <span class="chat-header d-block text-body">
+            2024-11-10 09:15 AM
+        </span>
+        <div class="chat-body">
+            <ul class="list-unstyled mb-0 mt-0">
+                <li class="position-relative">
+                    <img src="images/users/user12.jpg" width="35" class="rounded-circle user" alt="user">
+                    <div class="message">
+                        <div>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pharetra ligula non varius curabitur etiam malesuada. Congue eget luctus aliquet consectetur.</p>
+                        </div>
+                    </div>
+                    <span class="time d-block text-muted">
+                        09:31 AM
+                    </span>
+                </li>
+                <li class="position-relative right">
+                    <img src="images/users/user13.jpg" width="35" class="rounded-circle user" alt="user">
+                    <div class="message">
+                        <div>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        </div>
+                    </div>
+                    <span class="time d-block text-muted">
+                        09:30 AM
+                    </span>
+                </li>
+                <li class="position-relative">
+                    <img src="images/users/user12.jpg" width="35" class="rounded-circle user" alt="user">
+                    <div class="message">
+                        <div>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pharetra ligula non varius.</p>
+                        </div>
+                    </div>
+                    <span class="time d-block text-muted">
+                        09:25 AM
+                    </span>
+                </li>
+                <li class="position-relative right">
+                    <img src="images/users/user13.jpg" width="35" class="rounded-circle user" alt="user">
+                    <div class="message">
+                        <div>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit.</p>
+                        </div>
+                        <div>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        </div>
+                    </div>
+                    <span class="time d-block text-muted">
+                        09:22 AM
+                    </span>
+                </li>
+                <li class="position-relative">
+                    <img src="images/users/user12.jpg" width="35" class="rounded-circle user" alt="user">
+                    <div class="message">
+                        <div>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pharetra ligula non varius curabitur etiam malesuada.</p>
+                        </div>
+                        <div>
+                            <p>Lorem ipsum dolor sit amet. 🔥</p>
+                        </div>
+                    </div>
+                    <span class="time d-block text-muted">
+                        09:21 AM
+                    </span>
+                </li>
+                <li class="position-relative right">
+                    <img src="images/users/user13.jpg" width="35" class="rounded-circle user" alt="user">
+                    <div class="message">
+                        <div>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        </div>
+                    </div>
+                    <span class="time d-block text-muted">
+                        09:20 AM
+                    </span>
+                </li>
+            </ul>
+        </div>
+        <div class="chat-footer position-relative">
+            <mat-form-field>
+                <mat-label>Type your message....</mat-label>
+                <input matInput>
+            </mat-form-field>
+            <button mat-button>
+                <i class="material-symbols-outlined">
+                    send
+                </i>
+            </button>
+        </div>
+    </mat-card-content>
+</mat-card>

@@ -1,0 +1,133 @@
+<!-- Working Schedule -->
+<mat-card
+    class="daxa-card working-schedule-card mb-25 border-radius bg-white border-none d-block"
+    [class.component-dark-theme]="themeService.isDark()"
+    [class.rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mb-0">
+                Working Schedule
+            </h5>
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-calendar [(selected)]="selected"></mat-calendar>
+        <div class="events-content">
+            <h5>
+                EVENTS
+            </h5>
+            <ul class="mt-0 pl-0 list-unstyled mb-0">
+                <li class="position-relative">
+                    <p>
+                        Annual Conference
+                    </p>
+                    <span class="d-block text-daxa">
+                        November 21 <span class="text-body">(10:00 - 11:00 AM)</span>
+                    </span>
+                </li>
+                <li class="position-relative">
+                    <p>
+                        Product Lunch Webinar
+                    </p>
+                    <span class="d-block text-daxa">
+                        December 06 <span class="text-body">(02:00 PM)</span>
+                    </span>
+                </li>
+                <li class="position-relative">
+                    <p>
+                        Tech Summit 2024
+                    </p>
+                    <span class="d-block text-daxa">
+                        December 13 <span class="text-body">(03:00 PM)</span>
+                    </span>
+                </li>
+                <!-- <li class="position-relative">
+                    <p>
+                        Web Development Seminar
+                    </p>
+                    <span class="d-block text-daxa">
+                        December 20 <span class="text-body">(12:00 AM)</span>
+                    </span>
+                </li> -->
+            </ul>
+        </div>
+        <div class="add-new-event-btn text-right">
+            <button
+                mat-button
+                (click)="toggleClass()"
+            >
+                + Add New Event
+            </button>
+        </div>
+    </mat-card-content>
+</mat-card>
+
+<!-- Popup -->
+<div
+    class="add-new-event-popup"
+    [class.active]="classApplied"
+    [class.rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <div class="popup-dialog">
+        <mat-card class="daxa-card mb-25 border-radius bg-white border-none d-block">
+            <mat-card-header>
+                <mat-card-title>
+                    <h5 class="mb-0">
+                        Add New Event
+                    </h5>
+                </mat-card-title>
+                <mat-card-subtitle>
+                    <button
+                        mat-button
+                        (click)="toggleClass()"
+                    >
+                        <i class="ri-close-fill"></i>
+                    </button>
+                </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <label class="main-label d-block lh-1 text-black">
+                    Event Name
+                </label>
+                <mat-form-field>
+                    <mat-label>
+                        Event name
+                    </mat-label>
+                    <input matInput placeholder="E.g. Project Daxa milestone 1 due next week.">
+                </mat-form-field>
+                <label class="main-label d-block lh-1 text-black">
+                    Event Date
+                </label>
+                <mat-form-field class="date">
+                    <mat-label>
+                        Choose a date
+                    </mat-label>
+                    <input matInput [matDatepicker]="eventDate">
+                    <mat-datepicker-toggle matIconSuffix [for]="eventDate"></mat-datepicker-toggle>
+                    <mat-datepicker #eventDate></mat-datepicker>
+                </mat-form-field>
+                <label class="main-label d-block lh-1 text-black">
+                    Event Time
+                </label>
+                <mat-form-field>
+                    <mat-label>
+                        Event time
+                    </mat-label>
+                    <input matInput placeholder="E.g. 12:00 AM">
+                </mat-form-field>
+                <div class="btn-box">
+                    <button
+                        mat-button
+                        (click)="toggleClass()"
+                    >
+                        Cancel
+                    </button>
+                    <button mat-button>
+                        Create
+                    </button>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

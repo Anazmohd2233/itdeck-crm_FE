@@ -1,0 +1,752 @@
+// Working Schedule
+.mat-mdc-card {
+    &.daxa-card {
+        &.working-schedule-card {
+            .mat-mdc-card-content {
+                .events-content {
+                    margin-bottom: 15px;
+                    
+                    h5 {
+                        margin-bottom: 15px;
+                    }
+                    ul {
+                        li {
+                            border-bottom: 1px dashed #e0e0e0;
+                            padding: {
+                                top: 15px;
+                                left: 20px;
+                                bottom: 15px;
+                            };
+                            p {
+                                margin-bottom: 5px;
+                            }
+                            &:first-child {
+                                padding-top: 0;
+
+                                &::before {
+                                    top: 9px;
+                                }
+                            }
+                            &::before {
+                                left: 0;
+                                top: 24px;
+                                width: 10px;
+                                content: '';
+                                height: 10px;
+                                border-radius: 50%;
+                                position: absolute;
+                                background: var(--daxaColor);
+                            }
+                            &:nth-child(2) {
+                                &::before {
+                                    background: var(--infoColor);
+                                }
+                            }
+                            &:nth-child(3) {
+                                &::before {
+                                    background: var(--warningColor);
+                                }
+                            }
+                            &:nth-child(4) {
+                                &::before {
+                                    background: var(--primaryColor);
+                                }
+                            }
+                        }
+                    }
+                }
+                .add-new-event-btn {
+                    .mat-mdc-button {
+                        padding: 0;
+                        height: auto;
+                        min-width: auto;
+                        font: {
+                            size: var(--fontSize) !important;
+                            weight: normal;
+                        };
+                        &:not(:disabled) {
+                            color: var(--daxaColor);
+                        }
+                    }
+                }
+            }
+            &.component-dark-theme {
+                .mat-mdc-card-content {
+                    .events-content {
+                        ul {
+                            li {
+                                border-color: rgba(255, 255, 255, 0.09);
+                            }
+                        }
+                    }
+                }
+            }
+            &.rtl-enabled {
+                .mat-mdc-card-content {
+                    .events-content {
+                        ul {
+                            padding-right: 0;
+
+                            li {
+                                padding: {
+                                    left: 0;
+                                    right: 20px;
+                                };
+                                &::before {
+                                    left: auto;
+                                    right: 0;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+::ng-deep {
+    .mat-mdc-card {
+        &.daxa-card {
+            &.working-schedule-card {
+                .mat-mdc-card-content {
+                    .mat-calendar {
+                        margin-bottom: 15px;
+                        text-align: center;
+
+                        .mat-calendar-header {
+                            padding: 0;
+                            margin-bottom: 20px;
+
+                            .mat-calendar-spacer {
+                                display: none;
+                            }
+                            .mat-calendar-controls {
+                                margin: 0;
+                                justify-content: space-between;
+                            }
+                            .mat-calendar-previous-button {
+                                order: 1;
+                                background-color: #f7f7f7;
+                            }
+                            .mat-calendar-period-button {
+                                order: 2;
+
+                                &.mat-mdc-button {
+                                    margin: 0;
+                                    padding: 0;
+                                    height: auto;
+                                    color: var(--blackColor);
+
+                                    .mat-calendar-arrow {
+                                        fill: var(--bodyColor);
+                                        position: relative;
+                                        top: -2px;
+                                    }
+                                }
+                            }
+                            .mat-calendar-next-button {
+                                order: 3;
+                                background-color: #f7f7f7;
+                            }
+                        }
+                        .mat-calendar-table-header {
+                            th {
+                                padding: 0 0 8px;
+                                color: var(--blackColor);
+                                font-size: var(--fontSize);
+                            }
+                        }
+                        .mat-calendar-table-header-divider {
+                            display: none;
+                        }
+                        .mat-calendar-body {
+                            min-width: auto;
+
+                            .mat-calendar-body-label {
+                                opacity: 0;
+                            }
+                        }
+                        .mat-calendar-body-label {
+                            padding: 0 !important;
+                        }
+                        .mat-calendar-body-cell {
+                            padding: 0;
+                            width: 45px;
+                            height: 45px;
+                            border-radius: 50%;
+                            position: relative;
+                            margin: {
+                                left: auto;
+                                right: auto;
+                            };
+                            &.mat-calendar-body-active {
+                                background-color: var(--daxaColor);
+                                
+                                .mat-calendar-body-cell-content {
+                                    color: var(--whiteColor);
+                                    box-shadow: unset !important;
+                                    border-color: var(--daxaColor) !important;
+                                }
+                            }
+                            .mat-calendar-body-cell-content {
+                                top: 0;
+                                left: 0;
+                                width: 100%;
+                                height: 100%;
+                                color: var(--blackColor);
+                                font-size: var(--fontSize);
+                            }
+                            .mat-calendar-body-selected {
+                                background-color: var(--daxaColor);
+                            }
+                            .mat-calendar-body-cell-preview {
+                                height: 100%;
+                                top: 0;
+                            }
+                            &::before, &::after {
+                                display: none;
+                            }
+                        }
+                        .mat-calendar-body-today {
+                            &:not(.mat-calendar-body-selected):not(.mat-calendar-body-comparison-identical) {
+                                border-color: #e0e0e0;
+                            }
+                        }
+                        .mat-calendar-body-cell-container {
+                            width: auto !important;
+                            padding: 0 !important;
+                            line-height: initial;
+                            height: auto;
+                        }
+                        .mat-calendar-content {
+                            padding: 0;
+
+                            mat-month-view {
+                                display: block;
+                                overflow-x: auto;
+                                -webkit-overflow-scrolling: touch;
+                            }
+                        }
+                    }
+                }
+                &.component-dark-theme {
+                    .mat-mdc-card-content {
+                        .mat-calendar {
+                            .mat-calendar-header {
+                                .mat-calendar-previous-button {
+                                    background-color: var(--blackColor);
+                                }
+                                .mat-calendar-period-button {
+                                    &.mat-mdc-button {
+                                        color: var(--whiteColor);
+    
+                                        .mat-calendar-arrow {
+                                            fill: rgba(255, 255, 255, .50);
+                                        }
+                                    }
+                                }
+                                .mat-calendar-next-button {
+                                    background-color: var(--blackColor);
+                                }
+                            }
+                            .mat-calendar-table-header {
+                                th {
+                                    color: var(--whiteColor);
+                                }
+                            }
+                            .mat-calendar-body-cell {
+                                .mat-calendar-body-cell-content {
+                                    color: var(--whiteColor);
+                                }
+                            }
+                            .mat-calendar-body-today {
+                                &:not(.mat-calendar-body-selected):not(.mat-calendar-body-comparison-identical) {
+                                    border-color: rgba(255, 255, 255, 0.2);
+                                }
+                            }
+                        }
+                    }
+                }
+                &.rtl-enabled {
+                    .mat-mdc-card-content {
+                        .mat-calendar {
+                            direction: ltr;
+                            text-align: left;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Add New Event Popup
+::ng-deep {
+    .add-new-event-popup {
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        opacity: 0;
+        z-index: 999;
+        position: fixed;
+        transition: .3s;
+        visibility: hidden;
+        background-color: rgba(0, 0, 0, 0.5);
+        overflow: {
+            x: hidden;
+            y: auto;
+        };
+        .popup-dialog {
+            display: flex;
+            transition: .3s;
+            max-width: 550px;
+            align-items: center;
+            transform: translate(0, -20px);
+            min-height: calc(100% - 1.75rem * 2);
+            margin: {
+                left: auto;
+                right: auto;
+            };
+            .daxa-card {
+                width: 100%;
+
+                .mat-mdc-card-header {
+                    border-bottom: 1px solid #eeeeee;
+                    margin: {
+                        left: -20px;
+                        right: -20px;
+                    };
+                    padding: {
+                        left: 20px;
+                        right: 20px;
+                        bottom: 18px;
+                    };
+                    .mat-mdc-card-subtitle {
+                        .mat-mdc-button {
+                            padding: 0;
+                            height: auto;
+                            line-height: 1;
+                            min-width: auto;
+                            display: inline-block;
+                            font-size: 23px !important;
+                        }
+                    }
+                }
+                .mat-mdc-card-content {
+                    .main-label {
+                        margin-bottom: 12px;
+                        font-size: 15px;
+                    }
+                    .mat-mdc-form-field {
+                        margin-bottom: 20px;
+                    }
+                    .btn-box {
+                        text-align: right;
+
+                        .mat-mdc-button {
+                            border: 0;
+                            height: auto;
+                            min-width: auto;
+                            min-height: auto;
+                            padding: 14px 35px;
+                            font-weight: normal;
+                            color: var(--whiteColor);
+                            font-size: 15px !important;
+                            background-color: var(--daxaColor);
+
+                            &:first-child {
+                                margin-right: 10px;
+                                background-color: var(--dangerColor);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        &.active {
+            opacity: 1;
+            visibility: visible;
+
+            .popup-dialog {
+                transform: none;
+            }
+        }
+        &.rtl-enabled {
+            .popup-dialog {
+                .daxa-card {
+                    .mat-mdc-card-content {
+                        .btn-box {
+                            text-align: left;
+    
+                            .mat-mdc-button {
+                                &:first-child {
+                                    margin: {
+                                        right: 0;
+                                        left: 10px;
+                                    };
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width : 767px) {
+
+    // Working Schedule
+    .mat-mdc-card {
+        &.daxa-card {
+            &.working-schedule-card {
+                .mat-mdc-card-content {
+                    .events-content {
+                        margin-bottom: 13px;
+                        
+                        ul {
+                            li {
+                                padding: {
+                                    top: 13px;
+                                    left: 18px;
+                                    bottom: 13px;
+                                };
+                                p {
+                                    margin-bottom: 5px;
+                                }
+                                &:first-child {
+                                    &::before {
+                                        top: 7px;
+                                    }
+                                }
+                                &::before {
+                                    top: 20px;
+                                }
+                            }
+                        }
+                    }
+                    .add-new-event-btn {
+                        .mat-mdc-button {
+                            font-size: 14px !important;
+                        }
+                    }
+                }
+                &.rtl-enabled {
+                    .mat-mdc-card-content {
+                        .events-content {
+                            ul {
+                                li {
+                                    padding: {
+                                        left: 0;
+                                        right: 18px;
+                                    };
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    ::ng-deep {
+        .mat-mdc-card {
+            &.daxa-card {
+                &.working-schedule-card {
+                    .mat-mdc-card-content {
+                        .mat-calendar {
+                            .mat-calendar-header {
+                                margin-bottom: 15px;
+    
+                                .mat-calendar-period-button {
+                                    &.mat-mdc-button {
+                                        font-size: 14px !important;
+                                    }
+                                }
+                            }
+                            .mat-calendar-table-header {
+                                th {
+                                    padding: 0 0 8px;
+                                    font-size: 14px;
+                                }
+                            }
+                            .mat-calendar-body-cell {
+                                width: 40px;
+                                height: 40px;
+                                
+                                .mat-calendar-body-cell-content {
+                                    font-size: 14px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // Add New Event Popup
+    ::ng-deep {
+        .add-new-event-popup {
+            .popup-dialog {
+                max-width: 400px;
+                
+                .daxa-card {
+                    .mat-mdc-card-header {
+                        margin: {
+                            left: -15px;
+                            right: -15px;
+                        };
+                        padding: {
+                            left: 15px;
+                            right: 15px;
+                            bottom: 15px;
+                        };
+                        .mat-mdc-card-subtitle {
+                            .mat-mdc-button {
+                                font-size: 20px !important;
+                            }
+                        }
+                    }
+                    .mat-mdc-card-content {
+                        .main-label {
+                            font-size: 14px;
+                        }
+                        .mat-mdc-form-field {
+                            margin-bottom: 15px;
+                        }
+                        .btn-box {
+                            .mat-mdc-button {
+                                font-size: 14px !important;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 576px to Max width 767px */
+@media only screen and (min-width : 576px) and (max-width : 767px) {}
+
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width : 768px) and (max-width : 991px) {
+
+    // Working Schedule
+    .mat-mdc-card {
+        &.daxa-card {
+            &.working-schedule-card {
+                .mat-mdc-card-content {
+                    .add-new-event-btn {
+                        .mat-mdc-button {
+                            font-size: 15px !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width : 992px) and (max-width : 1199px) {
+
+    // Working Schedule
+    .mat-mdc-card {
+        &.daxa-card {
+            &.working-schedule-card {
+                .mat-mdc-card-content {
+                    .events-content {
+                        ul {
+                            li {
+                                padding: {
+                                    top: 14px;
+                                    bottom: 14px;
+                                };
+                                p {
+                                    margin-bottom: 5px;
+                                }
+                                &:first-child {
+                                    &::before {
+                                        top: 8px;
+                                    }
+                                }
+                                &::before {
+                                    top: 23px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    ::ng-deep {
+        .mat-mdc-card {
+            &.daxa-card {
+                &.working-schedule-card {
+                    .mat-mdc-card-content {
+                        .mat-calendar {
+                            .mat-calendar-header {
+                                margin-bottom: 15px;
+                            }
+                            .mat-calendar-table-header {
+                                th {
+                                    font-size: 15px;
+                                }
+                            }
+                            .mat-calendar-body-cell {
+                                width: 40px;
+                                height: 40px;
+                                
+                                .mat-calendar-body-cell-content {
+                                    font-size: 15px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 1200px to Max width 1399px */
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {
+
+    // Working Schedule
+    .mat-mdc-card {
+        &.daxa-card {
+            &.working-schedule-card {
+                .mat-mdc-card-content {
+                    .events-content {
+                        h5 {
+                            margin-bottom: 10px;
+                        }
+                        ul {
+                            li {
+                                padding: {
+                                    top: 12px;
+                                    bottom: 12px;
+                                };
+                                p {
+                                    margin-bottom: 7px;
+                                }
+                                &:first-child {
+                                    &::before {
+                                        top: 9px;
+                                    }
+                                }
+                                &::before {
+                                    top: 21px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    ::ng-deep {
+        .mat-mdc-card {
+            &.daxa-card {
+                &.working-schedule-card {
+                    .mat-mdc-card-content {
+                        .mat-calendar {
+                            .mat-calendar-header {
+                                margin-bottom: 15px;
+                            }
+                            .mat-calendar-table-header {
+                                th {
+                                    font-size: 15px;
+                                }
+                            }
+                            .mat-calendar-body-cell {
+                                width: 40px;
+                                height: 40px;
+                                
+                                .mat-calendar-body-cell-content {
+                                    font-size: 15px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 1600px */
+@media only screen and (min-width: 1600px) {
+
+    // Working Schedule
+    .mat-mdc-card {
+        &.daxa-card {
+            &.working-schedule-card {
+                .mat-mdc-card-content {
+                    padding-bottom: 13px;
+    
+                    .events-content {
+                        margin-bottom: 20px;
+                        
+                        h5 {
+                            margin-bottom: 20px;
+                        }
+                        ul {
+                            li {
+                                padding: {
+                                    top: 20px;
+                                    bottom: 20px;
+                                };
+                                &:first-child {
+                                    &::before {
+                                        top: 9px;
+                                    }
+                                }
+                                &::before {
+                                    top: 29px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    ::ng-deep {
+        .mat-mdc-card {
+            &.daxa-card {
+                &.working-schedule-card {
+                    .mat-mdc-card-content {
+                        .mat-calendar {
+                            margin-bottom: 18px;
+    
+                            .mat-calendar-table-header {
+                                th {
+                                    padding: 0 0 9px;
+                                    font-size: 18px;
+                                }
+                            }
+                            .mat-calendar-body-cell {
+                                width: 50px;
+                                height: 50px;
+
+                                .mat-calendar-body-cell-content {
+                                    font-size: 18px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}

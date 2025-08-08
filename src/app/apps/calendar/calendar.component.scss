@@ -1,0 +1,269 @@
+::ng-deep {
+    .mat-mdc-card {
+        &.daxa-card {
+            &.calendar-card {
+                .mat-mdc-card-content {
+                    .fc {
+                        --fc-small-font-size: 14px;
+                        --fc-border-color: #eeeeee;
+                        --fc-event-bg-color: var(--daxaColor);
+                        --fc-event-border-color: var(--daxaColor);
+                        
+                        .fc-header-toolbar {
+                            margin-bottom: 20px;
+                            
+                            .fc-toolbar-title {
+                                font-size: 18px;
+                            }
+                            .fc-button-group {
+                                .fc-button {
+                                    padding: 0;
+                                    width: 40px;
+                                    height: 40px;
+                                    box-shadow: unset;
+                                    border-radius: 3px;
+                                    display: inline-block;
+                                    color: var(--blackColor);
+                                    border: 1px solid #dae0ec;
+                                    background-color: transparent;
+                                    transition: var(--transition);
+                                    margin: {
+                                        left: 5px;
+                                        right: 5px;
+                                    };
+                                    .fc-icon {
+                                        position: relative;
+                                        top: -.6px;
+                                    }
+                                    &:hover {
+                                        color: var(--whiteColor);
+                                        border-color: var(--daxaColor);
+                                        background-color: var(--daxaColor);
+                                    }
+                                    &:first-child {
+                                        margin-left: 0;
+                                    }
+                                    &:last-child {
+                                        margin-right: 0;
+                                    }
+                                }
+                            }
+                            .fc-today-button {
+                                transition: var(--transition);
+                                background-color: #eff3f9;
+                                text-transform: capitalize;
+                                color: var(--blackColor);
+                                border-color: #eff3f9;
+                                box-shadow: unset;
+                                height: 40px;
+                                padding: {
+                                    left: 20px;
+                                    right: 20px;
+                                };
+                                &:hover {
+                                    color: var(--whiteColor);
+                                    border-color: var(--daxaColor);
+                                    background-color: var(--daxaColor);
+                                }
+                                &:disabled {
+                                    background-color: #f9f9f9;
+                                    border-color: #f9f9f9;
+                                    color: var(--bodyColor);
+                                }
+                            }
+                        }
+                        .fc-scrollgrid-section-header {
+                            .fc-col-header-cell-cushion {
+                                padding: 15px;
+                                color: var(--blackColor);
+                            }
+                            .fc-col-header-cell {
+                                background-color: #e7effd;
+                                font-weight: 500;
+                                border: 0;
+                            }
+                        }
+                        .fc-daygrid-body {
+                            .fc-daygrid-day-number {
+                                padding: 10px;
+                                color: var(--blackColor);
+                            }
+                            .fc-h-event {
+                                padding: 5px;
+                                margin: 2px;
+
+                                .fc-event-title {
+                                    white-space: break-spaces;
+                                }
+                            }
+                            .fc-daygrid-more-link {
+                                transition: var(--transition);
+                                background-color: #e7effd;
+                                color: var(--blackColor);
+                                
+                                &:hover {
+                                    color: var(--whiteColor);
+                                    background-color: var(--daxaColor);
+                                }
+                            }
+                            tr {
+                                &:nth-child(2) {
+                                    --fc-event-bg-color: var(--warningColor);
+                                    --fc-event-border-color: var(--warningColor);
+                                }
+                                &:nth-child(3) {
+                                    --fc-event-bg-color: var(--infoColor);
+                                    --fc-event-border-color: var(--infoColor);
+                                }
+                                &:nth-child(4) {
+                                    --fc-event-bg-color: var(--successColor);
+                                    --fc-event-border-color: var(--successColor);
+                                }
+                                &:nth-child(5) {
+                                    --fc-event-bg-color: var(--dangerColor);
+                                    --fc-event-border-color: var(--dangerColor);
+                                }
+                                &:nth-child(6) {
+                                    --fc-event-bg-color: var(--primaryColor);
+                                    --fc-event-border-color: var(--primaryColor);
+                                }
+                                &:last-child {
+                                    th, td {
+                                        border-bottom: 0;
+                                    }
+                                }
+                            }
+                        }
+                        .fc-popover {
+                            border: 0;
+                            color: var(--blackColor);
+                            background-color: var(--whiteColor);
+                            box-shadow: 0px 4px 34px rgba(101, 96, 240, 0.1);
+
+                            .fc-popover-header {
+                                padding: 8px 10px;
+                                background-color: #e7effd;
+                            }
+                            .fc-event-title {
+                                padding: 4px;
+                            }
+                        }
+                    }
+                }
+                &.component-dark-theme {
+                    .mat-mdc-card-content {
+                        .fc {
+                            --fc-border-color: rgba(255, 255, 255, 0.09);
+                            
+                            .fc-header-toolbar {
+                                .fc-button-group {
+                                    .fc-button {
+                                        color: var(--whiteColor);
+                                        border-color: rgba(255, 255, 255, 0.09);
+
+                                        &:hover {
+                                            border-color: var(--daxaColor);
+                                        }
+                                    }
+                                }
+                                .fc-today-button {
+                                    background-color: rgba(255, 255, 255, 0.09);
+                                    border-color: rgba(255, 255, 255, 0.09);
+                                    color: var(--whiteColor);
+                                    
+                                    &:hover {
+                                        border-color: var(--daxaColor);
+                                        background-color: var(--daxaColor);
+                                    }
+                                    &:disabled {
+                                        background-color: var(--blackColor);
+                                        color: rgba(255, 255, 255, .50);
+                                        border-color: var(--blackColor);
+                                    }
+                                }
+                            }
+                            .fc-scrollgrid-section-header {
+                                .fc-col-header-cell-cushion {
+                                    color: var(--whiteColor);
+                                }
+                                .fc-col-header-cell {
+                                    background-color: #131920;
+                                }
+                            }
+                            .fc-daygrid-body {
+                                .fc-daygrid-day-number {
+                                    color: var(--whiteColor);
+                                }
+                                .fc-daygrid-more-link {
+                                    background-color: rgba(255, 255, 255, 0.09);
+                                    color: var(--whiteColor);
+                                    
+                                    &:hover {
+                                        color: var(--whiteColor);
+                                        background-color: var(--daxaColor);
+                                    }
+                                }
+                            }
+                            .fc-popover {
+                                color: var(--whiteColor);
+                                background-color: var(--blackColor);
+                                box-shadow: 0px 4px 34px rgba(101, 96, 240, 0.1);
+    
+                                .fc-popover-header {
+                                    background-color: rgba(255, 255, 255, 0.09);
+                                }
+                            }
+                        }
+                    }
+                }
+                &.rtl-enabled {
+                    .fc {
+                        text-align: right;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width : 767px) {
+
+    ::ng-deep {
+        .mat-mdc-card {
+            &.daxa-card {
+                &.calendar-card {
+                    .mat-mdc-card-content {
+                        .fc {
+                            .fc-header-toolbar {
+                                margin-bottom: 15px;
+                                display: block;
+                                
+                                .fc-toolbar-title {
+                                    font-size: 16px;
+                                    margin-bottom: 12px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 576px to Max width 767px */
+@media only screen and (min-width : 576px) and (max-width : 767px) {}
+
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width : 768px) and (max-width : 991px) {}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width : 992px) and (max-width : 1199px) {}
+
+/* Min width 1200px to Max width 1399px */
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {}
+
+/* Min width 1600px */
+@media only screen and (min-width: 1600px) {}

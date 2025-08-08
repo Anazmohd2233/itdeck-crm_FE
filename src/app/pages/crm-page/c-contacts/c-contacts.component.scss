@@ -1,0 +1,257 @@
+.mat-mdc-card {
+    &.daxa-card {
+        &.contacts-list-card {
+            .mat-mdc-card-content {
+                margin: {
+                    left: -20px;
+                    right: -20px;
+                };
+                .contacts-list-table {
+                    .mat-mdc-table {
+                        .mat-mdc-header-cell {
+                            &:last-child {
+                                text-align: right;
+                            }
+                            &:first-child {
+                                padding-right: 0;
+                            }
+                        }
+                        .mat-mdc-cell {
+                            &:last-child {
+                                text-align: right;
+                            }
+                            &:first-child {
+                                padding-right: 0;
+                            }
+                        }
+                        .info {
+                            .image {
+                                width: 35px;
+                                line-height: .01;
+                                margin-right: 12px;
+
+                                img {
+                                    border-radius: 50%;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            &.rtl-enabled {
+                .mat-mdc-card-content {
+                    .contacts-list-table {
+                        .mat-mdc-table {
+                            .mat-mdc-header-cell {
+                                &:last-child {
+                                    text-align: left;
+                                }
+                                &:first-child {
+                                    padding: {
+                                        right: 20px;
+                                        left: 0;
+                                    };
+                                }
+                            }
+                            .mat-mdc-cell {
+                                &:last-child {
+                                    text-align: left;
+                                }
+                                &:first-child {
+                                    padding: {
+                                        right: 20px;
+                                        left: 0;
+                                    };
+                                }
+                            }
+                            .info {
+                                .image {
+                                    margin: {
+                                        right: 0;
+                                        left: 12px;
+                                    };
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+::ng-deep {
+    .mat-mdc-card {
+        &.daxa-card {
+            &.contacts-list-card {
+                .mat-mdc-card-content {
+                    .contacts-list-table {
+                        .mat-mdc-paginator {
+                            padding: {
+                                top: 15px;
+                                left: 20px;
+                                right: 20px;
+                            };
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width : 767px) {
+
+    .mat-mdc-card {
+        &.daxa-card {
+            &.contacts-list-card {
+                .mat-mdc-card-header {
+                    .mat-mdc-button {
+                        &.add-new-btn {
+                            margin-top: 12px;
+                        }
+                    }
+                }
+                .mat-mdc-card-content {
+                    margin: {
+                        left: -15px;
+                        right: -15px;
+                    };
+                    .contacts-list-table {
+                        .mat-mdc-table {
+                            .info {
+                                .image {
+                                    margin-right: 8px;
+                                }
+                            }
+                        }
+                    }
+                }
+                &.rtl-enabled {
+                    .mat-mdc-card-content {
+                        .contacts-list-table {
+                            .mat-mdc-table {
+                                .mat-mdc-header-cell {
+                                    &:first-child {
+                                        padding: {
+                                            right: 15px;
+                                        };
+                                    }
+                                }
+                                .mat-mdc-cell {
+                                    &:first-child {
+                                        padding: {
+                                            right: 15px;
+                                        };
+                                    }
+                                }
+                                .info {
+                                    .image {
+                                        margin: {
+                                            left: 8px;
+                                        };
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    ::ng-deep {
+        .mat-mdc-card {
+            &.daxa-card {
+                &.contacts-list-card {
+                    .mat-mdc-card-header {
+                        .mat-mdc-card-header-text {
+                            display: block;
+                        }
+                    }
+                    .mat-mdc-card-content {
+                        .contacts-list-table {
+                            .mat-mdc-paginator {
+                                padding: {
+                                    top: 10px;
+                                    left: 15px;
+                                    right: 15px;
+                                };
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 576px to Max width 767px */
+@media only screen and (min-width : 576px) and (max-width : 767px) {
+
+    .mat-mdc-card {
+        &.daxa-card {
+            &.contacts-list-card {
+                .mat-mdc-card-content {
+                    margin: {
+                        left: -20px;
+                        right: -20px;
+                    };
+                }
+                &.rtl-enabled {
+                    .mat-mdc-card-content {
+                        .contacts-list-table {
+                            .mat-mdc-table {
+                                .mat-mdc-header-cell {
+                                    &:first-child {
+                                        padding: {
+                                            right: 20px;
+                                        };
+                                    }
+                                }
+                                .mat-mdc-cell {
+                                    &:first-child {
+                                        padding: {
+                                            right: 20px;
+                                        };
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    ::ng-deep {
+        .mat-mdc-card {
+            &.daxa-card {
+                &.contacts-list-card {
+                    .mat-mdc-card-content {
+                        .contacts-list-table {
+                            .mat-mdc-paginator {
+                                padding: {
+                                    left: 20px;
+                                    right: 20px;
+                                };
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width : 768px) and (max-width : 991px) {}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width : 992px) and (max-width : 1199px) {}
+
+/* Min width 1200px to Max width 1399px */
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {}
+
+/* Min width 1600px */
+@media only screen and (min-width: 1600px) {}

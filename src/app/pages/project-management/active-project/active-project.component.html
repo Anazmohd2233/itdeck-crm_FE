@@ -1,0 +1,135 @@
+<mat-card
+    class="daxa-card active-project-card mb-25 border-radius bg-white border-none d-block"
+    [class.rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mb-0">
+                Active Project
+            </h5>
+        </mat-card-title>
+        <mat-card-subtitle>
+            <button type="button" mat-button class="card-header-menu-btn" [matMenuTriggerFor]="cardHeaderMenu">
+                Project 01
+            </button>
+            <mat-menu #cardHeaderMenu="matMenu" class="card-header-menu" xPosition="before">
+                <button mat-menu-item>
+                    Project 01
+                </button>
+                <button mat-menu-item>
+                    Project 02
+                </button>
+                <button mat-menu-item>
+                    Project 03
+                </button>
+                <button mat-menu-item>
+                    Project 04
+                </button>
+            </mat-menu>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="project-info d-flex align-items-center justify-content-between">
+            <div class="d-md-flex align-items-center">
+                <div class="icon rounded-circle text-center position-relative">
+                    <img src="images/projects/project1.svg" alt="project-image">
+                </div>
+                <div class="info">
+                    <span class="d-block fw-medium">
+                        Project Alpho
+                    </span>
+                    <span class="client d-block">
+                        Client: <span class="text-body">Shawn Kennedy</span>
+                    </span>
+                </div>
+            </div>
+            <div class="d-md-flex align-items-center">
+                <div class="icon rounded-circle text-center position-relative">
+                    <img src="images/projects/project2.svg" alt="project-image">
+                </div>
+                <div class="info">
+                    <span class="d-block fw-medium">
+                        Assigned To
+                    </span>
+                    <span class="client text-body d-block">
+                        Vaxo Corporation
+                    </span>
+                </div>
+            </div>
+            <div>
+                <button type="button" mat-button class="action-btn text-body" [matMenuTriggerFor]="activeProjectActionMenu">
+                    <i class="material-symbols-outlined">
+                        more_horiz
+                    </i>
+                </button>
+                <mat-menu #activeProjectActionMenu="matMenu" class="action-menu" xPosition="before">
+                    <button mat-menu-item>
+                        <i class="ri-eye-line"></i> View
+                    </button>
+                    <button mat-menu-item>
+                        <i class="ri-edit-line"></i> Edit
+                    </button>
+                    <button mat-menu-item>
+                        <i class="ri-delete-bin-6-line"></i> Delete
+                    </button>
+                </mat-menu>
+            </div>
+        </div>
+        <div class="project-status bg-gradient">
+            <div class="numbers position-relative d-sm-flex align-items-center justify-content-between">
+                <div class="box">
+                    <div class="rounded-circle text-center transition text-white fw-medium">
+                        01
+                    </div>
+                    <span class="fw-medium d-block text-white">
+                        Planning
+                    </span>
+                </div>
+                <div class="box">
+                    <div class="rounded-circle text-center transition text-white fw-medium">
+                        02
+                    </div>
+                    <span class="fw-medium d-block text-white">
+                        Design
+                    </span>
+                </div>
+                <div class="box">
+                    <div class="active rounded-circle text-center transition text-white fw-medium">
+                        03
+                    </div>
+                    <span class="fw-medium d-block text-white">
+                        Development
+                    </span>
+                </div>
+                <div class="box">
+                    <div class="rounded-circle text-center transition text-white fw-medium">
+                        04
+                    </div>
+                    <span class="fw-medium d-block text-white">
+                        Testing
+                    </span>
+                </div>
+            </div>
+            <div class="d-flex align-items-center justify-content-between">
+                <span class="d-block fw-medium text-white">
+                    0%
+                </span>
+                <span class="d-block fw-medium text-white">
+                    50%
+                </span>
+                <span class="d-block fw-medium text-white">
+                    100%
+                </span>
+            </div>
+            <mat-progress-bar mode="determinate" value="75"></mat-progress-bar>
+        </div>
+        <div class="d-flex align-items-center justify-content-between">
+            <span class="d-block">
+                Project Total Hours: 384 hrs
+            </span>
+            <span class="d-block">
+                Project Hours Left: 144 hrs
+            </span>
+        </div>
+    </mat-card-content>
+</mat-card>

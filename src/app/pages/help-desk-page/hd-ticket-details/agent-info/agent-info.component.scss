@@ -1,0 +1,107 @@
+.mat-mdc-card {
+    &.daxa-card {
+        &.agent-info-card {
+            .mat-mdc-card-content {
+                h4 {
+                    margin: {
+                        top: 12px;
+                        bottom: 5px;
+                    };
+                }
+                .info {
+                    h5 {
+                        border-bottom: 1px dashed #e0e0e0;
+                        padding-bottom: 15px;
+                        margin: {
+                            top: 20px;
+                            bottom: 15px;
+                        };
+                    }
+                    ul {
+                        li {
+                            margin-bottom: 20px;
+
+                            span {
+                                margin-bottom: 8px;
+                            }
+                            &:last-child {
+                                margin-bottom: 0;
+                            }
+                        }
+                    }
+                }
+            }
+            &.component-dark-theme {
+                .mat-mdc-card-content {
+                    .info {
+                        h5 {
+                            border-color: rgba(255, 255, 255, 0.09);
+                        }
+                    }
+                }
+            }
+            &.rtl-enabled {
+                .mat-mdc-card-content {
+                    .info {
+                        ul {
+                            padding-right: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width : 767px) {
+
+    .mat-mdc-card {
+        &.daxa-card {
+            &.agent-info-card {
+                .mat-mdc-card-content {
+                    h4 {
+                        margin: {
+                            top: 10px;
+                            bottom: 5px;
+                        };
+                    }
+                    .info {
+                        h5 {
+                            padding-bottom: 12px;
+                            margin: {
+                                top: 15px;
+                                bottom: 12px;
+                            };
+                        }
+                        ul {
+                            li {
+                                margin-bottom: 15px;
+    
+                                span {
+                                    margin-bottom: 7px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 576px to Max width 767px */
+@media only screen and (min-width : 576px) and (max-width : 767px) {}
+
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width : 768px) and (max-width : 991px) {}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width : 992px) and (max-width : 1199px) {}
+
+/* Min width 1200px to Max width 1399px */
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {}
+
+/* Min width 1600px */
+@media only screen and (min-width: 1600px) {}

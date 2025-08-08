@@ -1,0 +1,29 @@
+<mat-card
+    class="daxa-card total-orders-card mb-25 border-radius bg-white border-none d-block"
+    [class.component-dark-theme]="themeService.isDark()"
+>
+    <mat-card-content>
+        <div class="title">
+            <h5>
+                Total Orders
+            </h5>
+            <div class="number fw-medium lh-1">
+                21.2K
+            </div>
+        </div>
+        <div class="icon text-center rounded-circle text-white position-relative">
+            <img src="images/icons/join.svg" alt="join-icon">
+        </div>
+        <div class="info d-flex align-items-center justify-content-between">
+            <span class="sub-title d-block text-body">
+                This Week
+            </span>
+            <span class="daxa-up-down-badge down position-relative">
+                <i class="material-symbols-outlined">
+                    trending_down
+                </i>
+                1.25%
+            </span>
+        </div>
+    </mat-card-content>
+</mat-card>

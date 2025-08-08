@@ -1,0 +1,166 @@
+<!-- Breadcrumb -->
+<div class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between">
+    <h5 class="mb-0">
+        Tasks Details
+    </h5>
+    <ol class="breadcrumb list-unstyled mt-0 mb-0 pl-0">
+        <li class="breadcrumb-item position-relative">
+            <a routerLink="/" class="d-inline-block position-relative">
+                <i class="ri-home-8-line"></i>
+                Dashboard
+            </a>
+        </li>
+        <li class="breadcrumb-item position-relative">
+            CRM
+        </li>
+        <li class="breadcrumb-item position-relative">
+            Tasks
+        </li>
+        <li class="breadcrumb-item position-relative">
+            Task Details
+        </li>
+    </ol>
+</div>
+
+<!-- Ticket Details -->
+<div class="row">
+    <div class="col-lg-4">
+
+        <!-- Agent Info -->
+        <app-agent-info />
+
+    </div>
+    <div class="col-lg-8">
+        <mat-card
+            class="daxa-card ticket-details-card mb-25 border-radius bg-white border-none d-block"
+            [class.component-dark-theme]="themeService.isDark()"
+            [class.rtl-enabled]="themeService.isRTLEnabled()"
+        >
+            <mat-card-header>
+                <mat-card-title>
+                    <h5 class="mb-0">
+                        Task Details
+                    </h5>
+                </mat-card-title>
+                <mat-card-subtitle>
+                    <div class="buttons-list">
+                        <button mat-button>
+                            <i class="material-symbols-outlined">
+                                block
+                            </i>
+                            Ban Visitor
+                        </button>
+                        <button mat-button>
+                            <i class="text-primary material-symbols-outlined">
+                                content_copy
+                            </i>
+                            Merge
+                        </button>
+                        <button mat-button>
+                            <i class="text-info material-symbols-outlined">
+                                close
+                            </i>
+                            Close
+                        </button>
+                        <button mat-button>
+                            <i class="text-success material-symbols-outlined">
+                                delete
+                            </i>
+                            Delete
+                        </button>
+                    </div>
+                </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="chat-header d-flex align-items-center">
+                    <div class="image">
+                        <img src="images/users/user12.jpg" alt="user-image">
+                    </div>
+                    <div class="title">
+                        <span class="d-block fw-medium">
+                            Ann Cohen
+                        </span>
+                        <span class="d-block text-body">
+                            anncohen&#64;example.com
+                        </span>
+                    </div>
+                </div>
+                <div class="chat-body">
+                    <ul class="list-unstyled mb-0 mt-0">
+                        <li class="position-relative">
+                            <img src="images/users/user12.jpg" width="35" class="rounded-circle user" alt="user">
+                            <div class="message">
+                                <div>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pharetra ligula non varius curabitur etiam malesuada. Congue eget luctus aliquet consectetur.</p>
+                                </div>
+                            </div>
+                            <span class="time d-block text-muted">19:04</span>
+                        </li>
+                        <li class="position-relative right">
+                            <img src="images/admin.png" width="35" class="rounded-circle user" alt="user">
+                            <div class="message">
+                                <div>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                </div>
+                            </div>
+                            <span class="time d-block text-muted">12:12</span>
+                        </li>
+                        <li class="position-relative">
+                            <img src="images/users/user12.jpg" width="35" class="rounded-circle user" alt="user">
+                            <div class="message">
+                                <div>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pharetra ligula non varius.</p>
+                                </div>
+                            </div>
+                            <span class="time d-block text-muted">19:04</span>
+                        </li>
+                        <li class="position-relative right">
+                            <img src="images/admin.png" width="35" class="rounded-circle user" alt="user">
+                            <div class="message">
+                                <div>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit.</p>
+                                </div>
+                                <div>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                </div>
+                            </div>
+                            <span class="time d-block text-muted">12:12</span>
+                        </li>
+                        <li class="position-relative">
+                            <img src="images/users/user12.jpg" width="35" class="rounded-circle user" alt="user">
+                            <div class="message">
+                                <div>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pharetra ligula non varius curabitur etiam malesuada.</p>
+                                </div>
+                                <div>
+                                    <p>Lorem ipsum dolor sit amet. 🔥</p>
+                                </div>
+                            </div>
+                            <span class="time d-block text-muted">19:04</span>
+                        </li>
+                        <li class="position-relative right">
+                            <img src="images/admin.png" width="35" class="rounded-circle user" alt="user">
+                            <div class="message">
+                                <div>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                </div>
+                            </div>
+                            <span class="time d-block text-muted">12:12</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="chat-footer position-relative">
+                    <mat-form-field>
+                        <mat-label>Type your message....</mat-label>
+                        <input matInput>
+                    </mat-form-field>
+                    <button mat-button>
+                        <i class="material-symbols-outlined">
+                            send
+                        </i>
+                    </button>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

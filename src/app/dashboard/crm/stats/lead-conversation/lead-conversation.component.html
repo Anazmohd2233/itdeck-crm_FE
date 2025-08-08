@@ -1,0 +1,24 @@
+<div
+    class="stat-item position-relative"
+    [class.component-dark-theme]="themeService.isDark()"
+    [class.rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <h5>
+        Lead Conversation
+    </h5>
+    <div class="number lh-1 fw-medium">
+        25.99%
+    </div>
+    <span class="daxa-up-down-badge down position-relative">
+        <i class="material-symbols-outlined">
+            trending_down
+        </i>
+        1.25%
+    </span>
+    <div class="chart">
+        <div id="crm_lead_conversation_chart"></div>
+        <div class="title d-block text-body">
+            Last Week
+        </div>
+    </div>
+</div>

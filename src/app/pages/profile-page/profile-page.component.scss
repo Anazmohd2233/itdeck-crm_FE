@@ -1,0 +1,427 @@
+.mat-mdc-card {
+    &.daxa-card {
+        &.profile-card {
+            .mat-mdc-card-content {
+                .cover-image {
+                    img {
+                        margin-bottom: -4px;
+                    }
+                    .edit-btn {
+                        &.mat-mdc-button {
+                            border: 0;
+                            right: 20px;
+                            bottom: 20px;
+                            height: auto;
+                            min-width: auto;
+                            min-height: auto;
+                            position: absolute;
+                            padding: 13px 40px;
+                            font-weight: normal;
+                            color: var(--whiteColor);
+                            background-color: var(--daxaColor);
+                        }
+                    }
+                }
+                .profile-content {
+                    margin-top: -104px;
+                    padding: {
+                        left: 20px;
+                        right: 20px;
+                    };
+                    .image {
+                        width: 210px;
+
+                        img {
+                            border: 10px solid var(--whiteColor);
+                        }
+                        .edit-btn {
+                            &.mat-mdc-button {
+                                padding: 0;
+                                width: 50px;
+                                right: 10px;
+                                height: auto;
+                                height: 50px;
+                                bottom: 10px;
+                                min-width: auto;
+                                border-radius: 50%;
+                                position: absolute;
+                                color: var(--blackColor);
+                                border: 1px solid #dae0ec;
+                                background-color: var(--whiteColor);
+
+                                i {
+                                    top: 1px;
+                                    font-size: 20px;
+                                    position: relative;
+                                }
+                            }
+                        }
+                    }
+                    .title {
+                        padding-bottom: 45px;
+                        margin-left: 20px;
+
+                        span {
+                            font-size: 18px;
+
+                            &:not(:first-child) {
+                                margin-top: 5px;
+                                font-size: var(--fontSize);
+                            }
+                        }
+                    }
+                    .btn-box {
+                        padding-bottom: 25px;
+
+                        .mat-mdc-button {
+                            border: 0;
+                            height: auto;
+                            min-width: auto;
+                            min-height: auto;
+                            padding: 10px 15px;
+                            margin-right: 10px;
+                            color: var(--blackColor);
+                            border: 1px solid #c2cada;
+                            background-color: var(--whiteColor);
+
+                            &:last-child {
+                                margin-right: 0;
+                            }
+                        }
+                    }
+                    .nav-links {
+                        margin-top: 35px;
+
+                        li {
+                            margin: {
+                                left: 13px;
+                                right: 13px;
+                            };
+                            a {
+                                color: var(--bodyColor);
+                                padding: {
+                                    left: 20px;
+                                    right: 20px;
+                                    bottom: 14px;
+                                };
+                                &::before {
+                                    left: 0;
+                                    right: 0;
+                                    bottom: 0;
+                                    height: 2px;
+                                    content: '';
+                                    position: absolute;
+                                    transform: scaleX(0);
+                                    background: var(--daxaColor);
+                                    transition: var(--transition);
+                                }
+                                &:hover, &.active {
+                                    color: var(--blackColor);
+
+                                    &::before {
+                                        transform: scaleX(1);
+                                    }
+                                }
+                            }
+                            &:first-child {
+                                margin-left: 0;
+                            }
+                            &:last-child {
+                                margin-right: 0;
+                            }
+                        }
+                    }
+                }
+            }
+            &.component-dark-theme {
+                .mat-mdc-card-content {
+                    .profile-content {
+                        .image {
+                            img {
+                                border-color: #1b232d;
+                            }
+                            .edit-btn {
+                                &.mat-mdc-button {
+                                    color: var(--whiteColor);
+                                    background-color: #1b232d;
+                                    border-color: rgba(255, 255, 255, 0.09);
+                                }
+                            }
+                        }
+                        .btn-box {
+                            .mat-mdc-button {
+                                color: var(--whiteColor);
+                                background-color: #1b232d;
+                                border-color: rgba(255, 255, 255, 0.09);
+                            }
+                        }
+                        .nav-links {
+                            li {
+                                a {
+                                    color: rgba(255, 255, 255, .50);
+
+                                    &:hover, &.active {
+                                        color: var(--whiteColor);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            &.rtl-enabled {
+                .mat-mdc-card-content {
+                    .cover-image {
+                        .edit-btn {
+                            &.mat-mdc-button {
+                                right: auto;
+                                left: 20px;
+                            }
+                        }
+                    }
+                    .profile-content {
+                        .image {
+                            .edit-btn {
+                                &.mat-mdc-button {
+                                    right: auto;
+                                    left: 10px;
+                                }
+                            }
+                        }
+                        .title {
+                            margin: {
+                                left: 0;
+                                right: 20px;
+                            };
+                        }
+                        .btn-box {
+                            .mat-mdc-button {
+                                margin: {
+                                    right: 0;
+                                    left: 10px;
+                                };
+                                &:last-child {
+                                    margin-left: 0;
+                                }
+                            }
+                        }
+                        .nav-links {
+                            padding-right: 0;
+                            
+                            li {
+                                &:first-child {
+                                    margin: {
+                                        right: 0;
+                                        left: 13px;
+                                    };
+                                }
+                                &:last-child {
+                                    margin: {
+                                        left: 0;
+                                        right: 13px;
+                                    };
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width : 767px) {
+
+    .mat-mdc-card {
+        &.daxa-card {
+            &.profile-card {
+                .mat-mdc-card-content {
+                    .cover-image {
+                        .edit-btn {
+                            &.mat-mdc-button {
+                                right: 0;
+                                bottom: 0;
+                                position: relative;
+                                padding: 11px 25px;
+                                margin: {
+                                    top: 15px;
+                                    left: 15px;
+                                };
+                            }
+                        }
+                    }
+                    .profile-content {
+                        margin-top: 15px;
+                        padding: {
+                            left: 15px;
+                            right: 15px;
+                        };
+                        .image {
+                            width: 150px;
+
+                            img {
+                                border: {
+                                    width: 4px;
+                                    color: #f7f7f7;
+                                };
+                            }
+                            .edit-btn {
+                                &.mat-mdc-button {
+                                    right: 5px;
+                                    bottom: 5px;
+                                    width: 45px;
+                                    height: 45px;
+                                }
+                            }
+                        }
+                        .title {
+                            padding-bottom: 0;
+                            margin: {
+                                left: 0;
+                                top: 15px;
+                            };
+                            span {
+                                font-size: 16px;
+    
+                                &:not(:first-child) {
+                                    font-size: 14px;
+                                }
+                            }
+                        }
+                        .btn-box {
+                            padding-bottom: 0;
+                            margin-top: 15px;
+    
+                            .mat-mdc-button {
+                                padding: 9px 15px;
+                            }
+                        }
+                        .nav-links {
+                            margin-top: 20px;
+    
+                            li {
+                                margin: {
+                                    left: 2px;
+                                    right: 2px;
+                                };
+                                a {
+                                    padding: {
+                                        left: 12px;
+                                        right: 12px;
+                                        bottom: 8px;
+                                    };
+                                }
+                            }
+                        }
+                    }
+                }
+                &.rtl-enabled {
+                    .mat-mdc-card-content {
+                        .cover-image {
+                            .edit-btn {
+                                &.mat-mdc-button {
+                                    left: 0;
+                                    right: auto;
+                                    margin: {
+                                        right: 15px;
+                                        left: 0;
+                                    };
+                                }
+                            }
+                        }
+                        .profile-content {
+                            .image {
+                                .edit-btn {
+                                    &.mat-mdc-button {
+                                        right: auto;
+                                        left: 5px;
+                                    }
+                                }
+                            }
+                            .title {
+                                margin: {
+                                    right: 0;
+                                };
+                            }
+                            .nav-links {
+                                li {
+                                    &:first-child {
+                                        margin-left: 2px;
+                                    }
+                                    &:last-child {
+                                        margin-right: 2px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 576px to Max width 767px */
+@media only screen and (min-width : 576px) and (max-width : 767px) {}
+
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width : 768px) and (max-width : 991px) {
+
+    .mat-mdc-card {
+        &.daxa-card {
+            &.profile-card {
+                .mat-mdc-card-content {
+                    .profile-content {
+                        .nav-links {
+                            margin-top: 20px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width : 992px) and (max-width : 1199px) {
+
+    .mat-mdc-card {
+        &.daxa-card {
+            &.profile-card {
+                .mat-mdc-card-content {
+                    .profile-content {
+                        .nav-links {
+                            margin-top: 20px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 1200px to Max width 1399px */
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {
+
+    .mat-mdc-card {
+        &.daxa-card {
+            &.profile-card {
+                .mat-mdc-card-content {
+                    .profile-content {
+                        .nav-links {
+                            margin-top: 20px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 1600px */
+@media only screen and (min-width: 1600px) {}

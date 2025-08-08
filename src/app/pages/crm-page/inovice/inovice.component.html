@@ -1,0 +1,209 @@
+<!-- Breadcrumb -->
+<div class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between">
+    <h5 class="mb-0">
+        Invoice
+    </h5>
+    <ol class="breadcrumb list-unstyled mt-0 mb-0 pl-0">
+        <li class="breadcrumb-item position-relative">
+            <a routerLink="/" class="d-inline-block position-relative">
+                <i class="ri-home-8-line"></i>
+                Dashboard
+            </a>
+        </li>
+        <li class="breadcrumb-item position-relative">
+            CRM
+        </li>
+        <li class="breadcrumb-item position-relative">
+            Students List
+        </li>
+        <li class="breadcrumb-item position-relative">
+            Student Profile
+        </li>
+        <li class="breadcrumb-item position-relative">
+            Invoice
+        </li>
+    </ol>
+</div>
+
+<mat-card
+    class="daxa-card to-do-list-card mb-25 border-radius bg-white border-none d-block"
+    [class.rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-header> &nbsp; </mat-card-header>
+    <mat-card-content>
+        <div class="content">
+            <div class="container">
+                <!-- Invoices -->
+                <div class="row justify-content-center">
+                    <div class="col-md-9">
+                        <div class="card mb-0">
+                            <div class="card-body">
+                                <div class="border-bottom mb-4">
+                                    <div class="row justify-content-between align-items-center flex-wrap row-gap-4">
+                                        <div class="col-md-6">
+                                            <div class="mb-2 invoice-logo-white">
+                                                <img src="images/logo-main.png" class="img-fluid" alt="logo" width="250">
+                                            </div>
+                                            <p class="fs-12">3099 Kennedy Court Framingham, MA 01702</p>
+                                        </div>
+                                        <div class="col-md-6 d-flex justify-content-end">
+                                            <div class=" text-end mb-3">
+                                                <h6 class="text-default mb-1">Invoice No <span class="text-primary fw-medium">#INV0001</span></h6>
+                                                <p class="fs-14 mb-1 fw-medium">Created Date : <span class="text-gray-9">Sep 24, 2023</span> </p>
+                                                <p class="fs-14 fw-medium">Due Date : <span class="text-gray-9">Sep 30, 2023</span> </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="border-bottom mb-4">
+                                    <div class="row align-items-center g-4">
+                                        <div class="col-md-5 d-flex justify-content-start">
+                                            <h6 class="mb-3 fw-semibold fs-14">From</h6>
+                                            <div>
+                                                <h6 class="mb-1">Thomas Lawler</h6>
+                                                <p class="fs-14 mb-1">2077 Chicago Avenue Orosi, CA 93647</p>
+                                                <p class="fs-14 mb-1">Email : <span class="text-gray-9">tarala2445&#64;example.com</span></p>
+                                                <p class="fs-14">Phone : <span class="text-gray-9">+1 987 654 3210</span></p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 d-flex justify-content-center">
+                                            <h6 class="mb-3 fw-semibold fs-14">To</h6>
+                                            <div>
+                                                <h6 class="mb-1">Sara Inc,.</h6>
+                                                <p class="fs-14 mb-1">3103 Trainer Avenue Peoria, IL 61602</p>
+                                                <p class="fs-14 mb-1">Email : <span class="text-gray-9">sara_inc34&#64;example.com</span></p>
+                                                <p class="fs-14">Phone : <span class="text-gray-9">+1 987 471 6589</span></p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 d-flex justify-content-end">
+                                            <div class="mb-3">
+                                                <h6 class="mb-1 fs-14 fw-medium">Payment Status </h6>
+                                                <span class="badge badge-danger align-items-center fs-10 mb-4"><i class="ti ti-point-filled "></i>Due in 10 Days</span>
+                                                <div>
+                                                    <!-- <img src="assets/img/invoice/qr.svg" class="img-fluid" alt="QR"> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <p class="fw-medium mb-3">Invoice For : <span class="text-dark fw-medium">Course 1</span></p>
+                                    <div class="to-do-list-table">
+                                        <div class="table-responsive">
+                                            <table mat-table [dataSource]="dataSource">
+                                                
+                                                <!-- Course ID Column -->
+                                                <ng-container matColumnDef="courseID">
+                                                    <th mat-header-cell *matHeaderCellDef>
+                                                        Course ID
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let element">
+                                                        {{element.courseID}}
+                                                    </td>
+                                                </ng-container>
+                            
+                                                <!-- Course Name Column -->
+                                                <ng-container matColumnDef="courseName">
+                                                    <th mat-header-cell *matHeaderCellDef>
+                                                        Course Name
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let element">
+                                                        {{element.courseName}}
+                                                    </td>
+                                                </ng-container>
+                            
+                                                <!-- Duration To Column -->
+                                                <ng-container matColumnDef="description">
+                                                    <th mat-header-cell *matHeaderCellDef>
+                                                        Description
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let element" class="text-black">
+                                                        {{element.description}}
+                                                    </td>
+                                                </ng-container>
+                            
+                                                <!-- Joined Date Column -->
+                                                <ng-container matColumnDef="price">
+                                                    <th mat-header-cell *matHeaderCellDef>
+                                                        Price
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let element">
+                                                        {{element.price}}
+                                                    </td>
+                                                </ng-container>    
+                                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                                              
+                                            </table>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div class="row border-bottom mb-3">
+                                    <div class="col-md-7">
+                                        <div class="py-4">
+                                            <div class="mb-3">
+                                                <h6 class="fs-14 mb-1">Terms and Conditions</h6>
+                                                <p class="fs-12">Please pay within 15 days from the date of invoice, overdue interest &#64; 14% will be charged on delayed payments.</p>
+                                            </div>
+                                            <div class="mb-3">
+                                                <h6 class="fs-14 mb-1">Notes</h6>
+                                                <p class="fs-12">Please quote invoice number when remitting funds.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="d-flex justify-content-between align-items-center border-bottom my-2 pe-3">
+                                            <p class="fs-14 fw-medium text-gray mb-0">Sub Total</p>
+                                            <p class="text-gray-9 fs-14 fw-medium mb-2">$2000</p>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center border-bottom my-2 pe-3">
+                                            <p class="fs-14 fw-medium text-gray mb-0">Discount (0%)</p>
+                                            <p class="text-gray-9 fs-14 fw-medium mb-2">$100</p>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center mb-2 pe-3">
+                                            <p class="fs-14 fw-medium text-gray mb-0">VAT (5%)</p>
+                                            <p class="text-gray-9 fs-14 fw-medium mb-2">$55</p>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center mb-2 pe-3">
+                                            <h6>Total Amount</h6>
+                                            <h6>$1955</h6>
+                                        </div>
+                                        <p class="fs-12">
+                                            Amount in Words : Dollar Thousand Nine Fifty Five
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-end align-items-end text-end border-bottom mb-3 me-2">
+                                    <div class="col-md-3">
+                                        <div class="text-end">
+                                            <!-- <img src="assets/img/invoice/sign.svg" class="img-fluid" alt="sign"> -->
+                                        </div>
+                                        <div class="text-end mb-3">
+                                            <h6 class="fs-14 fw-medium pe-3">Ted M. Davis</h6>
+                                            <p>Assistant Manager</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="text-center">
+                                    <div class="mb-3 invoice-logo-dark">
+                                        <img src="images/logo-main.png" class="img-fluid" alt="logo" width="250">
+                                    </div>
+                                    <p class="text-gray-9 fs-12 mb-1">Payment Made Via bank transfer / Cheque in the name of Thomas Lawler</p>
+                                    <div class="d-flex justify-content-center align-items-center flex-wrap gap-2">
+                                        <p class="fs-12 mb-0">Bank Name : <span class="text-gray-9">HDFC Bank</span></p>
+                                        <p class="fs-12 mb-0">Account Number : <span class="text-gray-9">45366287987</span></p>
+                                        <p class="fs-12">IFSC : <span class="text-gray-9">HDFC0018159</span></p>
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- /Invoices -->
+    
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

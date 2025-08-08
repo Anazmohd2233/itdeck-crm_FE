@@ -1,0 +1,318 @@
+.mat-mdc-card {
+    &.daxa-card {
+        &.profile-card {
+            .mat-mdc-card-content {
+                .user {
+                    margin-bottom: 15px;
+
+                    .image {
+                        img {
+                            width: 75px;
+                            margin-bottom: -4px;
+                        }
+                    }
+                    .title {
+                        margin-left: 15px;
+                        
+                        span {
+                            font-size: 18px;
+    
+                            &:not(:first-child) {
+                                margin-top: 5px;
+                                font-size: var(--fontSize);
+                            }
+                        }
+                    }
+                }
+                .sub-title {
+                    margin-bottom: 6px;
+                }
+                h5 {
+                    margin-bottom: 12px;
+                }
+                .socials-link {
+                    a {
+                        width: 24px;
+                        height: 24px;
+                        text-align: center;
+                        margin-right: 10px;
+                        color: var(--whiteColor);
+                        background-color: var(--daxaColor);
+
+                        i {
+                            left: 0;
+                            right: 0;
+                            top: 50%;
+                            position: absolute;
+                            transform: translateY(-50%);
+                        }
+                        &.facebook {
+                            background-color: #3A559F;
+                        }
+                        &.twiiter {
+                            background-color: #03A9F4;
+                        }
+                        &.linkedin {
+                            background-color: #007AB9;
+                        }
+                        &.mail {
+                            background-color: #2196F3;
+                        }
+                        &:last-child {
+                            margin-right: 0;
+                        }
+                    }
+                }
+                .info-list {
+                    li {
+                        margin-bottom: 14px;
+
+                        &:last-child {
+                            margin-bottom: 0;
+                        }
+                    }
+                }
+                .team-group {
+                    margin-top: 15px;
+                    
+                    .users {
+                        img {
+                            width: 40px;
+                            height: 40px;
+                            border-radius: 50%;
+                            margin-right: -12px;
+                            border: 2px solid var(--whiteColor);
+                        }
+                        div {
+                            width: 40px;
+                            height: 40px;
+                            line-height: 35px;
+                            text-align: center;
+                            border: 2px solid var(--whiteColor);
+                        }
+                    }
+                    .info {
+                        margin-left: 11px;
+
+                        span {
+                            &:not(:first-child) {
+                                font-size: 14px;
+                                margin-top: 4px;
+                            }
+                        }
+                    }
+                    &:first-child {
+                        margin-top: 0;
+                    }
+                }
+                .followers-list {
+                    height: 290px;
+                    overflow: auto;
+                    padding-right: 20px;
+                    margin-right: -20px;
+                    
+                    .follower {
+                        margin-bottom: 20px;
+
+                        .image {
+                            img {
+                                width: 42px;
+                                margin-bottom: -4px;
+                            }
+                        }
+                        .title {
+                            margin-left: 12px;
+                            
+                            span {
+                                &:not(:first-child) {
+                                    margin-top: 3px;
+                                    font-size: 14.5px;
+                                }
+                            }
+                        }
+                        .mat-mdc-button {
+                            font-size: 14.5px !important;
+                        }
+                        &:last-child {
+                            margin-bottom: 0;
+                        }
+                    }
+                }
+            }
+            &.rtl-enabled {
+                .mat-mdc-card-content {
+                    .user {
+                        .title {
+                            margin: {
+                                left: 0;
+                                right: 15px;
+                            };
+                        }
+                    }
+                    .socials-link {
+                        a {
+                            margin: {
+                                right: 0;
+                                left: 10px;
+                            };
+                            &:last-child {
+                                margin-left: 0;
+                            }
+                        }
+                    }
+                    .info-list {
+                        padding-right: 0;
+                    }
+                    .team-group {
+                        .users {
+                            img {
+                                margin: {
+                                    right: 0;
+                                    left: -12px;
+                                };
+                            }
+                        }
+                        .info {
+                            margin: {
+                                left: 0;
+                                right: 11px;
+                            };
+                        }
+                    }
+                    .followers-list {
+                        padding: {
+                            right: 0;
+                            left: 20px;
+                        };
+                        margin: {
+                            left: -20px;
+                            right: 0;
+                        };
+                        .follower {
+                            .title {
+                                margin: {
+                                    left: 0;
+                                    right: 12px;
+                                };
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width : 767px) {
+
+    .mat-mdc-card {
+        &.daxa-card {
+            &.profile-card {
+                .mat-mdc-card-content {
+                    .user {
+                        margin-bottom: 15px;
+    
+                        .title {
+                            margin-left: 12px;
+                            
+                            span {
+                                font-size: 16px;
+        
+                                &:not(:first-child) {
+                                    font-size: 14px;
+                                }
+                            }
+                        }
+                    }
+                    .followers-list {
+                        margin-right: -15px;
+                        padding-right: 15px;
+
+                        .follower {
+                            margin-bottom: 15px;
+        
+                            .title {
+                                span {
+                                    &:not(:first-child) {
+                                        font-size: 14px;
+                                    }
+                                }
+                            }
+                            .mat-mdc-button {
+                                font-size: 14px !important;
+                            }
+                        }
+                    }
+                }
+                &.rtl-enabled {
+                    .mat-mdc-card-content {
+                        .user {
+                            .title {
+                                margin: {
+                                    left: 0;
+                                    right: 12px;
+                                };
+                            }
+                        }
+                        .followers-list {
+                            padding: {
+                                right: 0;
+                                left: 15px;
+                            };
+                            margin: {
+                                right: 0;
+                                left: -15px;
+                            };
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 576px to Max width 767px */
+@media only screen and (min-width : 576px) and (max-width : 767px) {
+
+    .mat-mdc-card {
+        &.daxa-card {
+            &.profile-card {
+                .mat-mdc-card-content {
+                    .followers-list {
+                        margin-right: -20px;
+                        padding-right: 20px;
+                    }
+                }
+                &.rtl-enabled {
+                    .mat-mdc-card-content {
+                        .followers-list {
+                            padding: {
+                                right: 0;
+                                left: 20px;
+                            };
+                            margin: {
+                                right: 0;
+                                left: -20px;
+                            };
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width : 768px) and (max-width : 991px) {}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width : 992px) and (max-width : 1199px) {}
+
+/* Min width 1200px to Max width 1399px */
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {}
+
+/* Min width 1600px */
+@media only screen and (min-width: 1600px) {}

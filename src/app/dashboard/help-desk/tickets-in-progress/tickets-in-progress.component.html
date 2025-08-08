@@ -1,0 +1,22 @@
+<mat-card
+    class="daxa-card tickets-in-progress-card mb-25 border-radius bg-white border-none d-block"
+    [class.rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-content>
+        <span class="title d-block text-body">
+            Tickets In Progress
+        </span>
+        <h3 class="mb-0 lh-1">
+            1.25K
+        </h3>
+        <span class="info d-block position-relative text-success">
+            <i class="material-symbols-outlined">
+                trending_up
+            </i>
+            5.75% <span class="text-body">This Week</span>
+        </span>
+        <div class="chart">
+            <div id="help_desk_tickets_in_progress_chart"></div>
+        </div>
+    </mat-card-content>
+</mat-card>

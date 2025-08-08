@@ -1,0 +1,730 @@
+<!-- Breadcrumb -->
+<!-- <div class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between">
+    <h5 class="mb-0">
+        Lead Kanban Board
+    </h5>
+    <ol class="breadcrumb list-unstyled mt-0 mb-0 pl-0">
+        <li class="breadcrumb-item position-relative">
+            <a routerLink="/" class="d-inline-block position-relative">
+                <i class="ri-home-8-line"></i>
+                Dashboard
+            </a>
+        </li>
+        <li class="breadcrumb-item position-relative">
+            CRM
+        </li>
+        <li class="breadcrumb-item position-relative">
+            Lead Kanban Board
+        </li>
+    </ol>
+</div> -->
+
+<!-- Kanban Board -->
+<div
+    class="row bg-gray p-3"
+    cdkDropListGroup
+    [class.component-dark-theme]="themeService.isDark()"
+    [class.rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <div class="col-sm-6 col-lg-4 col-xxxl-3">
+        <mat-card class="daxa-card kanban-board-card mb-25 border-radius bg-gradient border-none d-block">
+            <mat-card-header>
+                <mat-card-title>
+                    <h5 class="mt-0 text-white">
+                        Open Lead (04)
+                    </h5>
+                    <span class="d-block text-white">
+                        This month add 04 new projects
+                    </span>
+                </mat-card-title>
+                <mat-card-subtitle>
+                    <button type="button" mat-button class="card-header-menu-btn p-0" [matMenuTriggerFor]="cardHeaderMenu">
+                        <i class="material-symbols-outlined">
+                            more_horiz
+                        </i>
+                    </button>
+                    <mat-menu #cardHeaderMenu="matMenu" class="card-header-menu" xPosition="before">
+                        <button mat-menu-item>
+                            Select All
+                        </button>
+                        <button mat-menu-item>
+                            Edit All
+                        </button>
+                        <button mat-menu-item>
+                            Delete All
+                        </button>
+                    </mat-menu>
+                </mat-card-subtitle>
+            </mat-card-header>
+        </mat-card>
+        <div
+            cdkDropList
+            [cdkDropListData]="toDo"
+            (cdkDropListDropped)="drop($event)"
+        >
+            @for (item of toDo; track item) {
+                <mat-card class="daxa-card kanban-board-card mb-25 border-radius bg-white border d-block" cdkDrag>
+                    <mat-card-content>
+                        <div class="row">
+                            <div class="col-2">
+                                <div class="icon position-relative text-center rounded-circle">
+                                    <img [src]="item.customer.img" alt="client-image">
+                                </div>
+                            </div>
+                            <div class="col-10">
+                                <div class="head d-flex align-items-center justify-content-between">
+                                    <span class="d-block fw-medium" style="cursor: pointer;" routerLink="/crm-page/profile">
+                                        {{item.customer.name}}
+                                    </span>
+                                    <span class="d-block text-daxa">
+                                        {{item.daysLeft}}
+                                    </span>
+                                </div>
+                                <div class="d-flex">
+                                    <span class="date text-body d-block position-relative" >
+                                        <i class="material-symbols-outlined" style="font-size: small !important;">
+                                            email
+                                        </i>
+                                        {{item.email}}
+                                    </span>&nbsp;&nbsp;|&nbsp;&nbsp;
+                                    <span class="date text-body d-block position-relative">
+                                        <i class="material-symbols-outlined" style="font-size: small !important;">
+                                            phone
+                                        </i>
+                                        {{item.phone}}
+                                    </span>
+
+                                </div>
+                            </div>
+                        </div>
+                        <span class="daxa-badge text-success d-inline-block">
+                            {{item.leadSource}}
+                        </span>
+                        <div class="footer d-flex align-items-center justify-content-between">
+                            <span class="date text-body d-block position-relative">
+                                <i class="material-symbols-outlined">
+                                    schedule
+                                </i>
+                                {{item.createDate}}
+                            </span>
+                            <div class="users-list">
+                                <img [src]="item.img1" alt="user-image" matTooltip="user-1" *ngIf="item.img1">
+                                <img [src]="item.img2" alt="user-image" matTooltip="user-2" *ngIf="item.img2">
+                                <img [src]="item.img3" alt="user-image" matTooltip="user-3" *ngIf="item.img3">
+                                <img [src]="item.img4" alt="user-image" matTooltip="user-4" *ngIf="item.img4">
+                                <img [src]="item.img5" alt="user-image" matTooltip="user-5" *ngIf="item.img5">
+                            </div>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            }
+        </div>
+        <div class="mb-25">
+            <button
+                mat-button
+                class="add-another-task-btn"
+                (click)="toggleClass()"
+            >
+                + Add Another Lead
+            </button>
+        </div>
+    </div>
+    <div class="col-sm-6 col-lg-4 col-xxxl-3">
+        <mat-card class="daxa-card kanban-board-card mb-25 border-radius bg-gradient border-none d-block">
+            <mat-card-header>
+                <mat-card-title>
+                    <h5 class="mt-0 text-white">
+                        In Progress (07)
+                    </h5>
+                    <span class="d-block text-white">
+                        This month progress 07 new projects
+                    </span>
+                </mat-card-title>
+                <mat-card-subtitle>
+                    <button type="button" mat-button class="card-header-menu-btn p-0" [matMenuTriggerFor]="cardHeaderMenu">
+                        <i class="material-symbols-outlined">
+                            more_horiz
+                        </i>
+                    </button>
+                    <mat-menu #cardHeaderMenu="matMenu" class="card-header-menu" xPosition="before">
+                        <button mat-menu-item>
+                            Select All
+                        </button>
+                        <button mat-menu-item>
+                            Edit All
+                        </button>
+                        <button mat-menu-item>
+                            Delete All
+                        </button>
+                    </mat-menu>
+                </mat-card-subtitle>
+            </mat-card-header>
+        </mat-card>
+        <div
+            cdkDropList
+            [cdkDropListData]="inProgress"
+            (cdkDropListDropped)="drop($event)"
+        >
+            @for (item of inProgress; track item) {
+                <mat-card class="daxa-card kanban-board-card mb-25 border-radius bg-white border d-block" cdkDrag>
+                    <mat-card-content>
+                        <div class="row">
+                            <div class="col-2">
+                                <div class="icon position-relative text-center rounded-circle">
+                                    <img [src]="item.customer.img" alt="client-image">
+                                </div>
+                            </div>
+                            <div class="col-10">
+                                <div class="head d-flex align-items-center justify-content-between">
+                                    <span class="d-block fw-medium" style="cursor: pointer;" routerLink="/crm-page/profile">
+                                        {{item.customer.name}}
+                                    </span>
+                                    <span class="d-block text-daxa">
+                                        {{item.daysLeft}}
+                                    </span>
+                                </div>
+                                <div class="d-flex">
+                                    <span class="date text-body d-block position-relative" >
+                                        <i class="material-symbols-outlined" style="font-size: small !important;">
+                                            email
+                                        </i>
+                                        {{item.email}}
+                                    </span>&nbsp;&nbsp;|&nbsp;&nbsp;
+                                    <span class="date text-body d-block position-relative">
+                                        <i class="material-symbols-outlined" style="font-size: small !important;">
+                                            phone
+                                        </i>
+                                        {{item.phone}}
+                                    </span>
+
+                                </div>
+                            </div>
+                        </div>
+                        <span class="daxa-badge text-success d-inline-block">
+                            {{item.leadSource}}
+                        </span>
+                        <div class="footer d-flex align-items-center justify-content-between">
+                            <span class="date text-body d-block position-relative">
+                                <i class="material-symbols-outlined">
+                                    schedule
+                                </i>
+                                {{item.createDate}}
+                            </span>
+                            <div class="users-list">
+                                <img [src]="item.img1" alt="user-image" matTooltip="user-1" *ngIf="item.img1">
+                                <img [src]="item.img2" alt="user-image" matTooltip="user-2" *ngIf="item.img2">
+                                <img [src]="item.img3" alt="user-image" matTooltip="user-3" *ngIf="item.img3">
+                                <img [src]="item.img4" alt="user-image" matTooltip="user-4" *ngIf="item.img4">
+                                <img [src]="item.img5" alt="user-image" matTooltip="user-5" *ngIf="item.img5">
+                            </div>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            }
+        </div>
+        <div class="mb-25">
+            <button
+                mat-button
+                class="add-another-task-btn"
+                (click)="toggleClass()"
+            >
+                + Add Another Lead
+            </button>
+        </div>
+    </div>
+    <div class="col-sm-6 col-lg-4 col-xxxl-3">
+        <mat-card class="daxa-card kanban-board-card mb-25 border-radius bg-gradient border-none d-block">
+            <mat-card-header>
+                <mat-card-title>
+                    <h5 class="mt-0 text-white">
+                        Closed Won (06)
+                    </h5>
+                    <span class="d-block text-white">
+                        This month review 06 projects
+                    </span>
+                </mat-card-title>
+                <mat-card-subtitle>
+                    <button type="button" mat-button class="card-header-menu-btn p-0" [matMenuTriggerFor]="cardHeaderMenu">
+                        <i class="material-symbols-outlined">
+                            more_horiz
+                        </i>
+                    </button>
+                    <mat-menu #cardHeaderMenu="matMenu" class="card-header-menu" xPosition="before">
+                        <button mat-menu-item>
+                            Select All
+                        </button>
+                        <button mat-menu-item>
+                            Edit All
+                        </button>
+                        <button mat-menu-item>
+                            Delete All
+                        </button>
+                    </mat-menu>
+                </mat-card-subtitle>
+            </mat-card-header>
+        </mat-card>
+        <div
+            cdkDropList
+            [cdkDropListData]="toReview"
+            (cdkDropListDropped)="drop($event)"
+        >
+            @for (item of toReview; track item) {
+                <mat-card class="daxa-card kanban-board-card mb-25 border-radius bg-white border d-block" cdkDrag>
+                    <mat-card-content>
+                        <div class="row">
+                            <div class="col-2">
+                                <div class="icon position-relative text-center rounded-circle">
+                                    <img [src]="item.customer.img" alt="client-image">
+                                </div>
+                            </div>
+                            <div class="col-10">
+                                <div class="head d-flex align-items-center justify-content-between">
+                                    <span class="d-block fw-medium" style="cursor: pointer;" routerLink="/crm-page/profile">
+                                        {{item.customer.name}}
+                                    </span>
+                                    <span class="d-block text-daxa">
+                                        {{item.daysLeft}}
+                                    </span>
+                                </div>
+                                <div class="d-flex">
+                                    <span class="date text-body d-block position-relative" >
+                                        <i class="material-symbols-outlined" style="font-size: small !important;">
+                                            email
+                                        </i>
+                                        {{item.email}}
+                                    </span>&nbsp;&nbsp;|&nbsp;&nbsp;
+                                    <span class="date text-body d-block position-relative">
+                                        <i class="material-symbols-outlined" style="font-size: small !important;">
+                                            phone
+                                        </i>
+                                        {{item.phone}}
+                                    </span>
+
+                                </div>
+                            </div>
+                        </div>
+                        <span class="daxa-badge text-success d-inline-block">
+                            {{item.leadSource}}
+                        </span>
+                        <div class="footer d-flex align-items-center justify-content-between">
+                            <span class="date text-body d-block position-relative">
+                                <i class="material-symbols-outlined">
+                                    schedule
+                                </i>
+                                {{item.createDate}}
+                            </span>
+                            <div class="users-list">
+                                <img [src]="item.img1" alt="user-image" matTooltip="user-1" *ngIf="item.img1">
+                                <img [src]="item.img2" alt="user-image" matTooltip="user-2" *ngIf="item.img2">
+                                <img [src]="item.img3" alt="user-image" matTooltip="user-3" *ngIf="item.img3">
+                                <img [src]="item.img4" alt="user-image" matTooltip="user-4" *ngIf="item.img4">
+                                <img [src]="item.img5" alt="user-image" matTooltip="user-5" *ngIf="item.img5">
+                            </div>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            }
+        </div>
+        <div class="mb-25">
+            <button
+                mat-button
+                class="add-another-task-btn"
+                (click)="toggleClass()"
+            >
+                + Add Another Lead
+            </button>
+        </div>
+    </div>
+    <div class="col-sm-6 col-lg-4 col-xxxl-3">
+        <mat-card class="daxa-card kanban-board-card mb-25 border-radius bg-gradient border  border-white  d-block">
+            <mat-card-header>
+                <mat-card-title>
+                    <h5 class="mt-0 text-white">
+                        Closed Lost (05)
+                    </h5>
+                    <span class="d-block text-white">
+                        This month completed 05 projects
+                    </span>
+                </mat-card-title>
+                <mat-card-subtitle>
+                    <button type="button" mat-button class="card-header-menu-btn p-0" [matMenuTriggerFor]="cardHeaderMenu">
+                        <i class="material-symbols-outlined">
+                            more_horiz
+                        </i>
+                    </button>
+                    <mat-menu #cardHeaderMenu="matMenu" class="card-header-menu" xPosition="before">
+                        <button mat-menu-item>
+                            Select All
+                        </button>
+                        <button mat-menu-item>
+                            Edit All
+                        </button>
+                        <button mat-menu-item>
+                            Delete All
+                        </button>
+                    </mat-menu>
+                </mat-card-subtitle>
+            </mat-card-header>
+        </mat-card>
+        <div
+            cdkDropList
+            [cdkDropListData]="toCompleted"
+            (cdkDropListDropped)="drop($event)"
+        >
+            @for (item of toCompleted; track item) {
+                <mat-card class="daxa-card kanban-board-card mb-25 border-radius bg-white border-none d-block" cdkDrag>
+                    <mat-card-content>
+                        <div class="row">
+                            <div class="col-2">
+                                <div class="icon position-relative text-center rounded-circle">
+                                    <img [src]="item.customer.img" alt="client-image">
+                                </div>
+                            </div>
+                            <div class="col-10">
+                                <div class="head d-flex align-items-center justify-content-between">
+                                    <span class="d-block fw-medium" style="cursor: pointer;" routerLink="/crm-page/profile">
+                                        {{item.customer.name}}
+                                    </span>
+                                    <span class="d-block text-daxa">
+                                        {{item.daysLeft}}
+                                    </span>
+                                </div>
+                                <div class="d-flex">
+                                    <span class="date text-body d-block position-relative" >
+                                        <i class="material-symbols-outlined" style="font-size: small !important;">
+                                            email
+                                        </i>
+                                        {{item.email}}
+                                    </span>&nbsp;&nbsp;|&nbsp;&nbsp;
+                                    <span class="date text-body d-block position-relative">
+                                        <i class="material-symbols-outlined" style="font-size: small !important;">
+                                            phone
+                                        </i>
+                                        {{item.phone}}
+                                    </span>
+
+                                </div>
+                            </div>
+                        </div>
+                        <span class="daxa-badge text-success d-inline-block">
+                            {{item.leadSource}}
+                        </span>
+                        <div class="footer d-flex align-items-center justify-content-between">
+                            <span class="date text-body d-block position-relative">
+                                <i class="material-symbols-outlined">
+                                    schedule
+                                </i>
+                                {{item.createDate}}
+                            </span>
+                            <div class="users-list">
+                                <img [src]="item.img1" alt="user-image" matTooltip="user-1" *ngIf="item.img1">
+                                <img [src]="item.img2" alt="user-image" matTooltip="user-2" *ngIf="item.img2">
+                                <img [src]="item.img3" alt="user-image" matTooltip="user-3" *ngIf="item.img3">
+                                <img [src]="item.img4" alt="user-image" matTooltip="user-4" *ngIf="item.img4">
+                                <img [src]="item.img5" alt="user-image" matTooltip="user-5" *ngIf="item.img5">
+                            </div>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            }
+        </div>
+        <div class="mb-25">
+            <button
+                mat-button
+                class="add-another-task-btn"
+                (click)="toggleClass()"
+            >
+                + Add Another Lead
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Popup -->
+<div
+    class="add-another-task-popup"
+    [class.active]="classApplied"
+    [class.rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <div class="popup-dialog">
+        <mat-card class="daxa-card mb-25 border-radius bg-white border-none d-block">
+            <mat-card-header>
+                <mat-card-title>
+                    <h5 class="mb-0">
+                        Add Lead
+                    </h5>
+                </mat-card-title>
+                <mat-card-subtitle>
+                    <button
+                        mat-button
+                        (click)="toggleClass()"
+                    >
+                        <i class="ri-close-fill"></i>
+                    </button>
+                </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <form>
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6">
+                            <div class="mb-25">
+                                <label class="main-label d-block lh-1 text-black">
+                                    ID
+                                </label>
+                                <mat-form-field>
+                                    <mat-label>
+                                        Enter id
+                                    </mat-label>
+                                    <input matInput placeholder="E.g. #ARP-1217">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <div class="mb-25">
+                                <label class="main-label d-block lh-1 text-black">
+                                    Customer Name
+                                </label>
+                                <mat-form-field>
+                                    <mat-label>
+                                        Enter customer name
+                                    </mat-label>
+                                    <input matInput placeholder="E.g. Marcia Baker">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <div class="mb-25">
+                                <label class="main-label d-block lh-1 text-black">
+                                    Email Address
+                                </label>
+                                <mat-form-field>
+                                    <mat-label>
+                                        Enter email address
+                                    </mat-label>
+                                    <input matInput placeholder="E.g. marcia@example.com">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <div class="mb-25">
+                                <label class="main-label d-block lh-1 text-black">
+                                    Phone Number
+                                </label>
+                                <mat-form-field>
+                                    <mat-label>
+                                        Enter phone number
+                                    </mat-label>
+                                    <input matInput placeholder="E.g. +1 555-123-4567">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <div class="mb-25">
+                                <label class="main-label d-block lh-1 text-black">
+                                    Create Date
+                                </label>
+                                <mat-form-field>
+                                    <mat-label>
+                                        Enter create date
+                                    </mat-label>
+                                    <input matInput placeholder="E.g. Nov 10, 2024">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <div class="mb-25">
+                                <label class="main-label d-block lh-1 text-black">
+                                    Company
+                                </label>
+                                <mat-form-field>
+                                    <mat-label>
+                                        Enter company
+                                    </mat-label>
+                                    <input matInput placeholder="E.g. ABC Corporation">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <div class="mb-25">
+                                <label class="main-label d-block lh-1 text-black">
+                                    Lead Source
+                                </label>
+                                <mat-form-field>
+                                    <mat-label>
+                                        Select lead source
+                                    </mat-label>
+                                    <mat-select>
+                                        <mat-option value="option1">
+                                            Website
+                                        </mat-option>
+                                        <mat-option value="option2">
+                                            Referral
+                                        </mat-option>
+                                        <mat-option value="option3">
+                                            Cold Call
+                                        </mat-option>
+                                        <mat-option value="option4">
+                                            Email Campaign
+                                        </mat-option>
+                                        <mat-option value="option5">
+                                            Online Store
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6" >
+                            <div class="mb-25">
+                                <label class="main-label d-block lh-1 text-black">
+                                    Assign to
+                                </label>
+                                <mat-form-field>
+                                    <mat-label>
+                                        Select
+                                    </mat-label>
+                                    <mat-select multiple>
+                                        <mat-option value="option1">
+                                            Walter Frazier
+                                        </mat-option>
+                                        <mat-option value="option2">
+                                            Kimberly Anderson
+                                        </mat-option>
+                                        <mat-option value="option3">
+                                            Roscoe Guerrero
+                                        </mat-option>
+                                        <mat-option value="option4">
+                                            Robert Stewart
+                                        </mat-option>
+                                        <mat-option value="option5">
+                                            Dustin Fritch
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <div class="mb-25">
+                                <label class="main-label d-block lh-1 text-black">
+                                    Status
+                                </label>
+                                <mat-form-field>
+                                    <mat-label>
+                                        Select status
+                                    </mat-label>
+                                    <mat-select>
+                                        <mat-option value="option1">
+                                            New
+                                        </mat-option>
+                                        <mat-option value="option2">
+                                            Won
+                                        </mat-option>
+                                        <mat-option value="option3">
+                                            In Progress
+                                        </mat-option>
+                                        <mat-option value="option4">
+                                            Lost
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-12">
+                            <div class="mb-25">
+                                <label class="main-label d-block lh-1 text-black">
+                                    Customer Image
+                                </label>
+                                <file-upload class="file-uploader" [multiple]="multiple"></file-upload>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="btn-box">
+                        <button mat-button>
+                            Create Lead
+                        </button>
+                        <button mat-button>
+                            Cancel
+                        </button>
+                    </div> -->
+                </form>
+                <!-- <div class="row">
+                    <div class="col-md-12">
+                        <label class="main-label d-block lh-1 text-black">
+                            Task Name
+                        </label>
+                        <mat-form-field>
+                            <mat-label>
+                                Task name
+                            </mat-label>
+                            <input matInput placeholder="E.g. Hand Watch">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-12">
+                        <label class="main-label d-block lh-1 text-black">
+                            Task Description
+                        </label>
+                        <mat-form-field class="textarea">
+                            <mat-label>
+                                Task description
+                            </mat-label>
+                            <textarea matInput placeholder="E.g. It makes me feel..."></textarea>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="main-label d-block lh-1 text-black">
+                            Team Members
+                        </label>
+                        <mat-form-field>
+                            <mat-label>
+                                Select
+                            </mat-label>
+                            <mat-select multiple>
+                                <mat-option value="option1">
+                                    Shawn Kennedy
+                                </mat-option>
+                                <mat-option value="option2">
+                                    Roberto Cruz
+                                </mat-option>
+                                <mat-option value="option3">
+                                    Juli Johnson
+                                </mat-option>
+                                <mat-option value="option4">
+                                    Catalina Engles	
+                                </mat-option>
+                                <mat-option value="option5">
+                                    Louis Nagle
+                                </mat-option>
+                                <mat-option value="option6">
+                                    Michael Marquez
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="main-label d-block lh-1 text-black">
+                            Deadline Date
+                        </label>
+                        <mat-form-field class="date">
+                            <mat-label>
+                                Choose a date
+                            </mat-label>
+                            <input matInput [matDatepicker]="dueDate">
+                            <mat-datepicker-toggle matIconSuffix [for]="dueDate"></mat-datepicker-toggle>
+                            <mat-datepicker #dueDate></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div> -->
+                <div class="btn-box">
+                    <button
+                        mat-button
+                        (click)="toggleClass()"
+                    >
+                        Cancel
+                    </button>
+                    <button mat-button>
+                        Create
+                    </button>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

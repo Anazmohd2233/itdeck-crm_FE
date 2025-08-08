@@ -1,0 +1,28 @@
+<mat-card class="daxa-card tasks-stats-card mb-25 border-radius bg-gradient border-none d-block">
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mt-0 mb-0 text-white">
+                Tasks Stats
+            </h5>
+        </mat-card-title>
+        <mat-card-subtitle>
+            <button type="button" mat-button class="card-header-menu-btn" [matMenuTriggerFor]="cardHeaderMenu">
+                Year 2024
+            </button>
+            <mat-menu #cardHeaderMenu="matMenu" class="card-header-menu" xPosition="before">
+                <button mat-menu-item>
+                    Year 2024
+                </button>
+                <button mat-menu-item>
+                    Year 2023
+                </button>
+                <button mat-menu-item>
+                    Year 2022
+                </button>
+            </mat-menu>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <div id="crm_tasks_stats_chart"></div>
+    </mat-card-content>
+</mat-card>

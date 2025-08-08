@@ -1,0 +1,42 @@
+<mat-card class="daxa-card course-sales-card mb-25 border-radius bg-white border-none d-block">
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mb-0">
+                Course Sales
+            </h5>
+        </mat-card-title>
+        <mat-card-subtitle>
+            <button type="button" mat-button class="card-header-menu-btn" [matMenuTriggerFor]="cardHeaderMenu">
+                This Month
+            </button>
+            <mat-menu #cardHeaderMenu="matMenu" class="card-header-menu" xPosition="before">
+                <button mat-menu-item>
+                    This Day
+                </button>
+                <button mat-menu-item>
+                    This Week
+                </button>
+                <button mat-menu-item>
+                    This Month
+                </button>
+                <button mat-menu-item>
+                    This Year
+                </button>
+            </mat-menu>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <h3 class="lh-1">
+            84,127
+        </h3>
+        <span class="daxa-up-down-badge position-relative">
+            <i class="material-symbols-outlined">
+                trending_up
+            </i>
+            3.21%
+        </span>
+        <div class="chart">
+            <div id="lms_courses_sales_chart"></div>
+        </div>
+    </mat-card-content>
+</mat-card>

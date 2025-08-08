@@ -1,0 +1,438 @@
+.mat-mdc-card {
+    &.daxa-card {
+        &.chat-projects-user-card {
+            .mat-mdc-card-header {
+                margin-bottom: 12px;
+            }
+            .mat-mdc-card-content {
+                .chat-header {
+                    font-size: 14px;
+                    margin-bottom: 15px;
+                }
+                .chat-body {
+                    transform: rotate(180deg);
+                    margin-right: -20px;
+                    overflow-y: scroll;
+                    direction: rtl;
+                    height: 313px;
+
+                    &::-webkit-scrollbar {
+                        width: 8px;
+                        height: 8px;
+                    }
+                    &::-webkit-scrollbar-track {
+                        background-color: var(--whiteColor);
+                    }
+                    &::-webkit-scrollbar-thumb {
+                        background: #ebebeb;
+                    }
+                    ul {
+                        flex-direction: column-reverse;
+                        justify-content: flex-end;
+                        display: flex;
+                        padding: {
+                            left: 20px;
+                            right: 0;
+                        };
+                        li {
+                            transform: rotate(180deg);
+                            padding-left: 45px;
+                            direction: ltr;
+            
+                            .user {
+                                top: 0;
+                                left: 0;
+                                position: absolute;
+                            }
+                            .message {
+                                text-align: left;
+            
+                                p {
+                                    font-size: 15px;
+                                    padding: 10px 15px;
+                                    display: inline-block;
+                                    background-color: #f4f6fc;
+                                    border-radius: 0 10px 10px 10px;
+                                }
+                                div {
+                                    margin-bottom: 5px;
+            
+                                    &:last-child {
+                                        margin-bottom: 0;
+                                    }
+                                }
+                            }
+                            .time {
+                                font-size: 13px;
+                                text-align: left;
+                                margin: {
+                                    bottom: 20px;
+                                    top: 6px;
+                                };
+                            }
+                            &.right {
+                                text-align: right;
+                                margin-left: auto;
+                                padding: {
+                                    left: 0;
+                                    right: 45px;
+                                };
+                                .user {
+                                    left: auto;
+                                    right: 0;
+                                }
+                                .message {
+                                    text-align: right;
+            
+                                    p {
+                                        color: var(--whiteColor);
+                                        border-radius: 10px 0 10px 10px;
+                                        background-color: var(--daxaColor);
+                                    }
+                                }
+                                .time {
+                                    text-align: right;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            &.component-dark-theme {
+                .mat-mdc-card-content {
+                    .chat-body {
+                        &::-webkit-scrollbar-track {
+                            background-color: rgba(255, 255, 255, .10);
+                        }
+                        &::-webkit-scrollbar-thumb {
+                            background: var(--blackColor);
+                        }
+                        ul {
+                            li {
+                                .message {
+                                    p {
+                                        background-color: #131920;
+                                    }
+                                }
+                                &.right {
+                                    .message {
+                                        p {
+                                            background-color: var(--daxaColor);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            &.rtl-enabled {
+                .mat-mdc-card-content {
+                    .chat-body {
+                        direction: ltr;
+                        margin: {
+                            left: -20px;
+                            right: 0;
+                        };
+                        ul {
+                            padding: {
+                                left: 0;
+                                right: 20px;
+                            };
+                            li {
+                                direction: rtl;
+                                padding: {
+                                    left: 0;
+                                    right: 45px;
+                                };
+                                .user {
+                                    left: auto;
+                                    right: 0;
+                                }
+                                .message {
+                                    text-align: right;
+                
+                                    p {
+                                        border-radius: 10px 0 10px 10px;
+                                    }
+                                }
+                                .time {
+                                    text-align: right;
+                                }
+                                &.right {
+                                    text-align: left;
+                                    margin: {
+                                        left: 0;
+                                        right: auto;
+                                    };
+                                    padding: {
+                                        left: 45px;
+                                        right: 0;
+                                    };
+                                    .user {
+                                        left: 0;
+                                        right: auto;
+                                    }
+                                    .message {
+                                        text-align: left;
+                
+                                        p {
+                                            border-radius: 0 10px 10px 10px;
+                                        }
+                                    }
+                                    .time {
+                                        text-align: left;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+::ng-deep {
+    .mat-mdc-card {
+        &.daxa-card {
+            &.chat-projects-user-card {
+                .mat-mdc-card-content {
+                    .chat-footer {
+                        .mat-mdc-form-field {
+                            .mdc-text-field--filled {
+                                &:not(.mdc-text-field--disabled) {
+                                    background-color: #f4f6fc;
+                                    height: 42px;
+                                    border: 0;
+                                }
+                            }
+                            .mat-mdc-text-field-wrapper {
+                                .mat-mdc-form-field-flex {
+                                    .mat-mdc-floating-label {
+                                        top: 21px;
+                                    }
+                                }
+                                &:not(.mdc-text-field--outlined) {
+                                    .mat-mdc-form-field-infix {
+                                        padding-top: 16px;
+                                    }
+                                }
+                            }
+                            .mdc-text-field--filled {
+                                .mdc-floating-label {
+                                    font-size: 14px;
+                                }
+                            }
+                        }
+                        .mat-mdc-button {
+                            right: 0;
+                            top: 50%;
+                            padding: 0;
+                            width: 42px;
+                            min-width: auto;
+                            border-radius: 5px;
+                            position: absolute;
+                            display: inline-block;
+                            height: 42px !important;
+                            color: var(--whiteColor);
+                            transform: translateY(-50%);
+                            background-color: var(--daxaColor);
+
+                            .mdc-button__label {
+                                left: 0;
+                                right: 0;
+                                top: 50%;
+                                margin-top: 2px;
+                                position: absolute;
+                                transform: translateY(-50%);
+                            }
+                        }
+                    }
+                }
+                &.component-dark-theme {
+                    .mat-mdc-card-content {
+                        .chat-footer {
+                            .mat-mdc-form-field {
+                                .mdc-text-field--filled {
+                                    &:not(.mdc-text-field--disabled) {
+                                        background-color: #131920;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                &.rtl-enabled {
+                    .mat-mdc-card-content {
+                        .chat-footer {
+                            .mat-mdc-button {
+                                right: auto;
+                                left: 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width : 767px) {
+
+    .mat-mdc-card {
+        &.daxa-card {
+            &.chat-projects-user-card {
+                .mat-mdc-card-header {
+                    margin-bottom: 10px;
+                }
+                .mat-mdc-card-content {
+                    .chat-header {
+                        font-size: 13px;
+                        margin-bottom: 12px;
+                    }
+                    .chat-body {
+                        margin-right: -15px;
+                        height: 315px;
+    
+                        ul {
+                            padding-left: 15px;
+                            
+                            li {
+                                .message {
+                                    p {
+                                        font-size: 14px;
+                                        padding: 8px 10px;
+                                    }
+                                }
+                                .time {
+                                    margin: {
+                                        bottom: 15px;
+                                        top: 5px;
+                                    };
+                                }
+                            }
+                        }
+                    }
+                }
+                &.rtl-enabled {
+                    .mat-mdc-card-content {
+                        .chat-body {
+                            margin: {
+                                right: 0;
+                                left: -15px;
+                            };
+                            ul {
+                                padding: {
+                                    left: 0;
+                                    right: 15px;
+                                };
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 576px to Max width 767px */
+@media only screen and (min-width : 576px) and (max-width : 767px) {
+
+    .mat-mdc-card {
+        &.daxa-card {
+            &.chat-projects-user-card {
+                .mat-mdc-card-content {
+                    .chat-body {
+                        margin-right: -20px;
+                    }
+                }
+                &.rtl-enabled {
+                    .mat-mdc-card-content {
+                        .chat-body {
+                            margin: {
+                                right: 0;
+                                left: -20px;
+                            };
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width : 768px) and (max-width : 991px) {
+
+    .mat-mdc-card {
+        &.daxa-card {
+            &.chat-projects-user-card {
+                .mat-mdc-card-content {
+                    .chat-body {
+                        height: 350px;
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width : 992px) and (max-width : 1199px) {
+
+    .mat-mdc-card {
+        &.daxa-card {
+            &.chat-projects-user-card {
+                .mat-mdc-card-content {
+                    .chat-body {
+                        ul {
+                            li {
+                                .message {
+                                    p {
+                                        font-size: 14px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+}
+
+/* Min width 1200px to Max width 1399px */
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {
+
+    .mat-mdc-card {
+        &.daxa-card {
+            &.chat-projects-user-card {
+                .mat-mdc-card-content {
+                    .chat-body {
+                        height: 290px;
+
+                        ul {
+                            li {
+                                .message {
+                                    p {
+                                        padding: 10px;
+                                        font-size: 14px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+}
+
+/* Min width 1600px */
+@media only screen and (min-width: 1600px) {}

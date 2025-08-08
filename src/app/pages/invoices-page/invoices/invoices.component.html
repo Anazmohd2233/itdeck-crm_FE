@@ -1,0 +1,227 @@
+<!-- Breadcrumb -->
+<div class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between">
+    <h5 class="mb-0">
+        Payments
+    </h5>
+    <ol class="breadcrumb list-unstyled mt-0 mb-0 pl-0">
+        <li class="breadcrumb-item position-relative">
+            <a routerLink="/" class="d-inline-block position-relative">
+                <i class="ri-home-8-line"></i>
+                Dashboard
+            </a>
+        </li>
+        <li class="breadcrumb-item position-relative">
+            Payments
+        </li>
+        <li class="breadcrumb-item position-relative">
+            Payment List
+        </li>
+    </ol>
+</div>
+
+<!-- Invoices -->
+<mat-card
+    class="daxa-card invoices-card mb-25 border-radius bg-white border-none d-block"
+    [class.rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-header>
+        <mat-card-title>
+            <form class="search-box position-relative">
+                <i class="material-symbols-outlined">
+                    search
+                </i>
+                <input type="text" class="input-search d-block w-100 border-none outline-0" placeholder="Search invoice..." (keyup)="applyFilter($event)" #input>
+            </form>
+        </mat-card-title>
+        <mat-card-subtitle>
+            <button type="button" mat-button class="card-header-menu-btn" [matMenuTriggerFor]="cardHeaderMenu">
+                This Week
+            </button>
+            <mat-menu #cardHeaderMenu="matMenu" class="card-header-menu" xPosition="before">
+                <button mat-menu-item>
+                    This Day
+                </button>
+                <button mat-menu-item>
+                    This Week
+                </button>
+                <button mat-menu-item>
+                    This Month
+                </button>
+                <button mat-menu-item>
+                    This Year
+                </button>
+            </mat-menu>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="invoices-table">
+          <div class="table-responsive">
+            <table mat-table [dataSource]="dataSource">
+      
+              <!-- Payment ID Column -->
+              <ng-container matColumnDef="paymentID">
+                <th mat-header-cell *matHeaderCellDef> Payment ID </th>
+                <td mat-cell *matCellDef="let element"> {{element.paymentID}} </td>
+              </ng-container>
+      
+              <!-- Student Column -->
+              <ng-container matColumnDef="student">
+                <th mat-header-cell *matHeaderCellDef> Student </th>
+                <td mat-cell *matCellDef="let element" class="text-black">
+                  <div class="info d-flex align-items-center">
+                    <div class="image">
+                      <img [src]="element.student.img" alt="student-image">
+                    </div>
+                    <span class="d-block fw-medium">
+                      {{element.student.name}}
+                    </span>
+                  </div>
+                </td>
+              </ng-container>
+      
+              <!-- Email Column -->
+              <ng-container matColumnDef="email">
+                <th mat-header-cell *matHeaderCellDef> Email </th>
+                <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+              </ng-container>
+      
+              <!-- Course Name Column -->
+              <ng-container matColumnDef="courseName">
+                <th mat-header-cell *matHeaderCellDef> Course Name </th>
+                <td mat-cell *matCellDef="let element"> {{element.courseName}} </td>
+              </ng-container>
+      
+              <!-- Course Fee Column -->
+              <ng-container matColumnDef="courseFee">
+                <th mat-header-cell *matHeaderCellDef> Course Fee </th>
+                <td mat-cell *matCellDef="let element">
+                   {{element.courseFee}} 
+                    <button type="button" mat-button matTooltip="Installment" matTooltipPosition="above"
+                            style="font-size: 8pxl !important;
+                                  padding: 0;
+                                  width: auto;
+                                  height: auto;
+                                  line-height: 1;
+                                  color: #0f79f3;
+                                  min-width: auto;
+                                  border-radius: 0;" 
+                            (click)="openInstallmentDialog(element)">
+                        <i class="material-symbols-outlined" style="font-size: 16px !important;">
+                            payments
+                        </i>
+                    </button>
+                </td>
+              </ng-container>
+      
+              <!-- Paid Amount Column -->
+              <ng-container matColumnDef="paidAmount">
+                <th mat-header-cell *matHeaderCellDef> Paid Amount </th>
+                <td mat-cell *matCellDef="let element"> {{element.paidAmount}} </td>
+              </ng-container>
+      
+              <!-- Pending Amount Column -->
+              <ng-container matColumnDef="balanceAmount">
+                <th mat-header-cell *matHeaderCellDef> Balance Amount </th>
+                <td mat-cell *matCellDef="let element"> {{element.balanceAmount}}</td>
+              </ng-container>
+      
+              <!-- Installments Column -->
+              <ng-container matColumnDef="installments">
+                <th mat-header-cell *matHeaderCellDef> Installments </th>
+                <td mat-cell *matCellDef="let element"> {{element.installments}} </td>
+              </ng-container>
+      
+              <!-- Next Installment Date Column -->
+              <ng-container matColumnDef="nextInstallmentDate">
+                <th mat-header-cell *matHeaderCellDef> Next Installment </th>
+                <td mat-cell *matCellDef="let element"> {{element.nextInstallmentDate}} </td>
+              </ng-container>
+      
+              <!-- Action Column -->
+              <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef> Action </th>
+                <td mat-cell *matCellDef="let element">
+                  <div class="action-info">
+                    <a mat-button routerLink="/payments/payment-details" matTooltip="View" matTooltipPosition="above">
+                      <i class="material-symbols-outlined">
+                        {{element.action.view}}
+                      </i>
+                    </a>
+                    <button type="button" mat-button matTooltip="Print" matTooltipPosition="above">
+                      <i class="material-symbols-outlined">
+                        {{element.action.print}}
+                      </i>
+                    </button>
+                    <button type="button" mat-button matTooltip="Delete" matTooltipPosition="above">
+                      <i class="material-symbols-outlined">
+                        {{element.action.delete}}
+                      </i>
+                    </button>
+                  </div>
+                </td>
+              </ng-container>
+      
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      
+              <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="10">No data matching the filter "{{input.value}}"</td>
+              </tr>
+      
+            </table>
+          </div>
+          <mat-paginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons></mat-paginator>
+        </div>
+      </mat-card-content>
+
+</mat-card>
+
+<ng-template #installmentDialog>
+  <h2 mat-dialog-title>Convert to Installments</h2>
+  <mat-dialog-content>
+    <p>Course Fee: ${{courseFee}}</p>
+    <!-- <mat-form-field>
+      <mat-label>Number of Installments</mat-label>
+      <input matInput type="number" [(ngModel)]="installmentCount" min="1">
+    </mat-form-field>
+    <button mat-stroked-button color="primary" (click)="generateInstallments()">Generate</button> -->
+    <mat-form-field appearance="outline" >
+      <mat-label>Number of Installments</mat-label>
+      <input matInput type="number" [(ngModel)]="installmentCount" min="1">
+      <button mat-button matSuffix  color="primary" (click)="generateInstallments()">
+        <i class="material-symbols-outlined" style="font-size: 16px !important;">
+          autorenew
+        </i>
+        Generate
+      </button>
+    </mat-form-field>
+
+    <div class="d-flex justify-content-end w-100" style="margin-top: 15px !important;">
+      <button *ngIf="installments.length" mat-stroked-button color="warn" (click)="clearInstallments()">Clear</button>
+    </div>
+
+    <div *ngIf="installments.length">
+      <div class="row">
+        <div *ngFor="let inst of installments; let i = index" class="mt-2 border p-2 rounded col-md-6 col-lg-6">
+          <p>Installment {{i + 1}}</p>
+          <mat-form-field>
+            <mat-label>Amount</mat-label>
+            <input matInput type="number" [(ngModel)]="inst.amount" (blur)="onAmountChange(i)">
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Date</mat-label>
+            <input matInput [matDatepicker]="picker" [(ngModel)]="inst.date">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-flat-button (click)="closeModal()">Close</button>
+    <button mat-flat-button color="primary" (click)="saveInstallments()">Save</button>
+  </mat-dialog-actions>
+</ng-template>
+

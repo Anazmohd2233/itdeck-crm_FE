@@ -1,0 +1,519 @@
+// Kanban Board
+.mat-mdc-card {
+    &.daxa-card {
+        &.kanban-board-card {
+            .mat-mdc-card-content {
+                .head {
+                    margin-bottom: 9px;
+
+                    span {
+                        font-size: 15px;
+
+                        &:nth-child(1) {
+                            font-size: 18px;
+                        }
+                    }
+                }
+                p {
+                    margin-bottom: 12px;
+                }
+                .daxa-badge {
+                    font-size: 14px;
+                    padding: 3px 10px;
+                    background-color: #f4f6fc;
+                }
+                .footer {
+                    margin-top: 12px;
+
+                    .date {
+                        padding-left: 22px;
+                        font-size: 15px;
+
+                        i {
+                            left: 0;
+                            top: 1.44px;
+                            font-size: 16px;
+                            position: absolute;
+                            color: var(--infoColor);
+                        }
+                    }
+                    .users-list {
+                        img {
+                            border: 2px solid var(--whiteColor);
+                            display: inline-block;
+                            margin-right: -10px;
+                            border-radius: 50%;
+                            width: 30px;
+
+                            &:last-child {
+                                margin-right: 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+::ng-deep {
+    .mat-mdc-card {
+        &.daxa-card {
+            &.kanban-board-card {
+                .mat-mdc-card-header {
+                    margin-bottom: 0;
+                    
+                    .mat-mdc-card-header-text {
+                        .mat-mdc-card-title {
+                            h5 {
+                                margin-bottom: 7px;
+                            }
+                            span {
+                                font-size: 15px;
+                            }
+                        }
+                        .mat-mdc-card-subtitle {
+                            display: block;
+
+                            .mat-mdc-button {
+                                &.card-header-menu-btn {
+                                    top: 50%;
+                                    right: 20px;
+                                    position: absolute;
+                                    color: var(--whiteColor);
+                                    transform: translateY(-50%);
+        
+                                    &::after {
+                                        display: none;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .cdk-drop-list {
+        min-height: 200px;
+    }
+}
+.add-another-task-btn {
+    &.mat-mdc-button {
+        width: 100%;
+        height: auto;
+        display: block;
+        min-width: auto;
+        padding: 13px 15px;
+        border-radius: 5px;
+        color: var(--blackColor);
+        background-color: var(--whiteColor);
+    }
+}
+
+// Dark Mode CSS
+.component-dark-theme {
+    .mat-mdc-card {
+        &.daxa-card {
+            &.kanban-board-card {
+                .mat-mdc-card-content {
+                    .daxa-badge {
+                        background-color: var(--blackColor);
+                    }
+                    .footer {
+                        .users-list {
+                            img {
+                                border-color: #1b232d;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .add-another-task-btn {
+        &.mat-mdc-button {
+            color: var(--whiteColor);
+            background-color: #1b232d;
+        }
+    }
+}
+
+// RTL Enabled
+.rtl-enabled {
+    .mat-mdc-card {
+        &.daxa-card {
+            &.kanban-board-card {
+                .mat-mdc-card-content {
+                    .footer {
+                        .date {
+                            padding: {
+                                left: 0;
+                                right: 22px;
+                            };
+                            i {
+                                left: auto;
+                                right: 0;
+                            }
+                        }
+                        .users-list {
+                            img {
+                                margin: {
+                                    right: 0;
+                                    left: -10px;
+                                };
+                                &:last-child {
+                                    margin-left: 0;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    ::ng-deep {
+        .mat-mdc-card {
+            &.daxa-card {
+                &.kanban-board-card {
+                    .mat-mdc-card-header {
+                        .mat-mdc-card-header-text {
+                            .mat-mdc-card-subtitle {
+                                .mat-mdc-button {
+                                    &.card-header-menu-btn {
+                                        right: auto;
+                                        left: 20px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Add Another Task Popup
+::ng-deep {
+    .add-another-task-popup {
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        opacity: 0;
+        position: fixed;
+        transition: .3s;
+        visibility: hidden;
+        background-color: rgba(0, 0, 0, 0.5);
+        overflow: {
+            x: hidden;
+            y: auto;
+        };
+        .popup-dialog {
+            display: flex;
+            transition: .3s;
+            max-width: 950px;
+            align-items: center;
+            transform: translate(0, -20px);
+            min-height: calc(100% - 1.75rem * 2);
+            margin: {
+                left: auto;
+                right: auto;
+            };
+            .daxa-card {
+                width: 100%;
+
+                .mat-mdc-card-header {
+                    border-bottom: 1px solid #eeeeee;
+                    margin: {
+                        left: -20px;
+                        right: -20px;
+                    };
+                    padding: {
+                        left: 20px;
+                        right: 20px;
+                        bottom: 18px;
+                    };
+                    .mat-mdc-card-subtitle {
+                        .mat-mdc-button {
+                            padding: 0;
+                            height: auto;
+                            line-height: 1;
+                            min-width: auto;
+                            display: inline-block;
+                            font-size: 23px !important;
+                        }
+                    }
+                }
+                .mat-mdc-card-content {
+                    .main-label {
+                        margin-bottom: 12px;
+                        font-size: 15px;
+                    }
+                    .mat-mdc-form-field {
+                        margin-bottom: 20px;
+                    }
+                    .btn-box {
+                        text-align: right;
+
+                        .mat-mdc-button {
+                            border: 0;
+                            height: auto;
+                            min-width: auto;
+                            min-height: auto;
+                            padding: 14px 35px;
+                            font-weight: normal;
+                            color: var(--whiteColor);
+                            font-size: 15px !important;
+                            background-color: var(--daxaColor);
+
+                            &:first-child {
+                                margin-right: 10px;
+                                background-color: var(--dangerColor);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        &.active {
+            opacity: 1;
+            visibility: visible;
+
+            .popup-dialog {
+                transform: none;
+            }
+        }
+        &.rtl-enabled {
+            .popup-dialog {
+                .daxa-card {
+                    .mat-mdc-card-content {
+                        .btn-box {
+                            text-align: left;
+    
+                            .mat-mdc-button {
+                                &:first-child {
+                                    margin: {
+                                        right: 0;
+                                        left: 10px;
+                                    };
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width : 767px) {
+
+    // Kanban Board
+    .mat-mdc-card {
+        &.daxa-card {
+            &.kanban-board-card {
+                .mat-mdc-card-content {
+                    .head {
+                        margin-bottom: 8px;
+
+                        span {
+                            font-size: 14px;
+                            
+                            &:nth-child(1) {
+                                font-size: 16px;
+                            }
+                        }
+                    }
+                    p {
+                        margin-bottom: 10px;
+                    }
+                    .footer {
+                        margin-top: 10px;
+
+                        .date {
+                            font-size: 14px;
+
+                            i {
+                                top: .5px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    ::ng-deep {
+        .mat-mdc-card {
+            &.daxa-card {
+                &.kanban-board-card {
+                    .mat-mdc-card-header {
+                        .mat-mdc-card-header-text {
+                            .mat-mdc-card-title {
+                                span {
+                                    font-size: 14px;
+                                }
+                            }
+                            .mat-mdc-card-subtitle {
+                                .mat-mdc-button {
+                                    &.card-header-menu-btn {
+                                        right: 15px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // RTL Enabled
+    .rtl-enabled {
+        ::ng-deep {
+            .mat-mdc-card {
+                &.daxa-card {
+                    &.kanban-board-card {
+                        .mat-mdc-card-header {
+                            .mat-mdc-card-header-text {
+                                .mat-mdc-card-subtitle {
+                                    .mat-mdc-button {
+                                        &.card-header-menu-btn {
+                                            right: auto;
+                                            left: 15px;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // Add Another Task Popup
+    ::ng-deep {
+        .add-another-task-popup {
+            .popup-dialog {
+                max-width: 700px;
+                
+                .daxa-card {
+                    .mat-mdc-card-header {
+                        margin: {
+                            left: -15px;
+                            right: -15px;
+                        };
+                        padding: {
+                            left: 15px;
+                            right: 15px;
+                            bottom: 15px;
+                        };
+                        .mat-mdc-card-subtitle {
+                            .mat-mdc-button {
+                                font-size: 20px !important;
+                            }
+                        }
+                    }
+                    .mat-mdc-card-content {
+                        .main-label {
+                            font-size: 14px;
+                        }
+                        .mat-mdc-form-field {
+                            margin-bottom: 15px;
+                        }
+                        .btn-box {
+                            .mat-mdc-button {
+                                font-size: 14px !important;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 576px to Max width 767px */
+@media only screen and (min-width : 576px) and (max-width : 767px) {
+
+    // Kanban Board
+    ::ng-deep {
+        .mat-mdc-card {
+            &.daxa-card {
+                &.kanban-board-card {
+                    .mat-mdc-card-header {
+                        .mat-mdc-card-header-text {
+                            .mat-mdc-card-subtitle {
+                                .mat-mdc-button {
+                                    &.card-header-menu-btn {
+                                        right: 20px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // RTL Enabled
+    .rtl-enabled {
+        ::ng-deep {
+            .mat-mdc-card {
+                &.daxa-card {
+                    &.kanban-board-card {
+                        .mat-mdc-card-header {
+                            .mat-mdc-card-header-text {
+                                .mat-mdc-card-subtitle {
+                                    .mat-mdc-button {
+                                        &.card-header-menu-btn {
+                                            right: auto;
+                                            left: 20px;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width : 768px) and (max-width : 991px) {
+
+    // Kanban Board
+    .mat-mdc-card {
+        &.daxa-card {
+            &.kanban-board-card {
+                .mat-mdc-card-content {
+                    .footer {
+                        .date {
+                            i {
+                                top: .5px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width : 992px) and (max-width : 1199px) {}
+
+/* Min width 1200px to Max width 1399px */
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {}
+
+/* Min width 1600px */
+@media only screen and (min-width: 1600px) {}
+

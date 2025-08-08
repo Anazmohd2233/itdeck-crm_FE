@@ -1,0 +1,114 @@
+<mat-card
+    class="daxa-card country-stats-card mb-25 border-radius bg-white border-none d-block"
+    [class.component-dark-theme]="themeService.isDark()"
+    [class.rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mb-0">
+                Country Stats
+            </h5>
+        </mat-card-title>
+        <mat-card-subtitle>
+            <button type="button" mat-button class="card-header-menu-btn" [matMenuTriggerFor]="cardHeaderMenu">
+                This Month
+            </button>
+            <mat-menu #cardHeaderMenu="matMenu" class="card-header-menu" xPosition="before">
+                <button mat-menu-item>
+                    This Day
+                </button>
+                <button mat-menu-item>
+                    This Week
+                </button>
+                <button mat-menu-item>
+                    This Month
+                </button>
+                <button mat-menu-item>
+                    This Year
+                </button>
+            </mat-menu>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="text-center">
+            <img src="images/locations-map.png" alt="locations-map-image">
+        </div>
+        <div class="country-stats-table text-left">
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col" class="fw-medium text-black">
+                                Country
+                            </th>
+                            <th scope="col" class="fw-medium text-black">
+                                User
+                            </th>
+                            <th scope="col" class="fw-medium text-black">
+                                Bounce Rate
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center fw-medium">
+                                    <img src="images/flags/usa.png" alt="flag-image">
+                                    United States
+                                </div>
+                            </td>
+                            <td class="text-body">
+                                17003
+                            </td>
+                            <td class="text-body">
+                                0.83%
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center fw-medium">
+                                    <img src="images/flags/china.png" alt="flag-image">
+                                    China
+                                </div>
+                            </td>
+                            <td class="text-body">
+                                16843
+                            </td>
+                            <td class="text-body">
+                                0.75%
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center fw-medium">
+                                    <img src="images/flags/germany.png" alt="flag-image">
+                                    Germany
+                                </div>
+                            </td>
+                            <td class="text-body">
+                                14285
+                            </td>
+                            <td class="text-body">
+                                0.49%
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center fw-medium">
+                                    <img src="images/flags/australia.png" alt="flag-image">
+                                    Australia
+                                </div>
+                            </td>
+                            <td class="text-body">
+                                9573
+                            </td>
+                            <td class="text-body">
+                                0.18%
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

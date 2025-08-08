@@ -1,0 +1,31 @@
+<div class="logout-area">
+    <div class="d-table">
+        <div class="d-table-cell">
+            <div
+                class="daxa-form ml-auto mr-auto border-radius bg-white"
+                [class.card-borderd-theme]="themeService.isCardBorder()"
+                [class.component-dark-theme]="themeService.isDark()"
+            >
+                <div class="title text-center">
+                    <h3>
+                        See You Again !
+                    </h3>
+                    <p class="ml-auto mr-auto">
+                        You are now successfully Logged out.
+                    </p>
+                </div>
+                <div class="admin text-center">
+                    <div class="logo position-relative rounded-circle">
+                        <img src="images/check.png" alt="logo">
+                    </div>
+                    <span class="d-block fw-medium">
+                        Back to login
+                    </span>
+                </div>
+                <a routerLink="/authentication" mat-button class="btn">
+                    Sign In
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

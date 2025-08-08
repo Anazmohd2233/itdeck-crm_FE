@@ -1,0 +1,33 @@
+<mat-card
+    class="daxa-card welcome-card mb-25 border-radius position-relative bg-gradient border-none d-block"
+    [class.rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-content>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="content">
+                    <span class="d-block text-white">
+                        {{ currentDate }}
+                    </span>
+                    <h3 class="text-white">
+                        Welcome To Daxa
+                    </h3>
+                    <p class="text-white">
+                        You have done 68% 😎 more sales today.
+                    </p>
+                    <span class="d-block text-white fw-medium">
+                        Daily Performance
+                    </span>
+                    <div class="chart">
+                        <div id="mp_welcome_chart"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="image">
+                    <img src="images/welcome.png" alt="welcome-image">
+                </div>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

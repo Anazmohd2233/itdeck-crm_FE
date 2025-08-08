@@ -1,0 +1,153 @@
+<mat-card
+    class="daxa-card course-ratings-card mb-25 border-radius bg-white border-none d-block"
+    [class.component-dark-theme]="themeService.isDark()"
+    [class.rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mb-0">
+                Course Ratings
+            </h5>
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="overall-ratings">
+            <div class="row align-items-center">
+                <div class="col-md-4 col-lg-4">
+                    <h3>
+                        4.9
+                    </h3>
+                    <span class="d-block text-body">
+                        Overall Rating 
+                    </span>
+                    <div class="all-ratings d-flex align-items-center">
+                        <i class="ri-star-fill"></i>
+                        <i class="ri-star-fill"></i>
+                        <i class="ri-star-fill"></i>
+                        <i class="ri-star-fill"></i>
+                        <i class="ri-star-fill"></i>
+                        <span class="text-body position-relative">(158 Reviews)</span>
+                    </div>
+                </div>
+                <div class="col-md-8 col-lg-8">
+                    <div class="rating-item position-relative">
+                        <div class="ratings d-flex align-items-center">
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <span class="text-body position-relative">(5.00)</span>
+                        </div>
+                        <mat-progress-bar mode="determinate" value="80"></mat-progress-bar>
+                        <span class="number text-body d-block">
+                            (120)
+                        </span>
+                    </div>
+                    <div class="rating-item position-relative">
+                        <div class="ratings d-flex align-items-center">
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-line"></i>
+                            <span class="text-body position-relative">(4.00)</span>
+                        </div>
+                        <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
+                        <span class="number text-body d-block">
+                            (25)
+                        </span>
+                    </div>
+                    <div class="rating-item position-relative">
+                        <div class="ratings d-flex align-items-center">
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-line"></i>
+                            <i class="ri-star-line"></i>
+                            <span class="text-body position-relative">(3.00)</span>
+                        </div>
+                        <mat-progress-bar mode="determinate" value="20"></mat-progress-bar>
+                        <span class="number text-body d-block">
+                            (9)
+                        </span>
+                    </div>
+                    <div class="rating-item position-relative">
+                        <div class="ratings d-flex align-items-center">
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-line"></i>
+                            <i class="ri-star-line"></i>
+                            <i class="ri-star-line"></i>
+                            <span class="text-body position-relative">(2.00)</span>
+                        </div>
+                        <mat-progress-bar mode="determinate" value="8"></mat-progress-bar>
+                        <span class="number text-body d-block">
+                            (3)
+                        </span>
+                    </div>
+                    <div class="rating-item position-relative">
+                        <div class="ratings d-flex align-items-center">
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-line"></i>
+                            <i class="ri-star-line"></i>
+                            <i class="ri-star-line"></i>
+                            <i class="ri-star-line"></i>
+                            <span class="text-body position-relative">(1.00)</span>
+                        </div>
+                        <mat-progress-bar mode="determinate" value="2"></mat-progress-bar>
+                        <span class="number text-body d-block">
+                            (1)
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="review-item border-radius">
+            <div class="user-info d-flex align-items-center">
+                <div>
+                    <img src="images/users/user1.jpg" alt="user-image">
+                </div>
+                <div>
+                    <span class="d-block">
+                        Mark Stjohn
+                    </span>
+                </div>
+            </div>
+            <div class="ratings d-flex align-items-center">
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+                <span class="text-body position-relative">(5)</span>
+            </div>
+            <p>
+                “Risus nulla amet facilisis eu metus nulla. Nisi interdum nec in lectus amet dis. Pulvinar ut vulputate odio venenatis id urna. Nullam elementum id egestas aliquet leo potenti pellentesque vel tortor. Varius integer facilisi vestibulum ante scelerisque adipiscing at turpis ultricies.”
+            </p>
+        </div>
+        <div class="review-item border-radius">
+            <div class="user-info d-flex align-items-center">
+                <div>
+                    <img src="images/users/user2.jpg" alt="user-image">
+                </div>
+                <div>
+                    <span class="d-block">
+                        Joan Stanley
+                    </span>
+                </div>
+            </div>
+            <div class="ratings d-flex align-items-center">
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-half-line"></i>
+                <span class="text-body position-relative">(4.5)</span>
+            </div>
+            <p>
+                “Risus nulla amet facilisis eu metus nulla. Nisi interdum nec in lectus amet dis. Pulvinar ut vulputate odio venenatis id urna. Nullam elementum id egestas aliquet leo potenti pellentesque vel tortor.”
+            </p>
+        </div>
+    </mat-card-content>
+</mat-card>

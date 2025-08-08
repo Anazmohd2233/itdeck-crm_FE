@@ -1,0 +1,36 @@
+<mat-card class="daxa-card first-response-time-card mb-25 bg-white border-radius border-none d-block">
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mb-0">
+                First Response Time
+            </h5>
+        </mat-card-title>
+        <mat-card-subtitle>
+            <button type="button" mat-button class="card-header-menu-btn" [matMenuTriggerFor]="cardHeaderMenu">
+                Last 30 days
+            </button>
+            <mat-menu #cardHeaderMenu="matMenu" class="card-header-menu" xPosition="before">
+                <button mat-menu-item>
+                    Last 30 days
+                </button>
+                <button mat-menu-item>
+                    Last 15 days
+                </button>
+                <button mat-menu-item>
+                    Last 7 days
+                </button>
+                <button mat-menu-item>
+                    Last Day
+                </button>
+            </mat-menu>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <h3 class="lh-1 mb-0 text-center">
+            1 <span class="fw-normal">hrs</span> : 22 <span class="fw-normal">min</span>
+        </h3>
+        <div class="chart">
+            <div id="help_desk_first_response_time_chart"></div>
+        </div>
+    </mat-card-content>
+</mat-card>

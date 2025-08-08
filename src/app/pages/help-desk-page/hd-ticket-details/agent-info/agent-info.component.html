@@ -1,0 +1,46 @@
+<mat-card
+    class="daxa-card agent-info-card mb-25 border-radius bg-white border-none d-block"
+    [class.component-dark-theme]="themeService.isDark()"
+    [class.rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-content>
+        <div class="text-center">
+            <img src="images/admin.png" width="160" class="rounded-cricle" alt="customer-image">
+            <h4>Mateo Luca</h4>
+            <span class="d-block text-body">
+                hello&#64;mateo.com
+            </span>
+        </div>
+        <div class="info">
+            <h5>
+                <!-- Agent Info -->
+            </h5>
+            <ul class="pl-0 mb-0 list-unstyled mt-0">
+                <li class="text-body">
+                    <span class="d-block text-black fw-medium">
+                        Account ID
+                    </span>
+                    ID-12174123
+                </li>
+                <li class="text-body">
+                    <span class="d-block text-black fw-medium">
+                        Phone
+                    </span>
+                    +1 234 4567 5678
+                </li>
+                <li class="text-body">
+                    <span class="d-block text-black fw-medium">
+                        Address
+                    </span>
+                    795 Folsom Ave, Suite 600 San Francisco, CA 94107 United States
+                </li>
+                <li class="text-body">
+                    <span class="d-block text-black fw-medium">
+                        Language
+                    </span>
+                    English, Spanish
+                </li>
+            </ul>
+        </div>
+    </mat-card-content>
+</mat-card>

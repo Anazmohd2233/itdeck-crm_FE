@@ -1,0 +1,120 @@
+.stat-item {
+    h5 {
+        margin-bottom: 10px;
+    }
+    .number {
+        font-size: 26px;
+        margin-bottom: 25px;
+    }
+    .chart {
+        top: 50%;
+        right: 15px;
+        max-width: 150px;
+        text-align: right;
+        margin-top: -12px;
+        position: absolute;
+        transform: translateY(-50%);
+
+        .title {
+            font-size: 14px;
+            margin: {
+                top: -23px;
+                right: 10px;
+            };
+        }
+    }
+    &.rtl-enabled {
+        .chart {
+            left: 15px;
+            right: auto;
+            text-align: left;
+    
+            .title {
+                margin: {
+                    right: 0;
+                    left: 10px;
+                };
+            }
+        }
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width : 767px) {
+
+    .stat-item {
+        padding: 15px 15px 0;
+
+        h5 {
+            margin-bottom: 7px;
+        }
+        .number {
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+        .chart {
+            top: 0;
+            right: 0;
+            max-width: 100%;
+            text-align: left;
+            position: relative;
+            transform: translateY(0);
+            margin: {
+                top: 0;
+                bottom: -30px;
+            };
+            .title {
+                left: 0;
+                top: 15px;
+                position: absolute;
+                margin: {
+                    top: 0;
+                    right: 0;
+                };
+            }
+        }
+        &.rtl-enabled {
+            .chart {
+                left: 0;
+                right: auto;
+                text-align: right;
+                
+                .title {
+                    left: auto;
+                    right: 0;
+                    margin: {
+                        left: 0;
+                    };
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 576px to Max width 767px */
+@media only screen and (min-width : 576px) and (max-width : 767px) {}
+
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width : 768px) and (max-width : 991px) {
+
+    .stat-item {
+        .chart {
+            margin-top: -10px;
+        
+            .title {
+                margin-top: -30px;
+            }
+        }
+    }
+
+}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width : 992px) and (max-width : 1199px) {}
+
+/* Min width 1200px to Max width 1399px */
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {}
+
+/* Min width 1600px */
+@media only screen and (min-width: 1600px) {}

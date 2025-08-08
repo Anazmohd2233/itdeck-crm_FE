@@ -1,0 +1,84 @@
+.mat-mdc-card {
+    &.daxa-card {
+        &.course-videos-card {
+            .mat-mdc-card-content {
+                .title {
+                    h5 {
+                        margin-bottom: 10px;
+                    }
+                    .number {
+                        font-size: 26px;
+                    }
+                }
+                .icon {
+                    width: 100px;
+                    height: 100px;
+                    margin: {
+                        top: 20px;
+                        left: auto;
+                        right: auto;
+                    };
+                    img {
+                        transform: translateY(-50%);
+                        position: absolute;
+                        top: 50%;
+                        right: 0;
+                        left: 0;
+                        margin: {
+                            top: -1px;
+                            left: auto;
+                            right: auto;
+                        };
+                    }
+                }
+                .info {
+                    margin-top: 32px;
+
+                    .sub-title {
+                        font-size: 14px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width : 767px) {
+
+    .mat-mdc-card {
+        &.daxa-card {
+            &.course-videos-card {
+                .mat-mdc-card-content {
+                    .title {
+                        .number {
+                            font-size: 22px;
+                        }
+                    }
+                    .icon {
+                        margin-top: 12px;
+                    }
+                    .info {
+                        margin-top: 12px;
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 576px to Max width 767px */
+@media only screen and (min-width : 576px) and (max-width : 767px) {}
+
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width : 768px) and (max-width : 991px) {}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width : 992px) and (max-width : 1199px) {}
+
+/* Min width 1200px to Max width 1399px */
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {}
+
+/* Min width 1600px */
+@media only screen and (min-width: 1600px) {}

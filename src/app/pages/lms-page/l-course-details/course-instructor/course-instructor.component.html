@@ -1,0 +1,49 @@
+<mat-card
+    class="daxa-card course-instructor-card mb-25 border-radius bg-white border-none d-block"
+    [class.rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mb-0">
+                Course Instructor
+            </h5>
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="course-instructor d-flex align-items-center">
+            <div class="image">
+                <img src="images/users/user1.jpg" alt="user-image">
+            </div>
+            <div class="title">
+                <span class="d-block fw-medium">
+                    Ann Cohen
+                </span>
+                <span class="d-block text-body">
+                    anncohen&#64;example.com
+                </span>
+            </div>
+        </div>
+        <div class="course-content">
+            <span class="title fw-medium d-block">
+                Course Description
+            </span>
+            <p>
+                This course is designed for beginners who want to learn the fundamentals of the Python programming language. The course covers basic syntax, data types, control structures, and an introduction to object-oriented programming. Participants will have hands-on coding exercises to reinforce their learning.
+            </p>
+            <span class="title fw-medium d-block">
+                Course Schedule
+            </span>
+            <p>
+                Start Date: August 01, 2024
+                <br>
+                End Date: December 30, 2024
+            </p>
+            <span class="title fw-medium d-block">
+                Status
+            </span>
+            <p>
+                The course is currently in progress. Students are actively engaged in the learning materials, and the instructor is providing guidance and support.
+            </p>
+        </div>
+    </mat-card-content>
+</mat-card>

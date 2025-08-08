@@ -1,0 +1,283 @@
+.mat-mdc-card {
+    &.daxa-card {
+        &.most-leads-card {
+            .mat-mdc-card-content {
+                .leads-list {
+                    margin-top: 0;
+
+                    li {
+                        border-bottom: 1px dashed #e0e0e0;
+                        padding: {
+                            top: 14.5px;
+                            bottom: 14.5px;
+                        };
+                        .title {
+                            .icon {
+                                width: 50px;
+                                height: 50px;
+                                margin-right: 12px;
+                                color: var(--daxaColor);
+                                
+                                i {
+                                    left: 0;
+                                    right: 0;
+                                    top: 50%;
+                                    font-size: 24px;
+                                    position: absolute;
+                                    transform: translateY(-50%);
+                                }
+                            }
+                        }
+                        &:nth-child(2) {
+                            .title {
+                                .icon {
+                                    color: var(--infoColor);
+                                }
+                            }
+                        }
+                        &:nth-child(3) {
+                            .title {
+                                .icon {
+                                    color: var(--primaryColor);
+                                }
+                            }
+                        }
+                        &:nth-child(4) {
+                            .title {
+                                .icon {
+                                    color: var(--warningColor);
+                                }
+                            }
+                        }
+                        &:last-child {
+                            border-bottom: 0;
+                            padding-bottom: 0;
+                        }
+                        &:first-child {
+                            padding-top: 0;
+                        }
+                    }
+                }
+            }
+            &.component-dark-theme {
+                .mat-mdc-card-content {
+                    .leads-list {
+                        li {
+                            border-color: rgba(255, 255, 255, 0.09);
+                        }
+                    }
+                }
+            }
+            &.rtl-enabled {
+                .mat-mdc-card-content {
+                    .leads-list {
+                        padding-right: 0;
+    
+                        li {
+                            .title {
+                                .icon {
+                                    margin: {
+                                        right: 0;
+                                        left: 12px;
+                                    };
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+::ng-deep {
+    .mat-mdc-card {
+        &.daxa-card {
+            &.most-leads-card {
+                .mat-mdc-card-content {
+                    .apexcharts-tooltip {
+                        .apexcharts-tooltip-series-group {
+                            padding-right: 12px;
+                            border-bottom: 0;
+                        }
+                    }
+                    .apexcharts-canvas {
+                        margin: auto;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width : 767px) {
+
+    .mat-mdc-card {
+        &.daxa-card {
+            &.most-leads-card {
+                .mat-mdc-card-content {
+                    .leads-list {
+                        li {
+                            padding: {
+                                top: 10px;
+                                bottom: 10px;
+                            };
+                            .title {
+                                .icon {
+                                    width: 40px;
+                                    height: 40px;
+                                    margin-right: 10px;
+                                    
+                                    i {
+                                        font-size: 22px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                &.rtl-enabled {
+                    .mat-mdc-card-content {
+                        .leads-list {
+                            li {
+                                .title {
+                                    .icon {
+                                        margin: {
+                                            right: 0;
+                                            left: 10px;
+                                        };
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    ::ng-deep {
+        .mat-mdc-card {
+            &.daxa-card {
+                &.most-leads-card {
+                    .mat-mdc-card-content {
+                        .apexcharts-tooltip {
+                            .apexcharts-tooltip-series-group {
+                                padding-right: 10px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 576px to Max width 767px */
+@media only screen and (min-width : 576px) and (max-width : 767px) {}
+
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width : 768px) and (max-width : 991px) {
+
+    .mat-mdc-card {
+        &.daxa-card {
+            &.most-leads-card {
+                .mat-mdc-card-content {
+                    .leads-list {
+                        li {
+                            padding: {
+                                top: 12px;
+                                bottom: 12px;
+                            };
+                            .title {
+                                .icon {
+                                    width: 45px;
+                                    height: 45px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width : 992px) and (max-width : 1199px) {
+
+    .mat-mdc-card {
+        &.daxa-card {
+            &.most-leads-card {
+                .mat-mdc-card-content {
+                    .leads-list {
+                        li {
+                            padding: {
+                                top: 12px;
+                                bottom: 12px;
+                            };
+                            .title {
+                                .icon {
+                                    width: 45px;
+                                    height: 45px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 1200px to Max width 1399px */
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {
+
+    .mat-mdc-card {
+        &.daxa-card {
+            &.most-leads-card {
+                .mat-mdc-card-content {
+                    .leads-list {
+                        li {
+                            padding: {
+                                top: 12px;
+                                bottom: 12px;
+                            };
+                            .title {
+                                .icon {
+                                    width: 45px;
+                                    height: 45px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 1600px */
+@media only screen and (min-width: 1600px) {
+
+    .mat-mdc-card {
+        &.daxa-card {
+            &.most-leads-card {
+                .mat-mdc-card-content {
+                    .leads-list {
+                        li {
+                            padding: {
+                                top: 10px;
+                                bottom: 10px;
+                            };
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}

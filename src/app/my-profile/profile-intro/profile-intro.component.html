@@ -1,0 +1,50 @@
+<mat-card
+    class="daxa-card profile-card mb-25 border-radius bg-white border-none d-block"
+    [class.rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mb-0">
+                Profile Intro
+            </h5>
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="user d-flex align-items-center">
+            <div class="image">
+                <img src="images/profile.jpg" class="rounded-circle" alt="profile-image">
+            </div>
+            <div class="title">
+                <span class="d-block fw-medium">
+                    Mateo Luca
+                </span>
+                <span class="d-block text-body">
+                    mateo&#64;daxa.com
+                </span>
+            </div>
+        </div>
+        <span class="sub-title d-block fw-medium">
+            About Me
+        </span>
+        <p>
+            Molestie tincidunt ut consequat a urna tortor. Vitae velit ac nisl velit mauris placerat nisi placerat. Pellentesque viverra lorem malesuada nunc tristique sapien. Imperdiet sit hendrerit tincidunt bibendum donec adipiscing.
+        </p>
+        <h5>
+            Social Profile
+        </h5>
+        <div class="socials-link">
+            <a href="https://www.facebook.com/" target="_blank" class="facebook d-inline-block text-center position-relative rounded-circle">
+                <i class="ri-facebook-fill"></i>
+            </a>
+            <a href="https://twitter.com/" target="_blank" class="twitter d-inline-block text-center position-relative rounded-circle">
+                <i class="ri-twitter-fill"></i>
+            </a>
+            <a href="https://www.linkedin.com/" target="_blank" class="linkedin d-inline-block text-center position-relative rounded-circle">
+                <i class="ri-linkedin-fill"></i>
+            </a>
+            <a href="mailto:mateo@daxa.com" class="mail d-inline-block text-center position-relative rounded-circle">
+                <i class="ri-mail-fill"></i>
+            </a>
+        </div>
+    </mat-card-content>
+</mat-card>

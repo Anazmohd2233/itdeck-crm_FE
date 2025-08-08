@@ -1,0 +1,24 @@
+<div
+    class="stat-item position-relative"
+    [class.component-dark-theme]="themeService.isDark()"
+    [class.rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <h5>
+        Leads
+    </h5>
+    <div class="number lh-1 fw-medium">
+        94,817
+    </div>
+    <span class="daxa-up-down-badge position-relative">
+        <i class="material-symbols-outlined">
+            trending_up
+        </i>
+        8.75%
+    </span>
+    <div class="chart">
+        <div id="crm_active_users_chart"></div>
+        <div class="title d-block text-body">
+            This Month
+        </div>
+    </div>
+</div>

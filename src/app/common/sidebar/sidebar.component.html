@@ -1,0 +1,343 @@
+<div
+    class="sidebar-area bg-white"
+    [ngClass]="{'active': isSidebarToggled}"
+    [class.component-dark-theme]="themeService.isDark()"
+    [class.dark-sidebar]="themeService.isSidebarDark()"
+    [class.right-sidebar]="themeService.isRightSidebar()"
+    [class.hide-sidebar]="themeService.isHideSidebar()"
+    [class.card-borderd-theme]="themeService.isCardBorder()"
+    [class.rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <div class="logo bg-white">
+        <a routerLink="/" class="d-flex align-items-center">
+            <img src="images/logo.png" width="155" alt="logo-icon">
+            <!-- <span class="fw-semibold">ITDECK</span> -->
+        </a>
+    </div>
+    <div
+        (click)="toggle()"
+        class="burger-menu"
+        [ngClass]="{'active': isSidebarToggled}"
+    >
+        <span class="top-bar"></span>
+        <span class="middle-bar"></span>
+        <span class="bottom-bar"></span>
+    </div>
+    <ng-scrollbar visibility="hover">
+        <div class="sidebar-inner">
+            <div class="sidebar-menu">
+                <mat-accordion>
+                    <span class="sub-title text-body">
+                        MAIN
+                    </span>
+                    <a routerLink="/crm" class="sidebar-menu-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                        <i class="material-symbols-outlined">
+                            dashboard
+                        </i>
+                        <span class="title">
+                            Dashboard
+                        </span>
+                    </a>
+                    <!-- <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = true">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <i class="material-symbols-outlined">
+                                    dashboard
+                                </i>
+                                <span class="title">
+                                    Dashboard
+                                </span>
+                                <span class="daxa-badge">
+                                    5
+                                </span>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <ul class="sidebar-sub-menu">
+                            <li class="sidemenu-item">
+                                <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    E-Commerce
+                                </a>
+                            </li>
+                            <li class="sidemenu-item">
+                                <a routerLink="/crm" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    CRM
+                                </a>
+                            </li>
+                            <li class="sidemenu-item">
+                                <a routerLink="/project-management" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Project Management
+                                </a>
+                            </li>
+                            <li class="sidemenu-item">
+                                <a routerLink="/lms" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    LMS
+                                </a>
+                            </li>
+                            <li class="sidemenu-item">
+                                <a routerLink="/help-desk" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Help Desk <span class="daxa-badge">Hot</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </mat-expansion-panel> -->
+                    <span class="sub-title text-body">
+                        CRM
+                    </span>
+                    <a routerLink="/crm-page" class="sidebar-menu-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                        <i class="material-symbols-outlined">
+                            perm_contact_calendar
+                        </i>
+                        <span class="title">
+                            Contacts
+                        </span>
+                    </a>
+                    <a routerLink="/crm-page/leads" class="sidebar-menu-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                        <i class="material-symbols-outlined">
+                            handshake
+                        </i>
+                        <span class="title">
+                            Leads
+                        </span>
+                    </a>
+                    <a routerLink="/customer" class="sidebar-menu-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                        <i class="material-symbols-outlined">
+                            school
+                        </i>
+                        <span class="title">
+                            Customer
+                        </span>
+                    </a>
+                    <a routerLink="/task" class="sidebar-menu-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                        <i class="material-symbols-outlined">
+                            work_history
+                        </i>
+                        <span class="title">
+                            Task
+                        </span>
+                    </a>
+                    <!-- <a routerLink="/kanban-board" class="sidebar-menu-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                        <i class="material-symbols-outlined">
+                            keyboard_command_key
+                        </i>
+                        <span class="title">
+                            Kanban Board
+                        </span>
+                    </a> -->
+
+                    <span class="sub-title text-body">
+                        Report
+                    </span>
+                    <a routerLink="/report" class="sidebar-menu-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                        <i class="material-symbols-outlined">
+                            auto_stories
+                        </i>
+                        <span class="title">
+                            Report
+
+                        </span>
+                    </a>
+
+                    <span class="sub-title text-body">
+                        Payments
+                    </span>
+                    <a routerLink="/payments" class="sidebar-menu-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                        <i class="material-symbols-outlined">
+                            payments
+                        </i>
+                        <span class="title">
+                            Payments
+                        </span>
+                    </a>
+                    
+                    <span class="sub-title text-body">
+                        Users
+                    </span>
+                    <a routerLink="/users" class="sidebar-menu-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                        <i class="material-symbols-outlined">
+                            person
+                        </i>
+                        <span class="title">
+                            Users
+
+                        </span>
+                    </a>
+                    <a routerLink="/teams" class="sidebar-menu-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                        <i class="material-symbols-outlined">
+                            group
+                        </i>
+                        <span class="title">
+                            Teams
+
+                        </span>
+                    </a>
+
+                    <!-- <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = true">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <i class="material-symbols-outlined">
+                                    auto_stories
+                                </i>
+                                <span class="title">
+                                    LMS
+                                </span>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <ul class="sidebar-sub-menu">
+                            <li class="sidemenu-item">
+                                <a routerLink="/lms-page" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Courses List
+                                </a>
+                            </li>
+                            <li class="sidemenu-item">
+                                <a routerLink="/lms-page/course-details" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Course Details
+                                </a>
+                            </li>
+                            <li class="sidemenu-item">
+                                <a routerLink="/lms-page/create-course" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Create Course
+                                </a>
+                            </li>
+                            <li class="sidemenu-item">
+                                <a routerLink="/lms-page/edit-course" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Edit Course
+                                </a>
+                            </li>
+                            <li class="sidemenu-item">
+                                <a routerLink="/lms-page/instructors" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Instructors
+                                </a>
+                            </li>
+                        </ul>
+                    </mat-expansion-panel> -->
+
+                    <!-- <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = true">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <i class="material-symbols-outlined">
+                                    handshake
+                                </i>
+                                <span class="title">
+                                    CRM
+                                </span>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <ul class="sidebar-sub-menu">
+                            <li class="sidemenu-item">
+                                <a routerLink="/crm-page" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Contacts
+                                </a>
+                            </li>
+                            <li class="sidemenu-item">
+                                <a routerLink="/crm-page/customers" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Customers
+                                </a>
+                            </li>
+                            <li class="sidemenu-item">
+                                <a routerLink="/crm-page/leads" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Leads
+                                </a>
+                            </li>
+                            <li class="sidemenu-item">
+                                <a routerLink="/crm-page/leads-kanban" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Leads Kanban
+                                </a>
+                            </li>
+
+                            <li class="sidemenu-item">
+                                <a routerLink="/crm-page/deals" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Deals
+                                </a>
+                            </li>
+                        </ul>
+                    </mat-expansion-panel> -->
+                    <!-- <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = true">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <i class="material-symbols-outlined">
+                                    description
+                                </i>
+                                <span class="title">
+                                    Project Management
+                                </span>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <ul class="sidebar-sub-menu">
+                            <li class="sidemenu-item">
+                                <a routerLink="/project-management-page" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Project Overview
+                                </a>
+                            </li>
+                            <li class="sidemenu-item">
+                                <a routerLink="/project-management-page/projects-list" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Projects List
+                                </a>
+                            </li>
+                            <li class="sidemenu-item">
+                                <a routerLink="/project-management-page/create-project" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Create Project
+                                </a>
+                            </li>
+                            <li class="sidemenu-item">
+                                <a routerLink="/project-management-page/clients" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Clients
+                                </a>
+                            </li>
+                            <li class="sidemenu-item">
+                                <a routerLink="/project-management-page/teams" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Teams
+                                </a>
+                            </li>
+                            <li class="sidemenu-item">
+                                <a routerLink="/project-management-page/kanban-board" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Kanban Board
+                                </a>
+                            </li>
+                            <li class="sidemenu-item">
+                                <a routerLink="/project-management-page/users" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Users
+                                </a>
+                            </li>
+                        </ul>
+                    </mat-expansion-panel> -->
+                    
+
+                    <!-- <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = true">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <i class="material-symbols-outlined">
+                                    work_history
+                                </i>
+                                <span class="title">
+                                    Task
+                                </span>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <ul class="sidebar-sub-menu">
+                            <li class="sidemenu-item">
+                                <a routerLink="/help-desk-page" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Tickets
+                                </a>
+                            </li>
+                            <li class="sidemenu-item">
+                                <a routerLink="/help-desk-page/ticket-details" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Ticket Details
+                                </a>
+                            </li>
+                            <li class="sidemenu-item">
+                                <a routerLink="/help-desk-page/agents" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Agents
+                                </a>
+                            </li>
+                            <li class="sidemenu-item">
+                                <a routerLink="/help-desk-page/reports" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Reports
+                                </a>
+                            </li>
+                        </ul>
+                    </mat-expansion-panel> -->
+                </mat-accordion>
+            </div>
+        </div>
+    </ng-scrollbar>
+</div>

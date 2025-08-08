@@ -1,0 +1,31 @@
+<mat-card class="daxa-card projects-roadmap-card mb-25 border-radius bg-white border-none d-block">
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mb-0">
+                Projects Roadmap
+            </h5>
+        </mat-card-title>
+        <mat-card-subtitle>
+            <button type="button" mat-button class="card-header-menu-btn" [matMenuTriggerFor]="cardHeaderMenu">
+                Week
+            </button>
+            <mat-menu #cardHeaderMenu="matMenu" class="card-header-menu" xPosition="before">
+                <button mat-menu-item>
+                    Day
+                </button>
+                <button mat-menu-item>
+                    Week
+                </button>
+                <button mat-menu-item>
+                    Month
+                </button>
+                <button mat-menu-item>
+                    Year
+                </button>
+            </mat-menu>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <div id="pm_projects_roadmap_chart"></div>
+    </mat-card-content>
+</mat-card>

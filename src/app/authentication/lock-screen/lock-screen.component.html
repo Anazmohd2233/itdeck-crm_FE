@@ -1,0 +1,53 @@
+<div class="lock-screen-area">
+    <div class="d-table">
+        <div class="d-table-cell">
+            <div
+                class="daxa-form ml-auto mr-auto border-radius bg-white"
+                [class.card-borderd-theme]="themeService.isCardBorder()"
+                [class.component-dark-theme]="themeService.isDark()"
+            >
+                <div class="title text-center">
+                    <h3>
+                        Welcome To Daxa
+                    </h3>
+                    <p class="ml-auto mr-auto">
+                        Enter your password to access the admin.
+                    </p>
+                </div>
+                <div class="admin text-center">
+                    <img src="images/admin.png" class="rounded-circle" alt="admin-image">
+                    <span class="d-block fw-medium">
+                        Mateo Luca
+                    </span>
+                </div>
+                <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
+                    <div class="form-group">
+                        <label class="main-label d-block lh-1 text-black">
+                            Password
+                        </label>
+                        <mat-form-field>
+                            <mat-label>
+                                Enter password
+                            </mat-label>
+                            <input matInput [type]="hide ? 'password' : 'text'" id="password" formControlName="password">
+                            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                <span class="material-symbols-outlined">
+                                    {{hide ? 'visibility_off' : 'visibility'}}
+                                </span>
+                            </button>
+                        </mat-form-field>
+                        <div class="error text-danger" *ngIf="authForm.get('password')!.hasError('required') && authForm.get('password')!.touched">
+                            Password is required.
+                        </div>
+                        <div class="error text-danger" *ngIf="authForm.get('password')!.hasError('minlength') && authForm.get('password')!.touched">
+                            Password must be at least 8 characters long.
+                        </div>
+                    </div>
+                    <button mat-button class="btn" type="submit" [disabled]="authForm.invalid">
+                        Sign In
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

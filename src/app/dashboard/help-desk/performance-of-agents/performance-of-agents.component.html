@@ -1,0 +1,134 @@
+<mat-card
+    class="daxa-card performance-of-agents-card mb-25 border-radius bg-white border-none d-block"
+    [class.component-dark-theme]="themeService.isDark()"
+    [class.rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mb-0">
+                Performance of Agents
+            </h5>
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="performance-of-agents-table">
+            <div class="table-responsive">
+                <table mat-table [dataSource]="dataSource">
+
+                    <!-- Agent ID Column -->
+                    <ng-container matColumnDef="agentID">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Agent ID
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.agentID}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Agent Column -->
+                    <ng-container matColumnDef="agent">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Agent
+                        </th>
+                        <td mat-cell *matCellDef="let element" class="text-black">
+                            <div class="info d-flex align-items-center">
+                                <div class="image">
+                                    <img [src]="element.agent.img" alt="customer-image">
+                                </div>
+                                <span class="d-block fw-medium">
+                                    {{element.agent.name}}
+                                </span>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <!-- Total Tickets Column -->
+                    <ng-container matColumnDef="totalTickets">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Total Tickets
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.totalTickets}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Open Tickets Column -->
+                    <ng-container matColumnDef="openTickets">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Open Tickets
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.openTickets}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Resolved Tickets Column -->
+                    <ng-container matColumnDef="resolvedTickets">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Resolved Tickets
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.resolvedTickets}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Ave. Resolution Time Column -->
+                    <ng-container matColumnDef="aveResolutionTime">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Ave. Resolution Time
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.aveResolutionTime}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Satisfaction Rate Column -->
+                    <ng-container matColumnDef="satisfactionRate">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Satisfaction Rate
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="d-flex align-items-center">
+                                <span class="percentage d-block text-body">
+                                    {{element.satisfactionRate}}%
+                                </span>
+                                <mat-progress-bar mode="determinate" [value]="element.satisfactionRate"></mat-progress-bar>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <!-- Action Column -->
+                    <ng-container matColumnDef="action">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Action
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="action-info">
+                                <button type="button" mat-button matTooltip="View Agent" matTooltipPosition="above">
+                                    <i class="material-symbols-outlined">
+                                        {{element.action.view}}
+                                    </i>
+                                </button>
+                                <button type="button" mat-button matTooltip="Edit Agent" matTooltipPosition="above">
+                                    <i class="material-symbols-outlined">
+                                        {{element.action.edit}}
+                                    </i>
+                                </button>
+                                <button type="button" mat-button matTooltip="Delete Agent" matTooltipPosition="above">
+                                    <i class="material-symbols-outlined">
+                                        {{element.action.delete}}
+                                    </i>
+                                </button>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                </table>
+            </div>
+            <mat-paginator [pageSizeOptions]="[6, 12, 18]" showFirstLastButtons></mat-paginator>
+        </div>
+    </mat-card-content>
+</mat-card>

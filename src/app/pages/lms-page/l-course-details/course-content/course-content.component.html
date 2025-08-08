@@ -1,0 +1,737 @@
+<mat-card
+    class="daxa-card course-content-card mb-25 border-radius bg-white border-none d-block"
+    [class.component-dark-theme]="themeService.isDark()"
+    [class.rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mb-0">
+                Course Content
+            </h5>
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-accordion>
+            <mat-expansion-panel expanded>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Course Overview
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        <span class="d-inline-block">
+                            5 lecture
+                        </span>
+                        <span class="d-inline-block">
+                            16min
+                        </span>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <ul class="pl-0 mt-0 mb-0 list-unstyled">
+                    <li class="position-relative d-flex align-items-center justify-content-between">
+                        <i class="material-symbols-outlined">
+                            smart_display
+                        </i>
+                        <span class="d-block text-body">
+                            Auto welcome message
+                        </span>
+                        <span class="d-block text-body">
+                            00:55
+                        </span>
+                    </li>
+                    <li class="position-relative d-flex align-items-center justify-content-between">
+                        <i class="material-symbols-outlined">
+                            smart_display
+                        </i>
+                        <span class="d-block text-body">
+                            Course Introduction
+                        </span>
+                        <span class="d-block text-body">
+                            05:30
+                        </span>
+                    </li>
+                    <li class="position-relative d-flex align-items-center justify-content-between">
+                        <i class="material-symbols-outlined">
+                            smart_display
+                        </i>
+                        <span class="d-block text-body">
+                            Course Curriculum
+                        </span>
+                        <span class="d-block text-body">
+                            04:55
+                        </span>
+                    </li>
+                    <li class="position-relative d-flex align-items-center justify-content-between">
+                        <i class="material-symbols-outlined">
+                            smart_display
+                        </i>
+                        <span class="d-block text-body">
+                            Why Python
+                        </span>
+                        <span class="d-block text-body">
+                            04:55
+                        </span>
+                    </li>
+                    <li class="position-relative d-flex align-items-center justify-content-between">
+                        <i class="material-symbols-outlined">
+                            smart_display
+                        </i>
+                        <span class="d-block text-body">
+                            Course FAQs
+                        </span>
+                        <span class="d-block text-body">
+                            04:55
+                        </span>
+                    </li>
+                </ul>
+            </mat-expansion-panel>
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Python Setup
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        <span class="d-inline-block">
+                            4 lecture
+                        </span>
+                        <span class="d-inline-block">
+                            35min
+                        </span>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <ul class="pl-0 mt-0 mb-0 list-unstyled">
+                    <li class="position-relative d-flex align-items-center justify-content-between">
+                        <i class="material-symbols-outlined">
+                            smart_display
+                        </i>
+                        <span class="d-block text-body">
+                            Auto welcome message
+                        </span>
+                        <span class="d-block text-body">
+                            00:55
+                        </span>
+                    </li>
+                    <li class="position-relative d-flex align-items-center justify-content-between">
+                        <i class="material-symbols-outlined">
+                            smart_display
+                        </i>
+                        <span class="d-block text-body">
+                            Course Introduction
+                        </span>
+                        <span class="d-block text-body">
+                            05:30
+                        </span>
+                    </li>
+                    <li class="position-relative d-flex align-items-center justify-content-between">
+                        <i class="material-symbols-outlined">
+                            smart_display
+                        </i>
+                        <span class="d-block text-body">
+                            Course Curriculum
+                        </span>
+                        <span class="d-block text-body">
+                            04:55
+                        </span>
+                    </li>
+                    <li class="position-relative d-flex align-items-center justify-content-between">
+                        <i class="material-symbols-outlined">
+                            smart_display
+                        </i>
+                        <span class="d-block text-body">
+                            Why Python
+                        </span>
+                        <span class="d-block text-body">
+                            04:55
+                        </span>
+                    </li>
+                    <li class="position-relative d-flex align-items-center justify-content-between">
+                        <i class="material-symbols-outlined">
+                            smart_display
+                        </i>
+                        <span class="d-block text-body">
+                            Course FAQs
+                        </span>
+                        <span class="d-block text-body">
+                            04:55
+                        </span>
+                    </li>
+                </ul>
+            </mat-expansion-panel>
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Python comparison
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        <span class="d-inline-block">
+                            8 lecture
+                        </span>
+                        <span class="d-inline-block">
+                            22min
+                        </span>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <ul class="pl-0 mt-0 mb-0 list-unstyled">
+                    <li class="position-relative d-flex align-items-center justify-content-between">
+                        <i class="material-symbols-outlined">
+                            smart_display
+                        </i>
+                        <span class="d-block text-body">
+                            Auto welcome message
+                        </span>
+                        <span class="d-block text-body">
+                            00:55
+                        </span>
+                    </li>
+                    <li class="position-relative d-flex align-items-center justify-content-between">
+                        <i class="material-symbols-outlined">
+                            smart_display
+                        </i>
+                        <span class="d-block text-body">
+                            Course Introduction
+                        </span>
+                        <span class="d-block text-body">
+                            05:30
+                        </span>
+                    </li>
+                    <li class="position-relative d-flex align-items-center justify-content-between">
+                        <i class="material-symbols-outlined">
+                            smart_display
+                        </i>
+                        <span class="d-block text-body">
+                            Course Curriculum
+                        </span>
+                        <span class="d-block text-body">
+                            04:55
+                        </span>
+                    </li>
+                    <li class="position-relative d-flex align-items-center justify-content-between">
+                        <i class="material-symbols-outlined">
+                            smart_display
+                        </i>
+                        <span class="d-block text-body">
+                            Why Python
+                        </span>
+                        <span class="d-block text-body">
+                            04:55
+                        </span>
+                    </li>
+                    <li class="position-relative d-flex align-items-center justify-content-between">
+                        <i class="material-symbols-outlined">
+                            smart_display
+                        </i>
+                        <span class="d-block text-body">
+                            Course FAQs
+                        </span>
+                        <span class="d-block text-body">
+                            04:55
+                        </span>
+                    </li>
+                </ul>
+            </mat-expansion-panel>
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Python statements
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        <span class="d-inline-block">
+                            5 lecture
+                        </span>
+                        <span class="d-inline-block">
+                            20min
+                        </span>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <ul class="pl-0 mt-0 mb-0 list-unstyled">
+                    <li class="position-relative d-flex align-items-center justify-content-between">
+                        <i class="material-symbols-outlined">
+                            smart_display
+                        </i>
+                        <span class="d-block text-body">
+                            Auto welcome message
+                        </span>
+                        <span class="d-block text-body">
+                            00:55
+                        </span>
+                    </li>
+                    <li class="position-relative d-flex align-items-center justify-content-between">
+                        <i class="material-symbols-outlined">
+                            smart_display
+                        </i>
+                        <span class="d-block text-body">
+                            Course Introduction
+                        </span>
+                        <span class="d-block text-body">
+                            05:30
+                        </span>
+                    </li>
+                    <li class="position-relative d-flex align-items-center justify-content-between">
+                        <i class="material-symbols-outlined">
+                            smart_display
+                        </i>
+                        <span class="d-block text-body">
+                            Course Curriculum
+                        </span>
+                        <span class="d-block text-body">
+                            04:55
+                        </span>
+                    </li>
+                    <li class="position-relative d-flex align-items-center justify-content-between">
+                        <i class="material-symbols-outlined">
+                            smart_display
+                        </i>
+                        <span class="d-block text-body">
+                            Why Python
+                        </span>
+                        <span class="d-block text-body">
+                            04:55
+                        </span>
+                    </li>
+                    <li class="position-relative d-flex align-items-center justify-content-between">
+                        <i class="material-symbols-outlined">
+                            smart_display
+                        </i>
+                        <span class="d-block text-body">
+                            Course FAQs
+                        </span>
+                        <span class="d-block text-body">
+                            04:55
+                        </span>
+                    </li>
+                </ul>
+            </mat-expansion-panel>
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Python decorators
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        <span class="d-inline-block">
+                            2 lecture
+                        </span>
+                        <span class="d-inline-block">
+                            55min
+                        </span>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <ul class="pl-0 mt-0 mb-0 list-unstyled">
+                    <li class="position-relative d-flex align-items-center justify-content-between">
+                        <i class="material-symbols-outlined">
+                            smart_display
+                        </i>
+                        <span class="d-block text-body">
+                            Auto welcome message
+                        </span>
+                        <span class="d-block text-body">
+                            00:55
+                        </span>
+                    </li>
+                    <li class="position-relative d-flex align-items-center justify-content-between">
+                        <i class="material-symbols-outlined">
+                            smart_display
+                        </i>
+                        <span class="d-block text-body">
+                            Course Introduction
+                        </span>
+                        <span class="d-block text-body">
+                            05:30
+                        </span>
+                    </li>
+                    <li class="position-relative d-flex align-items-center justify-content-between">
+                        <i class="material-symbols-outlined">
+                            smart_display
+                        </i>
+                        <span class="d-block text-body">
+                            Course Curriculum
+                        </span>
+                        <span class="d-block text-body">
+                            04:55
+                        </span>
+                    </li>
+                    <li class="position-relative d-flex align-items-center justify-content-between">
+                        <i class="material-symbols-outlined">
+                            smart_display
+                        </i>
+                        <span class="d-block text-body">
+                            Why Python
+                        </span>
+                        <span class="d-block text-body">
+                            04:55
+                        </span>
+                    </li>
+                    <li class="position-relative d-flex align-items-center justify-content-between">
+                        <i class="material-symbols-outlined">
+                            smart_display
+                        </i>
+                        <span class="d-block text-body">
+                            Course FAQs
+                        </span>
+                        <span class="d-block text-body">
+                            04:55
+                        </span>
+                    </li>
+                </ul>
+            </mat-expansion-panel>
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Python generators
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        <span class="d-inline-block">
+                            6 lecture
+                        </span>
+                        <span class="d-inline-block">
+                            35min
+                        </span>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <ul class="pl-0 mt-0 mb-0 list-unstyled">
+                    <li class="position-relative d-flex align-items-center justify-content-between">
+                        <i class="material-symbols-outlined">
+                            smart_display
+                        </i>
+                        <span class="d-block text-body">
+                            Auto welcome message
+                        </span>
+                        <span class="d-block text-body">
+                            00:55
+                        </span>
+                    </li>
+                    <li class="position-relative d-flex align-items-center justify-content-between">
+                        <i class="material-symbols-outlined">
+                            smart_display
+                        </i>
+                        <span class="d-block text-body">
+                            Course Introduction
+                        </span>
+                        <span class="d-block text-body">
+                            05:30
+                        </span>
+                    </li>
+                    <li class="position-relative d-flex align-items-center justify-content-between">
+                        <i class="material-symbols-outlined">
+                            smart_display
+                        </i>
+                        <span class="d-block text-body">
+                            Course Curriculum
+                        </span>
+                        <span class="d-block text-body">
+                            04:55
+                        </span>
+                    </li>
+                    <li class="position-relative d-flex align-items-center justify-content-between">
+                        <i class="material-symbols-outlined">
+                            smart_display
+                        </i>
+                        <span class="d-block text-body">
+                            Why Python
+                        </span>
+                        <span class="d-block text-body">
+                            04:55
+                        </span>
+                    </li>
+                    <li class="position-relative d-flex align-items-center justify-content-between">
+                        <i class="material-symbols-outlined">
+                            smart_display
+                        </i>
+                        <span class="d-block text-body">
+                            Course FAQs
+                        </span>
+                        <span class="d-block text-body">
+                            04:55
+                        </span>
+                    </li>
+                </ul>
+            </mat-expansion-panel>
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Advanced python modules
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        <span class="d-inline-block">
+                            3 lecture
+                        </span>
+                        <span class="d-inline-block">
+                            50min
+                        </span>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <ul class="pl-0 mt-0 mb-0 list-unstyled">
+                    <li class="position-relative d-flex align-items-center justify-content-between">
+                        <i class="material-symbols-outlined">
+                            smart_display
+                        </i>
+                        <span class="d-block text-body">
+                            Auto welcome message
+                        </span>
+                        <span class="d-block text-body">
+                            00:55
+                        </span>
+                    </li>
+                    <li class="position-relative d-flex align-items-center justify-content-between">
+                        <i class="material-symbols-outlined">
+                            smart_display
+                        </i>
+                        <span class="d-block text-body">
+                            Course Introduction
+                        </span>
+                        <span class="d-block text-body">
+                            05:30
+                        </span>
+                    </li>
+                    <li class="position-relative d-flex align-items-center justify-content-between">
+                        <i class="material-symbols-outlined">
+                            smart_display
+                        </i>
+                        <span class="d-block text-body">
+                            Course Curriculum
+                        </span>
+                        <span class="d-block text-body">
+                            04:55
+                        </span>
+                    </li>
+                    <li class="position-relative d-flex align-items-center justify-content-between">
+                        <i class="material-symbols-outlined">
+                            smart_display
+                        </i>
+                        <span class="d-block text-body">
+                            Why Python
+                        </span>
+                        <span class="d-block text-body">
+                            04:55
+                        </span>
+                    </li>
+                    <li class="position-relative d-flex align-items-center justify-content-between">
+                        <i class="material-symbols-outlined">
+                            smart_display
+                        </i>
+                        <span class="d-block text-body">
+                            Course FAQs
+                        </span>
+                        <span class="d-block text-body">
+                            04:55
+                        </span>
+                    </li>
+                </ul>
+            </mat-expansion-panel>
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Emails with python
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        <span class="d-inline-block">
+                            4 lecture
+                        </span>
+                        <span class="d-inline-block">
+                            30min
+                        </span>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <ul class="pl-0 mt-0 mb-0 list-unstyled">
+                    <li class="position-relative d-flex align-items-center justify-content-between">
+                        <i class="material-symbols-outlined">
+                            smart_display
+                        </i>
+                        <span class="d-block text-body">
+                            Auto welcome message
+                        </span>
+                        <span class="d-block text-body">
+                            00:55
+                        </span>
+                    </li>
+                    <li class="position-relative d-flex align-items-center justify-content-between">
+                        <i class="material-symbols-outlined">
+                            smart_display
+                        </i>
+                        <span class="d-block text-body">
+                            Course Introduction
+                        </span>
+                        <span class="d-block text-body">
+                            05:30
+                        </span>
+                    </li>
+                    <li class="position-relative d-flex align-items-center justify-content-between">
+                        <i class="material-symbols-outlined">
+                            smart_display
+                        </i>
+                        <span class="d-block text-body">
+                            Course Curriculum
+                        </span>
+                        <span class="d-block text-body">
+                            04:55
+                        </span>
+                    </li>
+                    <li class="position-relative d-flex align-items-center justify-content-between">
+                        <i class="material-symbols-outlined">
+                            smart_display
+                        </i>
+                        <span class="d-block text-body">
+                            Why Python
+                        </span>
+                        <span class="d-block text-body">
+                            04:55
+                        </span>
+                    </li>
+                    <li class="position-relative d-flex align-items-center justify-content-between">
+                        <i class="material-symbols-outlined">
+                            smart_display
+                        </i>
+                        <span class="d-block text-body">
+                            Course FAQs
+                        </span>
+                        <span class="d-block text-body">
+                            04:55
+                        </span>
+                    </li>
+                </ul>
+            </mat-expansion-panel>
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Final capstone python
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        <span class="d-inline-block">
+                            3 lecture
+                        </span>
+                        <span class="d-inline-block">
+                            45min
+                        </span>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <ul class="pl-0 mt-0 mb-0 list-unstyled">
+                    <li class="position-relative d-flex align-items-center justify-content-between">
+                        <i class="material-symbols-outlined">
+                            smart_display
+                        </i>
+                        <span class="d-block text-body">
+                            Auto welcome message
+                        </span>
+                        <span class="d-block text-body">
+                            00:55
+                        </span>
+                    </li>
+                    <li class="position-relative d-flex align-items-center justify-content-between">
+                        <i class="material-symbols-outlined">
+                            smart_display
+                        </i>
+                        <span class="d-block text-body">
+                            Course Introduction
+                        </span>
+                        <span class="d-block text-body">
+                            05:30
+                        </span>
+                    </li>
+                    <li class="position-relative d-flex align-items-center justify-content-between">
+                        <i class="material-symbols-outlined">
+                            smart_display
+                        </i>
+                        <span class="d-block text-body">
+                            Course Curriculum
+                        </span>
+                        <span class="d-block text-body">
+                            04:55
+                        </span>
+                    </li>
+                    <li class="position-relative d-flex align-items-center justify-content-between">
+                        <i class="material-symbols-outlined">
+                            smart_display
+                        </i>
+                        <span class="d-block text-body">
+                            Why Python
+                        </span>
+                        <span class="d-block text-body">
+                            04:55
+                        </span>
+                    </li>
+                    <li class="position-relative d-flex align-items-center justify-content-between">
+                        <i class="material-symbols-outlined">
+                            smart_display
+                        </i>
+                        <span class="d-block text-body">
+                            Course FAQs
+                        </span>
+                        <span class="d-block text-body">
+                            04:55
+                        </span>
+                    </li>
+                </ul>
+            </mat-expansion-panel>
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Python data structures
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        <span class="d-inline-block">
+                            2 lecture
+                        </span>
+                        <span class="d-inline-block">
+                            20min
+                        </span>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <ul class="pl-0 mt-0 mb-0 list-unstyled">
+                    <li class="position-relative d-flex align-items-center justify-content-between">
+                        <i class="material-symbols-outlined">
+                            smart_display
+                        </i>
+                        <span class="d-block text-body">
+                            Auto welcome message
+                        </span>
+                        <span class="d-block text-body">
+                            00:55
+                        </span>
+                    </li>
+                    <li class="position-relative d-flex align-items-center justify-content-between">
+                        <i class="material-symbols-outlined">
+                            smart_display
+                        </i>
+                        <span class="d-block text-body">
+                            Course Introduction
+                        </span>
+                        <span class="d-block text-body">
+                            05:30
+                        </span>
+                    </li>
+                    <li class="position-relative d-flex align-items-center justify-content-between">
+                        <i class="material-symbols-outlined">
+                            smart_display
+                        </i>
+                        <span class="d-block text-body">
+                            Course Curriculum
+                        </span>
+                        <span class="d-block text-body">
+                            04:55
+                        </span>
+                    </li>
+                    <li class="position-relative d-flex align-items-center justify-content-between">
+                        <i class="material-symbols-outlined">
+                            smart_display
+                        </i>
+                        <span class="d-block text-body">
+                            Why Python
+                        </span>
+                        <span class="d-block text-body">
+                            04:55
+                        </span>
+                    </li>
+                    <li class="position-relative d-flex align-items-center justify-content-between">
+                        <i class="material-symbols-outlined">
+                            smart_display
+                        </i>
+                        <span class="d-block text-body">
+                            Course FAQs
+                        </span>
+                        <span class="d-block text-body">
+                            04:55
+                        </span>
+                    </li>
+                </ul>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </mat-card-content>
+</mat-card>

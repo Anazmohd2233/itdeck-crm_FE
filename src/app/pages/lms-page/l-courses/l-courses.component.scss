@@ -1,0 +1,347 @@
+.mat-mdc-card {
+    &.daxa-card {
+        &.courses-card {
+            .mat-mdc-card-content {
+                margin: {
+                    left: -20px;
+                    right: -20px;
+                };
+            }
+        }
+    }
+}
+::ng-deep {
+    .mat-mdc-card {
+        &.daxa-card {
+            &.courses-card {
+                .mat-mdc-card-content {
+                    .courses-table {
+                        .mat-mdc-table {
+                            .mat-mdc-header-cell {
+                                &:last-child {
+                                    text-align: right;
+                                }
+                            }
+                            .mat-mdc-cell {
+                                padding: {
+                                    top: 24px;
+                                    bottom: 24px;
+                                };
+                                &:last-child {
+                                    text-align: right;
+                                }
+                            }
+                        }
+                        .mat-mdc-paginator {
+                            padding: {
+                                top: 15px;
+                                left: 20px;
+                                right: 20px;
+                            };
+                        }
+                    }
+                    .mat-mdc-tab-group {
+                        display: block;
+
+                        .mat-mdc-tab-header {
+                            display: block;
+                            text-align: right;
+                            margin: {
+                                top: -26.5px;
+                                bottom: 20px;
+                            };
+                            padding: {
+                                left: 20px;
+                                right: 20px;
+                            };
+                            .mat-mdc-tab {
+                                display: inline-block;
+                                margin-right: 10px;
+                                min-width: auto;
+                                height: auto;
+                                padding: 0;
+                                font: {
+                                    size: 15px;
+                                    weight: 500;
+                                };
+                                .mdc-tab__text-label {
+                                    border: 1px solid #e0e0e0;
+                                    color: var(--blackColor);
+                                    display: inline-block;
+                                    border-radius: 2px;
+                                    padding: 6px 15px;
+                                    transition: unset;
+                                }
+                                &:last-child {
+                                    margin-right: 0;
+                                }
+                                &.mdc-tab--active {
+                                    .mdc-tab__text-label {
+                                        color: var(--whiteColor);
+                                        border-color: var(--daxaColor);
+                                        background-color: var(--daxaColor);
+                                    }
+                                }
+                            }
+                            .mdc-tab-indicator {
+                                display: none;
+                            }
+                            .mat-mdc-tab-labels {
+                                display: block;
+                            }
+                            .mat-mdc-tab-label-container {
+                                display: block;
+                                border: 0;
+                            }
+                            .mat-mdc-tab-header-pagination {
+                                display: none;
+                            }
+                        }
+                        .mat-mdc-tab-body-wrapper {
+                            display: block;
+
+                            .mat-mdc-tab-body {
+                                overflow: hidden;
+
+                                .mat-mdc-tab-body-content {
+                                    overflow: hidden;
+                                    height: auto;
+                                }
+                            }
+                        }
+                    }
+                }
+                &.component-dark-theme {
+                    .mat-mdc-card-content {
+                        .mat-mdc-tab-group {
+                            .mat-mdc-tab-header {
+                                .mat-mdc-tab {
+                                    .mdc-tab__text-label {
+                                        border-color: rgba(255, 255, 255, 0.09);
+                                        color: var(--whiteColor);
+                                    }
+                                    &.mdc-tab--active {
+                                        .mdc-tab__text-label {
+                                            border-color: var(--daxaColor);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                &.rtl-enabled {
+                    .mat-mdc-card-content {
+                        .courses-table {
+                            .mat-mdc-table {
+                                .mat-mdc-header-cell {
+                                    &:last-child {
+                                        text-align: left;
+                                    }
+                                }
+                                .mat-mdc-cell {
+                                    &:last-child {
+                                        text-align: left;
+                                    }
+                                }
+                            }
+                        }
+                        .mat-mdc-tab-group {
+                            .mat-mdc-tab-header {
+                                text-align: left;
+                                
+                                .mat-mdc-tab {
+                                    margin-right: 10px;
+                                    margin: {
+                                        right: 0;
+                                        left: 10px;
+                                    };
+                                    &:last-child {
+                                        margin-left: 0;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width : 767px) {
+
+    .mat-mdc-card {
+        &.daxa-card {
+            &.courses-card {
+                .mat-mdc-card-content {
+                    margin: {
+                        left: -15px;
+                        right: -15px;
+                    };
+                }
+            }
+        }
+    }
+    ::ng-deep {
+        .mat-mdc-card {
+            &.daxa-card {
+                &.courses-card {
+                    .mat-mdc-card-header {
+                        .mat-mdc-card-header-text {
+                            display: block;
+
+                            .mat-mdc-card-subtitle {
+                                margin-top: 12px;
+                            }
+                        }
+                    }
+                    .mat-mdc-card-content {
+                        .courses-table {
+                            .mat-mdc-table {
+                                .mat-mdc-cell {
+                                    padding: {
+                                        top: 15px;
+                                        bottom: 15px;
+                                    };
+                                }
+                            }
+                            .mat-mdc-paginator {
+                                padding: {
+                                    top: 10px;
+                                    left: 15px;
+                                    right: 15px;
+                                };
+                            }
+                        }
+                        .mat-mdc-tab-group {
+                            .mat-mdc-tab-header {
+                                text-align: left;
+                                padding: {
+                                    left: 15px;
+                                    right: 15px;
+                                };
+                                margin: {
+                                    top: 0;
+                                    bottom: 5px;
+                                };
+                                .mat-mdc-tab {
+                                    font-size: 14px;
+                                    margin: {
+                                        right: 10px;
+                                        bottom: 10px;
+                                    };
+                                    .mdc-tab__text-label {
+                                        padding: 5px 12px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    &.rtl-enabled {
+                        .mat-mdc-card-content {
+                            .mat-mdc-tab-group {
+                                .mat-mdc-tab-header {
+                                    text-align: right;
+                                    
+                                    .mat-mdc-tab {
+                                        margin: {
+                                            right: 0;
+                                            left: 10px;
+                                        };
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 576px to Max width 767px */
+@media only screen and (min-width : 576px) and (max-width : 767px) {
+
+    .mat-mdc-card {
+        &.daxa-card {
+            &.courses-card {
+                .mat-mdc-card-content {
+                    margin: {
+                        left: -20px;
+                        right: -20px;
+                    };
+                }
+            }
+        }
+    }
+    ::ng-deep {
+        .mat-mdc-card {
+            &.daxa-card {
+                &.courses-card {
+                    .mat-mdc-card-content {
+                        .courses-table {
+                            .mat-mdc-paginator {
+                                padding: {
+                                    left: 20px;
+                                    right: 20px;
+                                };
+                            }
+                        }
+                        .mat-mdc-tab-group {
+                            .mat-mdc-tab-header {
+                                padding: {
+                                    left: 20px;
+                                    right: 20px;
+                                };
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width : 768px) and (max-width : 991px) {
+
+    ::ng-deep {
+        .mat-mdc-card {
+            &.daxa-card {
+                &.courses-card {
+                    .mat-mdc-card-content {
+                        .mat-mdc-tab-group {
+                            .mat-mdc-tab-header {
+                                text-align: left;
+                                margin-top: 0;
+                            }
+                        }
+                    }
+                    &.rtl-enabled {
+                        .mat-mdc-card-content {
+                            .mat-mdc-tab-group {
+                                .mat-mdc-tab-header {
+                                    text-align: right;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width : 992px) and (max-width : 1199px) {}
+
+/* Min width 1200px to Max width 1399px */
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {}
+
+/* Min width 1600px */
+@media only screen and (min-width: 1600px) {}

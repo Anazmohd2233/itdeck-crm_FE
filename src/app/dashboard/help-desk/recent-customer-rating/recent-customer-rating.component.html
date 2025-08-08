@@ -1,0 +1,98 @@
+<mat-card
+    class="daxa-card recent-customer-rating-card mb-25 border-radius bg-white border-none d-block"
+    [class.component-dark-theme]="themeService.isDark()"
+    [class.rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mb-0">
+                Recent Customer Rating
+            </h5>
+        </mat-card-title>
+        <mat-card-subtitle>
+            <button type="button" mat-button class="card-header-menu-btn" [matMenuTriggerFor]="cardHeaderMenu">
+                Last Week
+            </button>
+            <mat-menu #cardHeaderMenu="matMenu" class="card-header-menu" xPosition="before">
+                <button mat-menu-item>
+                    Last Day
+                </button>
+                <button mat-menu-item>
+                    Last Week
+                </button>
+                <button mat-menu-item>
+                    Last Month
+                </button>
+                <button mat-menu-item>
+                    Last Year
+                </button>
+            </mat-menu>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="recent-customer-rating-table">
+            <div class="table-responsive">
+                <table mat-table [dataSource]="dataSource">
+
+                    <!-- ID Column -->
+                    <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef>
+                            # ID
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.id}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Customer Column -->
+                    <ng-container matColumnDef="customer">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Customer
+                        </th>
+                        <td mat-cell *matCellDef="let element" class="text-black">
+                            <div class="info d-flex align-items-center">
+                                <div class="image">
+                                    <img [src]="element.customer.img" alt="customer-image">
+                                </div>
+                                <span class="d-block fw-medium">
+                                    {{element.customer.name}}
+                                </span>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <!-- Rating Column -->
+                    <ng-container matColumnDef="rating">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Rating
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="rating d-flex align-items-center text-body">
+                                <i class="{{element.rating.star1}}"></i>
+                                <i class="{{element.rating.star2}}"></i>
+                                <i class="{{element.rating.star3}}"></i>
+                                <i class="{{element.rating.star4}}"></i>
+                                <i class="{{element.rating.star5}}"></i>
+                                ({{element.rating.overallStar}})
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <!-- Message Column -->
+                    <ng-container matColumnDef="message">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Message
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.message}}
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                </table>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

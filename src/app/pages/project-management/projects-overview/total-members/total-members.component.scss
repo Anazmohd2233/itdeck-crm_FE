@@ -1,0 +1,99 @@
+.mat-mdc-card {
+    &.daxa-card {
+        &.total-members-card {
+            margin-bottom: 20px;
+            background-color: #eff3f9;
+
+            .mat-mdc-card-content {
+                .title {
+                    h5 {
+                        margin-bottom: 10px;
+                    }
+                    .number {
+                        font-size: 26px;
+                    }
+                }
+                .users {
+                    img {
+                        width: 37px;
+                        height: 37px;
+                        border-radius: 50%;
+                        margin-right: -15px;
+                        border: 2px solid var(--whiteColor);
+                    }
+                    div {
+                        width: 37px;
+                        height: 37px;
+                        font-size: 13px;
+                        line-height: 33px;
+                        text-align: center;
+                        border: 2px solid var(--whiteColor);
+                    }
+                }
+                .info {
+                    margin-top: 43px;
+
+                    .sub-title {
+                        font-size: 14px;
+                    }
+                }
+            }
+            &.component-dark-theme {
+                background-color: #28333f;
+
+                .mat-mdc-card-content {
+                    .users {
+                        img {
+                            border-color: #1b232d;
+                        }
+                        div {
+                            border-color: #1b232d;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width : 767px) {
+
+    .mat-mdc-card {
+        &.daxa-card {
+            &.total-members-card {
+                margin-bottom: 15px;
+
+                .mat-mdc-card-content {
+                    .title {
+                        .number {
+                            font-size: 22px;
+                        }
+                    }
+                    .users {
+                        margin-top: 13px;
+                    }
+                    .info {
+                        margin-top: 15px;
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 576px to Max width 767px */
+@media only screen and (min-width : 576px) and (max-width : 767px) {}
+
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width : 768px) and (max-width : 991px) {}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width : 992px) and (max-width : 1199px) {}
+
+/* Min width 1200px to Max width 1399px */
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {}
+
+/* Min width 1600px */
+@media only screen and (min-width: 1600px) {}

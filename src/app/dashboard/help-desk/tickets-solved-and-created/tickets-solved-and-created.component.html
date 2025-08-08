@@ -1,0 +1,31 @@
+<mat-card class="daxa-card tickets-solved-and-created-card mb-25 border-radius bg-white border-none d-block">
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mb-0">
+                Tickets Solved and Created
+            </h5>
+        </mat-card-title>
+        <mat-card-subtitle>
+            <button type="button" mat-button class="card-header-menu-btn" [matMenuTriggerFor]="cardHeaderMenu">
+                Last Week
+            </button>
+            <mat-menu #cardHeaderMenu="matMenu" class="card-header-menu" xPosition="before">
+                <button mat-menu-item>
+                    Last Day
+                </button>
+                <button mat-menu-item>
+                    Last Week
+                </button>
+                <button mat-menu-item>
+                    Last Month
+                </button>
+                <button mat-menu-item>
+                    Last Year
+                </button>
+            </mat-menu>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <div id="help_desk_tickets_solved_and_created_chart"></div>
+    </mat-card-content>
+</mat-card>

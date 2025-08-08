@@ -1,0 +1,171 @@
+<mat-card
+    class="daxa-card team-members-card mb-25 border-radius bg-white border-none d-block"
+    [class.component-dark-theme]="themeService.isDark()"
+    [class.rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mb-0">
+                Team Members
+            </h5>
+        </mat-card-title>
+        <mat-card-subtitle>
+            <a mat-button routerLink="/members" class="card-header-link-btn">
+                View All
+            </a>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="team-members-table">
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col" class="fw-medium text-black text-left">
+                                Member
+                            </th>
+                            <th scope="col" class="fw-medium text-black text-left">
+                                Hours
+                            </th>
+                            <th scope="col" class="fw-medium text-black text-left">
+                                Status
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="info d-flex align-items-center">
+                                    <div class="image">
+                                        <img src="images/users/user12.jpg" alt="user-image">
+                                    </div>
+                                    <div>
+                                        <span class="d-block fw-medium">
+                                            Mark Stjohn
+                                        </span>
+                                        <span class="sub-title d-block text-body">
+                                            Product Manager
+                                        </span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="text-body">
+                                120 hrs
+                            </td>
+                            <td class="text-body">
+                                <span class="percentage d-block">
+                                    75%
+                                </span>
+                                <mat-progress-bar mode="determinate" value="75"></mat-progress-bar>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="info d-flex align-items-center">
+                                    <div class="image">
+                                        <img src="images/users/user13.jpg" alt="user-image">
+                                    </div>
+                                    <div>
+                                        <span class="d-block fw-medium">
+                                            Russell Colon
+                                        </span>
+                                        <span class="sub-title d-block text-body">
+                                            Web Designer
+                                        </span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="text-body">
+                                89 hrs
+                            </td>
+                            <td class="text-body">
+                                <span class="percentage d-block">
+                                    55%
+                                </span>
+                                <mat-progress-bar mode="determinate" value="55"></mat-progress-bar>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="info d-flex align-items-center">
+                                    <div class="image">
+                                        <img src="images/users/user14.jpg" alt="user-image">
+                                    </div>
+                                    <div>
+                                        <span class="d-block fw-medium">
+                                            Juana Thatcher
+                                        </span>
+                                        <span class="sub-title d-block text-body">
+                                            UI/UX Designer
+                                        </span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="text-body">
+                                57 hrs
+                            </td>
+                            <td class="text-body">
+                                <span class="percentage d-block">
+                                    65%
+                                </span>
+                                <mat-progress-bar mode="determinate" value="65"></mat-progress-bar>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="info d-flex align-items-center">
+                                    <div class="image">
+                                        <img src="images/users/user15.jpg" alt="user-image">
+                                    </div>
+                                    <div>
+                                        <span class="d-block fw-medium">
+                                            Raymond Nguyen
+                                        </span>
+                                        <span class="sub-title d-block text-body">
+                                            Lead Developer
+                                        </span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="text-body">
+                                76 hrs
+                            </td>
+                            <td class="text-body">
+                                <span class="percentage d-block">
+                                    85%
+                                </span>
+                                <mat-progress-bar mode="determinate" value="85"></mat-progress-bar>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="info d-flex align-items-center">
+                                    <div class="image">
+                                        <img src="images/users/user16.jpg" alt="user-image">
+                                    </div>
+                                    <div>
+                                        <span class="d-block fw-medium">
+                                            Frank Mele
+                                        </span>
+                                        <span class="sub-title d-block text-body">
+                                            Angular Developer
+                                        </span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="text-body">
+                                95 hrs
+                            </td>
+                            <td class="text-body">
+                                <span class="percentage d-block">
+                                    60%
+                                </span>
+                                <mat-progress-bar mode="determinate" value="60"></mat-progress-bar>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

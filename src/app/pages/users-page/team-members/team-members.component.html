@@ -1,0 +1,145 @@
+<!-- Breadcrumb -->
+<div class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between">
+    <h5 class="mb-0">
+        Team Members
+    </h5>
+    <ol class="breadcrumb list-unstyled mt-0 mb-0 pl-0">
+        <li class="breadcrumb-item position-relative">
+            <a routerLink="/" class="d-inline-block position-relative">
+                <i class="ri-home-8-line"></i>
+                Dashboard
+            </a>
+        </li>
+        <li class="breadcrumb-item position-relative">
+            Users
+        </li>
+        <li class="breadcrumb-item position-relative">
+            Team Members
+        </li>
+    </ol>
+</div>
+
+<!-- Team Members -->
+<mat-card
+    class="daxa-card team-member-card mb-25 border-radius bg-white border-none d-block"
+    [class.rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-header>
+        <mat-card-title>
+            <a mat-button class="add-new-btn" routerLink="/users/add-user">
+                + Add New Member
+            </a>
+        </mat-card-title>
+        <mat-card-subtitle>
+            <form class="search-box position-relative">
+                <i class="material-symbols-outlined">
+                    search
+                </i>
+                <input type="text" class="input-search d-block w-100 border-none outline-0" placeholder="Search member...">
+            </form>
+        </mat-card-subtitle>
+    </mat-card-header>
+</mat-card>
+
+<div class="row">
+    <div class="col-lg-4 col-xxl-3 col-sm-6" *ngFor="let content of teamMemberCard;">
+        <mat-card
+            class="daxa-card team-member-card mb-25 border-radius bg-white border-none d-block"
+            [class.rtl-enabled]="themeService.isRTLEnabled()"
+        >
+            <mat-card-header>
+                <mat-card-subtitle>
+                    <button type="button" mat-button class="card-header-menu-btn p-0" [matMenuTriggerFor]="cardHeaderMenu">
+                        <i class="material-symbols-outlined">
+                            more_horiz
+                        </i>
+                    </button>
+                    <mat-menu #cardHeaderMenu="matMenu" class="card-header-menu" xPosition="before">
+                        <button mat-menu-item>
+                            View
+                        </button>
+                        <button mat-menu-item>
+                            Delete
+                        </button>
+                    </mat-menu>
+                </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="d-flex align-items-center">
+                    <div class="icon position-relative text-center rounded-circle">
+                        <img [src]="content.memberImg" class="rounded-circle" alt="member-image">
+                    </div>
+                    <h5 class="mb-0">
+                        {{content.memberName}}
+                        <span class="d-block text-body fw-normal">
+                            {{content.designation}}
+                        </span>
+                    </h5>
+                </div>
+                <ul class="pl-0 mb-0 list-unstyled">
+                    <li>
+                        <span class="text-body">
+                            Joined Date:
+                        </span> 
+                        {{content.joinedDate}}
+                    </li>
+                    <li>
+                        <span class="text-body">
+                            Contact Phone:
+                        </span> 
+                        {{content.contactPhone}}
+                    </li>
+                    <li>
+                        <span class="text-body">
+                            Location:
+                        </span> 
+                        {{content.location}}
+                    </li>
+                </ul>
+                <div class="socials-link">
+                    <a href="{{item.link}}" target="_blank" [class]="item.class" *ngFor="let item of content.socialsLink;">
+                        <i class="{{item.icon}}"></i>
+                    </a>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
+
+<!-- Pagination -->
+<div class="pagination-card mb-25 d-lg-flex align-items-center justify-content-between">
+    <p class="mb-0">
+        Showing 1 to 12 of 80 entries
+    </p>
+    <ol class="pagination list-unstyled mt-0 mb-0 pl-0">
+        <li class="pagination-item d-inline-block">
+            <a mat-button routerLink="/users">
+                <i class="material-symbols-outlined">
+                    west
+                </i>
+            </a>
+        </li>
+        <li class="pagination-item d-inline-block">
+            <a mat-button routerLink="/users" class="active">
+                1
+            </a>
+        </li>
+        <li class="pagination-item d-inline-block">
+            <a mat-button routerLink="/users">
+                2
+            </a>
+        </li>
+        <li class="pagination-item d-inline-block">
+            <a mat-button routerLink="/users">
+                3
+            </a>
+        </li>
+        <li class="pagination-item d-inline-block">
+            <a mat-button routerLink="/users">
+                <i class="material-symbols-outlined">
+                    east
+                </i>
+            </a>
+        </li>
+    </ol>
+</div>

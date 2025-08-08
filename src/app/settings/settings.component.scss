@@ -1,0 +1,172 @@
+.mat-mdc-card {
+    &.daxa-card {
+        &.settings-card {
+            .mat-mdc-card-content {
+                ul {
+                    margin-bottom: 10px;
+
+                    li {
+                        margin: {
+                            right: 15px;
+                            bottom: 15px;
+                        };
+                        .mat-mdc-button {
+                            border: 0;
+                            height: auto;
+                            min-width: auto;
+                            min-height: auto;
+                            padding: 11px 28px;
+                            font-weight: normal;
+                            color: var(--blackColor);
+                            border: 1px solid #c2cada;
+                            background-color: transparent;
+
+                            &:hover, &.active {
+                                color: var(--whiteColor);
+                                border-color: var(--daxaColor);
+                                background-color: var(--daxaColor);
+                            }
+                        }
+                        &:last-child {
+                            margin-right: 0;
+                        }
+                    }
+                }
+            }
+            &.component-dark-theme {
+                .mat-mdc-card-content {
+                    ul {
+                        li {
+                            .mat-mdc-button {
+                                color: var(--whiteColor);
+                                border-color: rgba(255, 255, 255, 0.09);
+    
+                                &:hover, &.active {
+                                    border-color: var(--daxaColor);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            &.rtl-enabled {
+                .mat-mdc-card-content {
+                    ul {
+                        padding-right: 0;
+    
+                        li {
+                            margin: {
+                                right: 0;
+                                left: 15px;
+                            };
+                            &:last-child {
+                                margin-left: 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width : 767px) {
+
+    .mat-mdc-card {
+        &.daxa-card {
+            &.settings-card {
+                .mat-mdc-card-content {
+                    ul {
+                        margin-bottom: 10px;
+    
+                        li {
+                            margin: {
+                                right: 10px;
+                                bottom: 10px;
+                            };
+                            .mat-mdc-button {
+                                padding: 10px 25px;
+                            }
+                        }
+                    }
+                }
+                &.rtl-enabled {
+                    .mat-mdc-card-content {
+                        ul {
+                            li {
+                                margin: {
+                                    right: 0;
+                                    left: 10px;
+                                };
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 576px to Max width 767px */
+@media only screen and (min-width : 576px) and (max-width : 767px) {
+
+    .mat-mdc-card {
+        &.daxa-card {
+            &.settings-card {
+                .mat-mdc-card-content {
+                    ul {
+                        margin-bottom: 10px;
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width : 768px) and (max-width : 991px) {
+
+    .mat-mdc-card {
+        &.daxa-card {
+            &.settings-card {
+                .mat-mdc-card-content {
+                    ul {
+                        margin-bottom: 10px;
+    
+                        li {
+                            margin: {
+                                right: 10px;
+                                bottom: 10px;
+                            };
+                        }
+                    }
+                }
+                &.rtl-enabled {
+                    .mat-mdc-card-content {
+                        ul {
+                            li {
+                                margin: {
+                                    left: 10px;
+                                    right: 0;
+                                };
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width : 992px) and (max-width : 1199px) {}
+
+/* Min width 1200px to Max width 1399px */
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {}
+
+/* Min width 1600px */
+@media only screen and (min-width: 1600px) {}

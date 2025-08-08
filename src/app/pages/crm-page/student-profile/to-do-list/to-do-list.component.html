@@ -1,0 +1,328 @@
+<!-- To Do List -->
+<mat-card
+    class="daxa-card to-do-list-card mb-25 border-radius bg-white border-none d-block"
+    [class.rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mb-0">
+                Couse List
+            </h5>
+        </mat-card-title>
+        <mat-card-subtitle>
+            <form class="search-box position-relative">
+                <i class="material-symbols-outlined">
+                    search
+                </i>
+                <input type="text" class="input-search d-block w-100 border-none outline-0" placeholder="Search here..." (keyup)="applyFilter($event)" #input>
+            </form>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="to-do-list-table">
+            <div class="table-responsive">
+                <table mat-table [dataSource]="dataSource">
+
+                    <!-- Checkbox Column -->
+                    <ng-container matColumnDef="select">
+                        <th mat-header-cell *matHeaderCellDef>
+                            <mat-checkbox
+                                (change)="$event ? toggleAllRows() : null"
+                                [checked]="selection.hasValue() && isAllSelected()"
+                                [indeterminate]="selection.hasValue() && !isAllSelected()"
+                                [aria-label]="checkboxLabel()"
+                            >
+                            </mat-checkbox>
+                        </th>
+                        <td mat-cell *matCellDef="let row">
+                            <mat-checkbox
+                                (click)="$event.stopPropagation()"
+                                (change)="$event ? selection.toggle(row) : null"
+                                [checked]="selection.isSelected(row)"
+                                [aria-label]="checkboxLabel(row)"
+                            >
+                            </mat-checkbox>
+                        </td>
+                    </ng-container>
+
+                    <!-- Course ID Column -->
+                    <ng-container matColumnDef="courseID">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Course ID
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.courseID}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Course Name Column -->
+                    <ng-container matColumnDef="courseName">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Course Name
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.courseName}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Duration To Column -->
+                    <ng-container matColumnDef="duration">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Duration
+                        </th>
+                        <td mat-cell *matCellDef="let element" class="text-black">
+                            <!-- <mat-icon style="font-size: 14px !important;">schedule</mat-icon>  -->
+                            {{element.duration}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Joined Date Column -->
+                    <ng-container matColumnDef="joinedDate">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Joined Date
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.joinedDate}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Price Column -->
+                    <ng-container matColumnDef="price">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Price
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            ${{element.price}}
+                            <button type="button" mat-button matTooltip="Installment" matTooltipPosition="above"
+                            style="font-size: 8pxl !important;
+                                  padding: 0;
+                                  width: auto;
+                                  height: auto;
+                                  line-height: 1;
+                                  color: #0f79f3;
+                                  min-width: auto;
+                                  border-radius: 0;" 
+                            (click)="openInstallmentDialog(element)">
+                        <i class="material-symbols-outlined" style="font-size: 16px !important;">
+                            payments
+                        </i>
+                    </button>
+                        </td>
+                    </ng-container>
+
+                    <!-- Paid Amount Column -->
+                    <ng-container matColumnDef="paidAmount">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Paid Amount
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            ${{element.paidAmount}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Balance Amount Column -->
+                    <ng-container matColumnDef="balanceAmount">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Balance Amount
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            ${{element.balanceAmount}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Status Column -->
+                    <ng-container matColumnDef="status">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Status
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            <!-- <span class="daxa-badge in-progress d-inline-block" *ngIf="element.status.inProgress">
+                                {{element.status.inProgress}}
+                            </span>
+                            <span class="daxa-badge pending d-inline-block" *ngIf="element.status.pending">
+                                {{element.status.pending}}
+                            </span> -->
+                            <span class="daxa-badge completed d-inline-block" *ngIf="element.status.active">
+                                {{element.status.active}}
+                            </span>
+                            <span class="daxa-badge not-started d-inline-block" *ngIf="element.status.inActive">
+                                {{element.status.inActive}}
+                            </span>
+                        </td>
+                    </ng-container>
+
+                    <!-- Action Column -->
+                    <ng-container matColumnDef="action">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Action
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="action-info">
+                                <a routerLink="/payments/payment-details" mat-button matTooltip="View" matTooltipPosition="above">
+                                    <i class="material-symbols-outlined">
+                                        {{element.action.view}}
+                                    </i>
+                                </a>
+                                <button type="button" mat-button matTooltip="Edit" matTooltipPosition="above">
+                                    <i class="material-symbols-outlined">
+                                        {{element.action.edit}}
+                                    </i>
+                                </button>
+                                <!-- <button type="button" mat-button matTooltip="Invoice" (click)="navigateToInvoice()" matTooltipPosition="above" [disabled]="element.balanceAmount <= 0">
+                                    <i class="material-symbols-outlined">
+                                        {{element.action.invoice}}
+                                    </i>
+                                </button> -->
+                                <button type="button" mat-button matTooltip="Delete" matTooltipPosition="above">
+                                    <i class="material-symbols-outlined">
+                                        {{element.action.delete}}
+                                    </i>
+                                </button>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    
+                    <!-- Row shown when there is no matching data. -->
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+        <div class="add-new-task-btn text-right">
+            <button
+                mat-button
+                (click)="toggleClass()"
+            >
+                + Add Courses
+            </button>
+        </div>
+    </mat-card-content>
+</mat-card>
+
+<!-- Popup -->
+<div
+    class="add-new-task-popup"
+    [class.active]="classApplied"
+    [class.rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <div class="popup-dialog">
+        <mat-card class="daxa-card mb-25 border-radius bg-white border-none d-block">
+            <mat-card-header>
+                <mat-card-title>
+                    <h5 class="mb-0">
+                        Add Course
+                    </h5>
+                </mat-card-title>
+                <mat-card-subtitle>
+                    <button
+                        mat-button
+                        (click)="toggleClass()"
+                    >
+                        <i class="ri-close-fill"></i>
+                    </button>
+                </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label class="main-label d-block lh-1 text-black">
+                            Course
+                        </label>
+                        <mat-form-field>
+                            <mat-label>
+                                Select
+                            </mat-label>
+                            <mat-select multiple>
+                                <mat-option value="option1">
+                                    Course 01
+                                </mat-option>
+                                <mat-option value="option2">
+                                    Course 02
+                                </mat-option>
+                                <mat-option value="option3">
+                                    Course 03
+                                </mat-option>
+                                <mat-option value="option4">
+                                    Course 04
+                                </mat-option>
+                                <mat-option value="option5">
+                                    Course 05
+                                </mat-option>
+                                <mat-option value="option6">
+                                    Course 06
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    
+                </div>
+                <div class="btn-box">
+                    <button
+                        mat-button
+                        (click)="toggleClass()"
+                    >
+                        Cancel
+                    </button>
+                    <button mat-button>
+                        Add
+                    </button>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
+
+
+<ng-template #installmentDialog>
+    <h2 mat-dialog-title>Convert to Installments</h2>
+    <mat-dialog-content>
+      <p>Course Fee: ${{courseFee}}</p>
+      <!-- <mat-form-field>
+        <mat-label>Number of Installments</mat-label>
+        <input matInput type="number" [(ngModel)]="installmentCount" min="1">
+      </mat-form-field>
+      <button mat-stroked-button color="primary" (click)="generateInstallments()">Generate</button> -->
+      <mat-form-field appearance="outline" >
+        <mat-label>Number of Installments</mat-label>
+        <input matInput type="number" [(ngModel)]="installmentCount" min="1">
+        <button mat-button matSuffix  color="primary" (click)="generateInstallments()">
+          <i class="material-symbols-outlined" style="font-size: 16px !important;">
+            autorenew
+          </i>
+          Generate
+        </button>
+      </mat-form-field>
+  
+      <div class="d-flex justify-content-end w-100" style="margin-top: 15px !important;">
+        <button *ngIf="installments.length" mat-stroked-button color="warn" (click)="clearInstallments()">Clear</button>
+      </div>
+  
+      <div *ngIf="installments.length">
+        <div class="row">
+          <div *ngFor="let inst of installments; let i = index" class="mt-2 border p-2 rounded col-md-6 col-lg-6">
+            <p>Installment {{i + 1}}</p>
+            <mat-form-field>
+              <mat-label>Amount</mat-label>
+              <input matInput type="number" [(ngModel)]="inst.amount" (blur)="onAmountChange(i)">
+            </mat-form-field>
+  
+            <mat-form-field appearance="fill">
+              <mat-label>Date</mat-label>
+              <input matInput [matDatepicker]="picker" [(ngModel)]="inst.date">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-flat-button (click)="closeModal()">Close</button>
+      <button mat-flat-button color="primary" (click)="saveInstallments()">Save</button>
+    </mat-dialog-actions>
+  </ng-template>

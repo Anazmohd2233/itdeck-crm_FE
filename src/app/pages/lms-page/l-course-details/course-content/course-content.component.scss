@@ -1,0 +1,324 @@
+::ng-deep {
+    .mat-mdc-card {
+        &.daxa-card {
+            &.course-content-card {
+                .mat-mdc-card-content {
+                    .mat-accordion {
+                        .mat-expansion-panel {
+                            border-radius: 0;
+                            box-shadow: unset;
+                            margin: 0 -20px 11.1px;
+                            background-color: #f4f6fc;
+
+                            .mat-expansion-panel-header {
+                                padding: 15px 20px 15px 40px;
+                                display: block;
+                                height: auto;
+
+                                .mat-content {
+                                    margin-right: 0;
+                                    flex-direction: unset;
+                                    justify-content: space-between;
+                                }
+                                .mat-expansion-panel-header-title {
+                                    color: var(--blackColor);
+                                    font-weight: 500;
+                                    margin-right: 0;
+                                    display: block;
+                                    flex: {
+                                        basis: unset;
+                                        grow: unset;
+                                    };
+                                }
+                                .mat-expansion-panel-header-description {
+                                    display: block;
+                                    margin-right: 0;
+                                    flex-grow: unset;
+                                    flex-basis: unset;
+                                    color: var(--bodyColor);
+
+                                    span {
+                                        margin-right: 15px;
+
+                                        &:last-child {
+                                            margin-right: 0;
+                                        }
+                                    }
+                                }
+                                .mat-expansion-indicator {
+                                    transform: translateY(-50%) !important;
+                                    position: absolute;
+                                    margin-top: -4px;
+                                    left: 20px;
+                                    top: 50%;
+
+                                    &::after {
+                                        color: var(--blackColor);
+                                    }
+                                }
+                                &.mat-expanded {
+                                    .mat-expansion-indicator {
+                                        margin-top: 4px;
+                                        transform: translateY(-50%) rotate(180deg) !important;
+                                    }
+                                }
+                            }
+                            .mat-expansion-panel-body {
+                                padding: 17px 20px 15px;
+                                background-color: var(--whiteColor);
+
+                                ul {
+                                    li {
+                                        margin-bottom: 17px;
+                                        padding-left: 24px;
+                                        font-size: 15px;
+
+                                        i {
+                                            left: 0;
+                                            top: 50%;
+                                            font-size: 16px;
+                                            margin-top: -.5px;
+                                            position: absolute;
+                                            transform: translateY(-50%);
+                                        }
+                                        &:last-child {
+                                            margin-bottom: 0;
+                                        }
+                                    }
+                                }
+                            }
+                            &:last-child {
+                                margin-bottom: 0;
+                            }
+                        }
+                    }
+                }
+                &.component-dark-theme {
+                    .mat-mdc-card-content {
+                        .mat-accordion {
+                            .mat-expansion-panel {
+                                background-color: #131920;
+    
+                                .mat-expansion-panel-header {
+                                    .mat-expansion-panel-header-title {
+                                        color: var(--whiteColor);
+                                    }
+                                    .mat-expansion-panel-header-description {
+                                        color: rgba(255, 255, 255, .50);
+                                    }
+                                    .mat-expansion-indicator {
+                                        &::after {
+                                            color: var(--whiteColor);
+                                        }
+                                    }
+                                }
+                                .mat-expansion-panel-body {
+                                    background-color: #131920;
+                                }
+                            }
+                        }
+                    }
+                }
+                &.rtl-enabled {
+                    .mat-mdc-card-content {
+                        .mat-accordion {
+                            .mat-expansion-panel {
+                                .mat-expansion-panel-header {
+                                    padding: {
+                                        left: 20px;
+                                        right: 40px;
+                                    };
+                                    .mat-expansion-panel-header-description {
+                                        span {
+                                            margin: {
+                                                right: 0;
+                                                left: 15px;
+                                            };
+                                            &:last-child {
+                                                margin-left: 0;
+                                            }
+                                        }
+                                    }
+                                    .mat-expansion-indicator {
+                                        left: auto;
+                                        right: 20px;
+                                    }
+                                }
+                                .mat-expansion-panel-body {
+                                    ul {
+                                        padding-right: 0;
+
+                                        li {
+                                            padding: {
+                                                left: 0;
+                                                right: 24px;
+                                            };
+                                            i {
+                                                left: auto;
+                                                right: 0;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width : 767px) {
+
+    ::ng-deep {
+        .mat-mdc-card {
+            &.daxa-card {
+                &.course-content-card {
+                    .mat-mdc-card-content {
+                        .mat-accordion {
+                            .mat-expansion-panel {
+                                margin: 0 -15px 10px;
+    
+                                .mat-expansion-panel-header {
+                                    padding: 15px 15px 15px 32px;
+    
+                                    .mat-expansion-panel-header-description {
+                                        span {
+                                            margin-right: 10px;
+                                        }
+                                    }
+                                    .mat-expansion-indicator {
+                                        left: 15px;
+                                    }
+                                }
+                                .mat-expansion-panel-body {
+                                    padding: 15px 15px 10px;
+    
+                                    ul {
+                                        li {
+                                            margin-bottom: 15px;
+                                            padding-left: 22px;
+                                            font-size: 14px;
+    
+                                            i {
+                                                font-size: 16px;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    &.rtl-enabled {
+                        .mat-mdc-card-content {
+                            .mat-accordion {
+                                .mat-expansion-panel {
+                                    .mat-expansion-panel-header {
+                                        padding: {
+                                            left: 15px;
+                                            right: 32px;
+                                        };
+                                        .mat-expansion-panel-header-description {
+                                            span {
+                                                margin: {
+                                                    right: 0;
+                                                    left: 10px;
+                                                };
+                                            }
+                                        }
+                                        .mat-expansion-indicator {
+                                            left: auto;
+                                            right: 15px;
+                                        }
+                                    }
+                                    .mat-expansion-panel-body {
+                                        ul {
+                                            li {
+                                                padding: {
+                                                    left: 0;
+                                                    right: 22px;
+                                                };
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 576px to Max width 767px */
+@media only screen and (min-width : 576px) and (max-width : 767px) {
+
+    ::ng-deep {
+        .mat-mdc-card {
+            &.daxa-card {
+                &.course-content-card {
+                    .mat-mdc-card-content {
+                        .mat-accordion {
+                            .mat-expansion-panel {
+                                margin: {
+                                    left: -20px;
+                                    right: -20px;
+                                };
+                                .mat-expansion-panel-header {
+                                    padding: {
+                                        left: 37px;
+                                        right: 20px;
+                                    };
+                                    .mat-expansion-indicator {
+                                        left: 20px;
+                                    }
+                                }
+                                .mat-expansion-panel-body {
+                                    padding: {
+                                        left: 20px;
+                                        right: 20px;
+                                    };
+                                }
+                            }
+                        }
+                    }
+                    &.rtl-enabled {
+                        .mat-mdc-card-content {
+                            .mat-accordion {
+                                .mat-expansion-panel {
+                                    .mat-expansion-panel-header {
+                                        padding: {
+                                            right: 37px;
+                                            left: 20px;
+                                        };
+                                        .mat-expansion-indicator {
+                                            left: auto;
+                                            right: 20px;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width : 768px) and (max-width : 991px) {}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width : 992px) and (max-width : 1199px) {}
+
+/* Min width 1200px to Max width 1399px */
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {}
+
+/* Min width 1600px */
+@media only screen and (min-width: 1600px) {}
