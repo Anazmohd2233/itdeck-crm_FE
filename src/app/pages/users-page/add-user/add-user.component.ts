@@ -1,5 +1,11 @@
 import { Component } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+    FormBuilder,
+    FormGroup,
+    FormsModule,
+    ReactiveFormsModule,
+    Validators,
+} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -13,20 +19,116 @@ import { FileUploadModule } from '@iplab/ngx-file-upload';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CustomizerSettingsService } from '../../../customizer-settings/customizer-settings.service';
+import { HttpClient } from '@angular/common/http';
+import { UsersService } from '../../../services/users.service';
+import { ToastrService } from 'ngx-toastr';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-add-user',
-    imports: [MatCardModule, MatMenuModule, MatButtonModule, RouterLink, FormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule, ReactiveFormsModule, FileUploadModule, MatRadioModule, MatCheckboxModule],
+    imports: [
+        MatCardModule,
+        MatMenuModule,
+        MatButtonModule,
+        RouterLink,
+        FormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        ReactiveFormsModule,
+        FileUploadModule,
+        MatRadioModule,
+        MatCheckboxModule,
+        CommonModule,
+    ],
     templateUrl: './add-user.component.html',
-    styleUrl: './add-user.component.scss'
+    styleUrl: './add-user.component.scss',
 })
 export class AddUserComponent {
+    userForm!: FormGroup;
+    selectedFile: File | null = null;
+    isSubmitting = false;
 
     // File Uploader
     public multiple: boolean = false;
 
     constructor(
-        public themeService: CustomizerSettingsService
+        private fb: FormBuilder,
+        private http: HttpClient,
+        public themeService: CustomizerSettingsService,
+        private usersService: UsersService,
+        private toastr: ToastrService
     ) {}
 
+    ngOnInit(): void {
+        this.initializeUserForm();
+    }
+
+    initializeUserForm() {
+        this.userForm = this.fb.group({
+            user_name: ['', Validators.required],
+            name: [''],
+            email: [''],
+            phone: [''],
+            designation: [''],
+            status: ['', Validators.required],
+            password: ['', Validators.required],
+            user_type: ['', Validators.required],
+        });
+    }
+
+    onFileSelect(event: any) {
+        this.selectedFile = event.target.files[0];
+    }
+
+    createUser() {
+        if (this.userForm.invalid) {
+            this.userForm.markAllAsTouched();
+            return;
+        }
+        this.isSubmitting = true;
+
+        const formData = new FormData();
+        Object.keys(this.userForm.controls).forEach((key) => {
+            formData.append(key, this.userForm.get(key)?.value);
+        });
+
+        if (this.selectedFile) {
+            formData.append('file', this.selectedFile);
+        }
+
+        const formValue = this.userForm.getRawValue(); // ✅ fix here
+        formData.append(
+            'is_super_admin',
+            formValue.user_type === 'admin' ? 'true' : 'false'
+        );
+
+        this.usersService.createUser(formData).subscribe({
+            next: (response) => {
+                if (response.success) {
+                    this.isSubmitting = false;
+
+                    this.toastr.success('User Added successfully', 'Success');
+                    console.log('✅ User Added successfully');
+                } else {
+                    this.isSubmitting = false;
+
+                    this.toastr.error(
+                        response.message || 'Failed to Add Service.',
+                        'Error'
+                    );
+                    console.error('❌ add failed:', response.message);
+                }
+            },
+            error: (error) => {
+                this.isSubmitting = false;
+
+                this.toastr.error('Something went wrong.', 'Error');
+
+                console.error('❌ API error:', error);
+            },
+        });
+    }
 }

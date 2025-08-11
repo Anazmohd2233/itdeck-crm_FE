@@ -21,7 +21,9 @@
 
 <!-- Add User -->
 <div class="row">
-    <div class="col-xxl-7 col-xxxl-8">
+<form [formGroup]="userForm" (ngSubmit)="createUser()">
+
+    <div class="col-xxl-12 col-xxxl-12">
         <mat-card
             class="daxa-card add-user-card mb-25 border-radius bg-white border-none d-block"
             [class.rtl-enabled]="themeService.isRTLEnabled()"
@@ -35,7 +37,7 @@
             </mat-card-header>
             <mat-card-content>
                 <div class="row">
-                    <div class="col-sm-6">
+                    <!-- <div class="col-sm-4">
                         <div class="mb-25">
                             <label class="main-label d-block lh-1 text-black">
                                 User ID
@@ -47,21 +49,21 @@
                                 <input matInput>
                             </mat-form-field>
                         </div>
-                    </div>
-                    <div class="col-sm-6">
+                    </div> -->
+                    <div class="col-sm-4">
                         <div class="mb-25">
                             <label class="main-label d-block lh-1 text-black">
-                                User Name
+                                Name
                             </label>
                             <mat-form-field>
                                 <mat-label>
-                                    User name
+                                     Name
                                 </mat-label>
-                                <input matInput>
+                                <input matInput formControlName="name">
                             </mat-form-field>
                         </div>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-4">
                         <div class="mb-25">
                             <label class="main-label d-block lh-1 text-black">
                                 Email Address
@@ -70,46 +72,12 @@
                                 <mat-label>
                                     Email address
                                 </mat-label>
-                                <input matInput>
+                                <input matInput formControlName="email">
                             </mat-form-field>
                         </div>
                     </div>
-                    <div class="col-sm-6">
-                        <div class="mb-25">
-                            <label class="main-label d-block lh-1 text-black">
-                                Location
-                            </label>
-                            <mat-form-field>
-                                <mat-label>
-                                    Select
-                                </mat-label>
-                                <mat-select>
-                                    <mat-option value="option1">
-                                        Washington D.C	
-                                    </mat-option>
-                                    <mat-option value="option2">
-                                        Chicago
-                                    </mat-option>
-                                    <mat-option value="option3">
-                                        Oklahoma City
-                                    </mat-option>
-                                    <mat-option value="option4">
-                                        San Diego
-                                    </mat-option>
-                                    <mat-option value="option5">
-                                        Los Angeles
-                                    </mat-option>
-                                    <mat-option value="option6">
-                                        Las Vegas
-                                    </mat-option>
-                                    <mat-option value="option7">
-                                        San Francisco
-                                    </mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
+               
+                    <div class="col-sm-4">
                         <div class="mb-25">
                             <label class="main-label d-block lh-1 text-black">
                                 Phone No
@@ -118,120 +86,97 @@
                                 <mat-label>
                                     Phone no
                                 </mat-label>
-                                <input matInput>
+                                <input matInput formControlName="phone">
                             </mat-form-field>
                         </div>
                     </div>
-                    <div class="col-sm-6">
+
+                    <div class="col-sm-4">
                         <div class="mb-25">
                             <label class="main-label d-block lh-1 text-black">
-                                Projects
+                                Designation
                             </label>
                             <mat-form-field>
                                 <mat-label>
-                                    Projects
+                                 Designation
                                 </mat-label>
-                                <input matInput>
+                                <input matInput formControlName="designation">
                             </mat-form-field>
                         </div>
                     </div>
-                    <div class="col-sm-6">
+
+                    <div class="col-sm-4">
                         <div class="mb-25">
                             <label class="main-label d-block lh-1 text-black">
-                                Teams
+                                Status
                             </label>
                             <mat-form-field>
                                 <mat-label>
-                                    Select
+                                    Select status
                                 </mat-label>
-                                <mat-select multiple>
-                                    <mat-option value="option1">
-                                        Team 1
+                                <mat-select formControlName="status">
+                                    <mat-option value="true">
+                                        Active
                                     </mat-option>
-                                    <mat-option value="option2">
-                                        Team 2
-                                    </mat-option>
-                                    <mat-option value="option3">
-                                        Team 3
-                                    </mat-option>
-                                    <mat-option value="option4">
-                                        Team 4
-                                    </mat-option>
-                                    <mat-option value="option5">
-                                        Team 5
-                                    </mat-option>
-                                    <mat-option value="option6">
-                                        Team 6
+                                    <mat-option value="false">
+                                        Inactive
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </div>
                     </div>
-                    <div class="col-sm-12">
+
+                    <div class="col-sm-4">
                         <div class="mb-25">
                             <label class="main-label d-block lh-1 text-black">
-                                Add Some Info
-                            </label>
-                            <mat-form-field class="textarea">
-                                <mat-label>
-                                    Write your description
-                                </mat-label>
-                                <textarea matInput placeholder="E.g. It makes me feel..."></textarea>
-                            </mat-form-field>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="mb-25">
-                            <label class="main-label d-block lh-1 text-black">
-                                Facebook
+                                User Type
                             </label>
                             <mat-form-field>
                                 <mat-label>
-                                    Facebook
+                                    Select Type
                                 </mat-label>
-                                <input matInput placeholder="facebook@example.com">
+                                <mat-select formControlName="user_type">
+                                    <mat-option value="admin">
+                                        Admin
+                                    </mat-option>
+                                    <mat-option value="user">
+                                        User
+                                    </mat-option>
+                                </mat-select>
                             </mat-form-field>
                         </div>
                     </div>
-                    <div class="col-sm-6">
-                        <div class="mb-25">
-                            <label class="main-label d-block lh-1 text-black">
-                                Twitter
-                            </label>
-                            <mat-form-field>
-                                <mat-label>
-                                    Twitter
-                                </mat-label>
-                                <input matInput placeholder="twitter@example.com">
-                            </mat-form-field>
+
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="mb-25">
+                                <label class="main-label d-block lh-1 text-black">
+                                    User Name
+                                </label>
+                                <mat-form-field>
+                                    <mat-label>
+                                         User Name
+                                    </mat-label>
+                                    <input matInput formControlName="user_name">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <div class="mb-25">
+                                <label class="main-label d-block lh-1 text-black">
+                                    Password
+                                </label>
+                                <mat-form-field>
+                                    <mat-label>
+                                         Password
+                                    </mat-label>
+                                    <input matInput formControlName="password">
+                                </mat-form-field>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-sm-6">
-                        <div class="mb-25">
-                            <label class="main-label d-block lh-1 text-black">
-                                Linkedin
-                            </label>
-                            <mat-form-field>
-                                <mat-label>
-                                    Linkedin
-                                </mat-label>
-                                <input matInput placeholder="linkedin@example.com">
-                            </mat-form-field>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="mb-25">
-                            <label class="main-label d-block lh-1 text-black">
-                                YouTube
-                            </label>
-                            <mat-form-field>
-                                <mat-label>
-                                    YouTube
-                                </mat-label>
-                                <input matInput placeholder="youtube@example.com">
-                            </mat-form-field>
-                        </div>
-                    </div>
+
                     <div class="col-sm-12">
                         <div class="mb-25">
                             <label class="main-label d-block lh-1 text-black">
@@ -242,66 +187,14 @@
                     </div>
                 </div>
                 <div class="btn-box">
-                    <button mat-button>
+                    <button mat-button type="submit">
+                          <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm me-1" role="status"
+                                aria-hidden="true"></span>
                         Add User
                     </button>
-                    <button mat-button>
-                        Cancel
-                    </button>
                 </div>
             </mat-card-content>
         </mat-card>
     </div>
-    <div class="col-xxl-5 col-xxxl-4">
-        <mat-card
-            class="daxa-card add-user-card mb-25 border-radius bg-white border-none d-block"
-            [class.rtl-enabled]="themeService.isRTLEnabled()"
-        >
-            <mat-card-header>
-                <mat-card-title>
-                    <h5 class="mb-0">
-                        Privacy Policy
-                    </h5>
-                </mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <div class="mb-25">
-                    <mat-checkbox>
-                        Allow users to show your email
-                    </mat-checkbox>
-                    <mat-checkbox>
-                        Allow users to show your experiences
-                    </mat-checkbox>
-                    <mat-checkbox>
-                        Allow users to show your followers
-                    </mat-checkbox>
-                </div>
-                <label class="main-label d-block lh-1 text-black">
-                    Select Your Skills
-                </label>
-                <mat-form-field>
-                    <mat-label>
-                        Select
-                    </mat-label>
-                    <mat-select>
-                        <mat-option value="option1">
-                            Leadership
-                        </mat-option>
-                        <mat-option value="option2">
-                            Project Management
-                        </mat-option>
-                        <mat-option value="option3">
-                            Data Analysis
-                        </mat-option>
-                        <mat-option value="option4">
-                            Teamwork
-                        </mat-option>
-                        <mat-option value="option5">
-                            Web Development
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </mat-card-content>
-        </mat-card>
-    </div>
+</form>
 </div>
