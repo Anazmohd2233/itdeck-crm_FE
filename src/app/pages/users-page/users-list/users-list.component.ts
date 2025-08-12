@@ -9,17 +9,40 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { CustomizerSettingsService } from '../../../customizer-settings/customizer-settings.service';
+import { UsersService } from '../../../services/users.service';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'app-users-list',
-    imports: [MatCardModule, MatMenuModule, MatButtonModule, RouterLink, MatTableModule, MatPaginatorModule, MatCheckboxModule, MatTooltipModule],
+    imports: [
+        MatCardModule,
+        MatMenuModule,
+        MatButtonModule,
+        RouterLink,
+        MatTableModule,
+        MatPaginatorModule,
+        MatCheckboxModule,
+        MatTooltipModule,
+    ],
     templateUrl: './users-list.component.html',
-    styleUrl: './users-list.component.scss'
+    styleUrl: './users-list.component.scss',
 })
 export class UsersListComponent {
+    page: number = 1;
+    users: any;
+    ELEMENT_DATA: PeriodicElement[] = [];
 
-    displayedColumns: string[] = ['userID', 'user', 'email', 'location', 'phone', 'projects', 'joinDate', 'action'];
-    dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+    displayedColumns: string[] = [
+        'id',
+        'name',
+        'email',
+        'phone',
+        'designation',
+        'type',
+        'status',
+        'action',
+    ];
+    dataSource = new MatTableDataSource<PeriodicElement>(this.ELEMENT_DATA);
     selection = new SelectionModel<PeriodicElement>(true, []);
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -35,342 +58,74 @@ export class UsersListComponent {
     }
 
     constructor(
-        public themeService: CustomizerSettingsService
+        public themeService: CustomizerSettingsService,
+        private usersService: UsersService,
+        private toastr: ToastrService
     ) {}
 
+    ngOnInit(): void {
+        this.getUserList();
+    }
+
+    // private getUserList(): void {
+    //     this.usersService.getUsers(this.page).subscribe({
+    //         next: (response) => {
+    //             if (response.success) {
+    //                 this.users = response.data.users;
+    //                                     this.ELEMENT_DATA = response.data.users;
+
+    //             } else {
+    //                 this.toastr.error('Failed to load users', 'Failed');
+
+    //                 console.error('Failed to load users:', response.message);
+    //             }
+    //         },
+    //         error: (error) => {
+    //             console.error('API error:', error);
+    //         },
+    //     });
+    // }
+
+    private getUserList(): void {
+        this.usersService.getUsers(this.page).subscribe({
+            next: (response) => {
+                if (response && response.success) {
+                    const users = response.data?.users || [];
+
+                    this.ELEMENT_DATA = users.map((u: any) => ({
+                        id: u.id || 'N/A',
+
+                        name: u.name || 'N/A',
+                        email: u.email || 'N/A',
+                                                type: u.user_type || 'N/A',
+
+                        phone: u.phone || '-',
+                        designation: u.designation || '-',
+                        status: u.status ? 'Active' : 'Inactive',
+                        action: '', // we will handle icons directly in template
+                    }));
+
+                    this.dataSource.data = this.ELEMENT_DATA;
+                } else {
+                    this.toastr.error('Failed to load users', 'Failed');
+                    console.error('Failed to load users:', response?.message);
+                }
+            },
+            error: (error) => {
+                console.error('API error:', error);
+            },
+        });
+    }
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-    {
-        userID: '#158',
-        user: {
-            img: 'images/users/user15.jpg',
-            name: 'Marcia Baker'
-        },
-        email: 'marcia@example.com',
-        location: 'Washington D.C',
-        phone: '+1 555-445-4455',
-        projects: 6,
-        joinDate: '01 Dec, 2024',
-        action: {
-            view: 'visibility',
-            delete: 'delete'
-        }
-    },
-    {
-        userID: '#325',
-        user: {
-            img: 'images/users/user7.jpg',
-            name: 'Carolyn Barnes'
-        },
-        email: 'barnes@example.com',
-        location: 'Chicago',
-        phone: '+1 555-455-9966',
-        projects: 10,
-        joinDate: '02 Dec, 2024',
-        action: {
-            view: 'visibility',
-            delete: 'delete'
-        }
-    },
-    {
-        userID: '#286',
-        user: {
-            img: 'images/users/user12.jpg',
-            name: 'Donna Miller'
-        },
-        email: 'donna@example.com',
-        location: 'Oklahoma City',
-        phone: '+1 555-555-9922',
-        projects: 6,
-        joinDate: '03 Dec, 2024',
-        action: {
-            view: 'visibility',
-            delete: 'delete'
-        }
-    },
-    {
-        userID: '#463',
-        user: {
-            img: 'images/users/user5.jpg',
-            name: 'Barbara Cross'
-        },
-        email: 'cross@example.com',
-        location: 'San Diego',
-        phone: '+1 555-445-7788',
-        projects: 4,
-        joinDate: '04 Dec, 2024',
-        action: {
-            view: 'visibility',
-            delete: 'delete'
-        }
-    },
-    {
-        userID: '#491',
-        user: {
-            img: 'images/users/user16.jpg',
-            name: 'Rebecca Block'
-        },
-        email: 'block@example.com',
-        location: 'Los Angeles',
-        phone: '+1 555-333-2288',
-        projects: 2,
-        joinDate: '05 Dec, 2024',
-        action: {
-            view: 'visibility',
-            delete: 'delete'
-        }
-    },
-    {
-        userID: '#860',
-        user: {
-            img: 'images/users/user9.jpg',
-            name: 'Ramiro McCarty'
-        },
-        email: 'ramiro@example.com',
-        location: 'Las Vegas',
-        phone: '+1 555-445-4455',
-        projects: 8,
-        joinDate: '06 Dec, 2024',
-        action: {
-            view: 'visibility',
-            delete: 'delete'
-        }
-    },
-    {
-        userID: '#431',
-        user: {
-            img: 'images/users/user1.jpg',
-            name: 'Robert Fairweather'
-        },
-        email: 'robert@example.com',
-        location: 'San Francisco',
-        phone: '+1 555-555-9922',
-        projects: 6,
-        joinDate: '07 Dec, 2024',
-        action: {
-            view: 'visibility',
-            delete: 'delete'
-        }
-    },
-    {
-        userID: '#998',
-        user: {
-            img: 'images/users/user6.jpg',
-            name: 'Marcelino Haddock'
-        },
-        email: 'haddock@example.com',
-        location: 'Washington D.C',
-        phone: '+1 555-455-9966',
-        projects: 9,
-        joinDate: '08 Dec, 2024',
-        action: {
-            view: 'visibility',
-            delete: 'delete'
-        }
-    },
-    {
-        userID: '#436',
-        user: {
-            img: 'images/users/user13.jpg',
-            name: 'Thomas Wilson'
-        },
-        email: 'wildon@example.com',
-        location: 'San Diego',
-        phone: '+1 555-333-2288',
-        projects: 5,
-        joinDate: '10 Dec, 2024',
-        action: {
-            view: 'visibility',
-            delete: 'delete'
-        }
-    },
-    {
-        userID: '#125',
-        user: {
-            img: 'images/users/user14.jpg',
-            name: 'Nathaniel Hulsey'
-        },
-        email: 'hulsey@example.com',
-        location: 'Chicago',
-        phone: '+1 555-445-7788',
-        projects: 6,
-        joinDate: '11 Dec, 2024',
-        action: {
-            view: 'visibility',
-            delete: 'delete'
-        }
-    },
-    {
-        userID: '#125',
-        user: {
-            img: 'images/users/user14.jpg',
-            name: 'Nathaniel Hulsey'
-        },
-        email: 'hulsey@example.com',
-        location: 'Chicago',
-        phone: '+1 555-445-7788',
-        projects: 6,
-        joinDate: '12 Dec, 2024',
-        action: {
-            view: 'visibility',
-            delete: 'delete'
-        }
-    },
-    {
-        userID: '#436',
-        user: {
-            img: 'images/users/user13.jpg',
-            name: 'Thomas Wilson'
-        },
-        email: 'wildon@example.com',
-        location: 'San Diego',
-        phone: '+1 555-333-2288',
-        projects: 5,
-        joinDate: '13 Dec, 2024',
-        action: {
-            view: 'visibility',
-            edit: 'edit',
-            delete: 'delete'
-        }
-    },
-    {
-        userID: '#998',
-        user: {
-            img: 'images/users/user6.jpg',
-            name: 'Marcelino Haddock'
-        },
-        email: 'haddock@example.com',
-        location: 'Washington D.C',
-        phone: '+1 555-455-9966',
-        projects: 9,
-        joinDate: '14 Dec, 2024',
-        action: {
-            view: 'visibility',
-            delete: 'delete'
-        }
-    },
-    {
-        userID: '#431',
-        user: {
-            img: 'images/users/user1.jpg',
-            name: 'Robert Fairweather'
-        },
-        email: 'robert@example.com',
-        location: 'San Francisco',
-        phone: '+1 555-555-9922',
-        projects: 6,
-        joinDate: '15 Dec, 2024',
-        action: {
-            view: 'visibility',
-            delete: 'delete'
-        }
-    },
-    {
-        userID: '#860',
-        user: {
-            img: 'images/users/user9.jpg',
-            name: 'Ramiro McCarty'
-        },
-        email: 'ramiro@example.com',
-        location: 'Las Vegas',
-        phone: '+1 555-445-4455',
-        projects: 8,
-        joinDate: '16 Dec, 2024',
-        action: {
-            view: 'visibility',
-            delete: 'delete'
-        }
-    },
-    {
-        userID: '#491',
-        user: {
-            img: 'images/users/user16.jpg',
-            name: 'Rebecca Block'
-        },
-        email: 'block@example.com',
-        location: 'Los Angeles',
-        phone: '+1 555-333-2288',
-        projects: 2,
-        joinDate: '17 Dec, 2024',
-        action: {
-            view: 'visibility',
-            delete: 'delete'
-        }
-    },
-    {
-        userID: '#463',
-        user: {
-            img: 'images/users/user5.jpg',
-            name: 'Barbara Cross'
-        },
-        email: 'cross@example.com',
-        location: 'San Diego',
-        phone: '+1 555-445-7788',
-        projects: 4,
-        joinDate: '18 Dec, 2024',
-        action: {
-            view: 'visibility',
-            delete: 'delete'
-        }
-    },
-    {
-        userID: '#286',
-        user: {
-            img: 'images/users/user12.jpg',
-            name: 'Donna Miller'
-        },
-        email: 'donna@example.com',
-        location: 'Oklahoma City',
-        phone: '+1 555-555-9922',
-        projects: 6,
-        joinDate: '19 Dec, 2024',
-        action: {
-            view: 'visibility',
-            delete: 'delete'
-        }
-    },
-    {
-        userID: '#325',
-        user: {
-            img: 'images/users/user7.jpg',
-            name: 'Carolyn Barnes'
-        },
-        email: 'barnes@example.com',
-        location: 'Chicago',
-        phone: '+1 555-455-9966',
-        projects: 10,
-        joinDate: '20 Dec, 2024',
-        action: {
-            view: 'visibility',
-            delete: 'delete'
-        }
-    },
-    {
-        userID: '#579',
-        user: {
-            img: 'images/users/user15.jpg',
-            name: 'Marcia Baker'
-        },
-        email: 'marcia@example.com',
-        location: 'Washington D.C',
-        phone: '+1 555-445-4455',
-        projects: 6,
-        joinDate: '21 Dec, 2024',
-        action: {
-            view: 'visibility',
-            delete: 'delete'
-        }
-    }
-];
-
 export interface PeriodicElement {
-    userID: string;
-    user: any;
-    email: string;
-    location: string;
+    id: any;
+    name: string;
+    email: any;
     phone: string;
-    projects: number;
-    joinDate: string;
+        type: string;
+
+    designation: string;
+    status: string;
     action: any;
 }

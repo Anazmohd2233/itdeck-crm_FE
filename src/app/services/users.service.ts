@@ -16,6 +16,11 @@ export class UsersService {
         return this.http.post<any>(apiUrl, formData);
     }
 
+    getUsers(page: number, params?: HttpParams): Observable<any> {
+        const url = `${this.apiUrl}/admin/list/${page}`;
+        return this.http.get<any>(url, { params });
+    }
+
     updateUser(id: number, data: any): Observable<any> {
         return this.http.put(`${this.apiUrl}/users/${id}`, data);
     }
@@ -29,12 +34,6 @@ export class UsersService {
     }
     getUserById(id: number): Observable<any> {
         return this.http.get<any>(`${this.apiUrl}/users/${id}`);
-    }
-
-    getUsers(page: number, limit: number): Observable<any> {
-        return this.http.get<any>(
-            `${this.apiUrl}/users?page=${page}&limit=${limit}`
-        );
     }
 
     // **********************************************///

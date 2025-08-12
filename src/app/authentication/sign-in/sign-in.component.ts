@@ -4,7 +4,12 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { RouterLink } from '@angular/router';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+    FormBuilder,
+    FormGroup,
+    ReactiveFormsModule,
+    Validators,
+} from '@angular/forms';
 import { NgIf } from '@angular/common';
 import { Router } from '@angular/router';
 import { CustomizerSettingsService } from '../../customizer-settings/customizer-settings.service';
@@ -14,11 +19,20 @@ import { UsersService } from '../../services/users.service';
 
 @Component({
     selector: 'app-sign-in',
-    imports: [RouterLink, MatFormFieldModule, MatInputModule, MatButtonModule, MatCheckboxModule, ReactiveFormsModule, NgIf],
+    imports: [
+        RouterLink,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatCheckboxModule,
+        ReactiveFormsModule,
+        NgIf,
+    ],
     templateUrl: './sign-in.component.html',
-    styleUrl: './sign-in.component.scss'
+    styleUrl: './sign-in.component.scss',
 })
 export class SignInComponent {
+    authForm: FormGroup;
 
     constructor(
         private fb: FormBuilder,
@@ -29,8 +43,8 @@ export class SignInComponent {
         private userService: UsersService
     ) {
         this.authForm = this.fb.group({
-            email: ['', [Validators.required, Validators.email]],
-            password: ['', [Validators.required, Validators.minLength(8)]],
+            username: ['super_admin', [Validators.required]],
+            password: ['admin@123', [Validators.required]],
         });
     }
 
@@ -38,33 +52,34 @@ export class SignInComponent {
     hide = true;
     userProfile: any;
     // Form
-    authForm: FormGroup;
-    onSubmit() {
+
+    onSubmit(): void {
         if (this.authForm.valid) {
-            const data = this.authForm.value;
-            this.authService.login(data).subscribe({
-                next: (res: any) => {
-                    console.log(res)
-                    if (res.success) {
-                        localStorage.setItem('token', res.token)
-                        localStorage.setItem('role', res.role)
-                        this.toast.success(res.message, 'Success')
-                        if (res.role !== 'superadmin') {
-                            this.getUserProfile();
-                        }
-                        
-                        this.router.navigate(['/']);
+                const formData = new FormData();
+
+                formData.append('username', this.authForm.value.username);
+                formData.append('password', this.authForm.value.password);
+
+            this.authService.login(formData).subscribe(
+                (response: any) => {
+                    if (response.success) {
+                         localStorage.setItem('token',response.data.api_key);
+                                                  localStorage.setItem('super_admin',response.data.super_admin);
+
+                        console.log('response', response);
+                           this.router.navigate(['crm']);
                     } else {
-                        this.toast.error(res.message, 'Error')
+                        this.toast.error(
+                            response.message || 'Failed to Login',
+                            'Error'
+                        );
+                        console.error('❌ Add failed:', response.message);
                     }
                 },
-                error(err) {
-                    console.error(err)
+                (err) => {
+                    this.toast.error('Failed to Login', 'Error');
                 }
-            })
-            // this.router.navigate(['/']);
-        } else {
-            console.log('Form is invalid. Please check the fields.');
+            );
         }
     }
 
@@ -73,10 +88,12 @@ export class SignInComponent {
             next: (res: any) => {
                 if (res.success) {
                     this.userProfile = res.profile;
-                    localStorage.setItem('profile', JSON.stringify(this.userProfile))
+                    localStorage.setItem(
+                        'profile',
+                        JSON.stringify(this.userProfile)
+                    );
                 }
-            }
-        })
+            },
+        });
     }
-
 }

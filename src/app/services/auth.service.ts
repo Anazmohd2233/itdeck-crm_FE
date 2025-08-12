@@ -12,7 +12,7 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  login(auth: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/login`,auth)
+  login(form: FormData): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/admin/login`,form)
   }
 }

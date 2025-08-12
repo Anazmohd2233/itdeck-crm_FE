@@ -6,4 +6,10 @@ import { Injectable } from '@angular/core';
 export class AuthenticationService {
 
   constructor() { }
+
+    logout(): void {
+        // remove user from session storage to log user out
+        localStorage.removeItem('Authorization'); 
+        sessionStorage.clear(); 
+    }
 }

@@ -69,7 +69,7 @@ import { ProjectManagementComponent } from './pages/project-management/project-m
 // import { HdReportsComponent } from './pages/hd-reports/hd-reports.component';
 
 export const routes: Routes = [
-    {path: '', redirectTo: 'crm', pathMatch: 'full'},
+    {path: '', redirectTo: 'authentication', pathMatch: 'full'},
     {path: 'crm', component: CrmComponent},
     {path: 'report', component: HdReportsComponent},
     {path: 'team-report', component: ProjectManagementComponent},

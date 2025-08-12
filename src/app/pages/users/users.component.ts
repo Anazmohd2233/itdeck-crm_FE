@@ -107,7 +107,7 @@ ngOnDestroy(): void {
       return numSelected === numRows;
   }
 
-  fetchUsersList(page: number, limit: number) {
+  fetchUsersList(page: number, limit: any) {
     this.userService.getUsers(page, limit).subscribe({
       next: (res: any) => {
         if (res.success) {

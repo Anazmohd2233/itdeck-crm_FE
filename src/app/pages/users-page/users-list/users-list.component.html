@@ -45,17 +45,17 @@
                 <table mat-table [dataSource]="dataSource">
 
                     <!-- User ID Column -->
-                    <ng-container matColumnDef="userID">
+                    <ng-container matColumnDef="id">
                         <th mat-header-cell *matHeaderCellDef>
                             User ID
                         </th>
                         <td mat-cell *matCellDef="let element">
-                            {{element.userID}}
+                            {{element.id}}
                         </td>
                     </ng-container>
 
                     <!-- User Column -->
-                    <ng-container matColumnDef="user">
+                    <!-- <ng-container matColumnDef="user">
                         <th mat-header-cell *matHeaderCellDef>
                             User
                         </th>
@@ -68,6 +68,16 @@
                                     {{element.user.name}}
                                 </span>
                             </div>
+                        </td>
+                    </ng-container> -->
+
+
+                      <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Name
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.name}}
                         </td>
                     </ng-container>
 
@@ -82,14 +92,14 @@
                     </ng-container>
 
                     <!-- Location Column -->
-                    <ng-container matColumnDef="location">
+                    <!-- <ng-container matColumnDef="location">
                         <th mat-header-cell *matHeaderCellDef>
                             Location
                         </th>
                         <td mat-cell *matCellDef="let element">
                             {{element.location}}
                         </td>
-                    </ng-container>
+                    </ng-container> -->
 
                     <!-- Phone Column -->
                     <ng-container matColumnDef="phone">
@@ -102,27 +112,45 @@
                     </ng-container>
 
                     <!-- Projects Column -->
-                    <ng-container matColumnDef="projects">
+                    <ng-container matColumnDef="designation">
                         <th mat-header-cell *matHeaderCellDef>
-                            Projects
+                            designation
                         </th>
                         <td mat-cell *matCellDef="let element">
-                            {{element.projects}}
+                            {{element.designation}}
+                        </td>
+                    </ng-container>
+
+                      <ng-container matColumnDef="type">
+                        <th mat-header-cell *matHeaderCellDef>
+                            User Type
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.type}}
+                        </td>
+                    </ng-container>
+
+                     <ng-container matColumnDef="status">
+                        <th mat-header-cell *matHeaderCellDef>
+                            status
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.status}}
                         </td>
                     </ng-container>
 
                     <!-- Join Date Column -->
-                    <ng-container matColumnDef="joinDate">
+                    <!-- <ng-container matColumnDef="joinDate">
                         <th mat-header-cell *matHeaderCellDef>
                             Join Date
                         </th>
                         <td mat-cell *matCellDef="let element">
                             {{element.joinDate}}
                         </td>
-                    </ng-container>
+                    </ng-container> -->
 
                     <!-- Action Column -->
-                    <ng-container matColumnDef="action">
+                    <!-- <ng-container matColumnDef="action">
                         <th mat-header-cell *matHeaderCellDef>
                             Action
                         </th>
@@ -140,7 +168,22 @@
                                 </button>
                             </div>
                         </td>
-                    </ng-container>
+                    </ng-container> -->
+
+
+                    <ng-container matColumnDef="action">
+  <th mat-header-cell *matHeaderCellDef>Action</th>
+  <td mat-cell *matCellDef="let element">
+    <div class="action-info">
+      <button type="button" mat-button matTooltip="View" matTooltipPosition="above">
+        <i class="material-symbols-outlined">edit</i>
+      </button>
+      <button type="button" mat-button matTooltip="Delete" matTooltipPosition="above">
+        <i class="material-symbols-outlined">delete</i>
+      </button>
+    </div>
+  </td>
+</ng-container>
 
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

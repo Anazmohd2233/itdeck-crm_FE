@@ -83,7 +83,7 @@ export class AddUserComponent {
         this.selectedFile = event.target.files[0];
     }
 
-    createUser() {
+    createUser(): void {
         if (this.userForm.invalid) {
             this.userForm.markAllAsTouched();
             return;
@@ -109,7 +109,7 @@ export class AddUserComponent {
             next: (response) => {
                 if (response.success) {
                     this.isSubmitting = false;
-
+                    this.userForm.reset();
                     this.toastr.success('User Added successfully', 'Success');
                     console.log('✅ User Added successfully');
                 } else {
