@@ -28,9 +28,9 @@
     [class.rtl-enabled]="themeService.isRTLEnabled()"
 >
     <mat-card-content>
-        <form>
+<form [formGroup]="contactForm" (ngSubmit)="createContact()">
             <div class="row">
-                <!-- <div class="col-md-4 col-sm-6">
+                <div class="col-md-4 col-sm-6">
                     <div class="mb-25">
                         <label class="main-label d-block lh-1 text-black">
                             Contact ID
@@ -39,10 +39,10 @@
                             <mat-label>
                                 Enter contact id
                             </mat-label>
-                            <input matInput>
+                            <input matInput formControlName="contact_id">
                         </mat-form-field>
                     </div>
-                </div> -->
+                </div>
                 <div class="col-md-4 col-sm-6">
                     <div class="mb-25">
                         <label class="main-label d-block lh-1 text-black">
@@ -52,7 +52,7 @@
                             <mat-label>
                                 Enter customer name
                             </mat-label>
-                            <input matInput>
+                            <input matInput formControlName="contact_name">
                         </mat-form-field>
                     </div>
                 </div>
@@ -65,7 +65,7 @@
                             <mat-label>
                                 Enter email address
                             </mat-label>
-                            <input matInput>
+                            <input matInput formControlName="email">
                         </mat-form-field>
                     </div>
                 </div>
@@ -78,7 +78,7 @@
                             <mat-label>
                                 Enter phone number
                             </mat-label>
-                            <input matInput>
+                            <input matInput formControlName="phone">
                         </mat-form-field>
                     </div>
                 </div>
@@ -98,17 +98,19 @@
                 <div class="col-md-4 col-sm-6">
                     <div class="mb-25">
                         <label class="main-label d-block lh-1 text-black">
-                            Services
+                            Courses
                         </label>
                         <mat-form-field>
                             <mat-label>
-                                Enter Service name
+                                Select Course name
                             </mat-label>
                             <!-- <mat-form-field> -->
                                 <!-- <mat-label>
                                     Select
                                 </mat-label> -->
-                                <mat-select multiple>
+                                                                <!-- <mat-select multiple formControlName="courses"> -->
+
+                                <mat-select  formControlName="courses">
                                     <mat-option value="option1">
                                         Course 1
                                     </mat-option>
@@ -148,10 +150,10 @@
                             Contact Status
                         </label>
                         <mat-form-field>
-                            <mat-label>
+                            <mat-label >
                                 Select contact status
                             </mat-label>
-                            <mat-select>
+                            <mat-select formControlName="status">
                                 <mat-option value="true">
                                     Active
                                 </mat-option>
@@ -171,20 +173,20 @@
                             <mat-label>
                                 Select lead source
                             </mat-label>
-                            <mat-select>
-                                <mat-option value="option1">
+                            <mat-select  formControlName="lead_source">
+                                <mat-option value="website">
                                     Website
                                 </mat-option>
-                                <mat-option value="option2">
+                                <mat-option value="referrel">
                                     Referral
                                 </mat-option>
-                                <mat-option value="option3">
+                                <mat-option value="cold_call">
                                     Cold Call
                                 </mat-option>
-                                <mat-option value="option4">
+                                <mat-option value="email_campaign">
                                     Email Campaign
                                 </mat-option>
-                                <mat-option value="option5">
+                                <mat-option value="online_store">
                                     Online Store
                                 </mat-option>
                             </mat-select>
@@ -200,13 +202,16 @@
                     </div>
                 </div>
             </div>
-            <div class="btn-box">
-                <button mat-button>
+                        <div class="btn-box">
+
+                <button mat-button type="submit">
+                       <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm me-1" role="status"
+                                aria-hidden="true"></span>
                     Create Contact
                 </button>
-                <button mat-button>
+                <!-- <button mat-button>
                     Cancel
-                </button>
+                </button> -->
             </div>
         </form>
     </mat-card-content>

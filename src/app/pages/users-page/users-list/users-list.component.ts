@@ -27,6 +27,7 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
     templateUrl: './users-list.component.html',
     styleUrl: './users-list.component.scss',
 })
+
 export class UsersListComponent {
     page: number = 1;
     users: any;
@@ -67,24 +68,7 @@ export class UsersListComponent {
         this.getUserList();
     }
 
-    // private getUserList(): void {
-    //     this.usersService.getUsers(this.page).subscribe({
-    //         next: (response) => {
-    //             if (response.success) {
-    //                 this.users = response.data.users;
-    //                                     this.ELEMENT_DATA = response.data.users;
 
-    //             } else {
-    //                 this.toastr.error('Failed to load users', 'Failed');
-
-    //                 console.error('Failed to load users:', response.message);
-    //             }
-    //         },
-    //         error: (error) => {
-    //             console.error('API error:', error);
-    //         },
-    //     });
-    // }
 
     private getUserList(): void {
         this.usersService.getUsers(this.page).subscribe({
@@ -97,7 +81,7 @@ export class UsersListComponent {
 
                         name: u.name || 'N/A',
                         email: u.email || 'N/A',
-                                                type: u.user_type || 'N/A',
+                        type: u.user_type || 'N/A',
 
                         phone: u.phone || '-',
                         designation: u.designation || '-',
@@ -107,7 +91,7 @@ export class UsersListComponent {
 
                     this.dataSource.data = this.ELEMENT_DATA;
                 } else {
-                    this.toastr.error('Failed to load users', 'Failed');
+                    // this.toastr.error('Failed to load users', 'Failed');
                     console.error('Failed to load users:', response?.message);
                 }
             },
@@ -123,7 +107,7 @@ export interface PeriodicElement {
     name: string;
     email: any;
     phone: string;
-        type: string;
+    type: string;
 
     designation: string;
     status: string;

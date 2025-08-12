@@ -21,6 +21,13 @@ export class UsersService {
         return this.http.get<any>(url, { params });
     }
 
+
+
+
+// ********************  need to remove  **************************///
+
+
+
     updateUser(id: number, data: any): Observable<any> {
         return this.http.put(`${this.apiUrl}/users/${id}`, data);
     }
@@ -38,13 +45,5 @@ export class UsersService {
 
     // **********************************************///
 
-    getBookingView(id: any): Observable<any> {
-        const url = `${this.apiUrl}/user/booking/view/${id}`;
-        return this.http.get<any>(url);
-    }
-
-    getBookingById(params: HttpParams): Observable<any> {
-        const url = `${this.apiUrl}/user/booking/view`;
-        return this.http.get<any>(url, { params });
-    }
+    
 }
