@@ -24,7 +24,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class ContactsComponent {
 
-    displayedColumns: string[] = ['select', 'contactID', 'customer', 'email', 'phone', 'lastContacted', 'course', 'leadSource', 'paidAmount', 'balanceAmount', 'status', 'action'];
+    displayedColumns: string[] = ['select', 'contactID', 'customer', 'email', 'phone', 'lastContacted', 'course', 'leadSource', 'status', 'action'];
     dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
     selection = new SelectionModel<PeriodicElement>(true, []);
 
@@ -99,8 +99,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
         lastContacted: 'Nov 10, 2024',
         course: 'ABC Corporation',
         leadSource: 'Meta',
-        paidAmount: 50,
-        balanceAmount: 25,
+
         status: {
             active: 'Active',
             // deactive: 'Deactive',
@@ -123,8 +122,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
         lastContacted: 'Nov 11, 2024',
         course: 'XYZ Ltd',
         leadSource: 'Meta',
-        paidAmount: 50,
-        balanceAmount: 25,
+
         status: {
             active: 'Active',
             // deactive: 'Deactive',
@@ -147,8 +145,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
         lastContacted: 'Nov 12, 2024',
         course: 'Tech Solutions',
         leadSource: 'Meta',
-        paidAmount: 50,
-        balanceAmount: 25,
+
         status: {
             // active: 'Active',
             deactive: 'Deactive',
@@ -171,8 +168,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
         lastContacted: 'Nov 13, 2024',
         course: 'Global Solutions',
         leadSource: 'Meta',
-        paidAmount: 50,
-        balanceAmount: 25,
+
         status: {
             active: 'Active',
             // deactive: 'Deactive',
@@ -195,8 +191,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
         lastContacted: 'Nov 14, 2024',
         course: 'Acma Industries',
         leadSource: 'Meta',
-        paidAmount: 50,
-        balanceAmount: 25,
+
         status: {
             // active: 'Active',
             deactive: 'Deactive',
@@ -220,8 +215,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
     //     lastContacted: 'Nov 15, 2024',
     //     course: 'Synergy Ltd',
     //     leadSource: 'Meta',
-    //     paidAmount: 50,
-    //     balanceAmount: 25,
+    //  
+    //   
     //     status: {
     //         active: 'Active',
     //         // deactive: 'Deactive',
@@ -244,8 +239,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
     //     lastContacted: 'Nov 16, 2024',
     //     course: 'Summit Solutions',
     //     leadSource: 'Meta',
-    //     paidAmount: 50,
-    //     balanceAmount: 25,
+    //  
+    //   
     //     status: {
     //         active: 'Active',
     //         // deactive: 'Deactive',
@@ -268,8 +263,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
     //     lastContacted: 'Nov 17, 2024',
     //     course: 'Strategies Ltd',
     //     leadSource: 'Meta',
-    //     paidAmount: 50,
-    //     balanceAmount: 25,
+    //  
+    //   
     //     status: {
     //         active: 'Active',
     //         // deactive: 'Deactive',
@@ -292,8 +287,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
     //     lastContacted: 'Nov 18, 2024',
     //     course: 'Tech Enterprises',
     //     leadSource: 'Meta',
-    //     paidAmount: 50,
-    //     balanceAmount: 25,
+    //  
+    //   
     //     status: {
     //         // active: 'Active',
     //         deactive: 'Deactive',
@@ -316,8 +311,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
     //     lastContacted: 'Nov 19, 2024',
     //     course: 'Synetic Solutions',
     //     leadSource: 'Meta',
-    //     paidAmount: 50,
-    //     balanceAmount: 25,
+    //  
+    //   
     //     status: {
     //         active: 'Active',
     //         // deactive: 'Deactive',
@@ -340,8 +335,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
     //     lastContacted: 'Nov 19, 2024',
     //     course: 'Synetic Solutions',
     //     leadSource: 'Meta',
-    //     paidAmount: 50,
-    //     balanceAmount: 25,
+    //  
+    //   
     //     status: {
     //         // active: 'Active',
     //         deactive: 'Deactive',
@@ -364,8 +359,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
     //     lastContacted: 'Nov 18, 2024',
     //     course: 'Tech Enterprises',
     //     leadSource: 'Meta',
-    //     paidAmount: 50,
-    //     balanceAmount: 25,
+    //  
+    //   
     //     status: {
     //         active: 'Active',
     //         // deactive: 'Deactive',
@@ -388,8 +383,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
     //     lastContacted: 'Nov 17, 2024',
     //     course: 'Strategies Ltd',
     //     leadSource: 'Meta',
-    //     paidAmount: 50,
-    //     balanceAmount: 25,
+    //  
+    //   
     //     status: {
     //         active: 'Active',
     //         // deactive: 'Deactive',
@@ -412,8 +407,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
     //     lastContacted: 'Nov 16, 2024',
     //     course: 'Summit Solutions',
     //     leadSource: 'Meta',
-    //     paidAmount: 50,
-    //     balanceAmount: 25,
+    //  
+    //   
     //     status: {
     //         // active: 'Active',
     //         deactive: 'Deactive',
@@ -436,8 +431,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
     //     lastContacted: 'Nov 15, 2024',
     //     course: 'Synergy Ltd',
     //     leadSource: 'Meta',
-    //     paidAmount: 50,
-    //     balanceAmount: 25,
+    //  
+    //   
     //     status: {
     //         active: 'Active',
     //         // deactive: 'Deactive',
@@ -460,8 +455,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
     //     lastContacted: 'Nov 14, 2024',
     //     course: 'Acma Industries',
     //     leadSource: 'Meta',
-    //     paidAmount: 50,
-    //     balanceAmount: 25,
+    //  
+    //   
     //     status: {
     //         active: 'Active',
     //         // deactive: 'Deactive',
@@ -484,8 +479,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
     //     lastContacted: 'Nov 13, 2024',
     //     course: 'Global Solutions',
     //     leadSource: 'Meta',
-    //     paidAmount: 50,
-    //     balanceAmount: 25,
+    //  
+    //   
     //     status: {
     //         // active: 'Active',
     //         deactive: 'Deactive',
@@ -508,8 +503,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
     //     lastContacted: 'Nov 12, 2024',
     //     course: 'Tech Solutions',
     //     leadSource: 'Meta',
-    //     paidAmount: 50,
-    //     balanceAmount: 25,
+    //  
+    //   
     //     status: {
     //         active: 'Active',
     //         // deactive: 'Deactive',
@@ -532,8 +527,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
     //     lastContacted: 'Nov 11, 2024',
     //     course: 'XYZ Ltd',
     //     leadSource: 'Meta',
-    //     paidAmount: 50,
-    //     balanceAmount: 25,
+    //  
+    //   
     //     status: {
     //         active: 'Active',
     //         // deactive: 'Deactive',
@@ -556,8 +551,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
     //     lastContacted: 'Nov 10, 2024',
     //     course: 'ABC Corporation',
     //     leadSource: 'Meta',
-    //     paidAmount: 50,
-    //     balanceAmount: 25,
+    //  
+    //   
     //     status: {
     //         active: 'Active',
     //         // deactive: 'Deactive',
@@ -578,9 +573,7 @@ export interface PeriodicElement {
     phone: string;
     lastContacted: string;
     course: string;
-    leadSource: string;
-    paidAmount: 50,
-    balanceAmount: 25,
+    leadSource: string
     status: any;
     action: any;
 }
