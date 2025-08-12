@@ -15,17 +15,37 @@ import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'app-c-contacts',
-    imports: [MatCardModule, MatMenuModule, MatButtonModule, RouterLink, MatTableModule, MatPaginatorModule, NgIf, MatCheckboxModule, MatTooltipModule],
+    imports: [
+        MatCardModule,
+        MatMenuModule,
+        MatButtonModule,
+        RouterLink,
+        MatTableModule,
+        MatPaginatorModule,
+        NgIf,
+        MatCheckboxModule,
+        MatTooltipModule,
+    ],
     templateUrl: './c-contacts.component.html',
-    styleUrl: './c-contacts.component.scss'
+    styleUrl: './c-contacts.component.scss',
 })
 export class CContactsComponent {
     ELEMENT_DATA: PeriodicElement[] = [];
 
-        page: number = 1;
+    page: number = 1;
     contacts: any;
 
-    displayedColumns: string[] = ['select', 'contactID', 'name', 'email', 'phone', 'courses', 'lead_source', 'status',  'action'];
+    displayedColumns: string[] = [
+        'select',
+        'contactID',
+        'name',
+        'email',
+        'phone',
+        'courses',
+        'lead_source',
+        'status',
+        'action',
+    ];
     dataSource = new MatTableDataSource<PeriodicElement>(this.ELEMENT_DATA);
     selection = new SelectionModel<PeriodicElement>(true, []);
 
@@ -56,7 +76,9 @@ export class CContactsComponent {
         if (!row) {
             return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
         }
-        return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.name + 1}`;
+        return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
+            row.name + 1
+        }`;
     }
 
     // Search Filter
@@ -67,40 +89,38 @@ export class CContactsComponent {
 
     constructor(
         public themeService: CustomizerSettingsService,
-                private contactService: ContactService,
-                        private toastr: ToastrService
-                
-        
+        private contactService: ContactService,
+        private toastr: ToastrService
     ) {}
 
-       ngOnInit(): void {
+    ngOnInit(): void {
         this.getContactList();
     }
 
-
-        private getContactList(): void {
+    private getContactList(): void {
         this.contactService.getContact(this.page).subscribe({
             next: (response) => {
                 if (response && response.success) {
                     const contacts = response.data?.contacts || [];
 
                     this.ELEMENT_DATA = contacts.map((u: any) => ({
-                        contactID: u.id || 'N/A',
+                        id: u.id,
+                        contactID: u.contact_id || 'N/A',
 
-                        name: u.name || 'N/A',
+                        name: u.contact_name || 'N/A',
                         email: u.email || 'N/A',
                         lead_source: u.lead_source || 'N/A',
 
                         phone: u.phone || '-',
                         courses: u.courses || '-',
-                        status: u.status ,
+                        status: u.status,
                         action: '', // we will handle icons directly in template
                     }));
 
                     this.dataSource.data = this.ELEMENT_DATA;
                 } else {
                     // this.toastr.error('Failed to load Contact', 'Failed');
-                    console.error('Failed to load users:', response?.message);
+                    console.error('Failed to load contact:', response?.message);
                 }
             },
             error: (error) => {
@@ -108,12 +128,10 @@ export class CContactsComponent {
             },
         });
     }
-
 }
 
-
-
 export interface PeriodicElement {
+    id: any;
     contactID: string;
     name: any;
     email: string;
@@ -123,4 +141,3 @@ export interface PeriodicElement {
     status: any;
     action: any;
 }
-

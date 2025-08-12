@@ -22,24 +22,29 @@
     </ol>
 </div>
 
-<!-- Create Lead -->
+
+
+
+
+
+
 <mat-card
     class="daxa-card create-lead-card mb-25 border-radius bg-white border-none d-block"
     [class.rtl-enabled]="themeService.isRTLEnabled()"
 >
     <mat-card-content>
-        <form>
+        <form [formGroup]="leadForm" (ngSubmit)="createLead()">
             <div class="row">
                 <div class="col-md-4 col-sm-6">
                     <div class="mb-25">
                         <label class="main-label d-block lh-1 text-black">
-                            ID
+                            Contact ID
                         </label>
                         <mat-form-field>
                             <mat-label>
-                                Enter id
+                                Enter contact id
                             </mat-label>
-                            <input matInput placeholder="E.g. #ARP-1217">
+                            <input matInput formControlName="contact_id">
                         </mat-form-field>
                     </div>
                 </div>
@@ -52,7 +57,7 @@
                             <mat-label>
                                 Enter customer name
                             </mat-label>
-                            <input matInput placeholder="E.g. Marcia Baker">
+                            <input matInput formControlName="contact_name">
                         </mat-form-field>
                     </div>
                 </div>
@@ -65,7 +70,7 @@
                             <mat-label>
                                 Enter email address
                             </mat-label>
-                            <input matInput placeholder="E.g. marcia@example.com">
+                            <input matInput formControlName="email">
                         </mat-form-field>
                     </div>
                 </div>
@@ -78,10 +83,122 @@
                             <mat-label>
                                 Enter phone number
                             </mat-label>
-                            <input matInput placeholder="E.g. +1 555-123-4567">
+                            <input matInput formControlName="phone">
                         </mat-form-field>
                     </div>
                 </div>
+                <!-- <div class="col-md-4 col-sm-6">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">
+                            Last Contacted Date
+                        </label>
+                        <mat-form-field>
+                            <mat-label>
+                                Enter last contacted date
+                            </mat-label>
+                            <input matInput>
+                        </mat-form-field>
+                    </div>
+                </div> -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">
+                            Courses
+                        </label>
+                        <mat-form-field>
+                            <mat-label>
+                                Select Course name
+                            </mat-label>
+                            <!-- <mat-form-field> -->
+                            <!-- <mat-label>
+                                    Select
+                                </mat-label> -->
+                            <!-- <mat-select multiple formControlName="courses"> -->
+
+                            <mat-select formControlName="courses">
+                                <mat-option value="option1">
+                                    Course 1
+                                </mat-option>
+                                <mat-option value="option2">
+                                    Course 2
+                                </mat-option>
+                                <mat-option value="option3">
+                                    Course 3
+                                </mat-option>
+                                <mat-option value="option4">
+                                    Course 4
+                                </mat-option>
+                                <mat-option value="option5">
+                                    Course 5
+                                </mat-option>
+                            </mat-select>
+                            <!-- </mat-form-field> -->
+                        </mat-form-field>
+                    </div>
+                </div>
+                <!-- <div class="col-md-4 col-sm-6">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">
+                            Duration
+                        </label>
+                        <mat-form-field>
+                            <mat-label>
+                                Enter duration
+                            </mat-label>
+                            <input matInput>
+                        </mat-form-field>
+                    </div>
+                </div> -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">
+                            Contact Status
+                        </label>
+                        <mat-form-field>
+                            <mat-label>
+                                Select contact status
+                            </mat-label>
+                            <mat-select formControlName="status">
+                                <mat-option [value]="true">
+                                    Active
+                                </mat-option>
+                                <mat-option [value]="false">
+                                    Inctive
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">
+                            Lead Source
+                        </label>
+                        <mat-form-field>
+                            <mat-label>
+                                Select lead source
+                            </mat-label>
+                            <mat-select formControlName="lead_source">
+                                <mat-option value="website">
+                                    Website
+                                </mat-option>
+                                <mat-option value="referrel">
+                                    Referral
+                                </mat-option>
+                                <mat-option value="cold_call">
+                                    Cold Call
+                                </mat-option>
+                                <mat-option value="email_campaign">
+                                    Email Campaign
+                                </mat-option>
+                                <mat-option value="online_store">
+                                    Online Store
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+
                 <div class="col-md-4 col-sm-6">
                     <div class="mb-25">
                         <label class="main-label d-block lh-1 text-black">
@@ -95,70 +212,8 @@
                         </mat-form-field>
                     </div>
                 </div>
+
                 <div class="col-md-4 col-sm-6">
-                    <div class="mb-25">
-                        <label class="main-label d-block lh-1 text-black">
-                            Courses
-                        </label>
-                        <mat-form-field>
-                            <mat-label>
-                                Enter Course name
-                            </mat-label>
-                            <!-- <mat-form-field> -->
-                                <!-- <mat-label>
-                                    Select
-                                </mat-label> -->
-                                <mat-select multiple >
-                                    <mat-option value="option1">
-                                        Course 1
-                                    </mat-option>
-                                    <mat-option value="option2">
-                                        Course 2
-                                    </mat-option>
-                                    <mat-option value="option3">
-                                        Course 3
-                                    </mat-option>
-                                    <mat-option value="option4">
-                                        Course 4
-                                    </mat-option>
-                                    <mat-option value="option5">
-                                        Course 5
-                                    </mat-option>
-                                </mat-select>
-                            <!-- </mat-form-field> -->
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="mb-25">
-                        <label class="main-label d-block lh-1 text-black">
-                            Lead Source
-                        </label>
-                        <mat-form-field>
-                            <mat-label>
-                                Select lead source
-                            </mat-label>
-                            <mat-select>
-                                <mat-option value="option1">
-                                    Website
-                                </mat-option>
-                                <mat-option value="option2">
-                                    Referral
-                                </mat-option>
-                                <mat-option value="option3">
-                                    Cold Call
-                                </mat-option>
-                                <mat-option value="option4">
-                                    Email Campaign
-                                </mat-option>
-                                <mat-option value="option5">
-                                    Online Store
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-6" >
                     <div class="mb-25">
                         <label class="main-label d-block lh-1 text-black">
                             Assign to
@@ -187,44 +242,6 @@
                         </mat-form-field>
                     </div>
                 </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="mb-25">
-                        <label class="main-label d-block lh-1 text-black">
-                            Status
-                        </label>
-                        <mat-form-field>
-                            <mat-label>
-                                Select status
-                            </mat-label>
-                            <mat-select>
-                                <mat-option value="option1">
-                                    New
-                                </mat-option>
-                                <mat-option value="option2">
-                                    Won
-                                </mat-option>
-                                <mat-option value="option3">
-                                    In Progress
-                                </mat-option>
-                                <mat-option value="option4">
-                                    Lost
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-6 d-flex align-items-center">
-                    <div class="btn-box" *ngIf="!taskCreated">
-                        <button mat-button (click)="createTask()">
-                            Create Task
-                        </button>
-                    </div>
-                    <div class="btn-box" *ngIf="taskCreated">
-                        <button mat-button routerLink="/task/ticket-details">
-                            Open Task
-                        </button>
-                    </div>
-                </div>
                 <div class="col-md-12 col-sm-12">
                     <div class="mb-25">
                         <label class="main-label d-block lh-1 text-black">
@@ -235,12 +252,17 @@
                 </div>
             </div>
             <div class="btn-box">
-                <button mat-button>
+
+                <button mat-button type="submit">
+                    <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm me-1" role="status"
+                        aria-hidden="true"></span>
                     Create Lead
+                    <!-- {{ editMode ? 'Edit Contact' : 'Create Contact' }} -->
                 </button>
-                <button mat-button>
+
+                <!-- <button mat-button>
                     Cancel
-                </button>
+                </button> -->
             </div>
         </form>
     </mat-card-content>

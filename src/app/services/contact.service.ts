@@ -27,7 +27,7 @@ export class ContactService {
     }
 
       getContactById(contact_id: number, params?: HttpParams): Observable<any> {
-        const url = `${this.apiUrl}/admin/contacts/list/${contact_id}`;
+        const url = `${this.apiUrl}/admin/contacts/view/${contact_id}`;
         return this.http.get<any>(url, { params });
     }
 

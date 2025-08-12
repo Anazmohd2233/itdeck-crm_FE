@@ -25,7 +25,7 @@
 <!-- Create Course -->
 <form>
     <div class="row">
-        <div class="col-xxl-7 col-xxxl-8">
+        <div class="col-xxl-12 col-xxxl-8">
             <mat-card class="daxa-card create-course-card mb-25 border-radius bg-white border-none d-block">
                 <mat-card-header>
                     <mat-card-title>
@@ -36,7 +36,7 @@
                 </mat-card-header>
                 <mat-card-content>
                     <div class="row">
-                        <div class="col-sm-12">
+                        <div class="col-sm-3">
                             <div class="mb-25">
                                 <label class="main-label d-block lh-1 text-black">
                                     Course Title
@@ -49,20 +49,8 @@
                                 </mat-form-field>
                             </div>
                         </div>
-                        <div class="col-sm-12">
-                            <div class="mb-25">
-                                <label class="main-label d-block lh-1 text-black">
-                                    Course Description
-                                </label>
-                                <div class="NgxEditor__Wrapper">
-                                    <ng-container *ngIf="editor">
-                                        <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"></ngx-editor-menu>
-                                        <ngx-editor [editor]="editor"></ngx-editor>
-                                    </ng-container>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-12">
+                  
+                        <div class="col-sm-3">
                             <div class="mb-25">
                                 <label class="main-label d-block lh-1 text-black">
                                     Course Price
@@ -75,7 +63,7 @@
                                 </mat-form-field>
                             </div>
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-sm-3">
                             <div class="mb-25">
                                 <label class="main-label d-block lh-1 text-black">
                                     Start Date
@@ -90,7 +78,7 @@
                                 </mat-form-field>
                             </div>
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-sm-3">
                             <div class="mb-25">
                                 <label class="main-label d-block lh-1 text-black">
                                     End Date
@@ -105,7 +93,7 @@
                                 </mat-form-field>
                             </div>
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-sm-3">
                             <div class="mb-25">
                                 <label class="main-label d-block lh-1 text-black">
                                     Instructor
@@ -122,10 +110,10 @@
                                 </mat-form-field>
                             </div>
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-sm-3">
                             <div class="mb-25">
                                 <label class="main-label d-block lh-1 text-black">
-                                    Course Tags
+                                    Course Category
                                 </label>
                                 <mat-form-field>
                                     <mat-label>
@@ -137,6 +125,20 @@
                                         }
                                     </mat-select>
                                 </mat-form-field>
+                            </div>
+                        </div>
+
+                              <div class="col-sm-12">
+                            <div class="mb-25">
+                                <label class="main-label d-block lh-1 text-black">
+                                    Course Description
+                                </label>
+                                <div class="NgxEditor__Wrapper">
+                                    <ng-container *ngIf="editor">
+                                        <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"></ngx-editor-menu>
+                                        <ngx-editor [editor]="editor"></ngx-editor>
+                                    </ng-container>
+                                </div>
                             </div>
                         </div>
                         <div class="col-sm-12">
@@ -151,70 +153,6 @@
                 </mat-card-content>
             </mat-card>
         </div>
-        <div class="col-xxl-5 col-xxxl-4">
-            <mat-card
-                class="daxa-card create-course-card mb-25 border-radius bg-white border-none d-block"
-                [class.component-dark-theme]="themeService.isDark()"
-            >
-                <mat-card-header>
-                    <mat-card-title>
-                        <h5 class="mb-0">
-                            Course Overview
-                        </h5>
-                    </mat-card-title>
-                </mat-card-header>
-                <mat-card-content>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="mb-25">
-                                <label class="main-label d-block lh-1 text-black">
-                                    Lesson Title
-                                </label>
-                                <mat-form-field>
-                                    <mat-label>
-                                        Lesson title
-                                    </mat-label>
-                                    <input matInput placeholder="E.g. Hand Watch">
-                                </mat-form-field>
-                            </div>
-                        </div>
-                        <div class="col-sm-12">
-                            <div class="mb-25">
-                                <label class="main-label d-block lh-1 text-black">
-                                    Lesson Time
-                                </label>
-                                <mat-form-field>
-                                    <mat-label>
-                                        Enter hours
-                                    </mat-label>
-                                    <input matInput placeholder="E.g. 2 hours 23 minutes">
-                                </mat-form-field>
-                            </div>
-                        </div>
-                        <div class="col-sm-12">
-                            <div class="mb-25">
-                                <label class="main-label d-block lh-1 text-black">
-                                    Lesson Description
-                                </label>
-                                <mat-form-field class="textarea">
-                                    <mat-label>
-                                        Write your description here....
-                                    </mat-label>
-                                    <textarea matInput placeholder="E.g. It makes me feel..."></textarea>
-                                </mat-form-field>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="btn-box d-md-flex align-items-center justify-content-between">
-                        <button mat-button>
-                            Save Course
-                        </button>
-                        <button mat-button>
-                            + Add More Field
-                        </button>
-                    </div>
-                </mat-card-content>
-            </mat-card>
-        </div>
+   
     </div>
 </form>

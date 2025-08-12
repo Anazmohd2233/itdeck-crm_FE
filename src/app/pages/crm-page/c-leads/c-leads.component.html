@@ -68,11 +68,11 @@
         </mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-        <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="end" [style.padding]="'5px 20px'" [style.margin-top]="'-20.5px'">
-            <mat-tab>
-                <ng-template mat-tab-label>
+        <!-- <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="end" [style.padding]="'5px 20px'" [style.margin-top]="'-20.5px'"> -->
+            <!-- <mat-tab> -->
+                <!-- <ng-template mat-tab-label>
                     <mat-icon class="example-tab-icon">view_list</mat-icon>
-                </ng-template>
+                </ng-template> -->
                 <div class="leads-table">
                     <div class="table-responsive">
                         <table mat-table [dataSource]="dataSource">
@@ -252,14 +252,14 @@
                     </div>
                     <mat-paginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons></mat-paginator>
                 </div> 
-            </mat-tab>
+            <!-- </mat-tab> -->
         
-            <mat-tab>
+            <!-- <mat-tab>
                 <ng-template mat-tab-label>
                     <mat-icon class="example-tab-icon">grid_view</mat-icon>
                 </ng-template>
                 <app-c-lead-kanban />
-            </mat-tab>
-        </mat-tab-group>
+            </mat-tab> -->
+        <!-- </mat-tab-group> -->
     </mat-card-content>
 </mat-card>

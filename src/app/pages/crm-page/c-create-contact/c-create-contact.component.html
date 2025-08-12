@@ -1,7 +1,8 @@
 <!-- Breadcrumb -->
 <div class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between">
     <h5 class="mb-0">
-        Create Contact
+        {{ editMode ? 'Edit Contact' : 'Create Contact' }}
+
     </h5>
     <ol class="breadcrumb list-unstyled mt-0 mb-0 pl-0">
         <li class="breadcrumb-item position-relative">
@@ -17,18 +18,17 @@
             Contacts
         </li>
         <li class="breadcrumb-item position-relative">
-            Create Contact
+            {{ editMode ? 'Edit Contact' : 'Create Contact' }}
         </li>
+
     </ol>
 </div>
 
 <!-- Create Contact -->
-<mat-card
-    class="daxa-card create-contact-card mb-25 border-radius bg-white border-none d-block"
-    [class.rtl-enabled]="themeService.isRTLEnabled()"
->
+<mat-card class="daxa-card create-contact-card mb-25 border-radius bg-white border-none d-block"
+    [class.rtl-enabled]="themeService.isRTLEnabled()">
     <mat-card-content>
-<form [formGroup]="contactForm" (ngSubmit)="createContact()">
+        <form [formGroup]="contactForm" (ngSubmit)="createContact()">
             <div class="row">
                 <div class="col-md-4 col-sm-6">
                     <div class="mb-25">
@@ -105,28 +105,28 @@
                                 Select Course name
                             </mat-label>
                             <!-- <mat-form-field> -->
-                                <!-- <mat-label>
+                            <!-- <mat-label>
                                     Select
                                 </mat-label> -->
-                                                                <!-- <mat-select multiple formControlName="courses"> -->
+                            <!-- <mat-select multiple formControlName="courses"> -->
 
-                                <mat-select  formControlName="courses">
-                                    <mat-option value="option1">
-                                        Course 1
-                                    </mat-option>
-                                    <mat-option value="option2">
-                                        Course 2
-                                    </mat-option>
-                                    <mat-option value="option3">
-                                        Course 3
-                                    </mat-option>
-                                    <mat-option value="option4">
-                                        Course 4
-                                    </mat-option>
-                                    <mat-option value="option5">
-                                        Course 5
-                                    </mat-option>
-                                </mat-select>
+                            <mat-select formControlName="courses">
+                                <mat-option value="option1">
+                                    Course 1
+                                </mat-option>
+                                <mat-option value="option2">
+                                    Course 2
+                                </mat-option>
+                                <mat-option value="option3">
+                                    Course 3
+                                </mat-option>
+                                <mat-option value="option4">
+                                    Course 4
+                                </mat-option>
+                                <mat-option value="option5">
+                                    Course 5
+                                </mat-option>
+                            </mat-select>
                             <!-- </mat-form-field> -->
                         </mat-form-field>
                     </div>
@@ -150,14 +150,14 @@
                             Contact Status
                         </label>
                         <mat-form-field>
-                            <mat-label >
+                            <mat-label>
                                 Select contact status
                             </mat-label>
                             <mat-select formControlName="status">
-                                <mat-option value="true">
+                                <mat-option [value]="true">
                                     Active
                                 </mat-option>
-                                <mat-option value="false">
+                                <mat-option [value]="false">
                                     Inctive
                                 </mat-option>
                             </mat-select>
@@ -173,7 +173,7 @@
                             <mat-label>
                                 Select lead source
                             </mat-label>
-                            <mat-select  formControlName="lead_source">
+                            <mat-select formControlName="lead_source">
                                 <mat-option value="website">
                                     Website
                                 </mat-option>
@@ -202,13 +202,14 @@
                     </div>
                 </div>
             </div>
-                        <div class="btn-box">
+            <div class="btn-box">
 
                 <button mat-button type="submit">
-                       <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm me-1" role="status"
-                                aria-hidden="true"></span>
-                    Create Contact
+                    <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm me-1" role="status"
+                        aria-hidden="true"></span>
+                    {{ editMode ? 'Edit Contact' : 'Create Contact' }}
                 </button>
+
                 <!-- <button mat-button>
                     Cancel
                 </button> -->

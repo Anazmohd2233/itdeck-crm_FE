@@ -14,7 +14,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FileUploadModule } from '@iplab/ngx-file-upload';
 import { CustomizerSettingsService } from '../../../customizer-settings/customizer-settings.service';
 import { ContactService } from '../../../services/contact.service';
@@ -44,7 +44,8 @@ import { CommonModule } from '@angular/common';
 export class CCreateContactComponent {
     contactForm!: FormGroup;
     isSubmitting = false;
-
+    contactId: string | null = null; // 👈 Store the ID here
+    editMode: boolean = false;
     selectedFile: File | null = null;
 
     // File Uploader
@@ -54,10 +55,23 @@ export class CCreateContactComponent {
         public themeService: CustomizerSettingsService,
         private fb: FormBuilder,
         private toastr: ToastrService,
-        private contactService: ContactService
+        private contactService: ContactService,
+        private route: ActivatedRoute // 👈 Inject ActivatedRoute
     ) {}
 
     ngOnInit(): void {
+        // ✅ Get ID from query params
+        this.route.queryParams.subscribe((params) => {
+            this.contactId = params['id'] || null;
+            console.log('📌 Received Contact ID:', this.contactId);
+
+            // If we have an ID, it’s an edit — fetch contact details
+            if (this.contactId) {
+                this.editMode = true;
+                this.loadContactDetails(this.contactId);
+            }
+        });
+
         this.initializeContactForm();
     }
 
@@ -78,7 +92,6 @@ export class CCreateContactComponent {
     }
 
     createContact(): void {
-        console.log('workiongggggggggggg*******');
         Object.keys(this.contactForm.controls).forEach((key) => {
             console.log(key, this.contactForm.get(key)?.value);
         });
@@ -99,32 +112,91 @@ export class CCreateContactComponent {
             formData.append('contact_img', this.selectedFile);
         }
 
-        this.contactService.createContact(formData).subscribe({
+        if (this.editMode) {
+            this.contactService
+                .updateContact(formData, this.contactId)
+                .subscribe({
+                    next: (response) => {
+                        if (response.success) {
+                            this.isSubmitting = false;
+                            this.toastr.success(
+                                'Contact Added successfully',
+                                'Success'
+                            );
+                            console.log('✅ Contact Updated successfully');
+                        } else {
+                            this.isSubmitting = false;
+
+                            this.toastr.error(
+                                response.message || 'Failed to Update Contact.',
+                                'Error'
+                            );
+                            console.error('❌ add failed:', response.message);
+                        }
+                    },
+                    error: (error) => {
+                        this.isSubmitting = false;
+
+                        this.toastr.error('Something went wrong.', 'Error');
+
+                        console.error('❌ API error:', error);
+                    },
+                });
+        } else {
+            this.contactService.createContact(formData).subscribe({
+                next: (response) => {
+                    if (response.success) {
+                        this.isSubmitting = false;
+                        this.contactForm.reset();
+                        this.toastr.success(
+                            'Contact Added successfully',
+                            'Success'
+                        );
+                        console.log('✅ Contact Added successfully');
+                    } else {
+                        this.isSubmitting = false;
+
+                        this.toastr.error(
+                            response.message || 'Failed to Add Contact.',
+                            'Error'
+                        );
+                        console.error('❌ add failed:', response.message);
+                    }
+                },
+                error: (error) => {
+                    this.isSubmitting = false;
+
+                    this.toastr.error('Something went wrong.', 'Error');
+
+                    console.error('❌ API error:', error);
+                },
+            });
+        }
+    }
+
+    loadContactDetails(id: any) {
+        this.contactService.getContactById(id).subscribe({
             next: (response) => {
                 if (response.success) {
-                    this.isSubmitting = false;
-                    this.contactForm.reset();
-                    this.toastr.success(
-                        'Contact Added successfully',
-                        'Success'
-                    );
-                    console.log('✅ Contact Added successfully');
-                } else {
-                    this.isSubmitting = false;
+                    const contact = response.contact;
 
-                    this.toastr.error(
-                        response.message || 'Failed to Add Contact.',
-                        'Error'
-                    );
-                    console.error('❌ add failed:', response.message);
+                    // ✅ Patch form values
+                    this.contactForm.patchValue({
+                        contact_id: contact.contact_id,
+                        contact_name: contact.contact_name,
+                        email: contact.email,
+                        phone: contact.phone,
+                        courses: contact.courses,
+                        status: contact.status,
+                        lead_source: contact.lead_source,
+                    });
+                } else {
+                    this.toastr.error('Customer not found.', 'Error');
                 }
             },
-            error: (error) => {
-                this.isSubmitting = false;
-
-                this.toastr.error('Something went wrong.', 'Error');
-
-                console.error('❌ API error:', error);
+            error: (err) => {
+                console.error('❌ Error loading contact:', err);
+                this.toastr.error('Failed to load contact details.', 'Error');
             },
         });
     }
