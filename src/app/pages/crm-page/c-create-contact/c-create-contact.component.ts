@@ -62,7 +62,7 @@ export class CCreateContactComponent {
     ngOnInit(): void {
         // ✅ Get ID from query params
         this.route.queryParams.subscribe((params) => {
-            this.contactId = params['id'] || null;
+            this.contactId = params['contact_id'] || null;
             console.log('📌 Received Contact ID:', this.contactId);
 
             // If we have an ID, it’s an edit — fetch contact details

@@ -48,17 +48,16 @@
 </mat-card> -->
 
 <!-- Leads -->
-<mat-card
-    class="daxa-card leads-card border-radius bg-white border-none d-block"
-    [class.rtl-enabled]="themeService.isRTLEnabled()"
->
+<mat-card class="daxa-card leads-card border-radius bg-white border-none d-block"
+    [class.rtl-enabled]="themeService.isRTLEnabled()">
     <mat-card-header>
         <mat-card-title>
             <form class="search-box position-relative">
                 <i class="material-symbols-outlined">
                     search
                 </i>
-                <input type="text" class="input-search d-block w-100 border-none outline-0" placeholder="Search lead..." (keyup)="applyFilter($event)" #input>
+                <input type="text" class="input-search d-block w-100 border-none outline-0" placeholder="Search lead..."
+                    (keyup)="applyFilter($event)" #input>
             </form>
         </mat-card-title>
         <mat-card-subtitle>
@@ -69,192 +68,198 @@
     </mat-card-header>
     <mat-card-content>
         <!-- <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="end" [style.padding]="'5px 20px'" [style.margin-top]="'-20.5px'"> -->
-            <!-- <mat-tab> -->
-                <!-- <ng-template mat-tab-label>
+        <!-- <mat-tab> -->
+        <!-- <ng-template mat-tab-label>
                     <mat-icon class="example-tab-icon">view_list</mat-icon>
                 </ng-template> -->
-                <div class="leads-table">
-                    <div class="table-responsive">
-                        <table mat-table [dataSource]="dataSource">
-        
-                            <!-- Checkbox Column -->
-                            <ng-container matColumnDef="select">
-                                <th mat-header-cell *matHeaderCellDef>
-                                    <mat-checkbox
-                                        (change)="$event ? toggleAllRows() : null"
-                                        [checked]="selection.hasValue() && isAllSelected()"
-                                        [indeterminate]="selection.hasValue() && !isAllSelected()"
-                                        [aria-label]="checkboxLabel()"
-                                    >
-                                    </mat-checkbox>
-                                </th>
-                                <td mat-cell *matCellDef="let row">
-                                    <mat-checkbox
-                                        (click)="$event.stopPropagation()"
-                                        (change)="$event ? selection.toggle(row) : null"
-                                        [checked]="selection.isSelected(row)"
-                                        [aria-label]="checkboxLabel(row)"
-                                    >
-                                    </mat-checkbox>
-                                </td>
-                            </ng-container>
-        
-                            <!-- ID Column -->
-                            <ng-container matColumnDef="id">
-                                <th mat-header-cell *matHeaderCellDef>
-                                    ID
-                                </th>
-                                <td mat-cell *matCellDef="let element">
-                                    {{element.id}}
-                                </td>
-                            </ng-container>
-        
-                            <!-- Customer Column -->
-                            <ng-container matColumnDef="customer">
-                                <th mat-header-cell *matHeaderCellDef>
-                                    Customer
-                                </th>
-                                <td mat-cell *matCellDef="let element" class="text-black">
-                                    <div class="info d-flex align-items-center" style="cursor: pointer;" routerLink="/crm-page/profile" >
-                                        <div class="image">
-                                            <img [src]="element.customer.img" alt="customer-image">
-                                        </div>
-                                        <span class="d-block fw-medium">
-                                            {{element.customer.name}}
-                                        </span>
-                                    </div>
-                                </td>
-                            </ng-container>
-        
-                            <!-- Email Column -->
-                            <ng-container matColumnDef="email">
-                                <th mat-header-cell *matHeaderCellDef>
-                                    Email
-                                </th>
-                                <td mat-cell *matCellDef="let element">
-                                    {{element.email}}
-                                </td>
-                            </ng-container>
-        
-                            <!-- Phone Column -->
-                            <ng-container matColumnDef="phone">
-                                <th mat-header-cell *matHeaderCellDef>
-                                    Phone
-                                </th>
-                                <td mat-cell *matCellDef="let element">
-                                    {{element.phone}}
-                                </td>
-                            </ng-container>
-        
-                            <!-- Create Date Column -->
-                            <ng-container matColumnDef="createDate">
-                                <th mat-header-cell *matHeaderCellDef>
-                                    Create Date
-                                </th>
-                                <td mat-cell *matCellDef="let element">
-                                    {{element.createDate}}
-                                </td>
-                            </ng-container>
-        
-                            <!-- Course Column -->
-                            <ng-container matColumnDef="company">
-                                <th mat-header-cell *matHeaderCellDef>
-                                    Interested Course
-                                </th>
-                                <td mat-cell *matCellDef="let element">
-                                    {{element.company}}
-                                </td>
-                            </ng-container>
-        
-                            <!-- Course Column -->
-                            <ng-container matColumnDef="assignedTo">
-                                <th mat-header-cell *matHeaderCellDef>
-                                    Assigned To
-                                </th>
-                                <td mat-cell *matCellDef="let element">
-                                    @for (item of element.assignedTo; track item){
-                                        <span>{{item + ', '}}</span>
-                                    }
-                                </td>
-                            </ng-container>
-                            
-                            <!-- Lead Source Column -->
-                            <ng-container matColumnDef="leadSource">
-                                <th mat-header-cell *matHeaderCellDef>
-                                    Lead Source
-                                </th>
-                                <td mat-cell *matCellDef="let element">
-                                    {{element.leadSource}}
-                                </td>
-                            </ng-container>
-        
-                            <!-- Status Column -->
-                            <ng-container matColumnDef="status">
-                                <th mat-header-cell *matHeaderCellDef>
-                                    Status
-                                </th>
-                                <td mat-cell *matCellDef="let element">
-                                    <span class="daxa-badge new d-inline-block" *ngIf="element.status.new">
-                                        {{element.status.new}}
-                                    </span>
-                                    <span class="daxa-badge in-progress d-inline-block" *ngIf="element.status.inProgress">
-                                        {{element.status.inProgress}}
-                                    </span>
-                                    <span class="daxa-badge won d-inline-block" *ngIf="element.status.won">
-                                        {{element.status.won}}
-                                    </span>
-                                    <span class="daxa-badge lost d-inline-block" *ngIf="element.status.lost">
-                                        {{element.status.lost}}
-                                    </span>
-                                </td>
-                            </ng-container>
-        
-                            <!-- Action Column -->
-                            <ng-container matColumnDef="action">
-                                <th mat-header-cell *matHeaderCellDef>
-                                    Action
-                                </th>
-                                <td mat-cell *matCellDef="let element">
-                                    <div class="action-info">
-                                        <a routerLink="/crm-page/profile" mat-button matTooltip="View Lead" matTooltipPosition="above">
-                                            <i class="material-symbols-outlined">
-                                                {{element.action.view}}
-                                            </i>
-                                        </a>
-                                        <a mat-button routerLink="/crm-page/edit-lead" matTooltip="Edit Lead" matTooltipPosition="above">
-                                            <i class="material-symbols-outlined">
-                                                {{element.action.edit}}
-                                            </i>
-                                        </a>
-                                        <a mat-button routerLink="/task/create-ticket" matTooltip="Create Task" matTooltipPosition="above">
-                                            <i class="material-symbols-outlined">
-                                                {{element.action.createTask}}
-                                            </i>
-                                        </a>
-                                        <button type="button" mat-button matTooltip="Delete" matTooltipPosition="above">
-                                            <i class="material-symbols-outlined">
-                                                {{element.action.delete}}
-                                            </i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </ng-container>
-        
-                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            
-                            <!-- Row shown when there is no matching data. -->
-                            <tr class="mat-row" *matNoDataRow>
-                                <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
-                            </tr>
-        
-                        </table>
-                    </div>
-                    <mat-paginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons></mat-paginator>
-                </div> 
-            <!-- </mat-tab> -->
-        
-            <!-- <mat-tab>
+        <div class="leads-table">
+            <div class="table-responsive">
+                <table mat-table [dataSource]="dataSource">
+
+                    <!-- Checkbox Column -->
+                    <ng-container matColumnDef="select">
+                        <th mat-header-cell *matHeaderCellDef>
+                            <mat-checkbox (change)="$event ? toggleAllRows() : null"
+                                [checked]="selection.hasValue() && isAllSelected()"
+                                [indeterminate]="selection.hasValue() && !isAllSelected()"
+                                [aria-label]="checkboxLabel()">
+                            </mat-checkbox>
+                        </th>
+                        <td mat-cell *matCellDef="let row">
+                            <mat-checkbox (click)="$event.stopPropagation()"
+                                (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)"
+                                [aria-label]="checkboxLabel(row)">
+                            </mat-checkbox>
+                        </td>
+                    </ng-container>
+
+                    <!-- ID Column -->
+                    <ng-container matColumnDef="contact_id">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Contact ID
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.contact_id}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Customer Column -->
+                    <ng-container matColumnDef="customer_name">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Customer
+                        </th>
+                        <td mat-cell *matCellDef="let element" class="text-black">
+                            <div class="info d-flex align-items-center" style="cursor: pointer;"
+                                routerLink="/crm-page/profile">
+
+                                <span class="d-block fw-medium">
+                                    {{element.customer_name}}
+                                </span>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <!-- Email Column -->
+                    <ng-container matColumnDef="email">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Email
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.email}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Phone Column -->
+                    <ng-container matColumnDef="phone">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Phone
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.phone}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Create Date Column -->
+                    <ng-container matColumnDef="created_date">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Create Date
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.created_date}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Course Column -->
+                    <ng-container matColumnDef="courses">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Interested Course
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.courses}}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="assign_to">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Assign to
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            User
+                            <!-- {{element.courses}} -->
+                        </td>
+                    </ng-container>
+
+
+
+                    <!-- Lead Source Column -->
+                    <ng-container matColumnDef="lead_source">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Lead Source
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.lead_source}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Status Column -->
+                    <ng-container matColumnDef="status">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Status
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            <span class="daxa-badge new d-inline-block" *ngIf="element.status === 'NEW'">
+                                New
+                            </span>
+                            <span class="daxa-badge in-progress d-inline-block"
+                                *ngIf="element.status === 'IN_PROGRESS'">
+                                In Progress
+                            </span>
+                            <span class="daxa-badge won d-inline-block" *ngIf="element.status === 'WON'">
+                                Won
+                            </span>
+                            <span class="daxa-badge lost d-inline-block" *ngIf="element.status === 'LOST'">
+                                Lost
+                            </span>
+                            <span class="daxa-badge other d-inline-block" *ngIf="element.status === 'OTHER'">
+                                Other
+                            </span>
+                        </td>
+
+                    </ng-container>
+
+                    <!-- Action Column -->
+                    <ng-container matColumnDef="action">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Action
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="action-info">
+                                <a routerLink="/crm-page/profile" mat-button matTooltip="View Lead"
+                                    matTooltipPosition="above">
+                                    <i class="material-symbols-outlined">
+                                        visibility </i>
+                                </a>
+
+
+                                <a mat-button [routerLink]="'/crm-page/create-lead'"
+                                    [queryParams]="{ lead_id: element.id }" matTooltip="Edit Lead"
+                                    matTooltipPosition="above">
+                                    <i class="material-symbols-outlined">
+                                        edit
+                                    </i>
+                                </a>
+
+
+
+
+                                <a mat-button routerLink="/task/create-ticket" matTooltip="Create Task"
+                                    matTooltipPosition="above">
+                                    <i class="material-symbols-outlined">
+                                        add_task </i>
+                                </a>
+                                <button type="button" mat-button matTooltip="Delete" matTooltipPosition="above">
+                                    <i class="material-symbols-outlined">
+                                        delete </i>
+                                </button>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                    <!-- Row shown when there is no matching data. -->
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                    </tr>
+
+                </table>
+            </div>
+            <mat-paginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons></mat-paginator>
+        </div>
+        <!-- </mat-tab> -->
+
+        <!-- <mat-tab>
                 <ng-template mat-tab-label>
                     <mat-icon class="example-tab-icon">grid_view</mat-icon>
                 </ng-template>

@@ -16,17 +16,51 @@ import { CustomizerSettingsService } from '../../../customizer-settings/customiz
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatIconModule } from '@angular/material/icon';
 import { CLeadKanbanComponent } from '../c-lead-kanban/c-lead-kanban.component';
+import { LeadsService } from '../../../services/lead.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'app-c-leads',
-    imports: [RouterLink, MatCardModule, NewLeadsComponent, ActiveLeadsComponent, LeadConversionComponent, RevenueGrowthComponent, MatTabsModule, MatIconModule, MatTooltipModule, MatCheckboxModule, NgIf, MatPaginatorModule, MatTableModule, MatButtonModule, CLeadKanbanComponent],
+    imports: [
+        RouterLink,
+        MatCardModule,
+        NewLeadsComponent,
+        ActiveLeadsComponent,
+        LeadConversionComponent,
+        RevenueGrowthComponent,
+        MatTabsModule,
+        MatIconModule,
+        MatTooltipModule,
+        MatCheckboxModule,
+        NgIf,
+        MatPaginatorModule,
+        MatTableModule,
+        MatButtonModule,
+        CLeadKanbanComponent,
+    ],
     templateUrl: './c-leads.component.html',
-    styleUrl: './c-leads.component.scss'
+    styleUrl: './c-leads.component.scss',
 })
 export class CLeadsComponent {
+    ELEMENT_DATA: PeriodicElement[] = [];
 
-    displayedColumns: string[] = ['select', 'id', 'customer', 'email', 'phone', 'createDate', 'company', 'assignedTo', 'leadSource', 'status', 'action'];
-    dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+    page: number = 1;
+    leads: any;
+
+    displayedColumns: string[] = [
+        'select',
+        'contact_id',
+        'customer_name',
+        'email',
+        'phone',
+        'assign_to',
+        'created_date',
+        'courses',
+        'status',
+        'lead_source',
+        'action',
+    ];
+    dataSource = new MatTableDataSource<PeriodicElement>(this.ELEMENT_DATA);
     selection = new SelectionModel<PeriodicElement>(true, []);
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -56,7 +90,9 @@ export class CLeadsComponent {
         if (!row) {
             return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
         }
-        return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.customer + 1}`;
+        return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
+            row.customer_name + 1
+        }`;
     }
 
     // Search Filter
@@ -66,524 +102,62 @@ export class CLeadsComponent {
     }
 
     constructor(
-        public themeService: CustomizerSettingsService
+        public themeService: CustomizerSettingsService,
+        private leadsService: LeadsService,
+        private toastr: ToastrService
     ) {}
 
+    ngOnInit(): void {
+        this.getLeadsList();
+    }
+
+    private getLeadsList(): void {
+        this.leadsService.getLead(this.page).subscribe({
+            next: (response) => {
+                if (response && response.success) {
+                    const leads = response.data?.leads || [];
+
+                    this.ELEMENT_DATA = leads.map((u: any) => ({
+                        id: u.id,
+                        contact_id: u.contact_id || 'N/A',
+
+                        customer_name: u.contact_name || 'N/A',
+                        email: u.email || 'N/A',
+                        phone: u.phone || '-',
+
+                        lead_source: u.lead_source || 'N/A',
+
+                        courses: u.courses || '-',
+                        created_date: u.created_date || 'N/A',
+
+                        assign_to: u.assign_to || 'N/A',
+
+                        status: u.status,
+                        action: '', // we will handle icons directly in template
+                    }));
+
+                    this.dataSource.data = this.ELEMENT_DATA;
+                } else {
+                    // this.toastr.error('Failed to load Contact', 'Failed');
+                    console.error('Failed to load contact:', response?.message);
+                }
+            },
+            error: (error) => {
+                console.error('API error:', error);
+            },
+        });
+    }
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-    {
-        id: ' #ARP-1217',
-        customer: {
-            img: 'images/users/user15.jpg',
-            name: 'Marcia Baker'
-        },
-        email: 'marcia@example.com',
-        phone: '+1 555-123-4567',
-        createDate: 'Nov 10, 2024',
-        company: 'ABC Corporation',
-        assignedTo: ['executive_1'],
-        leadSource: 'Website',
-        status: {
-            new: 'New',
-            // won: 'Won',
-            // inProgress: 'In Progress',
-            // lost: 'Lost',
-        },
-        action: {
-            view: 'visibility',
-            edit: 'edit',
-            createTask: 'add_task',
-            delete: 'delete'
-        }
-    },
-    {
-        id: '#FDA-1364',
-        customer: {
-            img: 'images/users/user7.jpg',
-            name: 'Carolyn Barnes'
-        },
-        email: 'barnes@example.com',
-        phone: '+1 555-987-6543',
-        createDate: 'Nov 11, 2024',
-        company: 'XYZ Ltd',
-        assignedTo: ['executive_1'],
-        leadSource: 'Referral',
-        status: {
-            // new: 'New',
-            won: 'Won',
-            // inProgress: 'In Progress',
-            // lost: 'Lost',
-        },
-        action: {
-            view: 'visibility',
-            edit: 'edit',
-            createTask: 'add_task',
-            delete: 'delete'
-        }
-    },
-    {
-        id: '#DES-1364',
-        customer: {
-            img: 'images/users/user12.jpg',
-            name: 'Donna Miller'
-        },
-        email: 'donna@example.com',
-        phone: '+1 555-456-7890',
-        createDate: 'Nov 12, 2024',
-        company: 'Tech Solutions',
-        assignedTo: ['executive_3'],
-        leadSource: 'Cold Call',
-        status: {
-            // new: 'New',
-            // won: 'Won',
-            inProgress: 'In Progress',
-            // lost: 'Lost',
-        },
-        action: {
-            view: 'visibility',
-            edit: 'edit',
-            createTask: 'add_task',
-            delete: 'delete'
-        }
-    },
-    {
-        id: '#DCV-7342',
-        customer: {
-            img: 'images/users/user5.jpg',
-            name: 'Barbara Cross'
-        },
-        email: 'cross@example.com',
-        phone: '+1 555-369-7878',
-        createDate: 'Nov 13, 2024',
-        company: 'Global Solutions',
-        assignedTo: ['executive_1'],
-        leadSource: 'Email Campaign',
-        status: {
-            new: 'New',
-            // won: 'Won',
-            // inProgress: 'In Progress',
-            // lost: 'Lost',
-        },
-        action: {
-            view: 'visibility',
-            edit: 'edit',
-            createTask: 'add_task',
-            delete: 'delete'
-        }
-    },
-    {
-        id: '#ASW-4619',
-        customer: {
-            img: 'images/users/user16.jpg',
-            name: 'Rebecca Block'
-        },
-        email: 'block@example.com',
-        phone: '+1 555-658-4488',
-        createDate: 'Nov 14, 2024',
-        company: 'Acma Industries',
-        assignedTo: ['executive_2'],
-        leadSource: 'Online Store',
-        status: {
-            // new: 'New',
-            // won: 'Won',
-            // inProgress: 'In Progress',
-            lost: 'Lost',
-        },
-        action: {
-            view: 'visibility',
-            edit: 'edit',
-            createTask: 'add_task',
-            delete: 'delete'
-        }
-    },
-
-    // {
-    //     id: '#AFR-7346',
-    //     customer: {
-    //         img: 'images/users/user9.jpg',
-    //         name: 'Ramiro McCarty'
-    //     },
-    //     email: 'ramiro@example.com',
-    //     phone: '+1 555-558-9966',
-    //     createDate: 'Nov 15, 2024',
-    //     company: 'Synergy Ltd',
-    //     assignedTo: ['executive_5'],
-    //     leadSource: 'Website',
-    //     status: {
-    //         // new: 'New',
-    //         // won: 'Won',
-    //         inProgress: 'In Progress',
-    //         // lost: 'Lost',
-    //     },
-    //     action: {
-    //         view: 'visibility',
-    //         edit: 'edit',
-    //         createTask: 'add_task',
-    //         delete: 'delete'
-    //     }
-    // },
-    // {
-    //     id: '#WSA-7612',
-    //     customer: {
-    //         img: 'images/users/user1.jpg',
-    //         name: 'Robert Fairweather'
-    //     },
-    //     email: 'robert@example.com',
-    //     phone: '+1 555-357-5888',
-    //     createDate: 'Nov 16, 2024',
-    //     company: 'Summit Solutions',
-    //     assignedTo: ['executive_1'],
-    //     leadSource: 'Email Campaign',
-    //     status: {
-    //         new: 'New',
-    //         // won: 'Won',
-    //         // inProgress: 'In Progress',
-    //         // lost: 'Lost',
-    //     },
-    //     action: {
-    //         view: 'visibility',
-    //         edit: 'edit',
-    //         createTask: 'add_task',
-    //         delete: 'delete'
-    //     }
-    // },
-    // {
-    //     id: '#AQD-7642',
-    //     customer: {
-    //         img: 'images/users/user6.jpg',
-    //         name: 'Marcelino Haddock'
-    //     },
-    //     email: 'haddock@example.com',
-    //     phone: '+1 555-456-8877',
-    //     createDate: 'Nov 17, 2024',
-    //     company: 'Strategies Ltd',
-    //     assignedTo: ['executive_5'],
-    //     leadSource: 'Cold Call',
-    //     status: {
-    //         new: 'New',
-    //         // won: 'Won',
-    //         // inProgress: 'In Progress',
-    //         // lost: 'Lost',
-    //     },
-    //     action: {
-    //         view: 'visibility',
-    //         edit: 'edit',
-    //         createTask: 'add_task',
-    //         delete: 'delete'
-    //     }
-    // },
-    // {
-    //     id: '#TGS-4652',
-    //     customer: {
-    //         img: 'images/users/user13.jpg',
-    //         name: 'Thomas Wilson'
-    //     },
-    //     email: 'wildon@example.com',
-    //     phone: '+1 555-622-4488',
-    //     createDate: 'Nov 18, 2024',
-    //     company: 'Tech Enterprises',
-    //     assignedTo: ['executive_1'],
-    //     leadSource: 'Referral',
-    //     status: {
-    //         // new: 'New',
-    //         won: 'Won',
-    //         // inProgress: 'In Progress',
-    //         // lost: 'Lost',
-    //     },
-    //     action: {
-    //         view: 'visibility',
-    //         edit: 'edit',
-    //         createTask: 'add_task',
-    //         delete: 'delete'
-    //     }
-    // },
-    // {
-    //     id: '#EGC-7895',
-    //     customer: {
-    //         img: 'images/users/user14.jpg',
-    //         name: 'Nathaniel Hulsey'
-    //     },
-    //     email: 'hulsey@example.com',
-    //     phone: '+1 555-225-4488',
-    //     createDate: 'Nov 19, 2024',
-    //     company: 'Synetic Solutions',
-    //     assignedTo: ['executive_2'],
-    //     leadSource: 'Website',
-    //     status: {
-    //         // new: 'New',
-    //         // won: 'Won',
-    //         // inProgress: 'In Progress',
-    //         lost: 'Lost',
-    //     },
-    //     action: {
-    //         view: 'visibility',
-    //         edit: 'edit',
-    //         createTask: 'add_task',
-    //         delete: 'delete'
-    //     }
-    // },
-    // {
-    //     id: '#DFR-7895',
-    //     customer: {
-    //         img: 'images/users/user14.jpg',
-    //         name: 'Nathaniel Hulsey'
-    //     },
-    //     email: 'hulsey@example.com',
-    //     phone: '+1 555-225-4488',
-    //     createDate: 'Nov 19, 2024',
-    //     company: 'Synetic Solutions',
-    //     assignedTo: ['executive_3'],
-    //     leadSource: 'Website',
-    //     status: {
-    //         // new: 'New',
-    //         // won: 'Won',
-    //         // inProgress: 'In Progress',
-    //         lost: 'Lost',
-    //     },
-    //     action: {
-    //         view: 'visibility',
-    //         edit: 'edit',
-    //         createTask: 'add_task',
-    //         delete: 'delete'
-    //     }
-    // },
-    // {
-    //     id: '#SQA-4652',
-    //     customer: {
-    //         img: 'images/users/user13.jpg',
-    //         name: 'Thomas Wilson'
-    //     },
-    //     email: 'wildon@example.com',
-    //     phone: '+1 555-622-4488',
-    //     createDate: 'Nov 18, 2024',
-    //     company: 'Tech Enterprises',
-    //     assignedTo: ['executive_3'],
-    //     leadSource: 'Referral',
-    //     status: {
-    //         // new: 'New',
-    //         won: 'Won',
-    //         // inProgress: 'In Progress',
-    //         // lost: 'Lost',
-    //     },
-    //     action: {
-    //         view: 'visibility',
-    //         edit: 'edit',
-    //         createTask: 'add_task',
-    //         delete: 'delete'
-    //     }
-    // },
-    // {
-    //     id: '#FBG-7642',
-    //     customer: {
-    //         img: 'images/users/user6.jpg',
-    //         name: 'Marcelino Haddock'
-    //     },
-    //     email: 'haddock@example.com',
-    //     phone: '+1 555-456-8877',
-    //     createDate: 'Nov 17, 2024',
-    //     company: 'Strategies Ltd',
-    //     assignedTo: ['executive_4'],
-    //     leadSource: 'Cold Call',
-    //     status: {
-    //         new: 'New',
-    //         // won: 'Won',
-    //         // inProgress: 'In Progress',
-    //         // lost: 'Lost',
-    //     },
-    //     action: {
-    //         view: 'visibility',
-    //         edit: 'edit',
-    //         createTask: 'add_task',
-    //         delete: 'delete'
-    //     }
-    // },
-    // {
-    //     id: '#RTF-7612',
-    //     customer: {
-    //         img: 'images/users/user1.jpg',
-    //         name: 'Robert Fairweather'
-    //     },
-    //     email: 'robert@example.com',
-    //     phone: '+1 555-357-5888',
-    //     createDate: 'Nov 16, 2024',
-    //     company: 'Summit Solutions',
-    //     assignedTo: ['executive_4'],
-    //     leadSource: 'Email Campaign',
-    //     status: {
-    //         new: 'New',
-    //         // won: 'Won',
-    //         // inProgress: 'In Progress',
-    //         // lost: 'Lost',
-    //     },
-    //     action: {
-    //         view: 'visibility',
-    //         edit: 'edit',
-    //         createTask: 'add_task',
-    //         delete: 'delete'
-    //     }
-    // },
-    // {
-    //     id: '#JHY-7346',
-    //     customer: {
-    //         img: 'images/users/user9.jpg',
-    //         name: 'Ramiro McCarty'
-    //     },
-    //     email: 'ramiro@example.com',
-    //     phone: '+1 555-558-9966',
-    //     createDate: 'Nov 15, 2024',
-    //     company: 'Synergy Ltd',
-    //     assignedTo: ['executive_2'],
-    //     leadSource: 'Website',
-    //     status: {
-    //         // new: 'New',
-    //         // won: 'Won',
-    //         inProgress: 'In Progress',
-    //         // lost: 'Lost',
-    //     },
-    //     action: {
-    //         view: 'visibility',
-    //         edit: 'edit',
-    //         createTask: 'add_task',
-    //         delete: 'delete'
-    //     }
-    // },
-    // {
-    //     id: '#IKG-4619',
-    //     customer: {
-    //         img: 'images/users/user16.jpg',
-    //         name: 'Rebecca Block'
-    //     },
-    //     email: 'block@example.com',
-    //     phone: '+1 555-658-4488',
-    //     createDate: 'Nov 14, 2024',
-    //     company: 'Acma Industries',
-    //     assignedTo: ['executive_6'],
-    //     leadSource: 'Online Store',
-    //     status: {
-    //         // new: 'New',
-    //         // won: 'Won',
-    //         // inProgress: 'In Progress',
-    //         lost: 'Lost',
-    //     },
-    //     action: {
-    //         view: 'visibility',
-    //         edit: 'edit',
-    //         createTask: 'add_task',
-    //         delete: 'delete'
-    //     }
-    // },
-    // {
-    //     id: '#THB-7342',
-    //     customer: {
-    //         img: 'images/users/user5.jpg',
-    //         name: 'Barbara Cross'
-    //     },
-    //     email: 'cross@example.com',
-    //     phone: '+1 555-369-7878',
-    //     createDate: 'Nov 13, 2024',
-    //     company: 'Global Solutions',
-    //     assignedTo: ['executive_3'],
-    //     leadSource: 'Email Campaign',
-    //     status: {
-    //         new: 'New',
-    //         // won: 'Won',
-    //         // inProgress: 'In Progress',
-    //         // lost: 'Lost',
-    //     },
-    //     action: {
-    //         view: 'visibility',
-    //         edit: 'edit',
-    //         createTask: 'add_task',
-    //         delete: 'delete'
-    //     }
-    // },
-    // {
-    //     id: '#NMK-1364',
-    //     customer: {
-    //         img: 'images/users/user12.jpg',
-    //         name: 'Donna Miller'
-    //     },
-    //     email: 'donna@example.com',
-    //     phone: '+1 555-456-7890',
-    //     createDate: 'Nov 12, 2024',
-    //     company: 'Tech Solutions',
-    //     assignedTo: [ 'executive_5'],
-    //     leadSource: 'Cold Call',
-    //     status: {
-    //         // new: 'New',
-    //         // won: 'Won',
-    //         inProgress: 'In Progress',
-    //         // lost: 'Lost',
-    //     },
-    //     action: {
-    //         view: 'visibility',
-    //         edit: 'edit',
-    //         createTask: 'add_task',
-    //         delete: 'delete'
-    //     }
-    // },
-    // {
-    //     id: '#PLO-1364',
-    //     customer: {
-    //         img: 'images/users/user7.jpg',
-    //         name: 'Carolyn Barnes'
-    //     },
-    //     email: 'barnes@example.com',
-    //     phone: '+1 555-987-6543',
-    //     createDate: 'Nov 11, 2024',
-    //     company: 'XYZ Ltd',
-    //     assignedTo: ['executive_6'],
-    //     leadSource: 'Referral',
-    //     status: {
-    //         // new: 'New',
-    //         won: 'Won',
-    //         // inProgress: 'In Progress',
-    //         // lost: 'Lost',
-    //     },
-    //     action: {
-    //         view: 'visibility',
-    //         edit: 'edit',
-    //         createTask: 'add_task',
-    //         delete: 'delete'
-    //     }
-    // },
-    // {
-    //     id: ' #UIK-1217',
-    //     customer: {
-    //         img: 'images/users/user15.jpg',
-    //         name: 'Marcia Baker'
-    //     },
-    //     email: 'marcia@example.com',
-    //     phone: '+1 555-123-4567',
-    //     createDate: 'Nov 10, 2024',
-    //     company: 'ABC Corporation',
-    //     assignedTo: [ 'executive_3',],
-    //     leadSource: 'Website',
-    //     status: {
-    //         new: 'New',
-    //         // won: 'Won',
-    //         // inProgress: 'In Progress',
-    //         // lost: 'Lost',
-    //     },
-    //     action: {
-    //         view: 'visibility',
-    //         edit: 'edit',
-    //         createTask: 'add_task',
-    //         delete: 'delete'
-    //     }
-    // }
-];
-
 export interface PeriodicElement {
-    id: string;
-    customer: any;
+    contact_id: string;
+    customer_name: any;
     email: string;
     phone: string;
-    createDate: string;
-    company: string;
-    leadSource: string;
-    assignedTo: any;
+    assign_to: any;
+    created_date: string;
+    courses: string;
     status: any;
+    lead_source: any;
     action: any;
 }

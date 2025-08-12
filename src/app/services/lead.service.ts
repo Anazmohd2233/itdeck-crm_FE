@@ -16,6 +16,8 @@ export class LeadsService {
         return this.http.post<any>(apiUrl, formData);
     }
 
+    
+
     updateLead(formData: any, leads_id: any): Observable<any> {
         const apiUrl = `${this.apiUrl}/admin/leads/update/${leads_id}`;
         return this.http.patch<any>(apiUrl, formData);
