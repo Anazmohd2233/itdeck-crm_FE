@@ -18,10 +18,12 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FileUploadModule } from '@iplab/ngx-file-upload';
 import { CustomizerSettingsService } from '../../../customizer-settings/customizer-settings.service';
 import { ToastrService } from 'ngx-toastr';
-import { NgIf } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
 import { ContactService } from '../../../services/contact.service';
 import { LeadsService } from '../../../services/lead.service';
 import { LeadStatus } from '../../../services/enums';
+import { UsersService } from '../../../services/users.service';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
     selector: 'app-c-create-lead',
@@ -39,6 +41,7 @@ import { LeadStatus } from '../../../services/enums';
         ReactiveFormsModule,
         FileUploadModule,
         NgIf,
+        CommonModule,
     ],
     templateUrl: './c-create-lead.component.html',
     styleUrl: './c-create-lead.component.scss',
@@ -57,17 +60,23 @@ export class CCreateLeadComponent {
     isSubmitting = false;
     editMode: boolean = false;
     selectedFile: File | null = null;
+    page: number = 1;
+    users: any;
 
     constructor(
         public themeService: CustomizerSettingsService,
         private route: ActivatedRoute,
-        private toastr: ToastrService,
         private fb: FormBuilder,
         private contactService: ContactService,
-        private leadsService: LeadsService
+        private leadsService: LeadsService,
+        private usersService: UsersService,
+        private toastr: ToastrService
     ) {}
 
     ngOnInit(): void {
+
+                this.getUserList();
+
         // ✅ Get ID from query params
         this.route.queryParams.subscribe((params) => {
             this.contactId = params['contact_id'] || null;
@@ -84,7 +93,7 @@ export class CCreateLeadComponent {
 
             if (this.leadId) {
                 this.editMode = true;
-                this.loadContactDetails(this.leadId);
+                this.loadLeadDetails(this.leadId);
             }
         });
 
@@ -153,7 +162,7 @@ export class CCreateLeadComponent {
                         lead_source: leads.lead_source,
                         created_date: leads.created_date,
 
-                        assign_to: leads.assign_to.name,
+                        assign_to: leads.assign_to.id,
                     });
                 } else {
                     this.toastr.error('Lead not found.', 'Error');
@@ -245,5 +254,25 @@ export class CCreateLeadComponent {
                 },
             });
         }
+    }
+
+    private getUserList(): void {
+        let params = new HttpParams();
+
+        params = params.set('user_type', 'USER');
+
+        this.usersService.getUsers(this.page, params).subscribe({
+            next: (response) => {
+                if (response && response.success) {
+                    this.users = response.data?.users || [];
+                } else {
+                    // this.toastr.error('Failed to load users', 'Failed');
+                    console.error('Failed to load users:', response?.message);
+                }
+            },
+            error: (error) => {
+                console.error('API error:', error);
+            },
+        });
     }
 }

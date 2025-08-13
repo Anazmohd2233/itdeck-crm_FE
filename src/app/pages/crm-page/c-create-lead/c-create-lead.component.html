@@ -1,7 +1,7 @@
 <!-- Breadcrumb -->
 <div class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between">
     <h5 class="mb-0">
-                {{ editMode ? 'Edit Lead' : 'Create Lead' }}
+        {{ editMode ? 'Edit Lead' : 'Create Lead' }}
 
     </h5>
     <ol class="breadcrumb list-unstyled mt-0 mb-0 pl-0">
@@ -18,7 +18,7 @@
             Leads
         </li>
         <li class="breadcrumb-item position-relative">
-                        {{ editMode ? 'Edit Lead' : 'Create Lead' }}
+            {{ editMode ? 'Edit Lead' : 'Create Lead' }}
 
         </li>
     </ol>
@@ -30,10 +30,8 @@
 
 
 
-<mat-card
-    class="daxa-card create-lead-card mb-25 border-radius bg-white border-none d-block"
-    [class.rtl-enabled]="themeService.isRTLEnabled()"
->
+<mat-card class="daxa-card create-lead-card mb-25 border-radius bg-white border-none d-block"
+    [class.rtl-enabled]="themeService.isRTLEnabled()">
     <mat-card-content>
         <form [formGroup]="leadForm" (ngSubmit)="createLead()">
             <div class="row">
@@ -151,26 +149,7 @@
                         </mat-form-field>
                     </div>
                 </div> -->
-                <div class="col-md-4 col-sm-6">
-                    <div class="mb-25">
-                        <label class="main-label d-block lh-1 text-black">
-                            Contact Status
-                        </label>
-                     <mat-form-field>
-  <mat-label>
-    Select Lead status
-  </mat-label>
-  <mat-select formControlName="status">
-    <mat-option [value]="LeadStatus.NEW">New</mat-option>
-    <mat-option [value]="LeadStatus.WON">Won</mat-option>
-    <mat-option [value]="LeadStatus.IN_PROGRESS">In Progress</mat-option>
-    <mat-option [value]="LeadStatus.LOST">Lost</mat-option>
-    <mat-option [value]="LeadStatus.OTHER">Other</mat-option>
-  </mat-select>
-</mat-form-field>
-
-                    </div>
-                </div>
+              
                 <div class="col-md-4 col-sm-6">
                     <div class="mb-25">
                         <label class="main-label d-block lh-1 text-black">
@@ -200,26 +179,42 @@
                         </mat-form-field>
                     </div>
                 </div>
+  <div class="col-md-4 col-sm-6">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">
+                            Lead Status
+                        </label>
+                        <mat-form-field>
+                            <mat-label>
+                                Select Lead status
+                            </mat-label>
+                            <mat-select formControlName="status">
+                                <mat-option [value]="LeadStatus.NEW">New</mat-option>
+                                <mat-option [value]="LeadStatus.WON">Won</mat-option>
+                                <mat-option [value]="LeadStatus.IN_PROGRESS">In Progress</mat-option>
+                                <mat-option [value]="LeadStatus.LOST">Lost</mat-option>
+                                <mat-option [value]="LeadStatus.OTHER">Other</mat-option>
+                            </mat-select>
+                        </mat-form-field>
 
-           <div class="col-md-4 col-sm-6">
-  <div class="mb-25">
-    <label class="main-label d-block lh-1 text-black">
-      Create Date
-    </label>
-    <mat-form-field appearance="outline">
-      <mat-label>Enter create date</mat-label>
-      <input
-        matInput
-        [matDatepicker]="picker"
-        placeholder="E.g. Nov 10, 2024"
-                formControlName="created_date"
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">
+                            Create Date
+                        </label>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Enter create date</mat-label>
+                            <input matInput [matDatepicker]="picker" placeholder="E.g. Nov 10, 2024"
+                                formControlName="created_date" />
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
 
-      />
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
-  </div>
-</div>
+
 
 
                 <div class="col-md-4 col-sm-6">
@@ -231,27 +226,16 @@
                             <mat-label>
                                 Select
                             </mat-label>
-                            <mat-select multiple         formControlName="assign_to"
->
-                                <mat-option value="option1">
-                                    Walter Frazier
-                                </mat-option>
-                                <mat-option value="option2">
-                                    Kimberly Anderson
-                                </mat-option>
-                                <mat-option value="option3">
-                                    Roscoe Guerrero
-                                </mat-option>
-                                <mat-option value="option4">
-                                    Robert Stewart
-                                </mat-option>
-                                <mat-option value="option5">
-                                    Dustin Fritch
+                            <!-- 'multiple' for multiple select -->
+                            <mat-select formControlName="assign_to">
+                                <mat-option *ngFor="let user of users" [value]="user.id">
+                                    {{ user.name }}
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
                     </div>
                 </div>
+
                 <div class="col-md-12 col-sm-12">
                     <div class="mb-25">
                         <label class="main-label d-block lh-1 text-black">
@@ -267,14 +251,14 @@
                     <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm me-1" role="status"
                         aria-hidden="true"></span>
 
-                                {{ editMode ? 'Edit Lead' : 'Create Lead' }}
+                    {{ editMode ? 'Edit Lead' : 'Create Lead' }}
 
                 </button>
 
                 <!-- <button mat-button>
                     Cancel
                 </button> -->
-   </div>
-                </form>
+            </div>
+        </form>
     </mat-card-content>
 </mat-card>
