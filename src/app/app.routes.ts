@@ -9,7 +9,7 @@ import { InvoicesComponent } from './pages/invoices-page/invoices/invoices.compo
 import { InvoicesPageComponent } from './pages/invoices-page/invoices-page.component';
 import { ToDoListComponent } from './apps/to-do-list/to-do-list.component';
 import { CalendarComponent } from './apps/calendar/calendar.component';
-import { ContactsComponent } from './apps/contacts/contacts.component';
+import { ContactsComponent } from './apps/student/contacts.component';
 import { ChatComponent } from './apps/chat/chat.component';
 import { KanbanBoardComponent } from './apps/kanban-board/kanban-board.component';
 import { TermsConditionsComponent } from './settings/terms-conditions/terms-conditions.component';
@@ -56,7 +56,6 @@ import { CContactsComponent } from './pages/crm-page/c-contacts/c-contacts.compo
 import { CrmPageComponent } from './pages/crm-page/crm-page.component';
 import { StudentProfileComponent } from './pages/crm-page/student-profile/student-profile.component';
 import { HdCreateTicketComponent } from './pages/help-desk-page/hd-create-ticket/hd-create-ticket.component';
-import { EditContactComponent } from './apps/edit-contact/edit-contact.component';
 import { InoviceComponent } from './pages/crm-page/inovice/inovice.component';
 import { StudentRegFormComponent } from './pages/student-reg-form/student-reg-form.component';
 import { UsersComponent } from './pages/users/users.component';
@@ -66,6 +65,7 @@ import { AddUserComponent } from './pages/users-page/add-user/add-user.component
 import { PmTeamsComponent } from './pages/users-page/pm-teams/pm-teams.component';
 import { TeamMembersComponent } from './pages/users-page/team-members/team-members.component';
 import { ProjectManagementComponent } from './pages/project-management/project-management.component';
+import { EditContactComponent } from './apps/student/edit-student/edit-contact.component';
 // import { HdReportsComponent } from './pages/hd-reports/hd-reports.component';
 
 export const routes: Routes = [
@@ -95,7 +95,7 @@ export const routes: Routes = [
 
     {path: 'to-do-list', component: ToDoListComponent},
     {path: 'calendar', component: CalendarComponent},
-    {path: 'customer', component: ContactsComponent},
+    {path: 'student', component: ContactsComponent},
     {path: 'edit-student', component: EditContactComponent},
     {path: 'chat', component: ChatComponent},
     {path: 'kanban-board', component: KanbanBoardComponent},

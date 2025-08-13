@@ -1,7 +1,7 @@
 <!-- Breadcrumb -->
 <div class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between">
     <h5 class="mb-0">
-        Customer
+        Student
     </h5>
     <ol class="breadcrumb list-unstyled mt-0 mb-0 pl-0">
         <li class="breadcrumb-item position-relative">
@@ -94,9 +94,7 @@
                         </th>
                         <td mat-cell *matCellDef="let element" class="text-black">
                             <div class="info d-flex align-items-center" routerLink="/crm-page/profile"  routerLink="/crm-page/profile"  style="cursor: pointer;">
-                                <div class="image">
-                                    <img [src]="element.customer.img" alt="customer-image">
-                                </div>
+                             
                                 <span class="d-block fw-medium">
                                     {{element.customer.name}}
                                 </span>
