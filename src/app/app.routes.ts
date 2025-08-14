@@ -9,7 +9,7 @@ import { InvoicesComponent } from './pages/invoices-page/invoices/invoices.compo
 import { InvoicesPageComponent } from './pages/invoices-page/invoices-page.component';
 import { ToDoListComponent } from './apps/to-do-list/to-do-list.component';
 import { CalendarComponent } from './apps/calendar/calendar.component';
-import { ContactsComponent } from './apps/student/contacts.component';
+import { StudentsComponent } from './apps/student/students.component';
 import { ChatComponent } from './apps/chat/chat.component';
 import { KanbanBoardComponent } from './apps/kanban-board/kanban-board.component';
 import { TermsConditionsComponent } from './settings/terms-conditions/terms-conditions.component';
@@ -65,7 +65,7 @@ import { AddUserComponent } from './pages/users-page/add-user/add-user.component
 import { PmTeamsComponent } from './pages/users-page/pm-teams/pm-teams.component';
 import { TeamMembersComponent } from './pages/users-page/team-members/team-members.component';
 import { ProjectManagementComponent } from './pages/project-management/project-management.component';
-import { EditContactComponent } from './apps/student/edit-student/edit-contact.component';
+import { EditStudentComponent } from './apps/student/edit-student/edit-student.component';
 // import { HdReportsComponent } from './pages/hd-reports/hd-reports.component';
 
 export const routes: Routes = [
@@ -95,8 +95,8 @@ export const routes: Routes = [
 
     {path: 'to-do-list', component: ToDoListComponent},
     {path: 'calendar', component: CalendarComponent},
-    {path: 'student', component: ContactsComponent},
-    {path: 'edit-student', component: EditContactComponent},
+    {path: 'student', component: StudentsComponent},
+    {path: 'edit-student', component: EditStudentComponent},
     {path: 'chat', component: ChatComponent},
     {path: 'kanban-board', component: KanbanBoardComponent},
     {

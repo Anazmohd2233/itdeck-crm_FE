@@ -15,12 +15,12 @@ import { NgxEditorModule, Editor, Toolbar } from 'ngx-editor';
 import { CustomizerSettingsService } from '../../../customizer-settings/customizer-settings.service';
 
 @Component({
-  selector: 'app-edit-contact',
+  selector: 'app-edit-student',
   imports: [MatCardModule, MatMenuModule, MatButtonModule, RouterLink, FormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule, ReactiveFormsModule, FileUploadModule, NgxEditorModule,CommonModule],
-  templateUrl: './edit-contact.component.html',
-  styleUrl: './edit-contact.component.scss'
+  templateUrl: './edit-student.component.html',
+  styleUrl: './edit-student.component.scss'
 })
-export class EditContactComponent implements OnInit {
+export class EditStudentComponent implements OnInit {
 
   option : string[] =['option2']
     // File Uploader

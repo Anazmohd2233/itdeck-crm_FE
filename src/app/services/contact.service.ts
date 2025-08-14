@@ -16,7 +16,7 @@ export class ContactService {
         return this.http.post<any>(apiUrl, formData);
     }
 
-     updateContact(formData: any,contact_id:any): Observable<any> {
+    updateContact(formData: any,contact_id:any): Observable<any> {
         const apiUrl = `${this.apiUrl}/admin/contacts/update/${contact_id}`;
         return this.http.patch<any>(apiUrl, formData);
     }
@@ -26,7 +26,7 @@ export class ContactService {
         return this.http.get<any>(url, { params });
     }
 
-      getContactById(contact_id: number, params?: HttpParams): Observable<any> {
+    getContactById(contact_id: number, params?: HttpParams): Observable<any> {
         const url = `${this.apiUrl}/admin/contacts/view/${contact_id}`;
         return this.http.get<any>(url, { params });
     }
