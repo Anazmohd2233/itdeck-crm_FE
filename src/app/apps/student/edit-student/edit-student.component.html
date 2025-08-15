@@ -24,7 +24,7 @@
     <mat-card-content>
         <form>
             <div class="row">
-                <div class="col-md-4 col-sm-6">
+                <!-- <div class="col-md-4 col-sm-6">
                     <div class="mb-25">
                         <label class="main-label d-block lh-1 text-black">
                             Student ID
@@ -33,10 +33,10 @@
                             <mat-label>
                                 Enter student id
                             </mat-label>
-                            <input matInput value="#ARP-1217">
+                            <input matInput formControlName="student_name">
                         </mat-form-field>
                     </div>
-                </div>
+                </div> -->
                 <div class="col-md-4 col-sm-6">
                     <div class="mb-25">
                         <label class="main-label d-block lh-1 text-black">
@@ -46,7 +46,7 @@
                             <mat-label>
                                 Enter student name
                             </mat-label>
-                            <input matInput value="Marcia Baker">
+                            <input matInput formControlName="student_name">
                         </mat-form-field>
                     </div>
                 </div>
@@ -59,7 +59,7 @@
                             <mat-label>
                                 Enter email address
                             </mat-label>
-                            <input matInput value="marcia@example.com">
+                            <input matInput formControlName="email">
                         </mat-form-field>
                     </div>
                 </div>
@@ -72,11 +72,11 @@
                             <mat-label>
                                 Enter phone number
                             </mat-label>
-                            <input matInput value="+1 555-123-4567">
+                            <input matInput formControlName="phone">
                         </mat-form-field>
                     </div>
                 </div>
-                <div class="col-md-4 col-sm-6">
+                <!-- <div class="col-md-4 col-sm-6">
                     <div class="mb-25">
                         <label class="main-label d-block lh-1 text-black">
                             Last Contacted Date
@@ -85,10 +85,10 @@
                             <mat-label>
                                 Enter last contacted date
                             </mat-label>
-                            <input matInput value="Nov 10, 2024">
+                            <input matInput >
                         </mat-form-field>
                     </div>
-                </div>
+                </div> -->
                 <div class="col-md-4 col-sm-6">
                     <div class="mb-25">
                         <label class="main-label d-block lh-1 text-black">
@@ -102,7 +102,7 @@
                                 <!-- <mat-label>
                                     Select
                                 </mat-label> -->
-                                <mat-select multiple [(value)]="option">
+                                <mat-select formControlName="courses">
                                     <mat-option value="option1">
                                         Course 1
                                     </mat-option>
@@ -123,7 +123,7 @@
                         </mat-form-field>
                     </div>
                 </div>
-                <div class="col-md-4 col-sm-6">
+                <!-- <div class="col-md-4 col-sm-6">
                     <div class="mb-25">
                         <label class="main-label d-block lh-1 text-black">
                             Duration
@@ -135,7 +135,7 @@
                             <input matInput value="50">
                         </mat-form-field>
                     </div>
-                </div>
+                </div> -->
                 <div class="col-md-4 col-sm-6">
                     <div class="mb-25">
                         <label class="main-label d-block lh-1 text-black">
@@ -145,7 +145,7 @@
                             <mat-label>
                                 Select contact status
                             </mat-label>
-                            <mat-select [(value)]="contactStatusSelected">
+                            <mat-select formControlName="status">
                                 <mat-option value="option1">
                                     Active
                                 </mat-option>
@@ -156,6 +156,45 @@
                         </mat-form-field>
                     </div>
                 </div>
+
+
+
+                 <div class="col-md-4 col-sm-6">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">
+                            Lead Source
+                        </label>
+                        <mat-form-field>
+                            <mat-label>
+                                Select lead source
+                            </mat-label>
+    <mat-select formControlName="lead_source">
+                                <mat-option value="option1">
+                                    Active
+                                </mat-option>
+                                <mat-option value="option2">
+                                    Deactive
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>                        
+                    </div>
+                </div>
+
+                 <div class="col-md-4 col-sm-6">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">
+                            Notes
+                        </label>
+                        <mat-form-field>
+                            <mat-label>
+                                Enter Notes
+                            </mat-label>
+                            <input matInput formControlName="notes">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+
                 <div class="col-md-12 col-sm-12">
                     <div class="mb-25">
                         <label class="main-label d-block lh-1 text-black">

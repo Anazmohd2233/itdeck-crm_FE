@@ -66,12 +66,7 @@ export class EditStudentComponent implements OnInit {
 
   ngOnInit(): void {
       // Check if user is authenticated
-      if (!this.studentService.isTokenValid()) {
-          console.error('No valid authentication token found');
-          this.router.navigate(['/authentication']);
-          return;
-      }
-
+     
       if (isPlatformBrowser(this.platformId)) {
           this.editor = new Editor();
       }
@@ -147,12 +142,7 @@ export class EditStudentComponent implements OnInit {
   }
 
   onSubmit(): void {
-      // Check authentication before submitting
-      if (!this.studentService.isTokenValid()) {
-          console.error('Authentication token expired or missing');
-          this.router.navigate(['/authentication']);
-          return;
-      }
+   
 
       if (this.studentForm.valid && !this.isSubmitting && this.studentId) {
           this.isSubmitting = true;

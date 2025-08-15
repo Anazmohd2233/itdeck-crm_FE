@@ -30,7 +30,7 @@ export class StudentsComponent {
     page: number = 1;
     students: any;
 
-    displayedColumns: string[] = ['select', 'studentID', 'student', 'email', 'phone', 'lastContacted', 'course', 'leadSource', 'status', 'action'];
+    displayedColumns: string[] = ['select', 'student', 'email', 'phone', 'lastContacted', 'course', 'leadSource', 'status', 'action'];
     dataSource = new MatTableDataSource<PeriodicElement>(this.ELEMENT_DATA);
     selection = new SelectionModel<PeriodicElement>(true, []);
 
@@ -99,14 +99,16 @@ export class StudentsComponent {
     }
 
     private getStudentList(): void {
-        this.studentService.getStudent(this.page).subscribe({
+
+        console.log('********getting student*******')
+        this.studentService.getStudentById(this.page).subscribe({
             next: (response) => {
                 if (response && response.success) {
                     const students = response.data?.students || []; 
 
                     this.ELEMENT_DATA = students.map((u: any) => ({
                         id: u.id,
-                        studentID: u.student_id || 'N/A',
+                        // studentID: u.student_id || 'N/A',
                         name: u.student_name || 'N/A',
                         email: u.email || 'N/A',
                         lead_source: u.lead_source || 'N/A',
@@ -139,7 +141,7 @@ export class StudentsComponent {
 
 export interface PeriodicElement {
     id: any;
-    studentID: string;
+    // studentID: string;
     name: any;
     email: string;
     phone: string;
