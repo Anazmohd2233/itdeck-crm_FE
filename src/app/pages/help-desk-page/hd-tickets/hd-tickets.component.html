@@ -252,12 +252,12 @@
                         </th>
                         <td mat-cell *matCellDef="let element">
                             <div class="action-info">
-                                <a mat-button routerLink="/task/ticket-details" matTooltip="View Ticket" matTooltipPosition="above">
+                                <button type="button" mat-button (click)="viewTask(element.ticketID)" matTooltip="View Task" matTooltipPosition="above">
                                     <i class="material-symbols-outlined">
                                         {{element.action.view}}
                                     </i>
-                                </a>
-                                <button type="button" mat-button matTooltip="Delete" matTooltipPosition="above">
+                                </button>
+                                <button type="button" mat-button (click)="deleteTask(element.ticketID)" matTooltip="Delete Task" matTooltipPosition="above">
                                     <i class="material-symbols-outlined">
                                         {{element.action.delete}}
                                     </i>

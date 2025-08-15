@@ -13,16 +13,13 @@
         <li class="breadcrumb-item position-relative">
             Task
         </li>
-        <!-- <li class="breadcrumb-item position-relative">
-            Projects
-        </li> -->
         <li class="breadcrumb-item position-relative">
             Create Task
         </li>
     </ol>
 </div>
 
-<!-- Create Project -->
+<!-- Create Task -->
 <mat-card
     class="daxa-card create-project-card mb-25 border-radius bg-white border-none d-block"
     [class.rtl-enabled]="themeService.isRTLEnabled()"
@@ -35,59 +32,69 @@
         </mat-card-title>
     </mat-card-header>
     <mat-card-content>
-        <form>
+        <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
             <div class="row">
                 <div class="col-lg-8">
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="mb-25">
                                 <label class="main-label d-block lh-1 text-black">
-                                    Task Title
+                                    Task Title *
                                 </label>
                                 <mat-form-field>
                                     <mat-label>
                                         Enter task title
                                     </mat-label>
-                                    <input matInput placeholder="Enter task title">
+                                    <input matInput placeholder="Enter task title" formControlName="task_title">
+                                    <mat-error *ngIf="task_title?.invalid && task_title?.touched">
+                                        <span *ngIf="task_title?.errors?.['required']">Task title is required</span>
+                                        <span *ngIf="task_title?.errors?.['minlength']">Task title must be at least 3 characters</span>
+                                    </mat-error>
                                 </mat-form-field>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="mb-25">
                                 <label class="main-label d-block lh-1 text-black">
-                                    Task Type
+                                    Task Type *
                                 </label>
                                 <mat-form-field>
                                     <mat-label>
                                         Select
                                     </mat-label>
-                                    <mat-select>
-                                        <mat-option value="option1">
+                                    <mat-select formControlName="task_type">
+                                        <mat-option value="To-DO">
                                             To-DO
                                         </mat-option>
-                                        <mat-option value="option2">
+                                        <mat-option value="Email">
                                             Email
                                         </mat-option>
-                                        <mat-option value="option3">
+                                        <mat-option value="Call">
                                             Call
                                         </mat-option>
+                                        <mat-option value="Follow-up">
+                                            Follow-up
+                                        </mat-option>
                                     </mat-select>
+                                    <mat-error *ngIf="task_type?.invalid && task_type?.touched">
+                                        Task type is required
+                                    </mat-error>
                                 </mat-form-field>
                             </div>
                         </div>
                         <div class="col-sm-12">
                             <div class="mb-25">
                                 <label class="main-label d-block lh-1 text-black">
-                                    Contact
+                                    Contact *
                                 </label>
                                 <mat-form-field>
                                     <mat-label>
                                         Select
                                     </mat-label>
-                                    <mat-select>
+                                    <mat-select formControlName="contact_id">
                                         @for (item of data; track item) {
-                                            <mat-option [value]="item.contact.name">
-                                                <div class="info d-flex align-items-center" routerLink="/crm-page/profile"  routerLink="/crm-page/profile"  style="cursor: pointer;">
+                                            <mat-option [value]="item.contact.id">
+                                                <div class="info d-flex align-items-center" style="cursor: pointer;">
                                                     <div class="image team-members-list" style="margin-right: 5px !important;">
                                                         <img [src]="item.contact.img" alt="contact-image">
                                                     </div>
@@ -95,127 +102,81 @@
                                                         {{item.contact.name}}
                                                     </span>
                                                 </div>
-                                                <!-- {{item.contact.name}} -->
                                             </mat-option>
                                         }
-                                        <!-- <mat-option value="option1">
-                                            Walter Frazier
-                                        </mat-option> -->
-                                        <!-- <mat-option value="option2">
-                                            Kimberly Anderson
-                                        </mat-option>
-                                        <mat-option value="option3">
-                                            Roscoe Guerrero
-                                        </mat-option>
-                                        <mat-option value="option4">
-                                            Robert Stewart
-                                        </mat-option>
-                                        <mat-option value="option4">
-                                            Dustin Fritch
-                                        </mat-option> -->
                                     </mat-select>
+                                    <mat-error *ngIf="contact_id?.invalid && contact_id?.touched">
+                                        Contact selection is required
+                                    </mat-error>
                                 </mat-form-field>
                             </div>
-                            <!-- <div class="mb-25">
-                                <label class="main-label d-block lh-1 text-black">
-                                    End Date
-                                </label>
-                                <mat-form-field>
-                                    <mat-label>
-                                        Choose a date
-                                    </mat-label>
-                                    <input matInput [matDatepicker]="endDate">
-                                    <mat-datepicker-toggle matIconSuffix [for]="endDate"></mat-datepicker-toggle>
-                                    <mat-datepicker #endDate></mat-datepicker>
-                                </mat-form-field>
-                            </div> -->
                         </div>
                         <div class="col-sm-6">
                             <div class="mb-25">
                                 <label class="main-label d-block lh-1 text-black">
-                                    Priority
+                                    Priority *
                                 </label>
                                 <mat-form-field>
                                     <mat-label>
                                         Select
                                     </mat-label>
-                                    <mat-select>
-                                        <mat-option value="option1">
+                                    <mat-select formControlName="priority">
+                                        <mat-option value="None">
                                             None
                                         </mat-option>
-                                        <mat-option value="option2">
+                                        <mat-option value="Low">
                                             Low
                                         </mat-option>
-                                        <mat-option value="option3">
+                                        <mat-option value="Medium">
                                             Medium
                                         </mat-option>
-                                        <mat-option value="option4">
+                                        <mat-option value="High">
                                             High
                                         </mat-option>
                                     </mat-select>
+                                    <mat-error *ngIf="priority?.invalid && priority?.touched">
+                                        Priority is required
+                                    </mat-error>
                                 </mat-form-field>
                             </div>
-                            <!-- <div class="mb-25">
-                                <label class="main-label d-block lh-1 text-black">
-                                    Start Date
-                                </label>
-                                <mat-form-field>
-                                    <mat-label>
-                                        Choose a date
-                                    </mat-label>
-                                    <input matInput [matDatepicker]="startDate">
-                                    <mat-datepicker-toggle matIconSuffix [for]="startDate"></mat-datepicker-toggle>
-                                    <mat-datepicker #startDate></mat-datepicker>
-                                </mat-form-field>
-                            </div> -->
                         </div>
 
                         <div class="col-sm-6">
                             <div class="mb-25">
                                 <label class="main-label d-block lh-1 text-black">
-                                    Assigned to
+                                    Assigned to *
                                 </label>
                                 <mat-form-field>
                                     <mat-label>
                                         Select
                                     </mat-label>
-                                    <mat-select>
-                                        <mat-option value="option1">
+                                    <mat-select formControlName="assigned_to">
+                                        <mat-option value="1">
                                             Walter Frazier
                                         </mat-option>
-                                        <mat-option value="option2">
+                                        <mat-option value="2">
                                             Kimberly Anderson
                                         </mat-option>
-                                        <mat-option value="option3">
+                                        <mat-option value="3">
                                             Roscoe Guerrero
                                         </mat-option>
-                                        <mat-option value="option4">
+                                        <mat-option value="4">
                                             Robert Stewart
                                         </mat-option>
-                                        <mat-option value="option4">
+                                        <mat-option value="5">
                                             Dustin Fritch
                                         </mat-option>
                                     </mat-select>
+                                    <mat-error *ngIf="assigned_to?.invalid && assigned_to?.touched">
+                                        Assignment is required
+                                    </mat-error>
                                 </mat-form-field>
                             </div>
-                            <!-- <div class="mb-25">
-                                <label class="main-label d-block lh-1 text-black">
-                                    End Date
-                                </label>
-                                <mat-form-field>
-                                    <mat-label>
-                                        Choose a date
-                                    </mat-label>
-                                    <input matInput [matDatepicker]="endDate">
-                                    <mat-datepicker-toggle matIconSuffix [for]="endDate"></mat-datepicker-toggle>
-                                    <mat-datepicker #endDate></mat-datepicker>
-                                </mat-form-field>
-                            </div> -->
                         </div>
                         <div class="col-sm-12">
                             <div class="mb-25">
                                 <label class="main-label d-block lh-1 text-black">
-                                    Due date
+                                    Due date *
                                 </label>
                                 <div class="row">
                                     <div class="col-9">
@@ -223,14 +184,17 @@
                                             <mat-label>
                                                 Choose a date
                                             </mat-label>
-                                            <input matInput [matDatepicker]="startDate">
-                                            <mat-datepicker-toggle matIconSuffix [for]="startDate"></mat-datepicker-toggle>
-                                            <mat-datepicker #startDate></mat-datepicker>
+                                            <input matInput [matDatepicker]="dueDatePicker" formControlName="due_date">
+                                            <mat-datepicker-toggle matIconSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
+                                            <mat-datepicker #dueDatePicker></mat-datepicker>
+                                            <mat-error *ngIf="due_date?.invalid && due_date?.touched">
+                                                Due date is required
+                                            </mat-error>
                                         </mat-form-field>
                                     </div>
                                     <div class="col-3">
                                         <mat-form-field appearance="fill">
-                                            <input matInput placeholder="12hr format" [ngxTimepicker]="picker">
+                                            <input matInput placeholder="12hr format" [ngxTimepicker]="picker" formControlName="due_time">
                                             <i class="material-symbols-outlined mr-15" matSuffix>
                                                 schedule
                                             </i>
@@ -239,17 +203,6 @@
                                     </div>
                                 </div>
                             </div> 
-                            <!-- <div class="mb-25">
-                                <label class="main-label d-block lh-1 text-black">
-                                    Project Description
-                                </label>
-                                <div class="NgxEditor__Wrapper">
-                                    <ng-container *ngIf="editor">
-                                        <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"></ngx-editor-menu>
-                                        <ngx-editor [editor]="editor"></ngx-editor>
-                                    </ng-container>
-                                </div>
-                            </div> -->
                         </div>
                         <div class="col-sm-12">
                             <div class="mb-25">
@@ -259,153 +212,11 @@
                                 <div class="NgxEditor__Wrapper">
                                     <ng-container *ngIf="editor">
                                         <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"></ngx-editor-menu>
-                                        <ngx-editor [editor]="editor"></ngx-editor>
+                                        <ngx-editor [editor]="editor" [(ngModel)]="editorContent" [placeholder]="'Type your notes here...'"></ngx-editor>
                                     </ng-container>
                                 </div>
                             </div> 
                         </div>
-                        <!-- <div class="col-sm-6">
-                            <div class="mb-25">
-                                <label class="main-label d-block lh-1 text-black">
-                                    Priority Status
-                                </label>
-                                <mat-form-field>
-                                    <mat-label>
-                                        Select
-                                    </mat-label>
-                                    <mat-select>
-                                        <mat-option value="option1">
-                                            In Progress
-                                        </mat-option>
-                                        <mat-option value="option2">
-                                            Pending
-                                        </mat-option>
-                                        <mat-option value="option3">
-                                            Completed
-                                        </mat-option>
-                                        <mat-option value="option4">
-                                            Not Started
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="mb-25">
-                                <label class="main-label d-block lh-1 text-black">
-                                    Categories
-                                </label>
-                                <mat-form-field>
-                                    <mat-label>
-                                        Select
-                                    </mat-label>
-                                    <mat-select>
-                                        <mat-option value="option1">
-                                            Watch
-                                        </mat-option>
-                                        <mat-option value="option2">
-                                            Electronics
-                                        </mat-option>
-                                        <mat-option value="option3">
-                                            Sports
-                                        </mat-option>
-                                        <mat-option value="option4">
-                                            Fashion
-                                        </mat-option>
-                                        <mat-option value="option5">
-                                            Jewellery
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="mb-25">
-                                <label class="main-label d-block lh-1 text-black">
-                                    Project Manager
-                                </label>
-                                <mat-form-field>
-                                    <mat-label>
-                                        Select
-                                    </mat-label>
-                                    <mat-select>
-                                        <mat-option value="option1">
-                                            Walter Frazier
-                                        </mat-option>
-                                        <mat-option value="option2">
-                                            Kimberly Anderson
-                                        </mat-option>
-                                        <mat-option value="option3">
-                                            Roscoe Guerrero
-                                        </mat-option>
-                                        <mat-option value="option4">
-                                            Robert Stewart
-                                        </mat-option>
-                                        <mat-option value="option4">
-                                            Dustin Fritch
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="mb-25">
-                                <label class="main-label d-block lh-1 text-black">
-                                    Add Team Members
-                                </label>
-                                <mat-form-field>
-                                    <mat-label>
-                                        Select
-                                    </mat-label>
-                                    <mat-select multiple>
-                                        <mat-option value="option1">
-                                            Walter Frazier
-                                        </mat-option>
-                                        <mat-option value="option2">
-                                            Kimberly Anderson
-                                        </mat-option>
-                                        <mat-option value="option3">
-                                            Roscoe Guerrero
-                                        </mat-option>
-                                        <mat-option value="option4">
-                                            Robert Stewart
-                                        </mat-option>
-                                        <mat-option value="option5">
-                                            Dustin Fritch
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="mb-25">
-                                <label class="main-label d-block lh-1 text-black">
-                                    Project Tags
-                                </label>
-                                <mat-form-field>
-                                    <mat-label>
-                                        Select
-                                    </mat-label>
-                                    <mat-select multiple>
-                                        <mat-option value="option1">
-                                            Watch
-                                        </mat-option>
-                                        <mat-option value="option2">
-                                            Electronics
-                                        </mat-option>
-                                        <mat-option value="option3">
-                                            Sports
-                                        </mat-option>
-                                        <mat-option value="option4">
-                                            Fashion
-                                        </mat-option>
-                                        <mat-option value="option5">
-                                            Jewellery
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </div>
-                        </div> -->
                     </div>
                 </div>
                 <div class="col-lg-4">
@@ -413,21 +224,22 @@
                         <label class="main-label d-block lh-1 text-black">
                             Task Image
                         </label>
-                        <file-upload class="file-uploader" [multiple]="multiple"></file-upload>
+                        <file-upload class="file-uploader" [multiple]="multiple" formControlName="taskImage"></file-upload>
                     </div>
                     <div class="mb-25">
                         <label class="main-label d-block lh-1 text-black">
                             Attached Files
                         </label>
-                        <file-upload class="file-uploader" [multiple]="multiple"></file-upload>
+                        <file-upload class="file-uploader" [multiple]="multiple" formControlName="attachedFiles"></file-upload>
                     </div>
                 </div>
             </div>
             <div class="btn-box">
-                <button mat-button>
-                    + Create Task
+                <button mat-button type="submit" [disabled]="isSubmitting">
+                    <span *ngIf="isSubmitting">Creating...</span>
+                    <span *ngIf="!isSubmitting">+ Create Task</span>
                 </button>
-                <button mat-button>
+                <button mat-button type="button" (click)="onCancel()">
                     Cancel
                 </button>
             </div>

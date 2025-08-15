@@ -1,6 +1,6 @@
 import { Component, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser, NgIf } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -14,17 +14,20 @@ import { FileUploadModule } from '@iplab/ngx-file-upload';
 import { NgxEditorModule, Editor, Toolbar } from 'ngx-editor';
 import { CustomizerSettingsService } from '../../../customizer-settings/customizer-settings.service';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { Router } from '@angular/router';
+import { TaskService } from '../../../services/task.service';
 
 @Component({
   selector: 'app-hd-create-ticket',
   imports: [MatCardModule, MatMenuModule, MatButtonModule, RouterLink, FormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule, ReactiveFormsModule, FileUploadModule, NgxMaterialTimepickerModule, NgxEditorModule, NgIf],
   templateUrl: './hd-create-ticket.component.html',
-  styleUrl: './hd-create-ticket.component.scss'
+  styleUrls: ['./hd-create-ticket.component.scss'] 
 })
 export class HdCreateTicketComponent {
 
   // Text Editor
-  editor!: Editor | null;  // Make it nullable
+  editor!: Editor | null; 
+  editorContent: string = ''; 
   toolbar: Toolbar = [
       ['bold', 'italic'],
       ['underline', 'strike'],
@@ -36,9 +39,70 @@ export class HdCreateTicketComponent {
       ['align_left', 'align_center', 'align_right', 'align_justify'],
   ];
 
-  data: any = ELEMENT_DATA
+  // Mock data  
+  data: any[] = [
+    {
+      contact: {
+        id: 1,
+        name: 'Marcia Baker',
+        img: 'images/users/user15.jpg'
+      }
+    },
+    {
+      contact: {
+        id: 2,
+        name: 'Carolyn Barnes',
+        img: 'images/users/user7.jpg'
+      }
+    },
+    {
+      contact: {
+        id: 3,
+        name: 'Donna Miller',
+        img: 'images/users/user12.jpg'
+      }
+    },
+    {
+      contact: {
+        id: 4,
+        name: 'Barbara Cross',
+        img: 'images/users/user5.jpg'
+      }
+    },
+    {
+      contact: {
+        id: 5,
+        name: 'Rebecca Block',
+        img: 'images/users/user16.jpg'
+      }
+    }
+  ];
+
+  // File Uploader
+  public multiple: boolean = false;
+
+  // Task Form
+  taskForm!: FormGroup;
+  isSubmitting = false;
+
+  constructor(
+      @Inject(PLATFORM_ID) private platformId: Object,
+      public themeService: CustomizerSettingsService,
+      private taskService: TaskService,
+      private router: Router,
+      private formBuilder: FormBuilder
+  ) {
+      this.initializeForm();
+  }
 
   ngOnInit(): void {
+      // Check if user is authenticated
+      if (!this.taskService.isTokenValid()) {
+          console.error('No valid authentication token found');
+          this.router.navigate(['/authentication']);
+          return;
+      }
+
       if (isPlatformBrowser(this.platformId)) {
           // Initialize the editor only in the browser
           this.editor = new Editor();
@@ -51,543 +115,89 @@ export class HdCreateTicketComponent {
       }
   }
 
-  // File Uploader
-  public multiple: boolean = false;
+  private initializeForm(): void {
+      this.taskForm = this.formBuilder.group({
+          task_title: ['', [Validators.required, Validators.minLength(3)]],
+          task_type: ['', Validators.required],
+          contact_id: ['', Validators.required],
+          priority: ['', Validators.required],
+          assigned_to: ['', Validators.required],
+          due_date: ['', Validators.required],
+          due_time: [''],
+          note: [''],
+          taskImage: [''],
+          attachedFiles: ['']
+      });
+  }
 
-  constructor(
-      @Inject(PLATFORM_ID) private platformId: Object,
-      public themeService: CustomizerSettingsService
-  ) {}
+  onSubmit(): void {
+      // Check authentication before submitting
+      if (!this.taskService.isTokenValid()) {
+          console.error('Authentication token expired or missing');
+          this.router.navigate(['/authentication']);
+          return;
+      }
+
+      if (this.taskForm.valid && !this.isSubmitting) {
+          this.isSubmitting = true;
+          
+          const formData = {
+              task_title: this.taskForm.value.task_title,
+              task_type: this.taskForm.value.task_type,
+              contact_id: parseInt(this.taskForm.value.contact_id),
+              priority: this.taskForm.value.priority,
+              assigned_to: parseInt(this.taskForm.value.assigned_to),
+              due_date: this.taskForm.value.due_date,
+              note: this.editorContent
+          };
+
+          this.taskService.createTask(formData).subscribe({
+              next: (response) => {
+                  console.log('Task created successfully:', response);
+                  // Navigate back to tasks list
+                  this.router.navigate(['/task']);
+                  this.isSubmitting = false;
+              },
+              error: (error) => {
+                  console.error('Error creating task:', error);
+                  this.isSubmitting = false;
+                  
+                  // Handle authentication errors
+                  if (error.status === 401 || error.status === 403) {
+                      console.error('Authentication failed, redirecting to login');
+                      localStorage.removeItem('Authorization');
+                      this.router.navigate(['/authentication']);
+                  }
+                  // You can add other error handling/notification here
+              }
+          });
+      } else {
+          // Mark all fields as touched to show validation errors
+          this.markFormGroupTouched();
+      }
+  }
+
+  onCancel(): void {
+      this.router.navigate(['/task']);
+  }
+
+  private markFormGroupTouched(): void {
+      Object.keys(this.taskForm.controls).forEach(key => {
+          const control = this.taskForm.get(key);
+          control?.markAsTouched();
+      });
+  }
+
+  // Getter methods for easy access to form controls in template
+  get task_title() { return this.taskForm.get('task_title'); }
+  get task_type() { return this.taskForm.get('task_type'); }
+  get contact_id() { return this.taskForm.get('contact_id'); }
+  get priority() { return this.taskForm.get('priority'); }
+  get assigned_to() { return this.taskForm.get('assigned_to'); }
+  get due_date() { return this.taskForm.get('due_date'); }
 
 }
-const ELEMENT_DATA: PeriodicElement[] = [
-    {
-        ticketID: '#951',
-        subject: 'Login Issues',
-        contact: {
-            img: 'images/users/user15.jpg',
-            name: 'Marcia Baker'
-        },
-        createdDate: '15 Nov, 2024',
-        dueDate: '15 Dec, 2024',
-        requester: 'Walter Frazier',
-        priority: 'High',
-        assignedAgents: {
-            img1: 'images/users/user5.jpg',
-            img2: 'images/users/user13.jpg'
-        },
-        status: {
-            inProgress: 'In Progress',
-            // pending: 'Pending',
-            // open: 'Open',
-            // closed: 'Closed',
-        },
-        action: {
-            view: 'visibility',
-            delete: 'delete'
-        }
-    },
-    {
-        ticketID: '#547',
-        subject: 'Email Configuration',
-        contact: {
-            img: 'images/users/user7.jpg',
-            name: 'Carolyn Barnes'
-        },
-        createdDate: '14 Nov, 2024',
-        dueDate: '14 Dec, 2024',
-        requester: 'Kimberly Anderson',
-        priority: 'Medium',
-        assignedAgents: {
-            img1: 'images/users/user7.jpg',
-            img2: 'images/users/user9.jpg',
-            img3: 'images/users/user12.jpg'
-        },
-        status: {
-            // inProgress: 'In Progress',
-            pending: 'Pending',
-            // open: 'Open',
-            // closed: 'Closed',
-        },
-        action: {
-            view: 'visibility',
-            delete: 'delete'
-        }
-    },
-    {
-        ticketID: '#658',
-        subject: 'Application Error',
-        contact: {
-            img: 'images/users/user12.jpg',
-            name: 'Donna Miller'
-        },
-        createdDate: '13 Nov, 2024',
-        dueDate: '13 Dec, 2024',
-        requester: 'Roscoe Guerrero',
-        priority: 'High',
-        assignedAgents: {
-            img1: 'images/users/user16.jpg',
-            img2: 'images/users/user17.jpg'
-        },
-        status: {
-            // inProgress: 'In Progress',
-            // pending: 'Pending',
-            open: 'Open',
-            // closed: 'Closed',
-        },
-        action: {
-            view: 'visibility',
-            delete: 'delete'
-        }
-    },
-    {
-        ticketID: '#367',
-        subject: 'Software Installation',
-        contact: {
-            img: 'images/users/user5.jpg',
-            name: 'Barbara Cross'
-        },
-        createdDate: '12 Nov, 2024',
-        dueDate: '12 Dec, 2024',
-        requester: 'Robert Stewart',
-        priority: 'Low',
-        assignedAgents: {
-            img1: 'images/users/user11.jpg',
-            img2: 'images/users/user3.jpg',
-            img3: 'images/users/user8.jpg'
-        },
-        status: {
-            // inProgress: 'In Progress',
-            // pending: 'Pending',
-            // open: 'Open',
-            closed: 'Closed',
-        },
-        action: {
-            view: 'visibility',
-            delete: 'delete'
-        }
-    },
-    {
-        ticketID: '#469',
-        subject: 'System Upgrade',
-        contact: {
-            img: 'images/users/user16.jpg',
-            name: 'Rebecca Block'
-        },
-        createdDate: '11 Nov, 2024',
-        dueDate: '11 Dec, 2024',
-        requester: 'Dustin Fritch',
-        priority: 'Medium',
-        assignedAgents: {
-            img1: 'images/users/user15.jpg',
-            img2: 'images/users/user6.jpg'
-        },
-        status: {
-            inProgress: 'In Progress',
-            // pending: 'Pending',
-            // open: 'Open',
-            // closed: 'Closed',
-        },
-        action: {
-            view: 'visibility',
-            delete: 'delete'
-        }
-    },
-    {
-        ticketID: '#431',
-        subject: 'Network Connectivity',
-        contact: {
-            img: 'images/users/user9.jpg',
-            name: 'Ramiro McCarty'
-        },
-        createdDate: '10 Nov, 2024',
-        dueDate: '10 Dec, 2024',
-        requester: 'Carol Camacho',
-        priority: 'Low',
-        assignedAgents: {
-            img1: 'images/users/user10.jpg',
-            img2: 'images/users/user5.jpg'
-        },
-        status: {
-            inProgress: 'In Progress',
-            // pending: 'Pending',
-            // open: 'Open',
-            // closed: 'Closed',
-        },
-        action: {
-            view: 'visibility',
-            delete: 'delete'
-        }
-    },
-    {
-        ticketID: '#547',
-        subject: 'Vaxo App Design',
-        contact: {
-            img: 'images/users/user1.jpg',
-            name: 'Robert Fairweather'
-        },
-        createdDate: '09 Nov, 2024',
-        dueDate: '09 Dec, 2024',
-        requester: 'Robert Heinemann',
-        priority: 'High',
-        assignedAgents: {
-            img1: 'images/users/user7.jpg',
-            img2: 'images/users/user12.jpg',
-            img3: 'images/users/user16.jpg'
-        },
-        status: {
-            // inProgress: 'In Progress',
-            pending: 'Pending',
-            // open: 'Open',
-            // closed: 'Closed',
-        },
-        action: {
-            view: 'visibility',
-            delete: 'delete'
-        }
-    },
-    {
-        ticketID: '#658',
-        subject: 'Aoriv AI Design',
-        contact: {
-            img: 'images/users/user6.jpg',
-            name: 'Marcelino Haddock'
-        },
-        createdDate: '08 Nov, 2024',
-        dueDate: '08 Dec, 2024',
-        requester: 'Jonathan Jones',
-        priority: 'High',
-        assignedAgents: {
-            img1: 'images/users/user17.jpg',
-            img2: 'images/users/user13.jpg'
-        },
-        status: {
-            // inProgress: 'In Progress',
-            // pending: 'Pending',
-            open: 'Open',
-            // closed: 'Closed',
-        },
-        action: {
-            view: 'visibility',
-            delete: 'delete'
-        }
-    },
-    {
-        ticketID: '#367',
-        subject: 'Beja Banking Finance',
-        contact: {
-            img: 'images/users/user13.jpg',
-            name: 'Thomas Wilson'
-        },
-        createdDate: '07 Nov, 2024',
-        dueDate: '07 Dec, 2024',
-        requester: 'David Williams',
-        priority: 'High',
-        assignedAgents: {
-            img1: 'images/users/user3.jpg',
-            img2: 'images/users/user8.jpg'
-        },
-        status: {
-            // inProgress: 'In Progress',
-            // pending: 'Pending',
-            // open: 'Open',
-            closed: 'Closed',
-        },
-        action: {
-            view: 'visibility',
-            delete: 'delete'
-        }
-    },
-    {
-        ticketID: '#469',
-        subject: 'Aegis Accounting Service',
-        contact: {
-            img: 'images/users/user14.jpg',
-            name: 'Nathaniel Hulsey'
-        },
-        createdDate: '06 Nov, 2024',
-        dueDate: '06 Dec, 2024',
-        requester: 'Steve Smith',
-        priority: 'Low',
-        assignedAgents: {
-            img1: 'images/users/user6.jpg',
-            img2: 'images/users/user13.jpg'
-        },
-        status: {
-            inProgress: 'In Progress',
-            // pending: 'Pending',
-            // open: 'Open',
-            // closed: 'Closed',
-        },
-        action: {
-            view: 'visibility',
-            delete: 'delete'
-        }
-    },
-    {
-        ticketID: '#469',
-        subject: 'Aegis Accounting Service',
-        contact: {
-            img: 'images/users/user14.jpg',
-            name: 'Nathaniel Hulsey'
-        },
-        createdDate: '06 Nov, 2024',
-        dueDate: '06 Dec, 2024',
-        requester: 'Steve Smith',
-        priority: 'Low',
-        assignedAgents: {
-            img1: 'images/users/user6.jpg',
-            img2: 'images/users/user13.jpg'
-        },
-        status: {
-            inProgress: 'In Progress',
-            // pending: 'Pending',
-            // open: 'Open',
-            // closed: 'Closed',
-        },
-        action: {
-            view: 'visibility',
-            delete: 'delete'
-        }
-    },
-    {
-        ticketID: '#367',
-        subject: 'Beja Banking Finance',
-        contact: {
-            img: 'images/users/user13.jpg',
-            name: 'Thomas Wilson'
-        },
-        createdDate: '07 Nov, 2024',
-        dueDate: '07 Dec, 2024',
-        requester: 'David Williams',
-        priority: 'High',
-        assignedAgents: {
-            img1: 'images/users/user3.jpg',
-            img2: 'images/users/user8.jpg'
-        },
-        status: {
-            // inProgress: 'In Progress',
-            // pending: 'Pending',
-            // open: 'Open',
-            closed: 'Closed',
-        },
-        action: {
-            view: 'visibility',
-            delete: 'delete'
-        }
-    },
-    {
-        ticketID: '#658',
-        subject: 'Aoriv AI Design',
-        contact: {
-            img: 'images/users/user6.jpg',
-            name: 'Marcelino Haddock'
-        },
-        createdDate: '08 Nov, 2024',
-        dueDate: '08 Dec, 2024',
-        requester: 'Jonathan Jones',
-        priority: 'High',
-        assignedAgents: {
-            img1: 'images/users/user17.jpg',
-            img2: 'images/users/user13.jpg'
-        },
-        status: {
-            // inProgress: 'In Progress',
-            // pending: 'Pending',
-            open: 'Open',
-            // closed: 'Closed',
-        },
-        action: {
-            view: 'visibility',
-            delete: 'delete'
-        }
-    },
-    {
-        ticketID: '#547',
-        subject: 'Vaxo App Design',
-        contact: {
-            img: 'images/users/user1.jpg',
-            name: 'Robert Fairweather'
-        },
-        createdDate: '09 Nov, 2024',
-        dueDate: '09 Dec, 2024',
-        requester: 'Robert Heinemann',
-        priority: 'High',
-        assignedAgents: {
-            img1: 'images/users/user7.jpg',
-            img2: 'images/users/user12.jpg',
-            img3: 'images/users/user16.jpg'
-        },
-        status: {
-            // inProgress: 'In Progress',
-            pending: 'Pending',
-            // open: 'Open',
-            // closed: 'Closed',
-        },
-        action: {
-            view: 'visibility',
-            delete: 'delete'
-        }
-    },
-    {
-        ticketID: '#431',
-        subject: 'Network Connectivity',
-        contact: {
-            img: 'images/users/user9.jpg',
-            name: 'Ramiro McCarty'
-        },
-        createdDate: '10 Nov, 2024',
-        dueDate: '10 Dec, 2024',
-        requester: 'Carol Camacho',
-        priority: 'Low',
-        assignedAgents: {
-            img1: 'images/users/user10.jpg',
-            img2: 'images/users/user5.jpg'
-        },
-        status: {
-            inProgress: 'In Progress',
-            // pending: 'Pending',
-            // open: 'Open',
-            // closed: 'Closed',
-        },
-        action: {
-            view: 'visibility',
-            delete: 'delete'
-        }
-    },
-    {
-        ticketID: '#469',
-        subject: 'System Upgrade',
-        contact: {
-            img: 'images/users/user16.jpg',
-            name: 'Rebecca Block'
-        },
-        createdDate: '11 Nov, 2024',
-        dueDate: '11 Dec, 2024',
-        requester: 'Dustin Fritch',
-        priority: 'Medium',
-        assignedAgents: {
-            img1: 'images/users/user15.jpg',
-            img2: 'images/users/user6.jpg'
-        },
-        status: {
-            inProgress: 'In Progress',
-            // pending: 'Pending',
-            // open: 'Open',
-            // closed: 'Closed',
-        },
-        action: {
-            view: 'visibility',
-            delete: 'delete'
-        }
-    },
-    {
-        ticketID: '#367',
-        subject: 'Software Installation',
-        contact: {
-            img: 'images/users/user5.jpg',
-            name: 'Barbara Cross'
-        },
-        createdDate: '12 Nov, 2024',
-        dueDate: '12 Dec, 2024',
-        requester: 'Robert Stewart',
-        priority: 'Low',
-        assignedAgents: {
-            img1: 'images/users/user11.jpg',
-            img2: 'images/users/user3.jpg',
-            img3: 'images/users/user8.jpg'
-        },
-        status: {
-            // inProgress: 'In Progress',
-            // pending: 'Pending',
-            // open: 'Open',
-            closed: 'Closed',
-        },
-        action: {
-            view: 'visibility',
-            delete: 'delete'
-        }
-    },
-    {
-        ticketID: '#658',
-        subject: 'Application Error',
-        contact: {
-            img: 'images/users/user12.jpg',
-            name: 'Donna Miller'
-        },
-        createdDate: '13 Nov, 2024',
-        dueDate: '13 Dec, 2024',
-        requester: 'Roscoe Guerrero',
-        priority: 'High',
-        assignedAgents: {
-            img1: 'images/users/user16.jpg',
-            img2: 'images/users/user17.jpg'
-        },
-        status: {
-            // inProgress: 'In Progress',
-            // pending: 'Pending',
-            open: 'Open',
-            // closed: 'Closed',
-        },
-        action: {
-            view: 'visibility',
-            delete: 'delete'
-        }
-    },
-    {
-        ticketID: '#547',
-        subject: 'Email Configuration',
-        contact: {
-            img: 'images/users/user7.jpg',
-            name: 'Carolyn Barnes'
-        },
-        createdDate: '14 Nov, 2024',
-        dueDate: '14 Dec, 2024',
-        requester: 'Kimberly Anderson',
-        priority: 'Medium',
-        assignedAgents: {
-            img1: 'images/users/user7.jpg',
-            img2: 'images/users/user9.jpg',
-            img3: 'images/users/user12.jpg'
-        },
-        status: {
-            // inProgress: 'In Progress',
-            pending: 'Pending',
-            // open: 'Open',
-            // closed: 'Closed',
-        },
-        action: {
-            view: 'visibility',
-            delete: 'delete'
-        }
-    },
-    {
-        ticketID: '#951',
-        subject: 'Login Issues',
-        contact: {
-            img: 'images/users/user15.jpg',
-            name: 'Marcia Baker'
-        },
-        createdDate: '15 Nov, 2024',
-        dueDate: '15 Dec, 2024',
-        requester: 'Walter Frazier',
-        priority: 'High',
-        assignedAgents: {
-            img1: 'images/users/user5.jpg',
-            img2: 'images/users/user13.jpg'
-        },
-        status: {
-            inProgress: 'In Progress',
-            // pending: 'Pending',
-            // open: 'Open',
-            // closed: 'Closed',
-        },
-        action: {
-            view: 'visibility',
-            delete: 'delete'
-        }
-    }
-];
+
 export interface PeriodicElement {
     ticketID: string;
     subject: string;
