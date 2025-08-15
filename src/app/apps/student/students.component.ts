@@ -5,7 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -75,6 +75,7 @@ export class StudentsComponent {
         private snackBar: MatSnackBar,
         private toastr: ToastrService,
         private studentService: StudentService,
+        private router: Router
     ) {}
 
     classApplied = false;
@@ -126,6 +127,10 @@ export class StudentsComponent {
                 console.error('API error:', error);
             }
         });
+    }
+
+    editStudent(id: number) {
+        this.router.navigate(['/edit-student', id]);
     }
 
 }

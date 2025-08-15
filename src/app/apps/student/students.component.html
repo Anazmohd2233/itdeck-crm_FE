@@ -174,22 +174,21 @@
                         </th>
                         <td mat-cell *matCellDef="let element">
                             <div class="action-info">
-                                <a mat-button routerLink="/edit-student" matTooltip="Edit Contact" matTooltipPosition="above">
+                                <button type="button" mat-button (click)="editStudent(element.id)" matTooltip="Edit Student" matTooltipPosition="above">
                                     <i class="material-symbols-outlined">
-                                        {{element.action.edit}}
+                                        edit
                                     </i>
-                                </a>
+                                </button>
                                 <button type="button" mat-button matTooltip="Copy Link" matTooltipPosition="above" class="link-share-btn" (click)="toggleClass()">
                                     <i class="material-symbols-outlined">
-                                        {{element.action.link}}
+                                        link
                                     </i>
                                 </button>
-                                <button type="button" mat-button matTooltip="Delete" matTooltipPosition="above">
+                                <button type="button" mat-button matTooltip="Delete Student" matTooltipPosition="above">
                                     <i class="material-symbols-outlined">
-                                        {{element.action.delete}}
+                                        delete
                                     </i>
                                 </button>
-
                             </div>
                         </td>
                     </ng-container>
