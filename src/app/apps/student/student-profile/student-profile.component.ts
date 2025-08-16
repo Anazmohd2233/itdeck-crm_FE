@@ -17,12 +17,12 @@ import { StudentService } from '../../../services/student.services';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-edit-student',
+  selector: 'app-profile-student',
   imports: [MatCardModule, MatMenuModule, MatButtonModule, RouterLink, FormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule, ReactiveFormsModule, FileUploadModule, NgxEditorModule, CommonModule],
-  templateUrl: './edit-student.component.html',
-  styleUrls: ['./edit-student.component.scss']
+  templateUrl: './student-profile.component.html',
+  styleUrls: ['./student-profile.component.scss']
 })
-export class EditStudentComponent implements OnInit {
+export class StudentProfileComponent implements OnInit {
 
   // Text Editor
   editor!: Editor;

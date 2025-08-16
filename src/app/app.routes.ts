@@ -9,7 +9,6 @@ import { InvoicesComponent } from './pages/invoices-page/invoices/invoices.compo
 import { InvoicesPageComponent } from './pages/invoices-page/invoices-page.component';
 import { ToDoListComponent } from './apps/to-do-list/to-do-list.component';
 import { CalendarComponent } from './apps/calendar/calendar.component';
-import { StudentsComponent } from './apps/student/students.component';
 import { ChatComponent } from './apps/chat/chat.component';
 import { KanbanBoardComponent } from './apps/kanban-board/kanban-board.component';
 import { TermsConditionsComponent } from './settings/terms-conditions/terms-conditions.component';
@@ -66,6 +65,7 @@ import { PmTeamsComponent } from './pages/users-page/pm-teams/pm-teams.component
 import { TeamMembersComponent } from './pages/users-page/team-members/team-members.component';
 import { ProjectManagementComponent } from './pages/project-management/project-management.component';
 import { EditStudentComponent } from './apps/student/edit-student/edit-student.component';
+import { StudentsComponent } from './apps/student/students.component';
 // import { HdReportsComponent } from './pages/hd-reports/hd-reports.component';
 
 export const routes: Routes = [

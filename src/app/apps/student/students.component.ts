@@ -30,7 +30,7 @@ export class StudentsComponent {
     page: number = 1;
     students: any;
 
-    displayedColumns: string[] = ['select', 'student', 'email', 'phone', 'lastContacted', 'course', 'leadSource', 'status', 'action'];
+    displayedColumns: string[] = ['select', 'studentID','name', 'email', 'phone', 'createdDate', 'courses', 'lead_source', 'status', 'action'];
     dataSource = new MatTableDataSource<PeriodicElement>(this.ELEMENT_DATA);
     selection = new SelectionModel<PeriodicElement>(true, []);
 
@@ -101,26 +101,32 @@ export class StudentsComponent {
     private getStudentList(): void {
 
         console.log('********getting student*******')
-        this.studentService.getStudentById(this.page).subscribe({
+        this.studentService.getStudent(this.page).subscribe({
             next: (response) => {
                 if (response && response.success) {
-                    const students = response.data?.students || []; 
+                    const students = response.data?.customer || []; 
+
+
+                     
 
                     this.ELEMENT_DATA = students.map((u: any) => ({
                         id: u.id,
-                        // studentID: u.student_id || 'N/A',
-                        name: u.student_name || 'N/A',
+                         studentID: u.contact_id || 'N/A',
+                        name: u.customer_name || 'N/A',
                         email: u.email || 'N/A',
                         lead_source: u.lead_source || 'N/A',
                         phone: u.phone || '-',
                         courses: u.courses || '-',
+                        createdDate: u.created_date || '-',
                         status: u.status,
                         action: '', // we will handle icons directly in template
                     }));
 
+                    console.log('this.ELEMENT_DATA',this.ELEMENT_DATA)
+
                     this.dataSource.data = this.ELEMENT_DATA;
                 } else {
-                    this.toastr.error('Failed to load students', 'Error');
+                    // this.toastr.error('Failed to load students', 'Error');
                     console.error('Failed to load students:', response?.message);
                 }
             },
@@ -131,9 +137,9 @@ export class StudentsComponent {
         });
     }
 
-    editStudent(id: number) {
-        this.router.navigate(['/edit-student', id]);
-    }
+    // editStudent(id: number) {
+    //     this.router.navigate(['/edit-student', id]);
+    // }
 
 }
 
@@ -141,10 +147,11 @@ export class StudentsComponent {
 
 export interface PeriodicElement {
     id: any;
-    // studentID: string;
+    studentID: string;
     name: any;
     email: string;
     phone: string;
+    createdDate:any;
     courses: string;
     lead_source: string;
     status: any;

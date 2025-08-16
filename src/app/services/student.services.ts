@@ -20,19 +20,19 @@ export class StudentService {
     // }
 
     updateStudent(formData: any, student_id: any): Observable<any> {
-        const apiUrl = `${this.apiUrl}/admin/student/update/${student_id}`;
+        const apiUrl = `${this.apiUrl}/admin/customer/update/${student_id}`;
         return this.http.patch<any>(apiUrl, formData);
     }
 
     getStudent(page: number, params?: HttpParams): Observable<any> {
-        const apiUrl = `${this.apiUrl}/admin/student/list/${page}`;
+        const apiUrl = `${this.apiUrl}/admin/customer/list/${page}`;
         return this.http.get<any>(apiUrl);
     }
 
   
 
     getStudentById(student_id: number, params?: HttpParams): Observable<any> {
-        const apiUrl = `${this.apiUrl}/admin/student/view/${student_id}`;
+        const apiUrl = `${this.apiUrl}/admin/customer/view/${student_id}`;
         return this.http.get<any>(apiUrl);
     }
 

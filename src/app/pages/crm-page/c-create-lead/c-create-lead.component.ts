@@ -197,12 +197,12 @@ export class CCreateLeadComponent {
         }
 
         if (this.editMode) {
-            this.leadsService.updateLead(formData, this.contactId).subscribe({
+            this.leadsService.updateLead(formData, this.leadId).subscribe({
                 next: (response) => {
                     if (response.success) {
                         this.isSubmitting = false;
                         this.toastr.success(
-                            'Lead Added successfully',
+                            'Lead Updated successfully',
                             'Success'
                         );
                         console.log('✅ Lead Updated successfully');
