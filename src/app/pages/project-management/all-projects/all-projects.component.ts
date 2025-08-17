@@ -10,13 +10,29 @@ import { CustomizerSettingsService } from '../../../customizer-settings/customiz
 
 @Component({
     selector: 'app-all-projects',
-    imports: [MatCardModule, MatMenuModule, MatButtonModule, MatTableModule, MatPaginatorModule, NgIf, MatTooltipModule],
+    imports: [
+        MatCardModule,
+        MatMenuModule,
+        MatButtonModule,
+        MatTableModule,
+        MatPaginatorModule,
+        NgIf,
+        MatTooltipModule,
+    ],
     templateUrl: './all-projects.component.html',
-    styleUrl: './all-projects.component.scss'
+    styleUrl: './all-projects.component.scss',
 })
 export class AllProjectsComponent {
-
-    displayedColumns: string[] = ['id', 'projectName', 'client', 'startDate', 'endDate', 'budget', 'status', 'action'];
+    displayedColumns: string[] = [
+        'id',
+        'projectName',
+        'client',
+        'startDate',
+        'endDate',
+        'budget',
+        'status',
+        'action',
+    ];
     dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -25,10 +41,7 @@ export class AllProjectsComponent {
         this.dataSource.paginator = this.paginator;
     }
 
-    constructor(
-        public themeService: CustomizerSettingsService
-    ) {}
-
+    constructor(public themeService: CustomizerSettingsService) {}
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
@@ -47,8 +60,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
         },
         action: {
             view: 'visibility',
-            delete: 'delete'
-        }
+            delete: 'delete',
+        },
     },
     {
         id: '#547',
@@ -65,8 +78,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
         },
         action: {
             view: 'visibility',
-            delete: 'delete'
-        }
+            delete: 'delete',
+        },
     },
     {
         id: '#658',
@@ -83,8 +96,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
         },
         action: {
             view: 'visibility',
-            delete: 'delete'
-        }
+            delete: 'delete',
+        },
     },
     {
         id: '#367',
@@ -101,8 +114,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
         },
         action: {
             view: 'visibility',
-            delete: 'delete'
-        }
+            delete: 'delete',
+        },
     },
     {
         id: '#469',
@@ -119,8 +132,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
         },
         action: {
             view: 'visibility',
-            delete: 'delete'
-        }
+            delete: 'delete',
+        },
     },
     {
         id: '#431',
@@ -137,8 +150,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
         },
         action: {
             view: 'visibility',
-            delete: 'delete'
-        }
+            delete: 'delete',
+        },
     },
     {
         id: '#542',
@@ -155,8 +168,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
         },
         action: {
             view: 'visibility',
-            delete: 'delete'
-        }
+            delete: 'delete',
+        },
     },
     {
         id: '#532',
@@ -173,8 +186,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
         },
         action: {
             view: 'visibility',
-            delete: 'delete'
-        }
+            delete: 'delete',
+        },
     },
     {
         id: '#567',
@@ -191,8 +204,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
         },
         action: {
             view: 'visibility',
-            delete: 'delete'
-        }
+            delete: 'delete',
+        },
     },
     {
         id: '#341',
@@ -209,9 +222,9 @@ const ELEMENT_DATA: PeriodicElement[] = [
         },
         action: {
             view: 'visibility',
-            delete: 'delete'
-        }
-    }
+            delete: 'delete',
+        },
+    },
 ];
 export interface PeriodicElement {
     id: string;

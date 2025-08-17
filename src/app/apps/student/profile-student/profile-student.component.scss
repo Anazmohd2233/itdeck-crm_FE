@@ -111,6 +111,16 @@
                     padding-right: 20px;
                     margin-right: -20px;
                     
+                    &::-webkit-scrollbar {
+                        width: 8px;
+                        height: 8px;
+                    }
+                    &::-webkit-scrollbar-track {
+                        background-color: var(--whiteColor);
+                    }
+                    &::-webkit-scrollbar-thumb {
+                        background: #ebebeb;
+                    }
                     .follower {
                         margin-bottom: 20px;
 
@@ -135,6 +145,28 @@
                         }
                         &:last-child {
                             margin-bottom: 0;
+                        }
+                    }
+                }
+            }
+            &.component-dark-theme {
+                .mat-mdc-card-content {
+                    .team-group {
+                        .users {
+                            img {
+                                border-color: #1b232d;
+                            }
+                            div {
+                                border-color: #1b232d;
+                            }
+                        }
+                    }
+                    .followers-list {
+                        &::-webkit-scrollbar-track {
+                            background-color: rgba(255, 255, 255, .10);
+                        }
+                        &::-webkit-scrollbar-thumb {
+                            background: var(--blackColor);
                         }
                     }
                 }
@@ -185,8 +217,8 @@
                             left: 20px;
                         };
                         margin: {
-                            left: -20px;
                             right: 0;
+                            left: -20px;
                         };
                         .follower {
                             .title {
@@ -256,13 +288,13 @@
                             }
                         }
                         .followers-list {
-                            padding: {
-                                right: 0;
-                                left: 15px;
-                            };
                             margin: {
                                 right: 0;
                                 left: -15px;
+                            };
+                            padding: {
+                                right: 0;
+                                left: 15px;
                             };
                         }
                     }
@@ -305,6 +337,23 @@
 
 }
 
+  .btn-box {
+                        .mat-mdc-button {
+                            border: 0;
+                            height: auto;
+                            min-width: auto;
+                            min-height: auto;
+                            padding: 13px 40px;
+                            font-weight: normal;
+                            color: var(--whiteColor);
+                            background-color: var(--daxaColor);
+
+                            &:not(:first-child) {
+                                margin-left: 10px;
+                                background-color: var(--dangerColor);
+                            }
+                        }
+                    }
 /* Min width 768px to Max width 991px */
 @media only screen and (min-width : 768px) and (max-width : 991px) {}
 
@@ -316,5 +365,3 @@
 
 /* Min width 1600px */
 @media only screen and (min-width: 1600px) {}
-
-

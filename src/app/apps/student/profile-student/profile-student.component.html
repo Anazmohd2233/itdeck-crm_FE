@@ -1,0 +1,270 @@
+<div class="row">
+    <div class="col-xxxl-3">
+
+        <div class="row">
+            <!-- LEFT SIDE -->
+            <div class="col-xxxl-3">
+                <mat-card class="daxa-card profile-card mb-25 border-radius bg-white border-none d-block"
+                    [class.component-dark-theme]="themeService.isDark()"
+                    [class.rtl-enabled]="themeService.isRTLEnabled()">
+                    <mat-card-header>
+                        <mat-card-title>
+                            <h5 class="mb-0">Profile Intro</h5>
+                        </mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <div class="user d-flex align-items-center">
+                            <div class="image">
+                                <img src="images/profile.jpg" class="rounded-circle" alt="profile-image" />
+                            </div>
+                            <div class="title">
+                                <span class="d-block fw-medium">{{student?.customer_name}}</span>
+                                <span class="d-block text-body">{{student?.email}}</span>
+                            </div>
+                        </div>
+                        <span class="sub-title d-block fw-medium">About Me</span>
+                        <p>
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
+                            been the industry's standard dummy text ever since the 1500s.
+                        </p>
+
+                        <ul class="info-list pl-0 mb-0 mt-0 list-unstyled">
+                            <li><span class="text-body">User ID:</span> {{student.unique_id}}</li>
+                            <li><span class="text-body">Phone:</span> {{student.phone}}</li>
+                            <li><span class="text-body">Created Date:</span>{{student.created_date}}</li>
+                        </ul>
+                    </mat-card-content>
+                </mat-card>
+
+            </div>
+
+            <!-- RIGHT SIDE -->
+            <div class="col-xxxl-9">
+                <div class="row">
+
+
+                    <!-- Form Side -->
+                    <div class="col-md-12">
+                        <mat-card class="daxa-card edit-contact-card mb-25 border-radius bg-white border-none d-block">
+                            <mat-card-content>
+                                <form [formGroup]="paymentForm" (ngSubmit)="onSubmitPayment()">
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-25">
+                                                <label class="main-label d-block lh-1 text-black mb-15">Course</label>
+                                                <mat-form-field>
+                                                    <mat-label>Select course</mat-label>
+
+
+                                                    <mat-select formControlName="course_id">
+                                                        <mat-option *ngFor="let course of courses" [value]="course.id">
+                                                            {{ course.service_name }}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="mb-25">
+                                                <label class="main-label d-block lh-1 text-black  mb-15">Payment
+                                                    Type</label>
+                                                <mat-form-field>
+                                                    <mat-label>Select type</mat-label>
+                                                    <mat-select formControlName="payment_type">
+                                                        <mat-option value="full">Full Payment</mat-option>
+                                                        <mat-option value="emi">EMI</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="mb-25">
+                                                <label class="main-label d-block lh-1 text-black  mb-15">EMI
+                                                    Months</label>
+                                                <mat-form-field>
+                                                    <mat-label>Enter months</mat-label>
+                                                    <input matInput formControlName="emi_months" type="number" />
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="mb-25">
+                                                <label class="main-label d-block lh-1 text-black  mb-15">Start
+                                                    Date</label>
+                                                <mat-form-field>
+                                                    <input matInput [matDatepicker]="picker"
+                                                        formControlName="start_date" />
+                                                    <mat-datepicker-toggle matSuffix
+                                                        [for]="picker"></mat-datepicker-toggle>
+                                                    <mat-datepicker #picker></mat-datepicker>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="btn-box">
+
+                                        <button mat-button type="submit">
+                                            <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm me-1"
+                                                role="status" aria-hidden="true"></span>
+                                            Create Payment
+                                        </button>
+
+
+                                    </div>
+
+
+                                </form>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+    <div class="col-xxxl-9">
+        <mat-card
+    class="daxa-card all-projects-card mb-25 border-radius bg-white border-none d-block"
+    [class.rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mb-0">
+                Payments
+            </h5>
+        </mat-card-title>
+        <mat-card-subtitle>
+            <button type="button" mat-button class="card-header-menu-btn" [matMenuTriggerFor]="cardHeaderMenu">
+                This Month
+            </button>
+            <mat-menu #cardHeaderMenu="matMenu" class="card-header-menu" xPosition="before">
+                <button mat-menu-item>
+                    This Day
+                </button>
+                <button mat-menu-item>
+                    This Week
+                </button>
+                <button mat-menu-item>
+                    This Month
+                </button>
+                <button mat-menu-item>
+                    This Year
+                </button>
+            </mat-menu>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="all-projects-table">
+            <div class="table-responsive">
+                <table mat-table [dataSource]="dataSource">
+
+                    <!-- ID Column -->
+                    <!-- <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef>
+                            ID
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.id}}
+                        </td>
+                    </ng-container> -->
+
+                    <!-- Project Name Column -->
+                    <ng-container matColumnDef="course_name">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Course Name
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.course_name}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Client Column -->
+                    <ng-container matColumnDef="payment_type">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Payment Type
+                        </th>
+                        <td mat-cell *matCellDef="let element" class="text-black">
+                            {{element.payment_type}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Start Date Column -->
+                    <ng-container matColumnDef="installment_amount">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Installment Amount
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.installment_amount}}
+                        </td>
+                    </ng-container>
+
+                    <!-- End Date Column -->
+                    <ng-container matColumnDef="due_date">
+                        <th mat-header-cell *matHeaderCellDef>
+                           Due Date
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.due_date}}
+                        </td>
+                    </ng-container>
+
+                   
+
+                   
+
+
+                     <ng-container matColumnDef="is_paid">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Status
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            <span class="daxa-badge active d-inline-block" *ngIf="element.is_paid">
+                                Paid
+                            </span>
+                            <span class="daxa-badge deactive d-inline-block" *ngIf="!element.is_paid">
+                               Unpaid
+                            </span>
+                        </td>
+                    </ng-container>
+
+                    <!-- Action Column -->
+                    <!-- <ng-container matColumnDef="action">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Action
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="action-info">
+                                <button type="button" mat-button matTooltip="View Project" matTooltipPosition="above">
+                                    <i class="material-symbols-outlined">
+                                        {{element.action.view}}
+                                    </i>
+                                </button>
+                                <button type="button" mat-button matTooltip="Delete" matTooltipPosition="above">
+                                    <i class="material-symbols-outlined">
+                                        {{element.action.delete}}
+                                    </i>
+                                </button>
+                            </div>
+                        </td>
+                    </ng-container> -->
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                </table>
+            </div>
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        </div>
+    </mat-card-content>
+</mat-card>
+
+    </div>
+</div>

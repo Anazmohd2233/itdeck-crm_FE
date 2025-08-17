@@ -116,15 +116,15 @@ export class EditStudentComponent implements OnInit {
                   const student = response.customer;
                   
                   // Populate form with student data
-                  this.studentForm.patchValue({
-                      student_name: student.customer_name || '',
-                      email: student.email || '',
-                      phone: student.phone || '',
-                      lead_source: student.lead_source || '',
-                      courses: student.courses || '',
-                      status: student.status || '',
-                      notes: student.notes || ''
-                  });
+                //   this.studentForm.patchValue({
+                //       student_name: student.customer_name || '',
+                //       email: student.email || '',
+                //       phone: student.phone || '',
+                //       lead_source: student.lead_source || '',
+                //       courses: student.courses || '',
+                //       status: student.status || '',
+                //       notes: student.notes || ''
+                //   });
 
                   // Set editor content
                   this.editorContent = student.notes || '';

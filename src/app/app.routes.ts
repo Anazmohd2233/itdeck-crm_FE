@@ -64,8 +64,9 @@ import { AddUserComponent } from './pages/users-page/add-user/add-user.component
 import { PmTeamsComponent } from './pages/users-page/pm-teams/pm-teams.component';
 import { TeamMembersComponent } from './pages/users-page/team-members/team-members.component';
 import { ProjectManagementComponent } from './pages/project-management/project-management.component';
-import { EditStudentComponent } from './apps/student/edit-student/edit-student.component';
 import { StudentsComponent } from './apps/student/students.component';
+import { EditStudentComponent } from './apps/student/edit-student/edit-student.component';
+import { ProfileStudentComponent } from './apps/student/profile-student/profile-student.component';
 // import { HdReportsComponent } from './pages/hd-reports/hd-reports.component';
 
 export const routes: Routes = [
@@ -111,7 +112,7 @@ export const routes: Routes = [
             {path: 'edit-lead', component: CEditLeadComponent},
             {path: 'leads', component: CLeadsComponent},
             {path: 'leads-kanban', component: CLeadKanbanComponent},
-            {path: 'profile', component: StudentProfileComponent},
+            // {path: 'profile', component: ProfileStudentComponent},
             {path: 'deals', component: CDealsComponent},
             {path: 'create-deal', component: CCreateDealComponent},
             {path: 'invoice', component: InoviceComponent}
@@ -149,8 +150,10 @@ export const routes: Routes = [
         ]
     },
     {
+                    // {path: 'profile', component: ProfileStudentComponent},
+
         path: 'profile',
-        component: ProfilePageComponent,
+        component: ProfileStudentComponent,
         children: [
             {path: '', component: UserProfileComponent},
             {path: 'teams', component: TeamsComponent},
