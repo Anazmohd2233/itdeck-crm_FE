@@ -16,7 +16,7 @@ import { CustomizerSettingsService } from '../../customizer-settings/customizer-
 
 @Component({
   selector: 'app-student-reg-form',
-  imports: [MatCardModule, MatMenuModule, MatButtonModule, RouterLink, FormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule, ReactiveFormsModule, FileUploadModule, NgxEditorModule, NgIf],
+  imports: [MatCardModule, MatMenuModule, MatButtonModule, FormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule, ReactiveFormsModule, FileUploadModule, NgxEditorModule, NgIf],
   templateUrl: './student-reg-form.component.html',
   styleUrl: './student-reg-form.component.scss'
 })
