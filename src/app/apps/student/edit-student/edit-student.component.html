@@ -22,7 +22,7 @@
 <!-- Edit Contact -->
 <mat-card class="daxa-card edit-contact-card mb-25 border-radius bg-white border-none d-block">
     <mat-card-content>
-        <form>
+        <form [formGroup]="studentForm" (ngSubmit)="onSubmit()">
             <div class="row">
                 <!-- <div class="col-md-4 col-sm-6">
                     <div class="mb-25">
@@ -217,10 +217,17 @@
                     </div> 
                 </div>
             </div>
-            <div class="btn-box">
-                <button mat-button>
-                    Save Changes
+          <div class="btn-box">
+
+                <button mat-button type="submit">
+                    <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm me-1" role="status"
+                        aria-hidden="true"></span>
+                    Edit Student
                 </button>
+
+                <!-- <button mat-button>
+                    Cancel
+                </button> -->
             </div>
         </form>
     </mat-card-content>

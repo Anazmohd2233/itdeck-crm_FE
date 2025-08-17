@@ -30,7 +30,9 @@
                 <mat-card-header>
                     <mat-card-title>
                         <h5 class="mb-0">
-                            Add a Course
+                            
+                                        {{ editMode ? 'Edit Course' : 'Add Course' }}
+
                         </h5>
                     </mat-card-title>
                 </mat-card-header>
@@ -119,7 +121,7 @@
                                     <mat-label>
                                         Select
                                     </mat-label>
-                                    <mat-select multiple formControlName="category">
+                                    <mat-select formControlName="category">
                                         @for (tag of tagsList; track tag) {
                                         <mat-option [value]="tag">{{tag}}</mat-option>
                                         }

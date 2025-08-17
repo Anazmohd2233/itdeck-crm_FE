@@ -20,6 +20,7 @@ import { CustomizerSettingsService } from '../../../customizer-settings/customiz
 import { ContactService } from '../../../services/contact.service';
 import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
+import { CourseService } from '../../../services/course.service';
 
 @Component({
     selector: 'app-c-create-contact',
@@ -47,6 +48,9 @@ export class CCreateContactComponent {
     contactId: string | null = null; // 👈 Store the ID here
     editMode: boolean = false;
     selectedFile: File | null = null;
+    courses: any;
+        page: number = 1;
+
 
     // File Uploader
     public multiple: boolean = false;
@@ -56,10 +60,14 @@ export class CCreateContactComponent {
         private fb: FormBuilder,
         private toastr: ToastrService,
         private contactService: ContactService,
-        private route: ActivatedRoute // 👈 Inject ActivatedRoute
+        private route: ActivatedRoute, // 👈 Inject ActivatedRoute
+                        private courseService: CourseService,
+        
     ) {}
 
     ngOnInit(): void {
+
+        this.getCourseList();
         // ✅ Get ID from query params
         this.route.queryParams.subscribe((params) => {
             this.contactId = params['contact_id'] || null;
@@ -197,6 +205,27 @@ export class CCreateContactComponent {
             error: (err) => {
                 console.error('❌ Error loading contact:', err);
                 this.toastr.error('Failed to load contact details.', 'Error');
+            },
+        });
+    }
+
+
+         private getCourseList(): void {
+        // let params = new HttpParams();
+
+        // params = params.set('user_type', 'USER');
+
+        this.courseService.getCourse(this.page).subscribe({
+            next: (response) => {
+                if (response && response.success) {
+                    this.courses = response.data?.services || [];
+                } else {
+                    // this.toastr.error('Failed to load users', 'Failed');
+                    console.error('Failed to load courses:', response?.message);
+                }
+            },
+            error: (error) => {
+                console.error('API error:', error);
             },
         });
     }

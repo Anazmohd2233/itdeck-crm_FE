@@ -113,11 +113,11 @@ export class EditStudentComponent implements OnInit {
       this.studentService.getStudentById(this.studentId).subscribe({
           next: (response) => {
               if (response && response.success) {
-                  const student = response.data;
+                  const student = response.customer;
                   
                   // Populate form with student data
                   this.studentForm.patchValue({
-                      student_name: student.student_name || '',
+                      student_name: student.customer_name || '',
                       email: student.email || '',
                       phone: student.phone || '',
                       lead_source: student.lead_source || '',
@@ -152,7 +152,7 @@ export class EditStudentComponent implements OnInit {
   onSubmit(): void {
    
 
-      if (this.studentForm.valid && !this.isSubmitting && this.studentId) {
+      if (this.studentForm.valid && this.studentId) {
           this.isSubmitting = true;
 
           const formData = {

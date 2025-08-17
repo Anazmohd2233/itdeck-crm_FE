@@ -24,6 +24,7 @@ import { LeadsService } from '../../../services/lead.service';
 import { LeadStatus } from '../../../services/enums';
 import { UsersService } from '../../../services/users.service';
 import { HttpParams } from '@angular/common/http';
+import { CourseService } from '../../../services/course.service';
 
 @Component({
     selector: 'app-c-create-lead',
@@ -62,6 +63,7 @@ export class CCreateLeadComponent {
     selectedFile: File | null = null;
     page: number = 1;
     users: any;
+    courses: any;
 
     constructor(
         public themeService: CustomizerSettingsService,
@@ -70,13 +72,15 @@ export class CCreateLeadComponent {
         private contactService: ContactService,
         private leadsService: LeadsService,
         private usersService: UsersService,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+                private courseService: CourseService,
+        
     ) {}
 
     ngOnInit(): void {
 
                 this.getUserList();
-
+this.getCourseList();
         // ✅ Get ID from query params
         this.route.queryParams.subscribe((params) => {
             this.contactId = params['contact_id'] || null;
@@ -225,6 +229,10 @@ export class CCreateLeadComponent {
                 },
             });
         } else {
+            if(this.contactId){
+                            formData.append('contact', this.contactId);
+
+            }
             this.leadsService.createLead(formData).subscribe({
                 next: (response) => {
                     if (response.success) {
@@ -268,6 +276,28 @@ export class CCreateLeadComponent {
                 } else {
                     // this.toastr.error('Failed to load users', 'Failed');
                     console.error('Failed to load users:', response?.message);
+                }
+            },
+            error: (error) => {
+                console.error('API error:', error);
+            },
+        });
+    }
+
+
+
+       private getCourseList(): void {
+        // let params = new HttpParams();
+
+        // params = params.set('user_type', 'USER');
+
+        this.courseService.getCourse(this.page).subscribe({
+            next: (response) => {
+                if (response && response.success) {
+                    this.courses = response.data?.services || [];
+                } else {
+                    // this.toastr.error('Failed to load users', 'Failed');
+                    console.error('Failed to load courses:', response?.message);
                 }
             },
             error: (error) => {

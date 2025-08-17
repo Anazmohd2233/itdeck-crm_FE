@@ -131,7 +131,7 @@ export class StudentsComponent {
                 }
             },
             error: (error) => {
-                this.toastr.error('Error loading students', 'Error');
+                // this.toastr.error('Error loading students', 'Error');
                 console.error('API error:', error);
             }
         });

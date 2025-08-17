@@ -125,6 +125,7 @@ export class LCoursesComponent {
                     const leads = response.data?.services || [];
 
                     this.ELEMENT_DATA = leads.map((u: any) => ({
+                        id:u.id,
                         service_name: u.service_name || 'N/A',
 
                         description: u.description || 'N/A',

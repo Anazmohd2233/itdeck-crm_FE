@@ -1,6 +1,13 @@
 import { Component, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser, NgIf } from '@angular/common';
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+    FormBuilder,
+    FormControl,
+    FormGroup,
+    FormsModule,
+    ReactiveFormsModule,
+    Validators,
+} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -35,8 +42,7 @@ import { CourseService } from '../../../services/course.service';
         FileUploadModule,
         NgxEditorModule,
         NgIf,
-                CommonModule,
-        
+        CommonModule,
     ],
     templateUrl: './l-create-course.component.html',
     styleUrl: './l-create-course.component.scss',
@@ -45,10 +51,20 @@ export class LCreateCourseComponent {
     users: any;
     page: number = 1;
     courseForm!: FormGroup;
-        courseId: string | null = null; // 👈 Store the ID here
-  editMode: boolean = false;
+    courseId: string | null = null; // 👈 Store the ID here
+    editMode: boolean = false;
     isSubmitting = false;
 
+       constructor(
+        @Inject(PLATFORM_ID) private platformId: Object,
+        public themeService: CustomizerSettingsService,
+        private usersService: UsersService,
+        private toastr: ToastrService,
+        private route: ActivatedRoute,
+        private fb: FormBuilder,
+        private courseService: CourseService,
+        
+    ) {}
 
     // Text Editor
     editor!: Editor | null; // Make it nullable
@@ -71,14 +87,11 @@ export class LCreateCourseComponent {
 
         this.getUserList();
 
-
         // ✅ Get ID from query params
         this.route.queryParams.subscribe((params) => {
             this.courseId = params['course_id'] || null;
 
             console.log('📌 Received courseId ID:', this.courseId);
-
-            
 
             if (this.courseId) {
                 this.editMode = true;
@@ -86,8 +99,7 @@ export class LCreateCourseComponent {
             }
         });
 
-                this.initializeCourseForm();
-
+        this.initializeCourseForm();
     }
 
     ngOnDestroy(): void {
@@ -101,7 +113,6 @@ export class LCreateCourseComponent {
 
     // Instructor Select
     instructor = new FormControl('');
-   
 
     // Tags Select
     tags = new FormControl('');
@@ -113,29 +124,20 @@ export class LCreateCourseComponent {
         'Angular',
     ];
 
-    constructor(
-        @Inject(PLATFORM_ID) private platformId: Object,
-        public themeService: CustomizerSettingsService,
-        private usersService: UsersService,
-        private toastr: ToastrService,
-         private route: ActivatedRoute,
-        private fb: FormBuilder,
-                private courseService: CourseService,
+ 
 
-    ) {}
-
-      initializeCourseForm() {
-            this.courseForm = this.fb.group({
-                service_name: ['', Validators.required],
-                description: [''],
-                price: ['', Validators.required],
-                start_date: ['', Validators.required],
-                end_date: ['', Validators.required],
-                category: ['', Validators.required],
-                status: ['', Validators.required],
-                // instructor: ['', Validators.required],
-            });
-        }
+    initializeCourseForm() {
+        this.courseForm = this.fb.group({
+            service_name: ['', Validators.required],
+            description: [''],
+            price: ['', Validators.required],
+            start_date: ['', Validators.required],
+            end_date: ['', Validators.required],
+            category: ['', Validators.required],
+            status: ['', Validators.required],
+            // instructor: ['', Validators.required],
+        });
+    }
 
     private getUserList(): void {
         let params = new HttpParams();
@@ -155,13 +157,9 @@ export class LCreateCourseComponent {
                 console.error('API error:', error);
             },
         });
-
-
-         
     }
 
-
-       loadCourse(id: any) {
+    loadCourse(id: any) {
         this.courseService.getCoursedById(id).subscribe({
             next: (response) => {
                 if (response.success) {
@@ -177,7 +175,6 @@ export class LCreateCourseComponent {
                         end_date: service.end_date,
                         category: service.category,
 
-
                         // assign_to: service.assign_to.id,
                     });
                 } else {
@@ -191,8 +188,7 @@ export class LCreateCourseComponent {
         });
     }
 
-
-      createCourse(): void {
+    createCourse(): void {
         Object.keys(this.courseForm.controls).forEach((key) => {
             console.log(key, this.courseForm.get(key)?.value);
         });
@@ -208,8 +204,6 @@ export class LCreateCourseComponent {
         Object.keys(this.courseForm.controls).forEach((key) => {
             formData.append(key, this.courseForm.get(key)?.value);
         });
-
-  
 
         if (this.editMode) {
             this.courseService.updateCourse(formData, this.courseId).subscribe({
