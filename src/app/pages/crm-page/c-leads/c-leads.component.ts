@@ -119,7 +119,7 @@ export class CLeadsComponent {
 
                     this.ELEMENT_DATA = leads.map((u: any) => ({
                         id: u.id,
-                        contact_id: u.contact_id || 'N/A',
+                        contact_id: u.unique_id || 'N/A',
 
                         customer_name: u.contact_name || 'N/A',
                         email: u.email || 'N/A',
@@ -127,7 +127,7 @@ export class CLeadsComponent {
 
                         lead_source: u.lead_source || 'N/A',
 
-                        courses: u.courses || '-',
+                        courses: u.courses.service_name || '-',
                         created_date: u.created_date || 'N/A',
 
                         assign_to: u.assign_to || 'N/A',

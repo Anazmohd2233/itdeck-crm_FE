@@ -190,11 +190,11 @@ export class CCreateContactComponent {
 
                     // ✅ Patch form values
                     this.contactForm.patchValue({
-                        contact_id: contact.contact_id,
+                        contact_id: contact.unique_id,
                         contact_name: contact.contact_name,
                         email: contact.email,
                         phone: contact.phone,
-                        courses: contact.courses,
+                        courses: contact.courses.id,
                         status: contact.status,
                         lead_source: contact.lead_source,
                     });

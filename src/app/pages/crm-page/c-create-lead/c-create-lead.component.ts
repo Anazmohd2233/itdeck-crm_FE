@@ -130,11 +130,11 @@ this.getCourseList();
 
                     // ✅ Patch form values
                     this.leadForm.patchValue({
-                        contact_id: contact.contact_id,
+                        contact_id: contact.unique_id,
                         customer_name: contact.contact_name,
                         email: contact.email,
                         phone: contact.phone,
-                        courses: contact.courses,
+                        courses: contact.courses.id,
                         status: contact.status,
                         lead_source: contact.lead_source,
                     });
@@ -157,11 +157,11 @@ this.getCourseList();
 
                     // ✅ Patch form values
                     this.leadForm.patchValue({
-                        contact_id: leads.contact_id,
+                        contact_id: leads.unique_id,
                         customer_name: leads.customer_name,
                         email: leads.email,
                         phone: leads.phone,
-                        courses: leads.courses,
+                        courses: leads.courses.id,
                         status: leads.status,
                         lead_source: leads.lead_source,
                         created_date: leads.created_date,

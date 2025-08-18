@@ -183,6 +183,9 @@ export class ProfileStudentComponent implements OnInit {
             emi_months: [''],
             start_date: ['', Validators.required],
         });
+
+         // Optional: reset emi_months if payment_type is FULL
+ 
     }
 
     private loadStudentData(): void {

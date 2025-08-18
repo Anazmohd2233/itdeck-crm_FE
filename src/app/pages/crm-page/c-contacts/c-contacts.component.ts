@@ -105,14 +105,14 @@ export class CContactsComponent {
 
                     this.ELEMENT_DATA = contacts.map((u: any) => ({
                         id: u.id,
-                        contactID: u.contact_id || 'N/A',
+                        contactID: u.unique_id || 'N/A',
 
                         name: u.contact_name || 'N/A',
                         email: u.email || 'N/A',
                         lead_source: u.lead_source || 'N/A',
 
                         phone: u.phone || '-',
-                        courses: u.courses || '-',
+                        courses: u.courses.service_name || '-',
                         status: u.status,
                         action: '', // we will handle icons directly in template
                     }));

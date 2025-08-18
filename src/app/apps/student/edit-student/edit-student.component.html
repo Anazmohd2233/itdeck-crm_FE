@@ -76,90 +76,50 @@
                         </mat-form-field>
                     </div>
                 </div>
-                <!-- <div class="col-md-4 col-sm-6">
-                    <div class="mb-25">
-                        <label class="main-label d-block lh-1 text-black">
-                            Last Contacted Date
-                        </label>
-                        <mat-form-field>
-                            <mat-label>
-                                Enter last contacted date
-                            </mat-label>
-                            <input matInput >
-                        </mat-form-field>
-                    </div>
-                </div> -->
-                <div class="col-md-4 col-sm-6">
+                 <div class="col-md-4 col-sm-6">
                     <div class="mb-25">
                         <label class="main-label d-block lh-1 text-black">
                             Courses
                         </label>
                         <mat-form-field>
                             <mat-label>
-                                Enter Course name
+                                Select Course name
                             </mat-label>
-                            <!-- <mat-form-field> -->
-                                <!-- <mat-label>
-                                    Select
-                                </mat-label> -->
-                                <mat-select formControlName="courses">
-                                    <mat-option value="option1">
-                                        Course 1
-                                    </mat-option>
-                                    <mat-option value="option2">
-                                        Course 2
-                                    </mat-option>
-                                    <mat-option value="option3">
-                                        Course 3
-                                    </mat-option>
-                                    <mat-option value="option4">
-                                        Course 4
-                                    </mat-option>
-                                    <mat-option value="option5">
-                                        Course 5
-                                    </mat-option>
-                                </mat-select>
+                          
+
+                       <mat-select formControlName="courses">
+                                <mat-option *ngFor="let course of courses" [value]="course.id">
+                                    {{ course.service_name }}
+                                </mat-option>
+                            </mat-select>
                             <!-- </mat-form-field> -->
                         </mat-form-field>
                     </div>
                 </div>
-                <!-- <div class="col-md-4 col-sm-6">
+                 <div class="col-md-4 col-sm-6">
                     <div class="mb-25">
                         <label class="main-label d-block lh-1 text-black">
-                            Duration
+                            Lead Status
                         </label>
                         <mat-form-field>
                             <mat-label>
-                                Enter lead score
-                            </mat-label>
-                            <input matInput value="50">
-                        </mat-form-field>
-                    </div>
-                </div> -->
-                <div class="col-md-4 col-sm-6">
-                    <div class="mb-25">
-                        <label class="main-label d-block lh-1 text-black">
-                            Student Status
-                        </label>
-                        <mat-form-field>
-                            <mat-label>
-                                Select contact status
+                                Select Lead status
                             </mat-label>
                             <mat-select formControlName="status">
-                                <mat-option value="option1">
-                                    Active
-                                </mat-option>
-                                <mat-option value="option2">
-                                    Deactive
-                                </mat-option>
+                                <mat-option [value]="LeadStatus.NEW">New</mat-option>
+                                <mat-option [value]="LeadStatus.WON">Won</mat-option>
+                                <mat-option [value]="LeadStatus.IN_PROGRESS">In Progress</mat-option>
+                                <mat-option [value]="LeadStatus.LOST">Lost</mat-option>
+                                <mat-option [value]="LeadStatus.OTHER">Other</mat-option>
                             </mat-select>
                         </mat-form-field>
+
                     </div>
                 </div>
 
 
 
-                 <div class="col-md-4 col-sm-6">
+                <div class="col-md-4 col-sm-6">
                     <div class="mb-25">
                         <label class="main-label d-block lh-1 text-black">
                             Lead Source
@@ -168,31 +128,41 @@
                             <mat-label>
                                 Select lead source
                             </mat-label>
-    <mat-select formControlName="lead_source">
-                                <mat-option value="option1">
-                                    Active
+                            <mat-select formControlName="lead_source">
+                                <mat-option value="website">
+                                    Website
                                 </mat-option>
-                                <mat-option value="option2">
-                                    Deactive
+                                <mat-option value="referrel">
+                                    Referral
+                                </mat-option>
+                                <mat-option value="cold_call">
+                                    Cold Call
+                                </mat-option>
+                                <mat-option value="email_campaign">
+                                    Email Campaign
+                                </mat-option>
+                                <mat-option value="online_store">
+                                    Online Store
                                 </mat-option>
                             </mat-select>
-                        </mat-form-field>                        
-                    </div>
-                </div>
-
-                 <div class="col-md-4 col-sm-6">
-                    <div class="mb-25">
-                        <label class="main-label d-block lh-1 text-black">
-                            Notes
-                        </label>
-                        <mat-form-field>
-                            <mat-label>
-                                Enter Notes
-                            </mat-label>
-                            <input matInput formControlName="notes">
                         </mat-form-field>
                     </div>
                 </div>
+
+                <div class="col-sm-6">
+  <div class="mb-25">
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>About Student</mat-label>
+      <textarea
+        matInput
+        id="description"
+        rows="5"
+        formControlName="description"
+        placeholder="Enter description">
+      </textarea>
+    </mat-form-field>
+  </div>
+</div>
 
 
                 <div class="col-md-12 col-sm-12">

@@ -15,6 +15,8 @@ import { NgxEditorModule, Editor, Toolbar } from 'ngx-editor';
 import { CustomizerSettingsService } from '../../../customizer-settings/customizer-settings.service';
 import { StudentService } from '../../../services/student.services';
 import { ToastrService } from 'ngx-toastr';
+import { CourseService } from '../../../services/course.service';
+import { LeadStatus } from '../../../services/enums';
 
 @Component({
   selector: 'app-edit-student',
@@ -47,6 +49,9 @@ export class EditStudentComponent implements OnInit {
   isLoading = false;
   studentId: number | null = null;
   editMode:boolean = false;
+  courses: any;
+        page: number = 1;
+    LeadStatus = LeadStatus; // <-- Make enum accessible in HTML
 
   // Options for dropdowns
   leadSources = ['Website', 'Social Media', 'Referral', 'Advertisement', 'Other'];
@@ -60,14 +65,16 @@ export class EditStudentComponent implements OnInit {
       private studentService: StudentService,
       private router: Router,
       private route: ActivatedRoute,
-      private toastr: ToastrService
+      private toastr: ToastrService,
+                              private courseService: CourseService,
+      
   ) {
-      this.initializeForm();
+     
   }
 
   ngOnInit(): void {
-      // Check if user is authenticated
-     
+      this.getCourseList();
+      
       if (isPlatformBrowser(this.platformId)) {
           this.editor = new Editor();
       }
@@ -86,6 +93,8 @@ export class EditStudentComponent implements OnInit {
                 this.loadStudentData();
             }
         });
+
+        this.initializeForm();
   }
 
   ngOnDestroy(): void {
@@ -97,12 +106,12 @@ export class EditStudentComponent implements OnInit {
   private initializeForm(): void {
       this.studentForm = this.formBuilder.group({
           student_name: ['', [Validators.required, Validators.minLength(2)]],
-          email: ['', [Validators.required, Validators.email]],
-          phone: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
+          email: ['', [Validators.required]],
+          phone: ['', [Validators.required,]],
           lead_source: ['', Validators.required],
           courses: ['', Validators.required],
           status: ['', Validators.required],
-          notes: ['']
+          description: ['']
       });
   }
 
@@ -116,15 +125,15 @@ export class EditStudentComponent implements OnInit {
                   const student = response.customer;
                   
                   // Populate form with student data
-                //   this.studentForm.patchValue({
-                //       student_name: student.customer_name || '',
-                //       email: student.email || '',
-                //       phone: student.phone || '',
-                //       lead_source: student.lead_source || '',
-                //       courses: student.courses || '',
-                //       status: student.status || '',
-                //       notes: student.notes || ''
-                //   });
+                  this.studentForm.patchValue({
+                      student_name: student.customer_name || '',
+                      email: student.email || '',
+                      phone: student.phone || '',
+                      lead_source: student.lead_source || '',
+                      courses: student.courses.id || '',
+                      status: student.status || '',
+                      description: student.description || ''
+                  });
 
                   // Set editor content
                   this.editorContent = student.notes || '';
@@ -162,14 +171,14 @@ export class EditStudentComponent implements OnInit {
               lead_source: this.studentForm.value.lead_source,
               courses: this.studentForm.value.courses,
               status: this.studentForm.value.status,
-              notes: this.editorContent
+              description: this.studentForm.value.description,
           };
 
           this.studentService.updateStudent(formData, this.studentId).subscribe({
               next: (response) => {
                   if (response && response.success) {
                       this.toastr.success('Student updated successfully', 'Success');
-                      this.router.navigate(['/students']);
+                    
                   } else {
                       this.toastr.error('Failed to update student', 'Error');
                   }
@@ -204,11 +213,27 @@ export class EditStudentComponent implements OnInit {
       });
   }
 
-  // Getter methods for easy access to form controls in template
-  get student_name() { return this.studentForm.get('student_name'); }
-  get email() { return this.studentForm.get('email'); }
-  get phone() { return this.studentForm.get('phone'); }
-  get lead_source() { return this.studentForm.get('lead_source'); }
-  get courses() { return this.studentForm.get('courses'); }
-  get status() { return this.studentForm.get('status'); }
+
+
+
+
+        private getCourseList(): void {
+        // let params = new HttpParams();
+
+        // params = params.set('user_type', 'USER');
+
+        this.courseService.getCourse(this.page).subscribe({
+            next: (response) => {
+                if (response && response.success) {
+                    this.courses = response.data?.services || [];
+                } else {
+                    // this.toastr.error('Failed to load users', 'Failed');
+                    console.error('Failed to load courses:', response?.message);
+                }
+            },
+            error: (error) => {
+                console.error('API error:', error);
+            },
+        });
+    }
 }
