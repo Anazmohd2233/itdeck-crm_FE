@@ -96,13 +96,6 @@ export class HdCreateTicketComponent {
   }
 
   ngOnInit(): void {
-      // Check if user is authenticated
-      if (!this.taskService.isTokenValid()) {
-          console.error('No valid authentication token found');
-          this.router.navigate(['/authentication']);
-          return;
-      }
-
       if (isPlatformBrowser(this.platformId)) {
           // Initialize the editor only in the browser
           this.editor = new Editor();
@@ -131,25 +124,39 @@ export class HdCreateTicketComponent {
   }
 
   onSubmit(): void {
-      // Check authentication before submitting
-      if (!this.taskService.isTokenValid()) {
-          console.error('Authentication token expired or missing');
-          this.router.navigate(['/authentication']);
-          return;
-      }
-
       if (this.taskForm.valid && !this.isSubmitting) {
           this.isSubmitting = true;
           
-          const formData = {
-              task_title: this.taskForm.value.task_title,
-              task_type: this.taskForm.value.task_type,
-              contact_id: parseInt(this.taskForm.value.contact_id),
-              priority: this.taskForm.value.priority,
-              assigned_to: parseInt(this.taskForm.value.assigned_to),
-              due_date: this.taskForm.value.due_date,
-              note: this.editorContent
-          };
+          // Format date for MySQL database (YYYY-MM-DD format)
+          const dueDate = new Date(this.taskForm.value.due_date);
+          const formattedDate = dueDate.toISOString().split('T')[0]; // Gets YYYY-MM-DD format
+
+          // Create FormData for file uploads
+          const formData = new FormData();
+          formData.append('task_title', this.taskForm.value.task_title);
+          formData.append('task_type', this.taskForm.value.task_type);
+          formData.append('contact_id', this.taskForm.value.contact_id);
+          formData.append('priority', this.taskForm.value.priority);
+          if (this.taskForm.value.assigned_to) {
+              formData.append('assigned_to', this.taskForm.value.assigned_to);
+          }
+          formData.append('due_date', formattedDate);
+          formData.append('note', this.editorContent || '');
+
+          // Handle file uploads
+          const taskImage = this.taskForm.value.taskImage;
+          if (taskImage && taskImage.length > 0) {
+              for (let i = 0; i < taskImage.length; i++) {
+                  formData.append('taskImage', taskImage[i]);
+              }
+          }
+
+          const attachedFiles = this.taskForm.value.attachedFiles;
+          if (attachedFiles && attachedFiles.length > 0) {
+              for (let i = 0; i < attachedFiles.length; i++) {
+                  formData.append('attachedFiles', attachedFiles[i]);
+              }
+          }
 
           this.taskService.createTask(formData).subscribe({
               next: (response) => {

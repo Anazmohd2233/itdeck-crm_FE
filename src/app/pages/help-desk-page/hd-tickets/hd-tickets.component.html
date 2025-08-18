@@ -257,7 +257,12 @@
                                         {{element.action.view}}
                                     </i>
                                 </button>
-                                <button type="button" mat-button (click)="deleteTask(element.ticketID)" matTooltip="Delete Task" matTooltipPosition="above">
+                                <button type="button" mat-button (click)="editTask(element.ticketID)" matTooltip="Edit Task" matTooltipPosition="above">
+                                    <i class="material-symbols-outlined">
+                                        edit
+                                    </i>
+                                </button>
+                                <button type="button" mat-button  matTooltip="Delete Task" matTooltipPosition="above">
                                     <i class="material-symbols-outlined">
                                         {{element.action.delete}}
                                     </i>

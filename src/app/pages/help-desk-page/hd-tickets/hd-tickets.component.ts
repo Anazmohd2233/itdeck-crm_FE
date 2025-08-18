@@ -56,17 +56,19 @@ export class HdTicketsComponent implements OnInit {
 
     loadTasks(): void {
         this.isLoading = true;
-        // For now, using mock data - will integrate API later
         this.taskService.getTasks(1).subscribe({
             next: (response: any) => {
                 // Map API response to TaskElement format
-                const tasks = response.data ? response.data.map((task: any) => this.mapApiTaskToElement(task)) : [];
+                const tasks = response.data?.tasks?.map((task: any) => this.mapApiTaskToElement(task)) || [];
                 this.dataSource.data = tasks;
                 this.dataSource.filterPredicate = this.customFilterPredicate();
                 this.isLoading = false;
             },
             error: (error) => {
                 console.error('Error loading tasks:', error);
+                console.error('Error details:', error.error);
+                console.error('Error status:', error.status);
+                console.error('Error URL:', error.url);
                 this.isLoading = false;
                 // Fallback to mock data for now
                 this.dataSource.data = ELEMENT_DATA;
@@ -76,19 +78,22 @@ export class HdTicketsComponent implements OnInit {
     }
 
     private mapApiTaskToElement(task: any): TaskElement {
+        // Use placeholder image service for missing images
+        const defaultAvatar = 'https://via.placeholder.com/40x40/007bff/ffffff?text=U';
+        
         return {
             ticketID: `#${task.id || 'N/A'}`,
             subject: task.task_title || 'No Title',
             contact: {
-                img: task.contact?.avatar || 'images/users/default.jpg',
-                name: task.contact?.name || 'Unknown Contact'
+                img: task.contact?.avatar || defaultAvatar,
+                name: task.contact?.name || `Contact #${task.contact_id || 'N/A'}`
             },
             createdDate: task.created_at ? new Date(task.created_at).toLocaleDateString() : 'N/A',
             dueDate: task.due_date ? new Date(task.due_date).toLocaleDateString() : 'N/A',
             requester: task.created_by?.name || 'System',
             priority: task.priority || 'Medium',
             assignedAgents: {
-                img1: task.assigned_user?.avatar || 'images/users/default.jpg'
+                img1: task.assigned_user?.avatar || defaultAvatar
             },
             status: this.mapTaskStatus(task.status),
             action: {
@@ -176,40 +181,23 @@ export class HdTicketsComponent implements OnInit {
         this.dataSource.filter = filterValue.trim().toLowerCase();
     }
 
-    viewTask(taskId: string) {
-        // Extract numeric ID from ticket ID (remove # prefix)
-        const numericTaskId = parseInt(taskId.replace('#', ''));
-        const params = new HttpParams()
-            .set('search', taskId)
-            .set('status', 'all');
-        
-        this.taskService.getTaskById(numericTaskId, params).subscribe({
-            next: (response: any) => {
-                console.log('Task details:', response);
-                // Navigate to task details page or show modal
-                this.router.navigate(['/task/view', numericTaskId]);
-            },
-            error: (error) => {
-                console.error('Error loading task details:', error);
-            }
-        });
+    viewTask(ticketId: string): void {
+        // Extract numeric ID from ticketId (remove # prefix)
+        const taskId = ticketId.replace('#', '');
+        console.log('Viewing task:', taskId);
+        // Navigate to task details page
+        this.router.navigate(['/task/ticket-details', taskId]);
     }
 
-    deleteTask(taskId: string) {
-        const numericTaskId = parseInt(taskId.replace('#', ''));
-        if (confirm('Are you sure you want to delete this task?')) {
-            this.taskService.deleteTask(numericTaskId).subscribe({
-                next: () => {
-                    console.log('Task deleted successfully');
-                    // Reload tasks after deletion
-                    this.loadTasks();
-                },
-                error: (error) => {
-                    console.error('Error deleting task:', error);
-                }
-            });
-        }
+    editTask(ticketId: string): void {
+        // Extract numeric ID from ticketId (remove # prefix)
+        const taskId = ticketId.replace('#', '');
+        console.log('Editing task:', taskId);
+        // Navigate to task edit page
+        this.router.navigate(['/task/edit-ticket', taskId]);
     }
+
+
 }
 
 const ELEMENT_DATA: TaskElement[] = [
