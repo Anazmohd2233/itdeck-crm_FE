@@ -12,6 +12,13 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { CustomizerSettingsService } from '../../../customizer-settings/customizer-settings.service';
 import { ContactService } from '../../../services/contact.service';
 import { ToastrService } from 'ngx-toastr';
+import { HttpParams } from '@angular/common/http';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @Component({
     selector: 'app-c-contacts',
@@ -25,6 +32,23 @@ import { ToastrService } from 'ngx-toastr';
         NgIf,
         MatCheckboxModule,
         MatTooltipModule,
+        MatFormFieldModule,
+        MatSelectModule,
+
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+
+        MatCardModule,
+        MatMenuModule,
+        MatButtonModule,
+        MatTableModule,
+        MatPaginatorModule,
+        NgIf,
+        MatTooltipModule,
+        MatProgressBarModule,
     ],
     templateUrl: './c-contacts.component.html',
     styleUrl: './c-contacts.component.scss',
@@ -33,6 +57,8 @@ export class CContactsComponent {
     ELEMENT_DATA: PeriodicElement[] = [];
 
     page: number = 1;
+    pageSize: number = 10;
+    totalRecords: number = 0;
     contacts: any;
 
     displayedColumns: string[] = [
@@ -53,9 +79,14 @@ export class CContactsComponent {
     @ViewChild(MatPaginator) paginator!: MatPaginator;
 
     ngAfterViewInit() {
-        this.dataSource.paginator = this.paginator;
+        // listen to paginator changes
+        console.log('**********page changed**********')
+        this.paginator.page.subscribe((event) => {
+            this.page = event.pageIndex + 1; // MatPaginator is 0-based, API is 1-based
+            this.pageSize = event.pageSize;
+            this.getContactList();
+        });
     }
-
     /** Whether the number of selected elements matches the total number of rows. */
     isAllSelected() {
         const numSelected = this.selection.selected.length;
@@ -72,6 +103,44 @@ export class CContactsComponent {
         this.selection.select(...this.dataSource.data);
     }
 
+    filterCreatedDate(event: any) {
+        // this.createdDateFilter = event.value;
+        this.applyAllFilters();
+    }
+
+    filterDueDate(event: any) {
+        // this.dueDateFilter = event.value;
+        this.applyAllFilters();
+    }
+
+    filterPriority(event: any) {
+        // this.priorityFilter = event.value;
+        this.applyAllFilters();
+    }
+
+    applyAllFilters() {
+        this.dataSource.filter = '' + Math.random(); // Trigger table refresh
+    }
+
+    filterStatus(event: any) {
+        // this.statusFilter = event.value;
+        this.applyAllFilters();
+    }
+
+    resetFilters() {
+        // this.createdDateFilter = null;
+        // this.dueDateFilter = null;
+        // this.priorityFilter = '';
+        // this.statusFilter = '';
+        this.applyAllFilters();
+    }
+
+    // applyFilter(event: Event) {
+    //     const filterValue = (event.target as HTMLInputElement).value;
+    //     console.log('filterValue => ???? ',filterValue.trim().toLowerCase())
+    //     this.dataSource.filter = filterValue.trim().toLowerCase();
+    // }
+
     /** The label for the checkbox on the passed row */
     checkboxLabel(row?: PeriodicElement): string {
         if (!row) {
@@ -85,7 +154,10 @@ export class CContactsComponent {
     // Search Filter
     applyFilter(event: Event) {
         const filterValue = (event.target as HTMLInputElement).value;
-        this.dataSource.filter = filterValue.trim().toLowerCase();
+        // this.dataSource.filter = filterValue.trim().toLowerCase();
+
+        let params = new HttpParams().set('search', filterValue);
+        this.getContactList(params);
     }
 
     constructor(
@@ -98,11 +170,12 @@ export class CContactsComponent {
         this.getContactList();
     }
 
-    private getContactList(): void {
-        this.contactService.getContact(this.page).subscribe({
+    private getContactList(params?: any): void {
+        this.contactService.getContact(this.page, params).subscribe({
             next: (response) => {
                 if (response && response.success) {
                     const contacts = response.data?.contacts || [];
+                     this.totalRecords = response.data?.total || contacts.length; 
 
                     this.ELEMENT_DATA = contacts.map((u: any) => ({
                         id: u.id,
@@ -113,7 +186,8 @@ export class CContactsComponent {
                         lead_source: u.lead_source || 'N/A',
                         lead_status: u.lead_status || 'OTHER',
                         phone: u.phone || '-',
-                        courses: u.courses.service_name || '-',
+                        courses: u?.courses,
+
                         status: u.status,
                         action: '', // we will handle icons directly in template
                     }));

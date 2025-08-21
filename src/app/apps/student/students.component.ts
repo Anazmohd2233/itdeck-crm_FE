@@ -17,6 +17,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ToastrService } from 'ngx-toastr';
 import { StudentService } from '../../services/student.services';
+import { environment } from '../../../environments/environment';
 
 @Component({
     selector: 'app-students',
@@ -40,6 +41,12 @@ import { StudentService } from '../../services/student.services';
 })
 export class StudentsComponent {
     ELEMENT_DATA: PeriodicElement[] = [];
+
+    
+    
+      link: string = `${environment.baseBaseUrl}/student-registration`;
+
+
 
     page: number = 1;
     students: any;
@@ -109,8 +116,8 @@ export class StudentsComponent {
     toggleClass() {
         this.classApplied = !this.classApplied;
     }
+    
 
-    link: string = 'https://iprulers-crm.vercel.app/student-registration';
 
     copyToClipboard(input: HTMLInputElement) {
         input.select();

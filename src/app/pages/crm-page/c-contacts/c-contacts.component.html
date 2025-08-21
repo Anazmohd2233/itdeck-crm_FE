@@ -33,12 +33,55 @@
                     placeholder="Search contact..." (keyup)="applyFilter($event)" #input>
             </form>
         </mat-card-title>
-        <mat-card-subtitle>
-            <a mat-button class="add-new-btn" routerLink="/crm-page/create-contact">
-                + Add New Contact
-            </a>
-        </mat-card-subtitle>
+        <mat-card-subtitle class="d-flex align-items-center justify-content-between filter-container gap-2">
+
+  <!-- <mat-form-field appearance="fill" class="small-form-field m-0">
+    <mat-label>Priority</mat-label>
+    <mat-select>
+      <mat-option value="">All</mat-option>
+      <mat-option value="High">High</mat-option>
+      <mat-option value="Medium">Medium</mat-option>
+      <mat-option value="Low">Low</mat-option>
+    </mat-select>
+  </mat-form-field> -->
+
+  <a mat-button class="add-new-btn m-0" routerLink="/crm-page/create-contact">
+    + Add Contact
+  </a>
+
+</mat-card-subtitle>
+
     </mat-card-header>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <mat-card-content>
         <div class="contacts-list-table">
             <div class="table-responsive">
@@ -112,7 +155,7 @@
                             Course
                         </th>
                         <td mat-cell *matCellDef="let element">
-                            {{element.courses}}
+                            {{element.courses?.service_name}}
                         </td>
                     </ng-container>
 
@@ -144,7 +187,7 @@
                     </ng-container>
 
 
-                           <!-- Status Column -->
+                    <!-- Status Column -->
                     <ng-container matColumnDef="lead_status">
                         <th mat-header-cell *matHeaderCellDef>
                             Lead Status
@@ -153,7 +196,7 @@
                             <span class="daxa-badge new d-inline-block" *ngIf="element.lead_status === 'NEW'">
                                 New
                             </span>
-                              <span class="daxa-badge new d-inline-block" *ngIf="element.lead_status === 'NOT_CREATED'">
+                            <span class="daxa-badge new d-inline-block" *ngIf="element.lead_status === 'NOT_CREATED'">
                                 NOT CREATED
                             </span>
                             <span class="daxa-badge in-progress d-inline-block"
@@ -195,7 +238,7 @@
                                     </i>
                                 </a>
 
-                                
+
 
                                 <a mat-button [routerLink]="'/crm-page/create-lead'"
                                     [queryParams]="{ contact_id: element.id }" matTooltip="Create Lead"
@@ -223,7 +266,21 @@
 
                 </table>
             </div>
-            <mat-paginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons></mat-paginator>
+            <!-- <mat-paginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons></mat-paginator> -->
+             <mat-paginator
+  [length]="totalRecords"
+  [pageSize]="20"
+  showFirstLastButtons>
+</mat-paginator>
+
+
+            <!-- <mat-paginator
+  [length]="totalRecords"
+  [pageSize]="10"
+  [pageSizeOptions]="[10, 20, 30]"
+  showFirstLastButtons>
+</mat-paginator> -->
+
         </div>
     </mat-card-content>
 </mat-card>

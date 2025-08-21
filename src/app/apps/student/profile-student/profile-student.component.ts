@@ -4,6 +4,7 @@ import {
     Inject,
     OnInit,
     PLATFORM_ID,
+    TemplateRef,
     ViewChild,
 } from '@angular/core';
 import {
@@ -40,6 +41,17 @@ import { CourseService } from '../../../services/course.service';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatIconModule } from '@angular/material/icon';
+import {
+    MAT_DIALOG_DATA,
+    MatDialog,
+    MatDialogActions,
+    MatDialogClose,
+    MatDialogContent,
+    MatDialogModule,
+    MatDialogRef,
+    MatDialogTitle,
+} from '@angular/material/dialog';
 
 @Component({
     selector: 'app-profile02-student',
@@ -62,11 +74,12 @@ import { MatTooltipModule } from '@angular/material/tooltip';
         RouterOutlet,
         AllProjectsComponent,
         RecentActivityComponent,
-
+        MatIconModule,
         MatTableModule,
         MatPaginatorModule,
         NgIf,
         MatTooltipModule,
+         MatDialogModule,
     ],
 
     templateUrl: './profile-student.component.html',
@@ -100,6 +113,11 @@ export class ProfileStudentComponent implements OnInit {
     page: number = 1;
     student: any;
     ELEMENT_DATA: PeriodicElement[] = [];
+    isModalOpen: boolean = false;
+        dialogRef!: MatDialogRef<any>; // store reference
+
+
+    animal: string = '';
 
     displayedColumns: string[] = [
         'course_name',
@@ -110,6 +128,7 @@ export class ProfileStudentComponent implements OnInit {
         // 'action',
     ];
     dataSource = new MatTableDataSource<PeriodicElement>(this.ELEMENT_DATA);
+    @ViewChild('taskDialog') taskDialog!: TemplateRef<any>;
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -143,10 +162,9 @@ export class ProfileStudentComponent implements OnInit {
         private route: ActivatedRoute,
         private toastr: ToastrService,
         private paymentsService: PaymentsService,
-        private courseService: CourseService
-    ) {
-        this.initializeForm();
-    }
+        private courseService: CourseService,
+        public dialog: MatDialog
+    ) {}
 
     ngOnInit(): void {
         // Check if user is authenticated
@@ -168,6 +186,7 @@ export class ProfileStudentComponent implements OnInit {
                 this.loadStudentData();
             }
         });
+        this.initializeForm();
     }
 
     ngOnDestroy(): void {
@@ -184,8 +203,7 @@ export class ProfileStudentComponent implements OnInit {
             start_date: ['', Validators.required],
         });
 
-         // Optional: reset emi_months if payment_type is FULL
- 
+        // Optional: reset emi_months if payment_type is FULL
     }
 
     private loadStudentData(): void {
@@ -198,12 +216,8 @@ export class ProfileStudentComponent implements OnInit {
                     const studentData = response.customer;
                     this.student = response.customer;
 
-
                     this.editorContent = studentData.notes || '';
                     this.isLoading = false;
-
-
-                     const contacts = response.data?.contacts || [];
 
                     this.ELEMENT_DATA = studentData.payments.map((u: any) => ({
                         id: u.id,
@@ -214,11 +228,9 @@ export class ProfileStudentComponent implements OnInit {
                         due_date: u.due_date || 'N/A',
 
                         is_paid: u.is_paid,
-                       
-                        // action: '', 
-                    }));
 
-                  
+                        action: '',
+                    }));
 
                     this.dataSource.data = this.ELEMENT_DATA;
                 } else {
@@ -265,6 +277,7 @@ export class ProfileStudentComponent implements OnInit {
         this.paymentsService.createPayment(formData).subscribe({
             next: (response) => {
                 if (response.success) {
+                    this.loadStudentData();
                     this.isSubmitting = false;
                     this.paymentForm.reset();
                     this.toastr.success(
@@ -310,6 +323,13 @@ export class ProfileStudentComponent implements OnInit {
             },
         });
     }
+
+        openDialog() {
+        this.dialogRef = this.dialog.open(this.taskDialog, {
+            width: '85%',
+            maxWidth: '100vw', // prevents overflow
+        });
+    }
 }
 
 export interface PeriodicElement {
@@ -318,5 +338,5 @@ export interface PeriodicElement {
     installment_amount: any;
     due_date: any;
     is_paid: any;
-    // action: any;
+    action: any;
 }

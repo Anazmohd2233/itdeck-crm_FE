@@ -31,8 +31,15 @@
                 <input type="text" class="input-search d-block w-100 border-none outline-0"
                     placeholder="Search student..." (keyup)="applyFilter($event)" #input>
             </form>
+
         </mat-card-title>
         <mat-card-subtitle>
+            <button class="me-25" type="button" mat-button matTooltip="Copy Link" matTooltipPosition="above"
+                class="link-share-btn" (click)="toggleClass()">
+                <i class="material-symbols-outlined">
+                    link
+                </i>
+            </button>
             <button type="button" mat-button class="card-header-menu-btn" [matMenuTriggerFor]="cardHeaderMenu">
                 All
             </button>
@@ -74,7 +81,7 @@
                     <!-- Contact ID Column -->
                     <ng-container matColumnDef="studentID">
                         <th mat-header-cell *matHeaderCellDef>
-                       School Name
+                            School Name
                         </th>
                         <td mat-cell *matCellDef="let element">
                             {{element.studentID}}
@@ -88,7 +95,7 @@
                         </th>
                         <td mat-cell *matCellDef="let element" class="text-black">
                             <div class="info d-flex align-items-center" routerLink="/profile"
-                             [queryParams]="{ student_id: element.id }" style="cursor: pointer;">
+                                [queryParams]="{ student_id: element.id }" style="cursor: pointer;">
 
                                 <span class="d-block fw-medium">
                                     {{element.name}}
@@ -117,7 +124,7 @@
                         </td>
                     </ng-container>
 
-             
+
 
                     <!-- Company Column -->
                     <ng-container matColumnDef="courses">
@@ -141,7 +148,7 @@
 
                     <ng-container matColumnDef="createdDate">
                         <th mat-header-cell *matHeaderCellDef>
-                           Created Date
+                            Created Date
                         </th>
                         <td mat-cell *matCellDef="let element">
                             {{element.createdDate}}
@@ -153,7 +160,7 @@
                         <th mat-header-cell *matHeaderCellDef>
                             Status
                         </th>
-   <td mat-cell *matCellDef="let element">
+                        <td mat-cell *matCellDef="let element">
                             <span class="daxa-badge new d-inline-block" *ngIf="element.status === 'NEW'">
                                 New
                             </span>
@@ -170,7 +177,7 @@
                             <span class="daxa-badge other d-inline-block" *ngIf="element.status === 'OTHER'">
                                 Other
                             </span>
-                        </td>                     <!-- <td mat-cell *matCellDef="let element">
+                        </td> <!-- <td mat-cell *matCellDef="let element">
                             <span class="daxa-badge active d-inline-block" *ngIf="element.status.active">
                                 {{element.status.active}}
                             </span>
@@ -187,15 +194,14 @@
                         </th>
                         <td mat-cell *matCellDef="let element">
                             <div class="action-info">
-                                 <a mat-button [routerLink]="'/edit-student'"
-                                    [queryParams]="{ student_id: element.id }" matTooltip="Edit Lead"
-                                    matTooltipPosition="above">
+                                <a mat-button [routerLink]="'/edit-student'" [queryParams]="{ student_id: element.id }"
+                                    matTooltip="Edit Lead" matTooltipPosition="above">
                                     <i class="material-symbols-outlined">
                                         edit
                                     </i>
                                 </a>
 
-                                
+
                                 <!-- <button type="button" mat-button matTooltip="Copy Link" matTooltipPosition="above"
                                     class="link-share-btn" (click)="toggleClass()">
                                     <i class="material-symbols-outlined">
@@ -234,7 +240,7 @@
             <mat-card-header>
                 <mat-card-title>
                     <h5 class="mb-0">
-                        Are you sure?
+                        Copy Link
                     </h5>
                 </mat-card-title>
                 <mat-card-subtitle>
@@ -248,7 +254,7 @@
                     <div class="col-md-12 col-sm-12">
                         <div class="mb-25">
                             <div class="d-block">
-                                <span>Do you want to send the student details form link to the student via email?</span>
+                                <span>Do you want to send the student details form </span>
                                 <!-- <div class="copy-link-container">
                                     <mat-form-field appearance="outline" class="copy-link-input">
                                       <input matInput [value]="link" readonly #linkInput />
@@ -258,7 +264,7 @@
                                       <mat-icon>content_copy</mat-icon> Copy Link
                                     </button>
                                 </div> -->
-                                <mat-form-field appearance="outline" class="copy-link-field">
+                                <mat-form-field appearance="outline" class="copy-link-field mt-25">
                                     <input matInput [value]="link" readonly #linkInput />
 
                                     <button mat-icon-button matSuffix (click)="copyToClipboard(linkInput)"
@@ -275,9 +281,9 @@
                     <button mat-button (click)="toggleClass()">
                         Cancel
                     </button>
-                    <button mat-button>
+                    <!-- <button mat-button>
                         Send
-                    </button>
+                    </button> -->
                 </div>
             </mat-card-content>
         </mat-card>

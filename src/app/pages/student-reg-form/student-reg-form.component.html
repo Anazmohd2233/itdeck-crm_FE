@@ -19,170 +19,311 @@
     </ol>
 </div>
 
-<!-- Edit Contact -->
+
+
 <mat-card class="daxa-card edit-contact-card reg-form-container mb-25 border-radius bg-white border-none d-block px-4">
-    <mat-card-content>
-        <form>
-            <div class="row">
-                <div class="col-md-4 col-sm-6">
-                    <div class="mb-25">
-                        <label class="main-label d-block lh-1 text-black">
-                            Student ID
-                        </label>
-                        <mat-form-field>
-                            <mat-label>
-                                Enter student id
-                            </mat-label>
-                            <input matInput value="#ARP-1217">
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="mb-25">
-                        <label class="main-label d-block lh-1 text-black">
-                            Student Name
-                        </label>
-                        <mat-form-field>
-                            <mat-label>
-                                Enter student name
-                            </mat-label>
-                            <input matInput value="Marcia Baker">
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="mb-25">
-                        <label class="main-label d-block lh-1 text-black">
-                            Email Address
-                        </label>
-                        <mat-form-field>
-                            <mat-label>
-                                Enter email address
-                            </mat-label>
-                            <input matInput value="marcia@example.com">
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="mb-25">
-                        <label class="main-label d-block lh-1 text-black">
-                            Phone Number
-                        </label>
-                        <mat-form-field>
-                            <mat-label>
-                                Enter phone number
-                            </mat-label>
-                            <input matInput value="+1 555-123-4567">
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="mb-25">
-                        <label class="main-label d-block lh-1 text-black">
-                            Last Contacted Date
-                        </label>
-                        <mat-form-field>
-                            <mat-label>
-                                Enter last contacted date
-                            </mat-label>
-                            <input matInput value="Nov 10, 2024">
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="mb-25">
-                        <label class="main-label d-block lh-1 text-black">
-                            Courses
-                        </label>
-                        <mat-form-field>
-                            <mat-label>
-                                Enter Course name
-                            </mat-label>
-                            <!-- <mat-form-field> -->
-                                <!-- <mat-label>
-                                    Select
-                                </mat-label> -->
-                                <mat-select multiple [(value)]="option">
-                                    <mat-option value="option1">
-                                        Course 1
-                                    </mat-option>
-                                    <mat-option value="option2">
-                                        Course 2
-                                    </mat-option>
-                                    <mat-option value="option3">
-                                        Course 3
-                                    </mat-option>
-                                    <mat-option value="option4">
-                                        Course 4
-                                    </mat-option>
-                                    <mat-option value="option5">
-                                        Course 5
-                                    </mat-option>
-                                </mat-select>
-                            <!-- </mat-form-field> -->
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="mb-25">
-                        <label class="main-label d-block lh-1 text-black">
-                            Duration
-                        </label>
-                        <mat-form-field>
-                            <mat-label>
-                                Enter lead score
-                            </mat-label>
-                            <input matInput value="50">
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="mb-25">
-                        <label class="main-label d-block lh-1 text-black">
-                            Student Status
-                        </label>
-                        <mat-form-field>
-                            <mat-label>
-                                Select contact status
-                            </mat-label>
-                            <mat-select [(value)]="contactStatusSelected">
-                                <mat-option value="option1">
-                                    Active
-                                </mat-option>
-                                <mat-option value="option2">
-                                    Deactive
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="col-md-12 col-sm-12">
-                    <div class="mb-25">
-                        <label class="main-label d-block lh-1 text-black">
-                            Student Image
-                        </label>
-                        <file-upload class="file-uploader" [multiple]="multiple"></file-upload>
-                    </div>
-                </div>
-                <div class="col-md-12 col-sm-12">
-                    <div class="mb-25">
-                        <label class="main-label d-block lh-1 text-black">
-                            About
-                        </label>
-                        <div class="NgxEditor__Wrapper">
-                            <ng-container *ngIf="editor">
-                                <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"></ngx-editor-menu>
-                                <ngx-editor [editor]="editor"></ngx-editor>
-                            </ng-container>
-                        </div>
-                    </div> 
-                </div>
+  <mat-card-content>
+    <form [formGroup]="studentForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+
+        <!-- First Name -->
+        <div class="col-md-3 col-sm-6">
+          <div class="mb-25">
+            <label class="main-label d-block lh-1 text-black">First Name *</label>
+            <mat-form-field>
+              <mat-label>Enter first name</mat-label>
+              <input matInput formControlName="firstName" />
+            </mat-form-field>
+            <div *ngIf="studentForm.get('firstName')?.touched && studentForm.get('firstName')?.invalid" class="text-danger">
+              First Name is required
             </div>
-            <div class="btn-box">
-                <button mat-button>
-                    Save Changes
-                </button>
+          </div>
+        </div>
+
+        <!-- Last Name -->
+        <div class="col-md-3 col-sm-6">
+          <div class="mb-25">
+            <label class="main-label d-block lh-1 text-black">Last Name *</label>
+            <mat-form-field>
+              <mat-label>Enter last name</mat-label>
+              <input matInput formControlName="lastName" />
+            </mat-form-field>
+            <div *ngIf="studentForm.get('lastName')?.touched && studentForm.get('lastName')?.invalid" class="text-danger">
+              Last Name is required
             </div>
-        </form>
-    </mat-card-content>
+          </div>
+        </div>
+
+        <!-- Contact Number -->
+        <div class="col-md-3 col-sm-6">
+          <div class="mb-25">
+            <label class="main-label d-block lh-1 text-black">Contact Number *</label>
+            <mat-form-field>
+              <mat-label>Enter mobile number</mat-label>
+              <input matInput formControlName="phone" />
+            </mat-form-field>
+            <div *ngIf="studentForm.get('phone')?.touched && studentForm.get('phone')?.invalid" class="text-danger">
+              Contact Number is required
+            </div>
+          </div>
+        </div>
+
+        <!-- Whatsapp Number -->
+        <div class="col-md-3 col-sm-6">
+          <div class="mb-25">
+            <label class="main-label d-block lh-1 text-black">Whatsapp Number *</label>
+            <mat-form-field>
+              <mat-label>Enter whatsapp number</mat-label>
+              <input matInput formControlName="whatsappNumber" />
+            </mat-form-field>
+            <div *ngIf="studentForm.get('whatsappNumber')?.touched && studentForm.get('whatsappNumber')?.invalid" class="text-danger">
+              Whatsapp Number is required
+            </div>
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="col-md-3 col-sm-6">
+          <div class="mb-25">
+            <label class="main-label d-block lh-1 text-black">Email *</label>
+            <mat-form-field>
+              <mat-label>Enter email</mat-label>
+              <input matInput formControlName="email" />
+            </mat-form-field>
+            <div *ngIf="studentForm.get('email')?.touched && studentForm.get('email')?.errors?.['required']" class="text-danger">
+              Email is required
+            </div>
+            <div *ngIf="studentForm.get('email')?.touched && studentForm.get('email')?.errors?.['email']" class="text-danger">
+              Enter a valid email
+            </div>
+          </div>
+        </div>
+
+        <!-- Gender -->
+        <div class="col-md-3 col-sm-6">
+          <div class="mb-25">
+            <label class="main-label d-block lh-1 text-black">Gender *</label>
+            <mat-form-field>
+              <mat-label>Select gender</mat-label>
+              <mat-select formControlName="gender">
+                <mat-option value="male">Male</mat-option>
+                <mat-option value="female">Female</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div *ngIf="studentForm.get('gender')?.touched && studentForm.get('gender')?.invalid" class="text-danger">
+              Gender is required
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Marital Status (no validation message) -->
+<div class="col-md-3 col-sm-6">
+  <div class="mb-25">
+    <label class="main-label d-block lh-1 text-black">Marital Status</label>
+    <mat-form-field>
+      <mat-label>Select marital status</mat-label>
+      <mat-select formControlName="maritalStatus">
+        <mat-option value="single">Single</mat-option>
+        <mat-option value="married">Married</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>
+
+        <!-- DOB -->
+        <div class="col-md-3 col-sm-6">
+          <div class="mb-25">
+            <label class="main-label d-block lh-1 text-black">DOB *</label>
+            <mat-form-field>
+              <mat-label>Select date of birth</mat-label>
+              <input matInput [matDatepicker]="dobPicker" formControlName="dob" />
+              <mat-datepicker-toggle matSuffix [for]="dobPicker"></mat-datepicker-toggle>
+              <mat-datepicker #dobPicker></mat-datepicker>
+            </mat-form-field>
+            <div *ngIf="studentForm.get('dob')?.touched && studentForm.get('dob')?.invalid" class="text-danger">
+              DOB is required
+            </div>
+          </div>
+        </div>
+
+        <!-- Residence Country -->
+        <div class="col-md-3 col-sm-6">
+          <div class="mb-25">
+            <label class="main-label d-block lh-1 text-black">Residence Country *</label>
+            <mat-form-field>
+              <mat-label>Select country</mat-label>
+              <mat-select formControlName="residenceCountry">
+                <mat-option value="uae">United Arab Emirates</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div *ngIf="studentForm.get('residenceCountry')?.touched && studentForm.get('residenceCountry')?.invalid" class="text-danger">
+              Residence Country is required
+            </div>
+          </div>
+        </div>
+
+   
+
+        <!-- Address (no validation message) -->
+<div class="col-md-3 col-sm-6">
+  <div class="mb-25">
+    <label class="main-label d-block lh-1 text-black">Address</label>
+    <mat-form-field>
+      <mat-label>Enter address</mat-label>
+      <input matInput formControlName="address" />
+    </mat-form-field>
+  </div>
+</div>
+
+     <!-- Nationality -->
+        <div class="col-md-3 col-sm-6">
+          <div class="mb-25">
+            <label class="main-label d-block lh-1 text-black">Nationality *</label>
+            <mat-form-field>
+              <mat-label>Enter nationality</mat-label>
+              <input matInput formControlName="nationality" />
+            </mat-form-field>
+            <div *ngIf="studentForm.get('nationality')?.touched && studentForm.get('nationality')?.invalid" class="text-danger">
+              Nationality is required
+            </div>
+          </div>
+        </div>
+
+        <!-- Qualification (no validation message) -->
+<div class="col-md-3 col-sm-6">
+  <div class="mb-25">
+    <label class="main-label d-block lh-1 text-black">Qualification</label>
+    <mat-form-field>
+      <mat-label>Enter qualification</mat-label>
+      <input matInput formControlName="qualification" />
+    </mat-form-field>
+  </div>
+</div>
+
+        <!-- Org Name -->
+        <div class="col-md-3 col-sm-6">
+          <div class="mb-25">
+            <label class="main-label d-block lh-1 text-black">Org Name *</label>
+            <mat-form-field>
+              <mat-label>Enter organization name</mat-label>
+              <input matInput formControlName="orgName" />
+            </mat-form-field>
+            <div *ngIf="studentForm.get('orgName')?.touched && studentForm.get('orgName')?.invalid" class="text-danger">
+              Organization Name is required
+            </div>
+          </div>
+        </div>
+
+        <!-- Job Title (no validation message) -->
+<div class="col-md-3 col-sm-6">
+  <div class="mb-25">
+    <label class="main-label d-block lh-1 text-black">Job Title</label>
+    <mat-form-field>
+      <mat-label>Enter job title</mat-label>
+      <input matInput formControlName="jobTitle" />
+    </mat-form-field>
+  </div>
+</div>
+
+
+<!-- Visa Status (no validation message) -->
+<div class="col-md-3 col-sm-6">
+  <div class="mb-25">
+    <label class="main-label d-block lh-1 text-black">Visa Status</label>
+    <mat-form-field>
+      <mat-label>Select visa status</mat-label>
+      <mat-select formControlName="visaStatus">
+        <mat-option value="employment">Employment</mat-option>
+        <mat-option value="visit">Visit</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>
+
+        <!-- Status -->
+        <div class="col-md-3 col-sm-6">
+          <div class="mb-25">
+            <label class="main-label d-block lh-1 text-black">Status *</label>
+            <mat-form-field>
+              <mat-label>Select status</mat-label>
+              <mat-select formControlName="status">
+                <mat-option value="individual">Individual</mat-option>
+                <mat-option value="company">Company</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div *ngIf="studentForm.get('status')?.touched && studentForm.get('status')?.invalid" class="text-danger">
+              Status is required
+            </div>
+          </div>
+        </div>
+
+        <!-- Emirates -->
+        <div class="col-md-3 col-sm-6">
+          <div class="mb-25">
+            <label class="main-label d-block lh-1 text-black">Emirates *</label>
+            <mat-form-field>
+              <mat-label>Select emirate</mat-label>
+              <mat-select formControlName="emirates">
+                <mat-option value="abudhabi">Abu Dhabi</mat-option>
+                <mat-option value="dubai">Dubai</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div *ngIf="studentForm.get('emirates')?.touched && studentForm.get('emirates')?.invalid" class="text-danger">
+              Emirates is required
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+
+        <!-- File Uploads -->
+        <div class="col-md-3 col-sm-12">
+          <div class="mb-25">
+            <label class="main-label d-block lh-1 text-black">Student Image *</label>
+<!-- <file-upload class="file-uploader" (change)="onFileSelected($event, 'studentImage')"></file-upload> -->
+<input type="file" (change)="onFileSelected($event, 'studentImage')" />
+
+
+            <button *ngIf="studentImage" class="btn btn-sm btn-danger mt-2" (click)="removeFile('studentImage')">Delete</button>
+            <!-- <div *ngIf="studentForm.get('studentImage')?.touched && studentForm.get('studentImage')?.invalid" class="text-danger">
+              Student Image is required
+            </div> -->
+          </div>
+        </div>
+
+        <div class="col-md-3 col-sm-12">
+          <div class="mb-25">
+            <label class="main-label d-block lh-1 text-black">ID Proof *</label>
+            <!-- <file-upload class="file-uploader" (change)="onFileSelected($event, 'idProof')"></file-upload> -->
+             <input type="file" (change)="onFileSelected($event, 'idProof')" />
+
+
+            <button *ngIf="idProof" class="btn btn-sm btn-danger mt-2" (click)="removeFile('idProof')">Delete</button>
+            <!-- <div *ngIf="studentForm.get('idProof')?.touched && studentForm.get('idProof')?.invalid" class="text-danger">
+              ID Proof is required
+            </div> -->
+          </div>
+        </div>
+
+        <div class="col-md-3 col-sm-12">
+          <div class="mb-25">
+            <label class="main-label d-block lh-1 text-black">Certificates *</label>
+            <!-- <file-upload class="file-uploader" (change)="onFileSelected($event, 'certificate')"></file-upload> -->
+                         <input type="file" (change)="onFileSelected($event, 'certificate')" />
+
+            <button *ngIf="certificate" class="btn btn-sm btn-danger mt-2" (click)="removeFile('certificate')">Delete</button>
+            <!-- <div *ngIf="studentForm.get('certificate')?.touched && studentForm.get('certificate')?.invalid" class="text-danger">
+              Certificates are required
+            </div> -->
+          </div>
+        </div>
+</div>
+      </div>
+
+      <div class="btn-box">
+        <button mat-button type="submit" >Save</button>
+      </div>
+    </form>
+  </mat-card-content>
 </mat-card>

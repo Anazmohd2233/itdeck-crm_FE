@@ -67,13 +67,14 @@ import { ProjectManagementComponent } from './pages/project-management/project-m
 import { StudentsComponent } from './apps/student/students.component';
 import { EditStudentComponent } from './apps/student/edit-student/edit-student.component';
 import { ProfileStudentComponent } from './apps/student/profile-student/profile-student.component';
+import { AuthGuard } from './helpers/auth_gaurd';
 // import { HdReportsComponent } from './pages/hd-reports/hd-reports.component';
 
 export const routes: Routes = [
     {path: '', redirectTo: 'authentication', pathMatch: 'full'},
-    {path: 'crm', component: CrmComponent},
-    {path: 'report', component: HdReportsComponent},
-    {path: 'team-report', component: ProjectManagementComponent},
+    {path: 'crm', component: CrmComponent , canActivate: [AuthGuard]},
+    // {path: 'report', component: HdReportsComponent},
+    // {path: 'team-report', component: ProjectManagementComponent},
     // {path: 'lms', component: LmsComponent},
     // {path: 'help-desk', component: HelpDeskComponent},
     {
@@ -90,19 +91,20 @@ export const routes: Routes = [
         component: UsersPageComponent,
         children: [
             {path: '', component: PmTeamsComponent},
-            {path: 'team-details', component: TeamMembersComponent}
+            // {path: 'team-details', component: TeamMembersComponent}
         ]
     },
 
-    {path: 'to-do-list', component: ToDoListComponent},
-    {path: 'calendar', component: CalendarComponent},
-    {path: 'student', component: StudentsComponent},
+    // {path: 'to-do-list', component: ToDoListComponent},
+    // {path: 'calendar', component: CalendarComponent},
+    {path: 'student', component: StudentsComponent , canActivate: [AuthGuard]},
     {path: 'edit-student', component: EditStudentComponent},
-    {path: 'chat', component: ChatComponent},
-    {path: 'kanban-board', component: KanbanBoardComponent},
+    // {path: 'chat', component: ChatComponent},
+    // {path: 'kanban-board', component: KanbanBoardComponent},
     {
         path: 'crm-page',
         component: CrmPageComponent,
+         canActivate: [AuthGuard],
         children: [
             {path: '', component: CContactsComponent},
             {path: 'create-contact', component: CCreateContactComponent},
@@ -118,7 +120,7 @@ export const routes: Routes = [
             {path: 'invoice', component: InoviceComponent}
         ]
     },
-    {path: 'student-registration', component: StudentRegFormComponent},
+    {path: 'student-registration', component: StudentRegFormComponent}, //public form
     {
         path: 'lms-page',
         component: LmsPageComponent,
@@ -133,6 +135,7 @@ export const routes: Routes = [
     {
         path: 'task',
         component: HelpDeskPageComponent,
+         canActivate: [AuthGuard],
         children: [
             {path: '', component: HdTicketsComponent},
             {path: 'ticket-details', component: HdTicketDetailsComponent},
@@ -144,6 +147,7 @@ export const routes: Routes = [
     {
         path: 'payments',
         component: InvoicesPageComponent,
+         canActivate: [AuthGuard],
         children: [
             {path: '', component: InvoicesComponent},
             {path: 'payment-details', component: InvoiceDetailsComponent},
@@ -153,6 +157,7 @@ export const routes: Routes = [
                     // {path: 'profile', component: ProfileStudentComponent},
 
         path: 'profile',
+         canActivate: [AuthGuard],
         component: ProfileStudentComponent,
         children: [
             {path: '', component: ProfileStudentComponent},
@@ -185,6 +190,8 @@ export const routes: Routes = [
             {path: 'terms-conditions', component: TermsConditionsComponent}
         ]
     },
+
+    
 
     {path: '**', component: NotFoundComponent} // This line will remain down from the whole pages component list
 ];

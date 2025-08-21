@@ -11,6 +11,9 @@
                         <mat-card-title>
                             <h5 class="mb-0">Student Profile</h5>
                         </mat-card-title>
+
+
+
                     </mat-card-header>
                     <mat-card-content>
                         <div class="user d-flex align-items-center">
@@ -86,7 +89,7 @@
                                                     Months</label>
                                                 <mat-form-field>
                                                     <mat-label>Enter months</mat-label>
-                                                    <mat-select formControlName="payment_type">
+                                                    <mat-select formControlName="emi_months">
                                                         <mat-option *ngFor="let month of [1,2,3,4,5,6,7,8,9,10,11,12]"
                                                             [value]="month">
                                                             {{month}}
@@ -198,6 +201,7 @@
                                 </td>
                             </ng-container>
 
+
                             <!-- Start Date Column -->
                             <ng-container matColumnDef="installment_amount">
                                 <th mat-header-cell *matHeaderCellDef>
@@ -239,24 +243,43 @@
 
                             <!-- Action Column -->
                             <!-- <ng-container matColumnDef="action">
-                        <th mat-header-cell *matHeaderCellDef>
-                            Action
-                        </th>
-                        <td mat-cell *matCellDef="let element">
-                            <div class="action-info">
-                                <button type="button" mat-button matTooltip="View Project" matTooltipPosition="above">
-                                    <i class="material-symbols-outlined">
-                                        {{element.action.view}}
-                                    </i>
-                                </button>
-                                <button type="button" mat-button matTooltip="Delete" matTooltipPosition="above">
-                                    <i class="material-symbols-outlined">
-                                        {{element.action.delete}}
-                                    </i>
-                                </button>
-                            </div>
-                        </td>
-                    </ng-container> -->
+                                <th mat-header-cell *matHeaderCellDef>
+                                    Action
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                    <div class="action-info">
+                                        <button (click)="openDialog()" type="button" mat-button matTooltip="Delete"
+                                            matTooltipPosition="above">
+                                            <i class="material-symbols-outlined">
+                                                edit
+                                            </i>
+                                        </button>
+
+                                        <button mat-button type="button" (click)="openDialog()">
+
+                                            <i class="material-symbols-outlined">
+                                                edit
+                                            </i>
+                                        </button>
+
+
+
+
+                                        <button type="button" mat-button matTooltip="Delete" matTooltipPosition="above">
+                                            <i class="material-symbols-outlined">
+                                                {{element.action.delete}}
+                                            </i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </ng-container> -->
+
+                            <!-- ✅ No data row -->
+                            <tr class="mat-row" *matNoDataRow>
+                                <td class="mat-cell text-center" [attr.colspan]="displayedColumns.length">
+                                    No payments found
+                                </td>
+                            </tr>
 
                             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
@@ -270,3 +293,5 @@
 
     </div>
 </div>
+
+

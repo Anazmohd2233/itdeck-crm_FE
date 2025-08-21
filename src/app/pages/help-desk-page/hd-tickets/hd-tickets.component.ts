@@ -23,13 +23,41 @@ import { HttpParams } from '@angular/common/http';
 
 @Component({
     selector: 'app-hd-tickets',
-    imports: [RouterLink, TicketsOpenComponent, MatDatepickerModule, MatNativeDateModule, MatFormFieldModule, MatInputModule, MatSelectModule, TicketsInProgressComponent, TicketsResolvedComponent, TicketsClosedComponent, MatCardModule, MatMenuModule, MatButtonModule, MatTableModule, MatPaginatorModule, NgIf, MatTooltipModule, MatProgressBarModule],
+    imports: [
+        RouterLink,
+        TicketsOpenComponent,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        TicketsInProgressComponent,
+        TicketsResolvedComponent,
+        TicketsClosedComponent,
+        MatCardModule,
+        MatMenuModule,
+        MatButtonModule,
+        MatTableModule,
+        MatPaginatorModule,
+        NgIf,
+        MatTooltipModule,
+        MatProgressBarModule,
+    ],
+    
     templateUrl: './hd-tickets.component.html',
-    styleUrls: ['./hd-tickets.component.scss']
+    styleUrls: ['./hd-tickets.component.scss'],
 })
 export class HdTicketsComponent implements OnInit {
-
-    displayedColumns: string[] = ['ticketID', 'title', 'type', 'priority',  'createdDate', 'dueDate','status', 'action'];
+    displayedColumns: string[] = [
+        'ticketID',
+        'title',
+        'type',
+        'priority',
+        'createdDate',
+        'dueDate',
+        'status',
+        'action',
+    ];
     dataSource = new MatTableDataSource<TaskElement>();
     isLoading = false;
 
@@ -60,7 +88,10 @@ export class HdTicketsComponent implements OnInit {
         this.taskService.getTasks(this.page).subscribe({
             next: (response: any) => {
                 // Map API response to TaskElement format
-                const tasks = response.data?.tasks?.map((task: any) => this.mapApiTaskToElement(task)) || [];
+                const tasks =
+                    response.data?.tasks?.map((task: any) =>
+                        this.mapApiTaskToElement(task)
+                    ) || [];
                 this.dataSource.data = tasks;
                 this.dataSource.filterPredicate = this.customFilterPredicate();
                 this.isLoading = false;
@@ -74,77 +105,91 @@ export class HdTicketsComponent implements OnInit {
                 // Fallback to mock data for now
                 // this.dataSource.data = ELEMENT_DATA;
                 this.dataSource.filterPredicate = this.customFilterPredicate();
-            }
+            },
         });
     }
 
     private mapApiTaskToElement(task: any): TaskElement {
         // Use placeholder image service for missing images
-        const defaultAvatar = 'https://via.placeholder.com/40x40/007bff/ffffff?text=U';
+        const defaultAvatar =
+            'https://via.placeholder.com/40x40/007bff/ffffff?text=U';
 
         return {
-            id:task.id,
+            id: task.id,
             ticketID: `#${task.id || 'N/A'}`,
             title: task.task_title || 'No Title',
-            type:task.task_type,
-            createdDate: task.created_at ? new Date(task.created_at).toLocaleDateString() : 'N/A',
-            dueDate: task.due_date ? new Date(task.due_date).toLocaleDateString() : 'N/A',
+            type: task.task_type,
+            createdDate: task.created_at
+                ? new Date(task.created_at).toLocaleDateString()
+                : 'N/A',
+            dueDate: task.due_date
+                ? new Date(task.due_date).toLocaleDateString()
+                : 'N/A',
             priority: task.priority || 'Medium',
-          
-            status:task.status,
+
+            status: task.status,
             action: {
                 view: 'visibility',
-                delete: 'delete'
-            }
+                delete: 'delete',
+            },
         };
     }
-
- 
 
     filterCreatedDate(event: any) {
         this.createdDateFilter = event.value;
         this.applyAllFilters();
     }
-  
+
     filterDueDate(event: any) {
         this.dueDateFilter = event.value;
         this.applyAllFilters();
     }
-  
+
     filterPriority(event: any) {
         this.priorityFilter = event.value;
         this.applyAllFilters();
     }
-  
+
     applyAllFilters() {
         this.dataSource.filter = '' + Math.random(); // Trigger table refresh
     }
-  
+
     customFilterPredicate() {
         return (data: TaskElement, filter: string): boolean => {
             let matchesCreatedDate = true;
             let matchesDueDate = true;
             let matchesPriority = true;
             let matchesStatus = true;
-  
+
             if (this.createdDateFilter) {
-                matchesCreatedDate = new Date(data.createdDate).toDateString() === this.createdDateFilter.toDateString();
+                matchesCreatedDate =
+                    new Date(data.createdDate).toDateString() ===
+                    this.createdDateFilter.toDateString();
             }
-  
+
             if (this.dueDateFilter) {
-                matchesDueDate = new Date(data.dueDate).toDateString() === this.dueDateFilter.toDateString();
+                matchesDueDate =
+                    new Date(data.dueDate).toDateString() ===
+                    this.dueDateFilter.toDateString();
             }
-  
+
             if (this.priorityFilter) {
                 matchesPriority = data.priority === this.priorityFilter;
             }
 
             if (this.statusFilter) {
                 // Check data.status object
-                matchesStatus = Object.values(data.status).includes(this.statusFilter);
+                matchesStatus = Object.values(data.status).includes(
+                    this.statusFilter
+                );
             }
 
-            return matchesCreatedDate && matchesDueDate && matchesPriority && matchesStatus;
+            return (
+                matchesCreatedDate &&
+                matchesDueDate &&
+                matchesPriority &&
+                matchesStatus
+            );
         };
     }
 
@@ -160,11 +205,10 @@ export class HdTicketsComponent implements OnInit {
         this.statusFilter = '';
         this.applyAllFilters();
     }
-  
 
     applyFilter(event: Event) {
         const filterValue = (event.target as HTMLInputElement).value;
-        console.log('filterValue => ???? ',filterValue.trim().toLowerCase())
+        console.log('filterValue => ???? ', filterValue.trim().toLowerCase());
         this.dataSource.filter = filterValue.trim().toLowerCase();
     }
 
@@ -183,23 +227,16 @@ export class HdTicketsComponent implements OnInit {
         // Navigate to task edit page
         this.router.navigate(['/task/edit-ticket', taskId]);
     }
-
-
 }
 
-
-
 export interface TaskElement {
-    id:any;
+    id: any;
     ticketID: string;
     title: string;
     type: any;
-        priority: string;
+    priority: string;
     createdDate: string;
     dueDate: string;
-   status: any;
+    status: any;
     action: any;
-
-   
 }
-

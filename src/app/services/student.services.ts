@@ -11,14 +11,7 @@ export class StudentService {
 
     constructor(private http: HttpClient) {}
 
-    // private getAuthHeaders(): HttpHeaders {
-    //     const token = localStorage.getItem('Authorization');
-    //     return new HttpHeaders({
-    //         'Authorization': token || '',
-    //         'Content-Type': 'application/json'
-    //     });
-    // }
-
+   
     updateStudent(formData: any, student_id: any): Observable<any> {
         const apiUrl = `${this.apiUrl}/admin/customer/update/${student_id}`;
         return this.http.patch<any>(apiUrl, formData);
@@ -34,6 +27,12 @@ export class StudentService {
     getStudentById(student_id: number, params?: HttpParams): Observable<any> {
         const apiUrl = `${this.apiUrl}/admin/customer/view/${student_id}`;
         return this.http.get<any>(apiUrl);
+    }
+
+
+     createContactPublic(formData: any): Observable<any> {
+        const apiUrl = `${this.apiUrl}/admin/contacts/create/public`;
+        return this.http.post<any>(apiUrl, formData);
     }
 
 

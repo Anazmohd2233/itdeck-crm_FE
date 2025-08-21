@@ -29,8 +29,8 @@ export class PaymentsService {
         return this.http.get<any>(url, { params });
     }
 
-    // getLeadById(leads_id: number, params?: HttpParams): Observable<any> {
-    //     const url = `${this.apiUrl}/admin/leads/view/${leads_id}`;
-    //     return this.http.get<any>(url, { params });
-    // }
+     getPaymentById(leads_id: number, params?: HttpParams): Observable<any> {
+         const url = `${this.apiUrl}/admin/leads/view/${leads_id}`;
+         return this.http.get<any>(url, { params });
+     }
 }
