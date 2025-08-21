@@ -134,3 +134,26 @@
 
 /* Min width 1600px */
 @media only screen and (min-width: 1600px) {}
+
+
+.example-badges {
+    margin-bottom: -15px;
+    
+    .badge {
+        display: inline-block;
+        margin: {
+            right: 15px;
+            bottom: 15px;
+        };
+    }
+}
+
+
+.success-btn {
+  background-color: #4caf50 !important; /* Material green */
+  color: white !important;
+}
+
+.warn-btn {
+  background-color: #e04242 !important; /* Material green */
+  color: white !important;}

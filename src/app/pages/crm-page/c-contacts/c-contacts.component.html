@@ -45,7 +45,7 @@
                 <table mat-table [dataSource]="dataSource">
 
                     <!-- Checkbox Column -->
-                    <ng-container matColumnDef="select">
+                    <!-- <ng-container matColumnDef="select">
                         <th mat-header-cell *matHeaderCellDef>
                             <mat-checkbox (change)="$event ? toggleAllRows() : null"
                                 [checked]="selection.hasValue() && isAllSelected()"
@@ -59,12 +59,12 @@
                                 [aria-label]="checkboxLabel(row)">
                             </mat-checkbox>
                         </td>
-                    </ng-container>
+                    </ng-container> -->
 
-                    <!-- Contact ID Column -->
+                    <!-- School Name Column -->
                     <ng-container matColumnDef="contactID">
                         <th mat-header-cell *matHeaderCellDef>
-                            Contact ID
+                            School Name
                         </th>
                         <td mat-cell *matCellDef="let element">
                             {{element.contactID}}
@@ -141,6 +141,36 @@
                                 Inactive
                             </span>
                         </td>
+                    </ng-container>
+
+
+                           <!-- Status Column -->
+                    <ng-container matColumnDef="lead_status">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Lead Status
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            <span class="daxa-badge new d-inline-block" *ngIf="element.lead_status === 'NEW'">
+                                New
+                            </span>
+                              <span class="daxa-badge new d-inline-block" *ngIf="element.lead_status === 'NOT_CREATED'">
+                                NOT CREATED
+                            </span>
+                            <span class="daxa-badge in-progress d-inline-block"
+                                *ngIf="element.lead_status === 'IN_PROGRESS'">
+                                In Progress
+                            </span>
+                            <span class="daxa-badge won d-inline-block" *ngIf="element.lead_status === 'WON'">
+                                Won
+                            </span>
+                            <span class="daxa-badge lost d-inline-block" *ngIf="element.lead_status === 'LOST'">
+                                Lost
+                            </span>
+                            <span class="daxa-badge other d-inline-block" *ngIf="element.lead_status === 'OTHER'">
+                                Other
+                            </span>
+                        </td>
+
                     </ng-container>
 
                     <!-- Action Column -->

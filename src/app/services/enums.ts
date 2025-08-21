@@ -8,3 +8,14 @@ export enum LeadStatus {
 
 
 }
+
+export enum TaskActivity {
+  SCHOOL_VISTED = "SCHOOL_VISTED",
+  CLASS_CONDUCTED = "CLASS_CONDUCTED",
+    LEAD_COLLECTED = "LEAD_COLLECTED",
+
+
+
+
+
+}

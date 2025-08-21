@@ -55,19 +55,26 @@ export class SignInComponent {
 
     onSubmit(): void {
         if (this.authForm.valid) {
-                const formData = new FormData();
+            const formData = new FormData();
 
-                formData.append('username', this.authForm.value.username);
-                formData.append('password', this.authForm.value.password);
+            formData.append('username', this.authForm.value.username);
+            formData.append('password', this.authForm.value.password);
 
             this.authService.login(formData).subscribe(
                 (response: any) => {
                     if (response.success) {
-                         localStorage.setItem('token',response.data.api_key);
-                                                  localStorage.setItem('super_admin',response.data.super_admin);
+                        localStorage.setItem('token', response.data.api_key);
+                        localStorage.setItem(
+                            'super_admin',
+                            response.data.super_admin
+                        );
+                        localStorage.setItem(
+                            'user_type',
+                            response.data.user_type
+                        );
 
                         console.log('response', response);
-                           this.router.navigate(['crm']);
+                        this.router.navigate(['crm']);
                     } else {
                         this.toast.error(
                             response.message || 'Failed to Login',

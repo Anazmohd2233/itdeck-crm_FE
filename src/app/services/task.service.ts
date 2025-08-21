@@ -30,4 +30,14 @@ export class TaskService {
         const url = `${this.apiUrl}/admin/task/list/${page}`;
         return this.http.get<any>(url, { params });
     }
+
+     createExpence(formData: any): Observable<any> {
+        const apiUrl = `${this.apiUrl}/admin/expence/create`;
+        return this.http.post<any>(apiUrl, formData);
+    }
+
+      getExpences(page: number, params?: HttpParams): Observable<any> {
+        const url = `${this.apiUrl}/admin/expence/list/${page}`;
+        return this.http.get<any>(url, { params });
+    }
 }

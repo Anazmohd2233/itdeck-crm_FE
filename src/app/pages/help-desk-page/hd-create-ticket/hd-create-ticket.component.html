@@ -1,7 +1,8 @@
 <!-- Breadcrumb -->
 <div class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between">
     <h5 class="mb-0">
-        Create Task
+
+        {{ editMode ? 'Edit Task' : 'Create Task' }}
     </h5>
     <ol class="breadcrumb list-unstyled mt-0 mb-0 pl-0">
         <li class="breadcrumb-item position-relative">
@@ -14,20 +15,19 @@
             Task
         </li>
         <li class="breadcrumb-item position-relative">
-            Create Task
+
+            {{ editMode ? 'Edit Task' : 'Create Task' }}
         </li>
     </ol>
 </div>
 
 <!-- Create Task -->
-<mat-card
-    class="daxa-card create-project-card mb-25 border-radius bg-white border-none d-block"
-    [class.rtl-enabled]="themeService.isRTLEnabled()"
->
+<mat-card class="daxa-card create-project-card mb-25 border-radius bg-white border-none d-block"
+    [class.rtl-enabled]="themeService.isRTLEnabled()">
     <mat-card-header>
         <mat-card-title>
             <h5 class="mb-0">
-                Create New Task
+                {{ editMode ? 'Update Task' : 'Create New Task' }}
             </h5>
         </mat-card-title>
     </mat-card-header>
@@ -36,7 +36,7 @@
             <div class="row">
                 <div class="col-lg-8">
                     <div class="row">
-                        <div class="col-sm-6">
+                        <div class="col-md-4 col-sm-6">
                             <div class="mb-25">
                                 <label class="main-label d-block lh-1 text-black">
                                     Task Title *
@@ -48,70 +48,41 @@
                                     <input matInput placeholder="Enter task title" formControlName="task_title">
                                     <mat-error *ngIf="task_title?.invalid && task_title?.touched">
                                         <span *ngIf="task_title?.errors?.['required']">Task title is required</span>
-                                        <span *ngIf="task_title?.errors?.['minlength']">Task title must be at least 3 characters</span>
+                                        <span *ngIf="task_title?.errors?.['minlength']">Task title must be at least 3
+                                            characters</span>
                                     </mat-error>
                                 </mat-form-field>
                             </div>
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-md-4 col-sm-6">
                             <div class="mb-25">
                                 <label class="main-label d-block lh-1 text-black">
-                                    Task Type *
+                                    School Name
                                 </label>
                                 <mat-form-field>
                                     <mat-label>
-                                        Select
+                                        Enter School Name
                                     </mat-label>
-                                    <mat-select formControlName="task_type">
-                                        <mat-option value="To-DO">
-                                            To-DO
-                                        </mat-option>
-                                        <mat-option value="Email">
-                                            Email
-                                        </mat-option>
-                                        <mat-option value="Call">
-                                            Call
-                                        </mat-option>
-                                        <mat-option value="Follow-up">
-                                            Follow-up
-                                        </mat-option>
-                                    </mat-select>
-                                    <mat-error *ngIf="task_type?.invalid && task_type?.touched">
-                                        Task type is required
-                                    </mat-error>
+                                    <input matInput formControlName="school_name">
                                 </mat-form-field>
                             </div>
                         </div>
-                        <div class="col-sm-12">
+
+                        <div class="col-md-4 col-sm-6">
                             <div class="mb-25">
                                 <label class="main-label d-block lh-1 text-black">
-                                    Contact *
+                                    School Location
                                 </label>
                                 <mat-form-field>
                                     <mat-label>
-                                        Select
+                                        Enter School Location
                                     </mat-label>
-                                    <mat-select formControlName="contact_id">
-                                        @for (item of data; track item) {
-                                            <mat-option [value]="item.contact.id">
-                                                <div class="info d-flex align-items-center" style="cursor: pointer;">
-                                                    <div class="image team-members-list" style="margin-right: 5px !important;">
-                                                        <img [src]="item.contact.img" alt="contact-image">
-                                                    </div>
-                                                    <span class="d-block fw-medium">
-                                                        {{item.contact.name}}
-                                                    </span>
-                                                </div>
-                                            </mat-option>
-                                        }
-                                    </mat-select>
-                                    <mat-error *ngIf="contact_id?.invalid && contact_id?.touched">
-                                        Contact selection is required
-                                    </mat-error>
+                                    <input matInput formControlName="location">
                                 </mat-form-field>
                             </div>
                         </div>
-                        <div class="col-sm-6">
+
+                        <div class="col-md-4 col-sm-6">
                             <div class="mb-25">
                                 <label class="main-label d-block lh-1 text-black">
                                     Priority *
@@ -141,39 +112,25 @@
                             </div>
                         </div>
 
-                        <div class="col-sm-6">
+                        <div class="col-md-4 col-sm-6">
                             <div class="mb-25">
                                 <label class="main-label d-block lh-1 text-black">
-                                    Assigned to *
+                                    Assign to
                                 </label>
                                 <mat-form-field>
                                     <mat-label>
                                         Select
                                     </mat-label>
+                                    <!-- 'multiple' for multiple select -->
                                     <mat-select formControlName="assigned_to">
-                                        <mat-option value="1">
-                                            Walter Frazier
-                                        </mat-option>
-                                        <mat-option value="2">
-                                            Kimberly Anderson
-                                        </mat-option>
-                                        <mat-option value="3">
-                                            Roscoe Guerrero
-                                        </mat-option>
-                                        <mat-option value="4">
-                                            Robert Stewart
-                                        </mat-option>
-                                        <mat-option value="5">
-                                            Dustin Fritch
+                                        <mat-option *ngFor="let user of users" [value]="user.id">
+                                            {{ user.name }}
                                         </mat-option>
                                     </mat-select>
-                                    <mat-error *ngIf="assigned_to?.invalid && assigned_to?.touched">
-                                        Assignment is required
-                                    </mat-error>
                                 </mat-form-field>
                             </div>
                         </div>
-                        <div class="col-sm-12">
+                        <div class="col-md-4 col-sm-6">
                             <div class="mb-25">
                                 <label class="main-label d-block lh-1 text-black">
                                     Due date *
@@ -185,14 +142,15 @@
                                                 Choose a date
                                             </mat-label>
                                             <input matInput [matDatepicker]="dueDatePicker" formControlName="due_date">
-                                            <mat-datepicker-toggle matIconSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
+                                            <mat-datepicker-toggle matIconSuffix
+                                                [for]="dueDatePicker"></mat-datepicker-toggle>
                                             <mat-datepicker #dueDatePicker></mat-datepicker>
                                             <mat-error *ngIf="due_date?.invalid && due_date?.touched">
                                                 Due date is required
                                             </mat-error>
                                         </mat-form-field>
                                     </div>
-                                    <div class="col-3">
+                                    <!-- <div class="col-3">
                                         <mat-form-field appearance="fill">
                                             <input matInput placeholder="12hr format" [ngxTimepicker]="picker" formControlName="due_time">
                                             <i class="material-symbols-outlined mr-15" matSuffix>
@@ -200,49 +158,314 @@
                                             </i>
                                             <ngx-material-timepicker #picker></ngx-material-timepicker>
                                         </mat-form-field>
-                                    </div>
+                                    </div> -->
                                 </div>
-                            </div> 
+                            </div>
                         </div>
-                        <div class="col-sm-12">
-                            <div class="mb-25">
-                                <label class="main-label d-block lh-1 text-black">
-                                    Notes
-                                </label>
-                                <div class="NgxEditor__Wrapper">
-                                    <ng-container *ngIf="editor">
-                                        <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"></ngx-editor-menu>
-                                        <ngx-editor [editor]="editor" [(ngModel)]="editorContent" [placeholder]="'Type your notes here...'"></ngx-editor>
-                                    </ng-container>
-                                </div>
-                            </div> 
-                        </div>
+
+
                     </div>
                 </div>
                 <div class="col-lg-4">
-                    <div class="mb-25">
-                        <label class="main-label d-block lh-1 text-black">
-                            Task Image
-                        </label>
-                        <file-upload class="file-uploader" [multiple]="multiple" formControlName="taskImage"></file-upload>
+
+                  
+                 
+                    <div class="col-md-12 col-sm-06">
+                        <div class="mb-25">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Notes</mat-label>
+                                <textarea matInput id="description" rows="4" formControlName="note"
+                                    placeholder="Enter description">
+                                    </textarea>
+                            </mat-form-field>
+                        </div>
                     </div>
-                    <div class="mb-25">
+
+                    <div class="col-md-12 col-sm-06 mb-25" *ngIf="editMode">
                         <label class="main-label d-block lh-1 text-black">
-                            Attached Files
+                            Activity
                         </label>
-                        <file-upload class="file-uploader" [multiple]="multiple" formControlName="attachedFiles"></file-upload>
+                        <div class="col-md-12 col-sm-12">
+                            <div class="mb-25">
+                                <mat-form-field appearance="outline" class="w-100">
+                                    <mat-label>Select</mat-label>
+                                    <mat-select multiple formControlName="activity">
+                                        <mat-option *ngFor="let val of taskActivityValues" [value]="val">
+                                            {{ val | titlecase }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <mat-card-content class="example-badges mt-15 mb-25">
+                            <span class="badge text-bg-primary me-2" *ngIf="taskData?.school_visited">School
+                                visited</span>
+                            <span class="badge text-bg-success me-2" *ngIf="taskData?.class_conducted">Class
+                                conducted</span>
+                            <span class="badge text-bg-warning" *ngIf="taskData?.data_collected">Data
+                                collected</span>
+                        </mat-card-content>
                     </div>
+
+                      <!-- <div class="btn-box">
+                <button mat-button type="button" (click)="openDialog()" *ngIf="editMode">
+                 
+                    <span>Add Expence</span>
+                </button>
+        
+            </div> -->
                 </div>
+
             </div>
-            <div class="btn-box">
+            <div class="btn-box mt-25">
                 <button mat-button type="submit" [disabled]="isSubmitting">
                     <span *ngIf="isSubmitting">Creating...</span>
-                    <span *ngIf="!isSubmitting">+ Create Task</span>
+                    <span *ngIf="!isSubmitting">{{ editMode ? 'Update' : 'Create Task' }}</span>
                 </button>
-                <button mat-button type="button" (click)="onCancel()">
+                 <button mat-button type="button" (click)="openDialog()" *ngIf="editMode">
+                 
+                    <span>Add Expence</span>
+                </button>
+                <!-- <button mat-button type="button" (click)="onCancel()">
                     Cancel
-                </button>
+                </button> -->
+
             </div>
         </form>
+    </mat-card-content>
+</mat-card>
+
+
+
+
+<!-- Angular Material Dialog Template -->
+<ng-template #taskDialog >
+    <h2 mat-dialog-title>Create Expenses</h2>
+    <mat-dialog-content>
+        <form *ngIf="expenceForm" [formGroup]="expenceForm" (ngSubmit)="createExpence()">
+            <div formArrayName="expenses">
+
+                <div *ngFor="let expense of expenses.controls; let i = index" [formGroupName]="i"
+                    class="row border p-2 mb-25 rounded">
+
+                    <div class="col-md-4 col-sm-6">
+                        <div class="mb-25">
+                            <mat-form-field class="w-100">
+                                <mat-label>Date</mat-label>
+                                <input matInput [matDatepicker]="picker" formControlName="date">
+                                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-4 col-sm-6">
+                        <mat-form-field class="w-100">
+                            <mat-label>Start Point</mat-label>
+                            <input matInput formControlName="start_point">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-4 col-sm-6">
+                        <mat-form-field class="w-100">
+                            <mat-label>End Point</mat-label>
+                            <input matInput formControlName="end_point">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-4 col-sm-6">
+                        <mat-form-field class="w-100">
+                            <mat-label>Kilometers</mat-label>
+                            <input matInput formControlName="kilometer">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-4 col-sm-6">
+                        <mat-form-field class="w-100">
+                            <mat-label>Food Expense</mat-label>
+                            <input matInput formControlName="food_expence">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-2 d-flex align-items-center">
+                        <button mat-icon-button color="warn" (click)="removeExpense(i)" *ngIf="expenses.length > 1">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <mat-dialog-actions align="end" class="w-100">
+                <button mat-button class="warn-btn" type="button" (click)="addExpense()">Add More</button>
+              <button mat-raised-button class="success-btn" type="submit">Save All</button>
+            </mat-dialog-actions>
+
+          
+
+            
+        
+    
+
+        </form>
+    </mat-dialog-content>
+
+    <mat-dialog-actions>
+        <button mat-button mat-dialog-close>Cancel</button>
+    </mat-dialog-actions>
+</ng-template>
+
+
+
+<!-- Contacts -->
+<mat-card *ngIf="editMode" class="daxa-card contacts-list-card mb-25 border-radius bg-white border-none d-block"
+    [class.rtl-enabled]="themeService.isRTLEnabled()">
+    <mat-card-header>
+        <mat-card-title>
+            <form class="search-box position-relative">
+                <i class="material-symbols-outlined">
+                    search
+                </i>
+                <input type="text" class="input-search d-block w-100 border-none outline-0"
+                    placeholder="Search expence..." (keyup)="applyFilter($event)" #input>
+            </form>
+        </mat-card-title>
+       
+    </mat-card-header>
+    <mat-card-content>
+        <div class="contacts-list-table">
+            <div class="table-responsive">
+                <table mat-table [dataSource]="dataSource">
+
+                    <!-- Checkbox Column -->
+                    <!-- <ng-container matColumnDef="select">
+                        <th mat-header-cell *matHeaderCellDef>
+                            <mat-checkbox (change)="$event ? toggleAllRows() : null"
+                                [checked]="selection.hasValue() && isAllSelected()"
+                                [indeterminate]="selection.hasValue() && !isAllSelected()"
+                                [aria-label]="checkboxLabel()">
+                            </mat-checkbox>
+                        </th>
+                        <td mat-cell *matCellDef="let row">
+                            <mat-checkbox (click)="$event.stopPropagation()"
+                                (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)"
+                                [aria-label]="checkboxLabel(row)">
+                            </mat-checkbox>
+                        </td>
+                    </ng-container> -->
+
+                    <!-- School Name Column -->
+                    <ng-container matColumnDef="date">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Date
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.date}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Customer Column -->
+                    <ng-container matColumnDef="start_point">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Start Point
+                        </th>
+                        <td mat-cell *matCellDef="let element" class="text-black">
+                            <div class="info d-flex align-items-center">
+
+                                <span class="d-block fw-medium">
+                                    {{element.start_point}}
+                                </span>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <!-- Email Column -->
+                    <ng-container matColumnDef="end_point">
+                        <th mat-header-cell *matHeaderCellDef>
+                            End Point
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.end_point}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Phone Column -->
+                    <ng-container matColumnDef="kilometer">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Kilometer
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.kilometer}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Last Contacted Column -->
+                    <ng-container matColumnDef="food_expence">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Food Expence
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.food_expence}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Company Column -->
+                    <ng-container matColumnDef="total">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Total Amount
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.total}}
+                        </td>
+                    </ng-container>
+
+
+
+
+                    <!-- Action Column -->
+                    <!-- <ng-container matColumnDef="action">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Action
+                        </th>
+                        
+                        <td mat-cell *matCellDef="let element">
+                            <div class="action-info">
+                                <a mat-button [routerLink]="'/crm-page/create-contact'"
+                                    [queryParams]="{ contact_id: element.id }" matTooltip="Edit Contact"
+                                    matTooltipPosition="above">
+                                    <i class="material-symbols-outlined">
+                                        edit
+                                    </i>
+                                </a>
+
+                                
+
+                                <a mat-button [routerLink]="'/crm-page/create-lead'"
+                                    [queryParams]="{ contact_id: element.id }" matTooltip="Create Lead"
+                                    matTooltipPosition="above">
+                                    <i class="material-symbols-outlined">
+                                        open_in_browser
+                                    </i>
+                                </a>
+                             
+                            </div>
+                        </td>
+                    </ng-container> -->
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                    <!-- Row shown when there is no matching data. -->
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                    </tr>
+
+                </table>
+            </div>
+            <mat-paginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons></mat-paginator>
+        </div>
     </mat-card-content>
 </mat-card>

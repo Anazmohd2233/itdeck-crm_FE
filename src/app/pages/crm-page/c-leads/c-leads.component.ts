@@ -48,7 +48,7 @@ export class CLeadsComponent {
     leads: any;
 
     displayedColumns: string[] = [
-        'select',
+        // 'select',
         'contact_id',
         'customer_name',
         'email',

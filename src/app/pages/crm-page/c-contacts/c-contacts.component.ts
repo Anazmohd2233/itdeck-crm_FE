@@ -36,7 +36,7 @@ export class CContactsComponent {
     contacts: any;
 
     displayedColumns: string[] = [
-        'select',
+        // 'select',
         'contactID',
         'name',
         'email',
@@ -44,6 +44,7 @@ export class CContactsComponent {
         'courses',
         'lead_source',
         'status',
+        'lead_status',
         'action',
     ];
     dataSource = new MatTableDataSource<PeriodicElement>(this.ELEMENT_DATA);
@@ -110,7 +111,7 @@ export class CContactsComponent {
                         name: u.contact_name || 'N/A',
                         email: u.email || 'N/A',
                         lead_source: u.lead_source || 'N/A',
-
+                        lead_status: u.lead_status || 'OTHER',
                         phone: u.phone || '-',
                         courses: u.courses.service_name || '-',
                         status: u.status,
@@ -139,5 +140,6 @@ export interface PeriodicElement {
     courses: string;
     lead_source: string;
     status: any;
+    lead_status: any;
     action: any;
 }

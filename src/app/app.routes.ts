@@ -155,7 +155,7 @@ export const routes: Routes = [
         path: 'profile',
         component: ProfileStudentComponent,
         children: [
-            {path: '', component: UserProfileComponent},
+            {path: '', component: ProfileStudentComponent},
             {path: 'teams', component: TeamsComponent},
             {path: 'projects', component: PProjectsComponent},
         ]

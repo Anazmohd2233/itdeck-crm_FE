@@ -14,13 +14,15 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FileUploadModule } from '@iplab/ngx-file-upload';
 import { CustomizerSettingsService } from '../../../customizer-settings/customizer-settings.service';
 import { ContactService } from '../../../services/contact.service';
 import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 import { CourseService } from '../../../services/course.service';
+import { UsersService } from '../../../services/users.service';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
     selector: 'app-c-create-contact',
@@ -49,8 +51,9 @@ export class CCreateContactComponent {
     editMode: boolean = false;
     selectedFile: File | null = null;
     courses: any;
-        page: number = 1;
-
+    page: number = 1;
+    user_type: any;
+    users: any;
 
     // File Uploader
     public multiple: boolean = false;
@@ -61,13 +64,19 @@ export class CCreateContactComponent {
         private toastr: ToastrService,
         private contactService: ContactService,
         private route: ActivatedRoute, // 👈 Inject ActivatedRoute
-                        private courseService: CourseService,
-        
+        private courseService: CourseService,
+        private usersService: UsersService,
+         private router: Router,
+            
     ) {}
 
     ngOnInit(): void {
+        this.user_type = localStorage.getItem('user_type');
+
+        console.log('user_type', localStorage.getItem('user_type'));
 
         this.getCourseList();
+        this.getUserList();
         // ✅ Get ID from query params
         this.route.queryParams.subscribe((params) => {
             this.contactId = params['contact_id'] || null;
@@ -91,7 +100,8 @@ export class CCreateContactComponent {
             phone: ['', Validators.required],
             courses: [''],
             status: ['', Validators.required],
-            lead_source: ['', Validators.required],
+            // lead_source: [''],
+            contact_owner: [''],
         });
     }
 
@@ -100,9 +110,9 @@ export class CCreateContactComponent {
     }
 
     createContact(): void {
-        Object.keys(this.contactForm.controls).forEach((key) => {
-            console.log(key, this.contactForm.get(key)?.value);
-        });
+        // Object.keys(this.contactForm.controls).forEach((key) => {
+        //     console.log(key, this.contactForm.get(key)?.value);
+        // });
         if (this.contactForm.invalid) {
             console.log('********contact form not vlaid*******');
 
@@ -128,7 +138,7 @@ export class CCreateContactComponent {
                         if (response.success) {
                             this.isSubmitting = false;
                             this.toastr.success(
-                                'Contact Added successfully',
+                                'Contact Updated successfully',
                                 'Success'
                             );
                             console.log('✅ Contact Updated successfully');
@@ -197,9 +207,12 @@ export class CCreateContactComponent {
                         courses: contact.courses.id,
                         status: contact.status,
                         lead_source: contact.lead_source,
+                        contact_owner:contact?.contact_owner?.id || null,
                     });
                 } else {
-                    this.toastr.error('Customer not found.', 'Error');
+                    console.error('❌ Contact not found.:');
+
+                    // this.toastr.error('Contact not found.', 'Error');
                 }
             },
             error: (err) => {
@@ -209,8 +222,7 @@ export class CCreateContactComponent {
         });
     }
 
-
-         private getCourseList(): void {
+    private getCourseList(): void {
         // let params = new HttpParams();
 
         // params = params.set('user_type', 'USER');
@@ -229,4 +241,28 @@ export class CCreateContactComponent {
             },
         });
     }
+
+    private getUserList(): void {
+        let params = new HttpParams();
+
+        params = params.set('user_type', 'USER');
+
+        this.usersService.getUsers(this.page, params).subscribe({
+            next: (response) => {
+                if (response && response.success) {
+                    this.users = response.data?.users || [];
+                } else {
+                    // this.toastr.error('Failed to load users', 'Failed');
+                    console.error('Failed to load users:', response?.message);
+                }
+            },
+            error: (error) => {
+                console.error('API error:', error);
+            },
+        });
+    }
+   onCancel(): void {
+        this.router.navigate(['/crm-page']);
+    }
+      
 }

@@ -14,7 +14,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FileUploadModule } from '@iplab/ngx-file-upload';
 import { CustomizerSettingsService } from '../../../customizer-settings/customizer-settings.service';
 import { ToastrService } from 'ngx-toastr';
@@ -74,6 +74,7 @@ export class CCreateLeadComponent {
         private usersService: UsersService,
         private toastr: ToastrService,
                 private courseService: CourseService,
+                 private router: Router,
         
     ) {}
 
@@ -139,7 +140,8 @@ this.getCourseList();
                         lead_source: contact.lead_source,
                     });
                 } else {
-                    this.toastr.error('Customer not found.', 'Error');
+                    console.log('Lead not found.')
+                    // this.toastr.error('Lead not found.', 'Error');
                 }
             },
             error: (err) => {
@@ -304,5 +306,9 @@ this.getCourseList();
                 console.error('API error:', error);
             },
         });
+    }
+
+      onCancel(): void {
+        this.router.navigate(['/crm-page/leads']);
     }
 }

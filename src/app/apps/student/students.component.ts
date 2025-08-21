@@ -15,14 +15,28 @@ import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ToastrService } from 'ngx-toastr'
+import { ToastrService } from 'ngx-toastr';
 import { StudentService } from '../../services/student.services';
 
 @Component({
     selector: 'app-students',
-    imports: [MatCardModule, MatMenuModule, MatButtonModule, RouterLink, MatTableModule, MatPaginatorModule, NgIf, MatCheckboxModule, MatTooltipModule, MatFormFieldModule, MatIconModule, ReactiveFormsModule, MatInputModule],
+    imports: [
+        MatCardModule,
+        MatMenuModule,
+        MatButtonModule,
+        RouterLink,
+        MatTableModule,
+        MatPaginatorModule,
+        NgIf,
+        MatCheckboxModule,
+        MatTooltipModule,
+        MatFormFieldModule,
+        MatIconModule,
+        ReactiveFormsModule,
+        MatInputModule,
+    ],
     templateUrl: './students.component.html',
-    styleUrl: './students.component.scss'
+    styleUrl: './students.component.scss',
 })
 export class StudentsComponent {
     ELEMENT_DATA: PeriodicElement[] = [];
@@ -30,7 +44,18 @@ export class StudentsComponent {
     page: number = 1;
     students: any;
 
-    displayedColumns: string[] = ['select', 'studentID','name', 'email', 'phone', 'createdDate', 'courses', 'lead_source', 'status', 'action'];
+    displayedColumns: string[] = [
+        // 'select',
+        'studentID',
+        'name',
+        'email',
+        'phone',
+        'createdDate',
+        'courses',
+        'lead_source',
+        'status',
+        'action',
+    ];
     dataSource = new MatTableDataSource<PeriodicElement>(this.ELEMENT_DATA);
     selection = new SelectionModel<PeriodicElement>(true, []);
 
@@ -61,7 +86,9 @@ export class StudentsComponent {
         if (!row) {
             return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
         }
-        return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.name + 1}`;
+        return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
+            row.name + 1
+        }`;
     }
 
     // Search Filter
@@ -86,12 +113,13 @@ export class StudentsComponent {
     link: string = 'https://iprulers-crm.vercel.app/student-registration';
 
     copyToClipboard(input: HTMLInputElement) {
-      input.select();
-      document.execCommand('copy');
-      this.snackBar.open('Link copied to clipboard!', 'Close', { duration: 2000,
-        horizontalPosition: 'center',
-        verticalPosition: 'top'});
-
+        input.select();
+        document.execCommand('copy');
+        this.snackBar.open('Link copied to clipboard!', 'Close', {
+            duration: 2000,
+            horizontalPosition: 'center',
+            verticalPosition: 'top',
+        });
     }
 
     ngOnInit(): void {
@@ -99,19 +127,15 @@ export class StudentsComponent {
     }
 
     private getStudentList(): void {
-
-        console.log('********getting student*******')
+        console.log('********getting student*******');
         this.studentService.getStudent(this.page).subscribe({
             next: (response) => {
                 if (response && response.success) {
-                    const students = response.data?.customer || []; 
-
-
-                     
+                    const students = response.data?.customer || [];
 
                     this.ELEMENT_DATA = students.map((u: any) => ({
                         id: u.id,
-                         studentID: u.unique_id || 'N/A',
+                        studentID: u.unique_id || 'N/A',
                         name: u.customer_name || 'N/A',
                         email: u.email || 'N/A',
                         lead_source: u.lead_source || 'N/A',
@@ -122,28 +146,28 @@ export class StudentsComponent {
                         action: '', // we will handle icons directly in template
                     }));
 
-                    console.log('this.ELEMENT_DATA',this.ELEMENT_DATA)
+                    console.log('this.ELEMENT_DATA', this.ELEMENT_DATA);
 
                     this.dataSource.data = this.ELEMENT_DATA;
                 } else {
                     // this.toastr.error('Failed to load students', 'Error');
-                    console.error('Failed to load students:', response?.message);
+                    console.error(
+                        'Failed to load students:',
+                        response?.message
+                    );
                 }
             },
             error: (error) => {
                 // this.toastr.error('Error loading students', 'Error');
                 console.error('API error:', error);
-            }
+            },
         });
     }
 
     // editStudent(id: number) {
     //     this.router.navigate(['/edit-student', id]);
     // }
-
 }
-
-
 
 export interface PeriodicElement {
     id: any;
@@ -151,7 +175,7 @@ export interface PeriodicElement {
     name: any;
     email: string;
     phone: string;
-    createdDate:any;
+    createdDate: any;
     courses: string;
     lead_source: string;
     status: any;

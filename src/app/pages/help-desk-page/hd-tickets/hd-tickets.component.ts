@@ -29,7 +29,7 @@ import { HttpParams } from '@angular/common/http';
 })
 export class HdTicketsComponent implements OnInit {
 
-    displayedColumns: string[] = ['ticketID', 'subject', 'contact','status', 'priority', 'requester', 'assignedAgents', 'createdDate', 'dueDate', 'action'];
+    displayedColumns: string[] = ['ticketID', 'title', 'type', 'priority',  'createdDate', 'dueDate','status', 'action'];
     dataSource = new MatTableDataSource<TaskElement>();
     isLoading = false;
 
@@ -39,6 +39,7 @@ export class HdTicketsComponent implements OnInit {
     dueDateFilter: Date | null = null;
     priorityFilter: string = '';
     statusFilter: string = '';
+    page = 1;
 
     constructor(
         public themeService: CustomizerSettingsService,
@@ -56,7 +57,7 @@ export class HdTicketsComponent implements OnInit {
 
     loadTasks(): void {
         this.isLoading = true;
-        this.taskService.getTasks(1).subscribe({
+        this.taskService.getTasks(this.page).subscribe({
             next: (response: any) => {
                 // Map API response to TaskElement format
                 const tasks = response.data?.tasks?.map((task: any) => this.mapApiTaskToElement(task)) || [];
@@ -71,7 +72,7 @@ export class HdTicketsComponent implements OnInit {
                 console.error('Error URL:', error.url);
                 this.isLoading = false;
                 // Fallback to mock data for now
-                this.dataSource.data = ELEMENT_DATA;
+                // this.dataSource.data = ELEMENT_DATA;
                 this.dataSource.filterPredicate = this.customFilterPredicate();
             }
         });
@@ -80,22 +81,17 @@ export class HdTicketsComponent implements OnInit {
     private mapApiTaskToElement(task: any): TaskElement {
         // Use placeholder image service for missing images
         const defaultAvatar = 'https://via.placeholder.com/40x40/007bff/ffffff?text=U';
-        
+
         return {
+            id:task.id,
             ticketID: `#${task.id || 'N/A'}`,
-            subject: task.task_title || 'No Title',
-            contact: {
-                img: task.contact?.avatar || defaultAvatar,
-                name: task.contact?.name || `Contact #${task.contact_id || 'N/A'}`
-            },
+            title: task.task_title || 'No Title',
+            type:task.task_type,
             createdDate: task.created_at ? new Date(task.created_at).toLocaleDateString() : 'N/A',
             dueDate: task.due_date ? new Date(task.due_date).toLocaleDateString() : 'N/A',
-            requester: task.created_by?.name || 'System',
             priority: task.priority || 'Medium',
-            assignedAgents: {
-                img1: task.assigned_user?.avatar || defaultAvatar
-            },
-            status: this.mapTaskStatus(task.status),
+          
+            status:task.status,
             action: {
                 view: 'visibility',
                 delete: 'delete'
@@ -103,16 +99,7 @@ export class HdTicketsComponent implements OnInit {
         };
     }
 
-    private mapTaskStatus(status: string): any {
-        const statusMap: any = {
-            'open': { open: 'Open' },
-            'in_progress': { inProgress: 'In Progress' },
-            'pending': { pending: 'Pending' },
-            'completed': { closed: 'Completed' },
-            'closed': { closed: 'Closed' }
-        };
-        return statusMap[status?.toLowerCase()] || { open: 'Open' };
-    }
+ 
 
     filterCreatedDate(event: any) {
         this.createdDateFilter = event.value;
@@ -200,124 +187,19 @@ export class HdTicketsComponent implements OnInit {
 
 }
 
-const ELEMENT_DATA: TaskElement[] = [
-    {
-        ticketID: '#951',
-        subject: 'Login Issues',
-        contact: {
-            img: 'images/users/user15.jpg',
-            name: 'Marcia Baker'
-        },
-        createdDate: '15 Nov, 2024',
-        dueDate: '15 Dec, 2024',
-        requester: 'Walter Frazier',
-        priority: 'High',
-        assignedAgents: {
-            img1: 'images/users/user5.jpg',
-            img2: 'images/users/user13.jpg'
-        },
-        status: {
-            inProgress: 'In Progress',
-            // pending: 'Pending',
-            // open: 'Open',
-            // closed: 'Closed',
-        },
-        action: {
-            view: 'visibility',
-            delete: 'delete'
-        }
-    },
-    {
-        ticketID: '#547',
-        subject: 'Email Configuration',
-        contact: {
-            img: 'images/users/user7.jpg',
-            name: 'Carolyn Barnes'
-        },
-        createdDate: '14 Nov, 2024',
-        dueDate: '14 Dec, 2024',
-        requester: 'Kimberly Anderson',
-        priority: 'Medium',
-        assignedAgents: {
-            img1: 'images/users/user7.jpg',
-            img2: 'images/users/user9.jpg',
-            img3: 'images/users/user12.jpg'
-        },
-        status: {
-            // inProgress: 'In Progress',
-            pending: 'Pending',
-            // open: 'Open',
-            // closed: 'Closed',
-        },
-        action: {
-            view: 'visibility',
-            delete: 'delete'
-        }
-    },
-    {
-        ticketID: '#658',
-        subject: 'Application Error',
-        contact: {
-            img: 'images/users/user12.jpg',
-            name: 'Donna Miller'
-        },
-        createdDate: '13 Nov, 2024',
-        dueDate: '13 Dec, 2024',
-        requester: 'Roscoe Guerrero',
-        priority: 'High',
-        assignedAgents: {
-            img1: 'images/users/user16.jpg',
-            img2: 'images/users/user17.jpg'
-        },
-        status: {
-            // inProgress: 'In Progress',
-            // pending: 'Pending',
-            open: 'Open',
-            // closed: 'Closed',
-        },
-        action: {
-            view: 'visibility',
-            delete: 'delete'
-        }
-    },
-    {
-        ticketID: '#367',
-        subject: 'Software Installation',
-        contact: {
-            img: 'images/users/user5.jpg',
-            name: 'Barbara Cross'
-        },
-        createdDate: '12 Nov, 2024',
-        dueDate: '12 Dec, 2024',
-        requester: 'Robert Stewart',
-        priority: 'Low',
-        assignedAgents: {
-            img1: 'images/users/user11.jpg',
-            img2: 'images/users/user3.jpg',
-            img3: 'images/users/user8.jpg'
-        },
-        status: {
-            // inProgress: 'In Progress',
-            // pending: 'Pending',
-            // open: 'Open',
-            closed: 'Closed',
-        },
-        action: {
-            view: 'visibility',
-            delete: 'delete'
-        }
-    },
-];
+
 
 export interface TaskElement {
+    id:any;
     ticketID: string;
-    subject: string;
-    contact: any;
+    title: string;
+    type: any;
+        priority: string;
     createdDate: string;
     dueDate: string;
-    requester: string;
-    priority: string;
-    assignedAgents: any;
-    status: any;
+   status: any;
     action: any;
+
+   
 }
+
