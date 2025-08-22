@@ -45,6 +45,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { SelectionModel } from '@angular/cdk/collections';
+import { SchoolService } from '../../../services/school.service';
 
 @Component({
     selector: 'app-hd-create-ticket',
@@ -158,6 +159,8 @@ export class HdCreateTicketComponent {
 
     isSubmitting = false;
     users: any;
+        school: any;
+
     page: number = 1;
     TaskActivity = TaskActivity;
     taskActivityValues = Object.values(TaskActivity);
@@ -177,15 +180,18 @@ export class HdCreateTicketComponent {
         private usersService: UsersService,
         private toastr: ToastrService,
         private route: ActivatedRoute,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+                private schoolService: SchoolService,
+
     ) {
         this.initializeForm();
         this.initializeExpenceForm();
     }
 
     ngOnInit(): void {
-         this.getExpenceList();
+        //  this.getExpenceList();
         this.getUserList();
+        this.getSchoolList();
 
         this.route.queryParams.subscribe((params) => {
             this.taskId = params['task_id'] || null;
@@ -219,8 +225,10 @@ export class HdCreateTicketComponent {
             due_time: [''],
             note: [''],
             taskImage: [''],
-            location: [''],
-            school_name: [''],
+            // location: [''],
+            school_name: [[]],
+                        school_name_edit: [''],
+
         });
     }
 
@@ -365,12 +373,34 @@ export class HdCreateTicketComponent {
         });
     }
 
+     private getSchoolList(): void {
+        let params = new HttpParams();
+
+        params = params.set('status', true);
+
+        this.schoolService.getSchool(this.page, params).subscribe({
+            next: (response) => {
+                if (response && response.success) {
+                    this.school = response.data?.school || [];
+                } else {
+                    // this.toastr.error('Failed to load users', 'Failed');
+                    console.error('Failed to load school:', response?.message);
+                }
+            },
+            error: (error) => {
+                console.error('API error:', error);
+            },
+        });
+    }
+
     loadTaskDetails() {
         this.taskService.getTaskById(this.taskId).subscribe({
             next: (response) => {
                 if (response.success) {
-                    const task = response.task;
                     this.taskData = response.task;
+                    const task = response.task;
+                   const expence= response.task.expence;
+
 
                     // ✅ Patch form values
                     this.taskForm.patchValue({
@@ -380,9 +410,25 @@ export class HdCreateTicketComponent {
                         due_date: task.due_date,
                         note: task.note,
                         taskImage: task.task_image_url,
-                        location: task.location,
-                        school_name: task.school_name,
+                        school_name_edit: task?.school?.id,
                     });
+
+
+                    this.ELEMENT_DATA = expence.map((u: any) => ({
+                        id: u.id,
+                        date: u.date || 'N/A',
+
+                        start_point: u.start_point || 'N/A',
+                        end_point: u.end_point || 'N/A',
+                        kilometer: u.kilometer || 'N/A',
+
+                        food_expence: u.food_expence || '-',
+                        total: u.total || '-',
+                 
+                        // action: '', // we will handle icons directly in template
+                    }));
+
+                    this.dataSource.data = this.ELEMENT_DATA;
                 } else {
                     console.log('Customer not found.');
                     // this.toastr.error('Customer not found.', 'Error');
@@ -416,8 +462,7 @@ export class HdCreateTicketComponent {
                     if (response.success) {
                         this.loadTaskDetails();
                         this.isSubmitting = false;
-                        this.closeDialog();3
-                         this.getExpenceList();
+                        this.closeDialog();
                         this.toastr.success(
                             'Expence Added successfully',
                             'Success'

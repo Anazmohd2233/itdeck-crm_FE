@@ -81,6 +81,16 @@
                         </td>
                     </ng-container>
 
+                    
+                      <ng-container matColumnDef="school_type">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Expert In
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.school_type}}
+                        </td>
+                    </ng-container>
+
                     <!-- Email Column -->
                     <ng-container matColumnDef="email">
                         <th mat-header-cell *matHeaderCellDef>
@@ -178,9 +188,9 @@
       <button type="button" mat-button matTooltip="View" matTooltipPosition="above">
         <i class="material-symbols-outlined">edit</i>
       </button>
-      <button type="button" mat-button matTooltip="Delete" matTooltipPosition="above">
+      <!-- <button type="button" mat-button matTooltip="Delete" matTooltipPosition="above">
         <i class="material-symbols-outlined">delete</i>
-      </button>
+      </button> -->
     </div>
   </td>
 </ng-container>

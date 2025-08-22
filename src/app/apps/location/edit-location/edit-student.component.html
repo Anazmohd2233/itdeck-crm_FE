@@ -1,0 +1,85 @@
+<!-- Breadcrumb -->
+<div class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between">
+    <h5 class="mb-0">
+        Location Details
+    </h5>
+    <ol class="breadcrumb list-unstyled mt-0 mb-0 pl-0">
+        <li class="breadcrumb-item position-relative">
+            <a routerLink="/" class="d-inline-block position-relative">
+                <i class="ri-home-8-line"></i>
+                Dashboard
+            </a>
+        </li>
+        <li class="breadcrumb-item position-relative">
+            CRM
+        </li>
+        <li class="breadcrumb-item position-relative">
+            {{ editMode ? 'Edit Location' : 'Create Location' }}
+        </li>
+    </ol>
+</div>
+
+<!-- Edit Contact -->
+<mat-card class="daxa-card edit-contact-card mb-25 border-radius bg-white border-none d-block">
+    <mat-card-content>
+        <form [formGroup]="studentForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+
+                <div class="col-md-4 col-sm-6">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">
+                            Location Name
+                        </label>
+                        <mat-form-field>
+                            <mat-label>
+                                Enter Location name
+                            </mat-label>
+                            <input matInput placeholder="district..etc" formControlName="name">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6" *ngIf = "editMode">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">
+                            Status
+                        </label>
+                         <mat-form-field>
+                            <mat-label>
+                                Select status
+                            </mat-label>
+                            <mat-select formControlName="status">
+                                <mat-option [value]="true">
+                                    Active
+                                </mat-option>
+                                <mat-option [value]="false">
+                                    Inctive
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                    </div>
+                </div>
+
+
+            </div>
+
+
+
+   
+            <div class="btn-box">
+
+                <button mat-button type="submit">
+                    <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm me-1" role="status"
+                        aria-hidden="true"></span>
+                    {{ editMode ? 'Edit Location' : 'Create Location' }}
+
+                </button>
+
+                <!-- <button mat-button>
+                    Cancel
+                </button> -->
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>

@@ -1,0 +1,143 @@
+<!-- Breadcrumb -->
+<div class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between">
+    <h5 class="mb-0">
+        School Details
+    </h5>
+    <ol class="breadcrumb list-unstyled mt-0 mb-0 pl-0">
+        <li class="breadcrumb-item position-relative">
+            <a routerLink="/" class="d-inline-block position-relative">
+                <i class="ri-home-8-line"></i>
+                Dashboard
+            </a>
+        </li>
+        <li class="breadcrumb-item position-relative">
+            CRM
+        </li>
+        <li class="breadcrumb-item position-relative">
+            {{ editMode ? 'Edit School' : 'Create School' }}
+        </li>
+    </ol>
+</div>
+
+<!-- Edit Contact -->
+<mat-card class="daxa-card edit-contact-card mb-25 border-radius bg-white border-none d-block">
+    <mat-card-content>
+        <form [formGroup]="studentForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+
+                <div class="col-md-4 col-sm-6">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">
+                            School Name
+                        </label>
+                        <mat-form-field>
+                            <mat-label>
+                                Enter School name
+                            </mat-label>
+                            <input matInput  formControlName="school_name">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">
+                            School Strength
+                        </label>
+                        <mat-form-field>
+                            <mat-label>
+                                Enter School Strength
+                            </mat-label>
+                            <input matInput formControlName="strength">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">
+                            Type
+                        </label>
+                        <mat-form-field>
+                            <mat-label>
+                                College / School
+                            </mat-label>
+                            <mat-select formControlName="type">
+                                <mat-option value="SCHOOL">
+                                    School
+                                </mat-option>
+                                <mat-option value="COLLEGE">
+                                    College
+                                </mat-option>
+
+                            </mat-select>
+                        </mat-form-field>
+
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">
+                            Location
+                        </label>
+                        <mat-form-field>
+                            <mat-label>
+                                Select Location
+                            </mat-label>
+                            <mat-select formControlName="location">
+                                <mat-option *ngFor="let loc of location" [value]="loc.id">
+                                    {{ loc.name }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                    </div>
+                </div>
+
+
+
+                <div class="col-md-4 col-sm-6" *ngIf="editMode">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">
+                            Status
+                        </label>
+                        <mat-form-field>
+                            <mat-label>
+                                Select status
+                            </mat-label>
+                            <mat-select formControlName="status">
+                                <mat-option [value]="true">
+                                    Active
+                                </mat-option>
+                                <mat-option [value]="false">
+                                    Inctive
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                    </div>
+                </div>
+
+
+            </div>
+
+
+
+
+            <div class="btn-box">
+
+                <button mat-button type="submit">
+                    <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm me-1" role="status"
+                        aria-hidden="true"></span>
+                    {{ editMode ? 'Edit School' : 'Create School' }}
+
+                </button>
+
+                <!-- <button mat-button>
+                    Cancel
+                </button> -->
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>

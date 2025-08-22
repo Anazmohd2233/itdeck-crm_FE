@@ -153,19 +153,16 @@
                     </ng-container>
 
                     <!-- Contact Column -->
-                    <ng-container matColumnDef="type">
+                    <ng-container matColumnDef="school">
                         <th mat-header-cell *matHeaderCellDef>
-                           Type
+                           School Name
                         </th>
                         <td mat-cell *matCellDef="let element" class="text-black">
-                            <div class="info d-flex align-items-center" routerLink="/crm-page/profile"  routerLink="/crm-page/profile"  style="cursor: pointer;">
-                                <!-- <div class="image team-members-list" style="margin-right: 5px !important;">
-                                    <img [src]="element.contact.img" alt="contact-image">
-                                </div> -->
+                         
                                 <span class="d-block fw-medium">
-                                    {{element.type}}
+                                    {{element.school}}
                                 </span>
-                            </div>
+                           
                         </td>
                     </ng-container>
 
@@ -193,7 +190,7 @@
                     <!-- Due Date Column -->
                     <ng-container matColumnDef="dueDate">
                         <th mat-header-cell *matHeaderCellDef>
-                            Contacted Date
+                            Due Date
                         </th>
                         <td mat-cell *matCellDef="let element">
                             {{element.dueDate}}

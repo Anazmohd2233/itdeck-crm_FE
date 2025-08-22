@@ -68,130 +68,157 @@ import { StudentsComponent } from './apps/student/students.component';
 import { EditStudentComponent } from './apps/student/edit-student/edit-student.component';
 import { ProfileStudentComponent } from './apps/student/profile-student/profile-student.component';
 import { AuthGuard } from './helpers/auth_gaurd';
+import { LocationComponent } from './apps/location/students.component';
+import { EditLocationComponent } from './apps/location/edit-location/edit-student.component';
+import { SchoolComponent } from './apps/school/students.component';
+import { AddSchoolComponent } from './apps/school/edit-school/edit-student.component';
+
 // import { HdReportsComponent } from './pages/hd-reports/hd-reports.component';
 
 export const routes: Routes = [
-    {path: '', redirectTo: 'authentication', pathMatch: 'full'},
-    {path: 'crm', component: CrmComponent , canActivate: [AuthGuard]},
+    { path: '', redirectTo: 'authentication', pathMatch: 'full' },
+    { path: 'crm', component: CrmComponent, canActivate: [AuthGuard] },
     // {path: 'report', component: HdReportsComponent},
     // {path: 'team-report', component: ProjectManagementComponent},
     // {path: 'lms', component: LmsComponent},
     // {path: 'help-desk', component: HelpDeskComponent},
     {
-        path: 'users', 
+        path: 'users',
         component: UsersPageComponent,
         children: [
-            {path: '', component: UsersListComponent},
-            {path: 'add-user', component: AddUserComponent},
-        ]
+            { path: '', component: UsersListComponent },
+            { path: 'add-user', component: AddUserComponent },
+        ],
     },
 
     {
         path: 'teams',
         component: UsersPageComponent,
         children: [
-            {path: '', component: PmTeamsComponent},
+            { path: '', component: PmTeamsComponent },
             // {path: 'team-details', component: TeamMembersComponent}
-        ]
+        ],
     },
 
     // {path: 'to-do-list', component: ToDoListComponent},
     // {path: 'calendar', component: CalendarComponent},
-    {path: 'student', component: StudentsComponent , canActivate: [AuthGuard]},
-    {path: 'edit-student', component: EditStudentComponent},
+    { path: 'student', component: StudentsComponent, canActivate: [AuthGuard] },
+    {
+        path: 'edit-student',
+        component: EditStudentComponent,
+        canActivate: [AuthGuard],
+    },
+
+    {
+        path: 'location',
+        component: LocationComponent,
+        canActivate: [AuthGuard],
+    },
+
+    {
+        path: 'create-location',
+        component: EditLocationComponent,
+        canActivate: [AuthGuard],
+    },
+
+    { path: 'school', component: SchoolComponent, canActivate: [AuthGuard] },
+
+    {
+        path: 'create-school',
+        component: AddSchoolComponent,
+        canActivate: [AuthGuard],
+    },
     // {path: 'chat', component: ChatComponent},
     // {path: 'kanban-board', component: KanbanBoardComponent},
     {
         path: 'crm-page',
         component: CrmPageComponent,
-         canActivate: [AuthGuard],
+        canActivate: [AuthGuard],
         children: [
-            {path: '', component: CContactsComponent},
-            {path: 'create-contact', component: CCreateContactComponent},
-            {path: 'edit-contact', component: CEditContactComponent},
-            {path: 'customers', component: CCustomersComponent},
-            {path: 'create-lead', component: CCreateLeadComponent},
-            {path: 'edit-lead', component: CEditLeadComponent},
-            {path: 'leads', component: CLeadsComponent},
-            {path: 'leads-kanban', component: CLeadKanbanComponent},
+            { path: '', component: CContactsComponent },
+            { path: 'create-contact', component: CCreateContactComponent },
+            { path: 'edit-contact', component: CEditContactComponent },
+            { path: 'customers', component: CCustomersComponent },
+            { path: 'create-lead', component: CCreateLeadComponent },
+            { path: 'edit-lead', component: CEditLeadComponent },
+            { path: 'leads', component: CLeadsComponent },
+            { path: 'leads-kanban', component: CLeadKanbanComponent },
             // {path: 'profile', component: ProfileStudentComponent},
-            {path: 'deals', component: CDealsComponent},
-            {path: 'create-deal', component: CCreateDealComponent},
-            {path: 'invoice', component: InoviceComponent}
-        ]
+            { path: 'deals', component: CDealsComponent },
+            { path: 'create-deal', component: CCreateDealComponent },
+            { path: 'invoice', component: InoviceComponent },
+        ],
     },
-    {path: 'student-registration', component: StudentRegFormComponent}, //public form
+    { path: 'student-registration', component: StudentRegFormComponent }, //public form
     {
         path: 'lms-page',
         component: LmsPageComponent,
         children: [
-            {path: '', component: LCoursesComponent},
-            {path: 'course-details', component: LCourseDetailsComponent},
-            {path: 'create-course', component: LCreateCourseComponent},
-            {path: 'edit-course', component: LEditCourseComponent},
-            {path: 'instructors', component: LInstructorsComponent}
-        ]
-    }, 
+            { path: '', component: LCoursesComponent },
+            { path: 'course-details', component: LCourseDetailsComponent },
+            { path: 'create-course', component: LCreateCourseComponent },
+            { path: 'edit-course', component: LEditCourseComponent },
+            { path: 'instructors', component: LInstructorsComponent },
+        ],
+    },
     {
         path: 'task',
         component: HelpDeskPageComponent,
-         canActivate: [AuthGuard],
+        canActivate: [AuthGuard],
         children: [
-            {path: '', component: HdTicketsComponent},
-            {path: 'ticket-details', component: HdTicketDetailsComponent},
-            {path: 'agents', component: HdAgentsComponent},
-            {path: 'reports', component: HdReportsComponent},
-            {path: 'create-ticket', component: HdCreateTicketComponent}
-        ]
+            { path: '', component: HdTicketsComponent },
+            { path: 'ticket-details', component: HdTicketDetailsComponent },
+            { path: 'agents', component: HdAgentsComponent },
+            { path: 'reports', component: HdReportsComponent },
+            { path: 'create-ticket', component: HdCreateTicketComponent },
+        ],
     },
     {
         path: 'payments',
         component: InvoicesPageComponent,
-         canActivate: [AuthGuard],
+        canActivate: [AuthGuard],
         children: [
-            {path: '', component: InvoicesComponent},
-            {path: 'payment-details', component: InvoiceDetailsComponent},
-        ]
+            { path: '', component: InvoicesComponent },
+            { path: 'payment-details', component: InvoiceDetailsComponent },
+        ],
     },
     {
-                    // {path: 'profile', component: ProfileStudentComponent},
+        // {path: 'profile', component: ProfileStudentComponent},
 
         path: 'profile',
-         canActivate: [AuthGuard],
+        canActivate: [AuthGuard],
         component: ProfileStudentComponent,
         children: [
-            {path: '', component: ProfileStudentComponent},
-            {path: 'teams', component: TeamsComponent},
-            {path: 'projects', component: PProjectsComponent},
-        ]
+            { path: '', component: ProfileStudentComponent },
+            { path: 'teams', component: TeamsComponent },
+            { path: 'projects', component: PProjectsComponent },
+        ],
     },
     {
         path: 'authentication',
         component: AuthenticationComponent,
         children: [
-            {path: '', component: SignInComponent},
-            {path: 'sign-up', component: SignUpComponent},
-            {path: 'forgot-password', component: ForgotPasswordComponent},
-            {path: 'reset-password', component: ResetPasswordComponent},
-            {path: 'lock-screen', component: LockScreenComponent},
-            {path: 'confirm-email', component: ConfirmEmailComponent},
-            {path: 'logout', component: LogoutComponent},
-        ]
+            { path: '', component: SignInComponent },
+            { path: 'sign-up', component: SignUpComponent },
+            { path: 'forgot-password', component: ForgotPasswordComponent },
+            { path: 'reset-password', component: ResetPasswordComponent },
+            { path: 'lock-screen', component: LockScreenComponent },
+            { path: 'confirm-email', component: ConfirmEmailComponent },
+            { path: 'logout', component: LogoutComponent },
+        ],
     },
-    {path: 'my-profile', component: MyProfileComponent},
+    { path: 'my-profile', component: MyProfileComponent },
     {
         path: 'settings',
         component: SettingsComponent,
         children: [
-            {path: '', component: AccountSettingsComponent},
-            {path: 'change-password', component: ChangePasswordComponent},
-            {path: 'connections', component: ConnectionsComponent},
-            {path: 'privacy-policy', component: PrivacyPolicyComponent},
-            {path: 'terms-conditions', component: TermsConditionsComponent}
-        ]
+            { path: '', component: AccountSettingsComponent },
+            { path: 'change-password', component: ChangePasswordComponent },
+            { path: 'connections', component: ConnectionsComponent },
+            { path: 'privacy-policy', component: PrivacyPolicyComponent },
+            { path: 'terms-conditions', component: TermsConditionsComponent },
+        ],
     },
 
-    
-
-    {path: '**', component: NotFoundComponent} // This line will remain down from the whole pages component list
+    { path: '**', component: NotFoundComponent }, // This line will remain down from the whole pages component list
 ];

@@ -27,7 +27,6 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
     templateUrl: './users-list.component.html',
     styleUrl: './users-list.component.scss',
 })
-
 export class UsersListComponent {
     page: number = 1;
     users: any;
@@ -36,6 +35,7 @@ export class UsersListComponent {
     displayedColumns: string[] = [
         'id',
         'name',
+        'school_type',
         'email',
         'phone',
         'designation',
@@ -68,8 +68,6 @@ export class UsersListComponent {
         this.getUserList();
     }
 
-
-
     private getUserList(): void {
         this.usersService.getUsers(this.page).subscribe({
             next: (response) => {
@@ -78,7 +76,7 @@ export class UsersListComponent {
 
                     this.ELEMENT_DATA = users.map((u: any) => ({
                         id: u.id || 'N/A',
-
+                        school_type : u.school_type || 'N/A',
                         name: u.name || 'N/A',
                         email: u.email || 'N/A',
                         type: u.user_type || 'N/A',
@@ -108,7 +106,7 @@ export interface PeriodicElement {
     email: any;
     phone: string;
     type: string;
-
+    school_type: any;
     designation: string;
     status: string;
     action: any;

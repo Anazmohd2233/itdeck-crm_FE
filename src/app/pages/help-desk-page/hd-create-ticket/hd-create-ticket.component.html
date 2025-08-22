@@ -59,16 +59,31 @@
                                 <label class="main-label d-block lh-1 text-black">
                                     School Name
                                 </label>
-                                <mat-form-field>
+
+                                 <mat-form-field>
                                     <mat-label>
-                                        Enter School Name
+                                        Select
                                     </mat-label>
-                                    <input matInput formControlName="school_name">
+                                    <!-- 'multiple' for multiple select -->
+                                   <mat-select multiple formControlName="school_name" *ngIf="!editMode">
+                                <mat-option *ngFor="let school of school" [value]="school.id">
+                                    {{ school.school_name }}
+                                </mat-option>
+                            </mat-select>
+
+                              <mat-select formControlName="school_name_edit" *ngIf="editMode">
+                                <mat-option *ngFor="let school of school" [value]="school.id">
+                                    {{ school.school_name }}
+                                </mat-option>
+                            </mat-select>
                                 </mat-form-field>
+
+                               
+                              
                             </div>
                         </div>
 
-                        <div class="col-md-4 col-sm-6">
+                        <!-- <div class="col-md-4 col-sm-6">
                             <div class="mb-25">
                                 <label class="main-label d-block lh-1 text-black">
                                     School Location
@@ -80,7 +95,7 @@
                                     <input matInput formControlName="location">
                                 </mat-form-field>
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="col-md-4 col-sm-6">
                             <div class="mb-25">

@@ -50,6 +50,7 @@ export class AddUserComponent {
     userForm!: FormGroup;
     selectedFile: File | null = null;
     isSubmitting = false;
+    editMode:boolean=false;
 
     // File Uploader
     public multiple: boolean = false;
@@ -72,8 +73,9 @@ export class AddUserComponent {
             name: [''],
             email: [''],
             phone: [''],
+            school_type: [''],
             designation: [''],
-            status: ['', Validators.required],
+            status: [''],
             password: ['', Validators.required],
             user_type: ['', Validators.required],
         });
@@ -85,6 +87,7 @@ export class AddUserComponent {
 
     createUser(): void {
         if (this.userForm.invalid) {
+            console.log('user add form not valis')
             this.userForm.markAllAsTouched();
             return;
         }
