@@ -68,7 +68,7 @@ export class CContactsComponent {
         'email',
         'phone',
         'courses',
-        'lead_source',
+        // 'lead_source',
         'status',
         'lead_status',
         'action',
@@ -184,7 +184,7 @@ export class CContactsComponent {
 
                         name: u.contact_name || 'N/A',
                         email: u.email || 'N/A',
-                        lead_source: u.lead_source || 'N/A',
+                        // lead_source: u.lead_source || 'N/A',
                         lead_status: u.lead_status || 'OTHER',
                         phone: u.phone || '-',
                         courses: u?.courses ,
@@ -213,7 +213,7 @@ export interface PeriodicElement {
     email: string;
     phone: string;
     courses: string;
-    lead_source: string;
+    // lead_source: string;
     status: any;
     lead_status: any;
     action: any;

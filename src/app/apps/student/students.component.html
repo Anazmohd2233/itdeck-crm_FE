@@ -194,6 +194,13 @@
                         </th>
                         <td mat-cell *matCellDef="let element">
                             <div class="action-info">
+
+                                   <a routerLink="/profile"
+                                [queryParams]="{ student_id: element.id }" mat-button matTooltip="View Student"
+                                    matTooltipPosition="above">
+                                    <i class="material-symbols-outlined">
+                                        visibility </i>
+                                </a>
                                 <a mat-button [routerLink]="'/edit-student'" [queryParams]="{ student_id: element.id }"
                                     matTooltip="Edit Lead" matTooltipPosition="above">
                                     <i class="material-symbols-outlined">

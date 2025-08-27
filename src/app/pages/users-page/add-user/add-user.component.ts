@@ -90,7 +90,7 @@ export class AddUserComponent {
             school_type: [''],
             designation: [''],
             status: [''],
-            password: ['', Validators.required],
+            password: [''],
             user_type: ['', Validators.required],
         });
     }
@@ -165,7 +165,7 @@ export class AddUserComponent {
                         school_type: contact?.school_type,
                         // status: contact.status,
                         designation: contact?.designation,
-                        status: contact?.status || null,
+                        status: contact.status,
 
                         user_type: contact?.user_type || null,
                     });

@@ -148,6 +148,14 @@
                         </th>
                         <td mat-cell *matCellDef="let element">
                             <div class="action-info">
+
+                                   <a routerLink="/crm-page/profile" mat-button matTooltip="View Lead"
+                                    matTooltipPosition="above">
+                                    <i class="material-symbols-outlined">
+                                        visibility </i>
+                                </a>
+
+                                
                                 <a mat-button [routerLink]="'/create-school'" [queryParams]="{ id: element.id }"
                                     matTooltip="Edit Lead" matTooltipPosition="above">
                                     <i class="material-symbols-outlined">
