@@ -14,7 +14,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FileUploadModule } from '@iplab/ngx-file-upload';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -50,7 +50,8 @@ export class AddUserComponent {
     userForm!: FormGroup;
     selectedFile: File | null = null;
     isSubmitting = false;
-    editMode:boolean=false;
+    editMode: boolean = false;
+    userId: string | null = null; // 👈 Store the ID here
 
     // File Uploader
     public multiple: boolean = false;
@@ -60,11 +61,24 @@ export class AddUserComponent {
         private http: HttpClient,
         public themeService: CustomizerSettingsService,
         private usersService: UsersService,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private route: ActivatedRoute // 👈 Inject ActivatedRoute
     ) {}
 
     ngOnInit(): void {
         this.initializeUserForm();
+
+        // ✅ Get ID from query params
+        this.route.queryParams.subscribe((params) => {
+            this.userId = params['user_id'] || null;
+            console.log('📌 Received user ID:', this.userId);
+
+            // If we have an ID, it’s an edit — fetch contact details
+            if (this.userId) {
+                this.editMode = true;
+                this.loadUser();
+            }
+        });
     }
 
     initializeUserForm() {
@@ -87,7 +101,7 @@ export class AddUserComponent {
 
     createUser(): void {
         if (this.userForm.invalid) {
-            console.log('user add form not valis')
+            console.log('user add form not valis');
             this.userForm.markAllAsTouched();
             return;
         }
@@ -131,6 +145,39 @@ export class AddUserComponent {
                 this.toastr.error('Something went wrong.', 'Error');
 
                 console.error('❌ API error:', error);
+            },
+        });
+    }
+
+    loadUser() {
+        this.usersService.getUserById(this.userId).subscribe({
+            next: (response) => {
+                if (response.success) {
+                    const contact = response.user;
+
+                    // ✅ Patch form values
+                    this.userForm.patchValue({
+                        // contact_id: contact.unique_id,
+                        user_name: contact?.user_name || null,
+                        name: contact?.name,
+                        email: contact?.email,
+                        phone: contact?.phone,
+                        school_type: contact?.school_type,
+                        // status: contact.status,
+                        designation: contact?.designation,
+                        status: contact?.status || null,
+
+                        user_type: contact?.user_type || null,
+                    });
+                } else {
+                    console.error('❌ user not found.:');
+
+                    // this.toastr.error('Contact not found.', 'Error');
+                }
+            },
+            error: (err) => {
+                console.error('❌ Error loading user:', err);
+                this.toastr.error('Failed to load user details.', 'Error');
             },
         });
     }

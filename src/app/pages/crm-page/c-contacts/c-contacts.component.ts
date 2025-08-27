@@ -73,6 +73,7 @@ export class CContactsComponent {
         'lead_status',
         'action',
     ];
+    
     dataSource = new MatTableDataSource<PeriodicElement>(this.ELEMENT_DATA);
     selection = new SelectionModel<PeriodicElement>(true, []);
 
@@ -179,14 +180,14 @@ export class CContactsComponent {
 
                     this.ELEMENT_DATA = contacts.map((u: any) => ({
                         id: u.id,
-                        contactID: u.unique_id || 'N/A',
+                        contactID: u.school || 'N/A',
 
                         name: u.contact_name || 'N/A',
                         email: u.email || 'N/A',
                         lead_source: u.lead_source || 'N/A',
                         lead_status: u.lead_status || 'OTHER',
                         phone: u.phone || '-',
-                        courses: u?.courses,
+                        courses: u?.courses ,
 
                         status: u.status,
                         action: '', // we will handle icons directly in template

@@ -110,7 +110,7 @@
                             School Name
                         </th>
                         <td mat-cell *matCellDef="let element">
-                            {{element.contactID}}
+                            {{element.contactID?.school_name}}
                         </td>
                     </ng-container>
 
@@ -155,7 +155,7 @@
                             Course
                         </th>
                         <td mat-cell *matCellDef="let element">
-                            {{element.courses?.service_name}}
+                            {{element.courses?.service_name || 'N/A'}}
                         </td>
                     </ng-container>
 

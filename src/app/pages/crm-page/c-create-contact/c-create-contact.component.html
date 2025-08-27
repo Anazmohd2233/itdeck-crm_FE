@@ -30,7 +30,7 @@
     <mat-card-content>
         <form [formGroup]="contactForm" (ngSubmit)="createContact()">
             <div class="row">
-                <div class="col-md-4 col-sm-6">
+                <!-- <div class="col-md-4 col-sm-6">
                     <div class="mb-25">
                         <label class="main-label d-block lh-1 text-black">
                             School Name
@@ -42,7 +42,32 @@
                             <input matInput formControlName="contact_id">
                         </mat-form-field>
                     </div>
-                </div>
+                </div> -->
+
+                 <div class="col-md-4 col-sm-6">
+                            <div class="mb-25">
+                                <label class="main-label d-block lh-1 text-black">
+                                    School Name
+                                </label>
+
+                                 <mat-form-field>
+                                    <mat-label>
+                                        Select
+                                    </mat-label>
+                                    <!-- 'multiple' for multiple select -->
+                                   <mat-select  formControlName="school_name">
+                                <mat-option *ngFor="let school of school" [value]="school.id">
+                                    {{ school.school_name }}
+                                </mat-option>
+                            </mat-select>
+
+                        
+                                </mat-form-field>
+
+                               
+                              
+                            </div>
+                        </div>
                 <div class="col-md-4 col-sm-6">
                     <div class="mb-25">
                         <label class="main-label d-block lh-1 text-black">
@@ -181,7 +206,7 @@
                     </div>
                 </div>
 
-                     <div class="col-md-4 col-sm-6">
+                     <!-- <div class="col-md-4 col-sm-6">
                     <div class="mb-25">
                         <label class="main-label d-block lh-1 text-black">
                             Contact Status
@@ -200,7 +225,7 @@
                             </mat-select>
                         </mat-form-field>
                     </div>
-                </div>
+                </div> -->
                 
                 <!-- <div class="col-md-12 col-sm-12">
                     <div class="mb-25">

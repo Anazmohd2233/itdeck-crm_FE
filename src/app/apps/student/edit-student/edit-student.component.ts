@@ -108,9 +108,9 @@ export class EditStudentComponent implements OnInit {
           student_name: ['', [Validators.required, Validators.minLength(2)]],
           email: ['', [Validators.required]],
           phone: ['', [Validators.required,]],
-          lead_source: ['', Validators.required],
+        //   lead_source: ['', Validators.required],
           courses: ['', Validators.required],
-          status: ['', Validators.required],
+        //   status: ['', Validators.required],
           description: ['']
       });
   }
@@ -129,9 +129,9 @@ export class EditStudentComponent implements OnInit {
                       student_name: student.customer_name || '',
                       email: student.email || '',
                       phone: student.phone || '',
-                      lead_source: student.lead_source || '',
+                    //   lead_source: student.lead_source || '',
                       courses: student.courses.id || '',
-                      status: student.status || '',
+                    //   status: student.status || '',
                       description: student.description || ''
                   });
 

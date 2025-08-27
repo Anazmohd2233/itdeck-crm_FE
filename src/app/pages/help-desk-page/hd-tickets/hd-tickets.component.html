@@ -203,12 +203,10 @@
                             Status
                         </th>
                        <td mat-cell *matCellDef="let element">
-                            <span class="daxa-badge active d-inline-block" *ngIf="element.status">
-                                Active
+                            <span class="daxa-badge active d-inline-block" >
+                                 {{element.status}}
                             </span>
-                            <span class="daxa-badge deactive d-inline-block" *ngIf="!element.status">
-                                Inactive
-                            </span>
+                       
                         </td>
                     </ng-container>
 

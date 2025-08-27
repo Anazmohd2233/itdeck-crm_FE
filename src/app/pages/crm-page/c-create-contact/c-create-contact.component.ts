@@ -23,6 +23,7 @@ import { CommonModule } from '@angular/common';
 import { CourseService } from '../../../services/course.service';
 import { UsersService } from '../../../services/users.service';
 import { HttpParams } from '@angular/common/http';
+import { SchoolService } from '../../../services/school.service';
 
 @Component({
     selector: 'app-c-create-contact',
@@ -54,6 +55,7 @@ export class CCreateContactComponent {
     page: number = 1;
     user_type: any;
     users: any;
+    school: any;
 
     // File Uploader
     public multiple: boolean = false;
@@ -66,8 +68,8 @@ export class CCreateContactComponent {
         private route: ActivatedRoute, // 👈 Inject ActivatedRoute
         private courseService: CourseService,
         private usersService: UsersService,
-         private router: Router,
-            
+        private router: Router,
+        private schoolService: SchoolService
     ) {}
 
     ngOnInit(): void {
@@ -77,6 +79,8 @@ export class CCreateContactComponent {
 
         this.getCourseList();
         this.getUserList();
+        this.getSchoolList();
+
         // ✅ Get ID from query params
         this.route.queryParams.subscribe((params) => {
             this.contactId = params['contact_id'] || null;
@@ -94,12 +98,13 @@ export class CCreateContactComponent {
 
     initializeContactForm() {
         this.contactForm = this.fb.group({
-            contact_id: ['', Validators.required],
+            // contact_id: ['', Validators.required],
+            school_name: [''],
             contact_name: ['', Validators.required],
             email: [''],
             phone: ['', Validators.required],
             courses: [''],
-            status: ['', Validators.required],
+            // status: ['', Validators.required],
             // lead_source: [''],
             contact_owner: [''],
         });
@@ -200,14 +205,15 @@ export class CCreateContactComponent {
 
                     // ✅ Patch form values
                     this.contactForm.patchValue({
-                        contact_id: contact.unique_id,
+                        // contact_id: contact.unique_id,
+                        school_name: contact?.school?.id || null,
                         contact_name: contact.contact_name,
                         email: contact.email,
                         phone: contact.phone,
-                        courses: contact.courses.id,
-                        status: contact.status,
+                        courses: contact.courses?.id,
+                        // status: contact.status,
                         lead_source: contact.lead_source,
-                        contact_owner:contact?.contact_owner?.id || null,
+                        contact_owner: contact?.contact_owner?.id || null,
                     });
                 } else {
                     console.error('❌ Contact not found.:');
@@ -261,8 +267,27 @@ export class CCreateContactComponent {
             },
         });
     }
-   onCancel(): void {
+    onCancel(): void {
         this.router.navigate(['/crm-page']);
     }
-      
+
+    private getSchoolList(): void {
+        let params = new HttpParams();
+
+        params = params.set('status', true);
+
+        this.schoolService.getSchool(this.page, params).subscribe({
+            next: (response) => {
+                if (response && response.success) {
+                    this.school = response.data?.school || [];
+                } else {
+                    // this.toastr.error('Failed to load users', 'Failed');
+                    console.error('Failed to load school:', response?.message);
+                }
+            },
+            error: (error) => {
+                console.error('API error:', error);
+            },
+        });
+    }
 }

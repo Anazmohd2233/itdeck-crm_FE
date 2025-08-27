@@ -1,6 +1,7 @@
 import {
     Component,
     Inject,
+    Input,
     PLATFORM_ID,
     TemplateRef,
     ViewChild,
@@ -70,12 +71,11 @@ import { SchoolService } from '../../../services/school.service';
         MatDialogModule,
         MatIcon,
 
-        
-                MatTableModule,
-                MatPaginatorModule,
-        
-                MatCheckboxModule,
-                MatTooltipModule,
+        MatTableModule,
+        MatPaginatorModule,
+
+        MatCheckboxModule,
+        MatTooltipModule,
     ],
     templateUrl: './hd-create-ticket.component.html',
     styleUrls: ['./hd-create-ticket.component.scss'],
@@ -97,58 +97,59 @@ export class HdCreateTicketComponent {
 
     ELEMENT_DATA: PeriodicElement[] = [];
 
-      displayedColumns: string[] = [
-   
+    displayedColumns: string[] = [
         'date',
         'start_point',
         'end_point',
         'kilometer',
+        'travel_expence',
         'food_expence',
+        'other_expence',
         'total',
 
         // 'action',
     ];
-     dataSource = new MatTableDataSource<PeriodicElement>(this.ELEMENT_DATA);
+    dataSource = new MatTableDataSource<PeriodicElement>(this.ELEMENT_DATA);
     selection = new SelectionModel<PeriodicElement>(true, []);
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
+     progress: number = 0;
 
     ngAfterViewInit() {
         this.dataSource.paginator = this.paginator;
     }
 
-        /** Whether the number of selected elements matches the total number of rows. */
-        isAllSelected() {
-            const numSelected = this.selection.selected.length;
-            const numRows = this.dataSource.data.length;
-            return numSelected === numRows;
+    /** Whether the number of selected elements matches the total number of rows. */
+    isAllSelected() {
+        const numSelected = this.selection.selected.length;
+        const numRows = this.dataSource.data.length;
+        return numSelected === numRows;
+    }
+
+    /** Selects all rows if they are not all selected; otherwise clear selection. */
+    toggleAllRows() {
+        if (this.isAllSelected()) {
+            this.selection.clear();
+            return;
         }
-    
-        /** Selects all rows if they are not all selected; otherwise clear selection. */
-        toggleAllRows() {
-            if (this.isAllSelected()) {
-                this.selection.clear();
-                return;
-            }
-            this.selection.select(...this.dataSource.data);
+        this.selection.select(...this.dataSource.data);
+    }
+
+    /** The label for the checkbox on the passed row */
+    checkboxLabel(row?: PeriodicElement): string {
+        if (!row) {
+            return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
         }
-    
-        /** The label for the checkbox on the passed row */
-        checkboxLabel(row?: PeriodicElement): string {
-            if (!row) {
-                return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
-            }
-            return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
-                row.start_point + 1
-            }`;
-        }
-    
-        // Search Filter
-        applyFilter(event: Event) {
-            const filterValue = (event.target as HTMLInputElement).value;
-            this.dataSource.filter = filterValue.trim().toLowerCase();
-        }
-    
+        return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
+            row.start_point + 1
+        }`;
+    }
+
+    // Search Filter
+    applyFilter(event: Event) {
+        const filterValue = (event.target as HTMLInputElement).value;
+        this.dataSource.filter = filterValue.trim().toLowerCase();
+    }
 
     // File Uploader
     public multiple: boolean = false;
@@ -156,10 +157,14 @@ export class HdCreateTicketComponent {
     // Task Form
     taskForm!: FormGroup;
     expenceForm!: FormGroup;
+    studentForm!: FormGroup;
 
     isSubmitting = false;
     users: any;
-        school: any;
+    school: any;
+    taskSchool: any;
+        contactCount: any;
+
 
     page: number = 1;
     TaskActivity = TaskActivity;
@@ -168,8 +173,10 @@ export class HdCreateTicketComponent {
     editMode: boolean = false;
     taskData: any;
     dialogRef!: MatDialogRef<any>; // store reference
+    dialogRef_Students!: MatDialogRef<any>; // store reference
 
     @ViewChild('taskDialog') taskDialog!: TemplateRef<any>;
+    @ViewChild('taskDialog_student') taskDialog_student!: TemplateRef<any>;
 
     constructor(
         @Inject(PLATFORM_ID) private platformId: Object,
@@ -181,8 +188,7 @@ export class HdCreateTicketComponent {
         private toastr: ToastrService,
         private route: ActivatedRoute,
         private dialog: MatDialog,
-                private schoolService: SchoolService,
-
+        private schoolService: SchoolService
     ) {
         this.initializeForm();
         this.initializeExpenceForm();
@@ -227,8 +233,7 @@ export class HdCreateTicketComponent {
             taskImage: [''],
             // location: [''],
             school_name: [[]],
-                        school_name_edit: [''],
-
+            school_name_edit: [''],
         });
     }
 
@@ -373,7 +378,7 @@ export class HdCreateTicketComponent {
         });
     }
 
-     private getSchoolList(): void {
+    private getSchoolList(): void {
         let params = new HttpParams();
 
         params = params.set('status', true);
@@ -397,10 +402,12 @@ export class HdCreateTicketComponent {
         this.taskService.getTaskById(this.taskId).subscribe({
             next: (response) => {
                 if (response.success) {
+                    this.contactCount=response.contactCount;
                     this.taskData = response.task;
                     const task = response.task;
-                   const expence= response.task.expence;
-
+                    const expence = response.task.expence;
+                    this.taskSchool = response.task.school;
+                    this.progress = (response.contactCount /  task.school?.strength ) * 100;
 
                     // ✅ Patch form values
                     this.taskForm.patchValue({
@@ -413,7 +420,6 @@ export class HdCreateTicketComponent {
                         school_name_edit: task?.school?.id,
                     });
 
-
                     this.ELEMENT_DATA = expence.map((u: any) => ({
                         id: u.id,
                         date: u.date || 'N/A',
@@ -421,10 +427,11 @@ export class HdCreateTicketComponent {
                         start_point: u.start_point || 'N/A',
                         end_point: u.end_point || 'N/A',
                         kilometer: u.kilometer || 'N/A',
-
+other_expence:u.other_expence|| '-',
+travel_expence:u.travel_expence|| '-',
                         food_expence: u.food_expence || '-',
                         total: u.total || '-',
-                 
+
                         // action: '', // we will handle icons directly in template
                     }));
 
@@ -492,6 +499,61 @@ export class HdCreateTicketComponent {
         }
     }
 
+    createStudent(): void {
+        if (this.studentForm.valid) {
+            // Cast your form value to correct type
+            const students: Students[] = this.studentForm.value.students;
+
+            const payload = {
+                task_id: this.taskId,
+                school_id: this.taskSchool.id,
+                assigned_to: this.taskData.assigned_to.id,
+
+                students: students.map((std: Students) => ({
+                    ...std,
+                })),
+            };
+
+            console.log('payload', JSON.stringify(payload));
+
+            this.isSubmitting = true;
+
+            this.taskService.createBulkContact(payload).subscribe({
+                next: (response) => {
+                    if (response.success) {
+                        this.loadTaskDetails();
+                        this.isSubmitting = false;
+                        this.closeDialog();
+                        this.toastr.success(
+                            'Students Added successfully',
+                            'Success'
+                        );
+                        console.log('✅ Students Added successfully');
+                    } else {
+                        this.isSubmitting = false;
+
+                        this.toastr.error(
+                            response.message || 'Failed to Add Students.',
+                            'Error'
+                        );
+                        console.error('❌ add failed:', response.message);
+                    }
+                },
+                error: (error) => {
+                    this.isSubmitting = false;
+
+                    this.toastr.error('Something went wrong.', 'Error');
+
+                    console.error('❌ API error:', error);
+                },
+            });
+        } else {
+            // Mark all fields as touched to show validation errors
+            this.markFormGroupTouched();
+            console.log('*****student form not validates****');
+        }
+    }
+
     openDialog() {
         this.initializeExpenceForm();
         this.dialogRef = this.dialog.open(this.taskDialog, {
@@ -500,9 +562,20 @@ export class HdCreateTicketComponent {
         });
     }
 
+    openDialog_add_student() {
+        this.initializeStudentForm();
+        this.dialogRef_Students = this.dialog.open(this.taskDialog_student, {
+            width: '40%',
+            maxWidth: '100vw', // prevents overflow
+        });
+    }
+
     closeDialog() {
         if (this.dialogRef) {
             this.dialogRef.close();
+        }
+        if (this.dialogRef_Students) {
+            this.dialogRef_Students.close();
         }
     }
 
@@ -513,6 +586,36 @@ export class HdCreateTicketComponent {
         });
     }
 
+    // component.ts
+    initializeStudentForm(): void {
+        this.studentForm = this.formBuilder.group({
+            students: this.formBuilder.array([this.createStudentGroup()]),
+        });
+
+            // 👇 Only track the last student row
+  this.students.valueChanges.subscribe((students) => {
+    const lastIndex = students.length - 1;
+    const lastStudent = students[lastIndex];
+
+    if (lastStudent.student_name && lastStudent.student_phone) {
+      this.onStudentFilled(lastIndex, lastStudent);
+    }
+  });
+
+    }
+
+
+onStudentFilled(index: number, student: any) {
+  const lastIndex = this.students.length - 1;
+
+  // Only add if the filled row is the last one
+  if (index === lastIndex) {
+    this.students.push(this.createStudentGroup());
+    console.log("✅ New blank row added automatically", index, student);
+  }
+}
+
+
     createExpenseGroup(): FormGroup {
         return this.formBuilder.group({
             date: ['', Validators.required],
@@ -520,6 +623,14 @@ export class HdCreateTicketComponent {
             end_point: ['', Validators.required],
             kilometer: ['', Validators.required],
             food_expence: ['', Validators.required],
+             other_expence: [''],
+        });
+    }
+
+    createStudentGroup(): FormGroup {
+        return this.formBuilder.group({
+            student_name: [''],
+            student_phone: [''],
         });
     }
 
@@ -535,8 +646,19 @@ export class HdCreateTicketComponent {
         this.expenses.removeAt(index);
     }
 
+    get students(): FormArray {
+        return this.studentForm.get('students') as FormArray;
+    }
 
-      private getExpenceList(): void {
+    addStudent(): void {
+        this.students.push(this.createStudentGroup());
+    }
+
+    removeStudent(index: number): void {
+        this.students.removeAt(index);
+    }
+
+    private getExpenceList(): void {
         this.taskService.getExpences(this.page).subscribe({
             next: (response) => {
                 if (response && response.success) {
@@ -552,7 +674,7 @@ export class HdCreateTicketComponent {
 
                         food_expence: u.food_expence || '-',
                         total: u.total || '-',
-                 
+
                         // action: '', // we will handle icons directly in template
                     }));
 
@@ -567,6 +689,12 @@ export class HdCreateTicketComponent {
             },
         });
     }
+
+    getRemainingSeats(): number {
+  if (!this.taskSchool) return 0;
+  return Math.max(this.taskSchool.strength - this.contactCount, 0);
+}
+
 }
 
 interface Expense {
@@ -575,6 +703,13 @@ interface Expense {
     end_point: string;
     kilometer: number;
     food_expence: number;
+        other_expence: number;
+
+}
+
+interface Students {
+    student_name: string;
+    student_phone: string;
 }
 
 export interface PeriodicElement {
@@ -583,8 +718,11 @@ export interface PeriodicElement {
     start_point: any;
     end_point: string;
     kilometer: string;
+        travel_expence: string;
+
     food_expence: string;
+            other_expence: number;
+
     total: Number;
     // action: any;
 }
-

@@ -35,6 +35,46 @@
         <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
             <div class="row">
                 <div class="col-lg-8">
+
+                    <mat-card class="daxa-card sales-overview-card mb-25 border-radius bg-primary border-none d-block" *ngIf="editMode">
+                        <mat-card-content>
+                            <h5 class="text-white">
+                                Lead Progress
+                            </h5>
+                            <div class="sales-overview-info d-flex align-items-center justify-content-between">
+                                <div>
+                                    <span class="sub-title d-block text-white">
+                                        Total Students
+                                    </span>
+                                    <span class="number d-block text-white fw-medium lh-1">
+                                        {{taskSchool?.strength}}
+                                    </span>
+                                </div>
+                                <div>
+                                    <span class="sub-title d-block text-white">
+                                        Collected Leads
+                                    </span>
+                                    <span class="number d-block text-white fw-medium lh-1">
+                                        {{contactCount}}
+                                    </span>
+                                </div>
+                                <div>
+                                    <span class="sub-title d-block text-white">
+                                        Pending
+                                    </span>
+                                    <span class="number d-block text-white fw-medium lh-1">
+{{ getRemainingSeats() }}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar" [style.width.%]="progress"></div>
+                            </div>
+                            <!-- <span class="info d-block text-white">
+            20% increase in last month
+        </span> -->
+                        </mat-card-content>
+                    </mat-card>
                     <div class="row">
                         <div class="col-md-4 col-sm-6">
                             <div class="mb-25">
@@ -60,26 +100,26 @@
                                     School Name
                                 </label>
 
-                                 <mat-form-field>
+                                <mat-form-field>
                                     <mat-label>
                                         Select
                                     </mat-label>
                                     <!-- 'multiple' for multiple select -->
-                                   <mat-select multiple formControlName="school_name" *ngIf="!editMode">
-                                <mat-option *ngFor="let school of school" [value]="school.id">
-                                    {{ school.school_name }}
-                                </mat-option>
-                            </mat-select>
+                                    <mat-select multiple formControlName="school_name" *ngIf="!editMode">
+                                        <mat-option *ngFor="let school of school" [value]="school.id">
+                                            {{ school.school_name }}
+                                        </mat-option>
+                                    </mat-select>
 
-                              <mat-select formControlName="school_name_edit" *ngIf="editMode">
-                                <mat-option *ngFor="let school of school" [value]="school.id">
-                                    {{ school.school_name }}
-                                </mat-option>
-                            </mat-select>
+                                    <mat-select formControlName="school_name_edit" *ngIf="editMode">
+                                        <mat-option *ngFor="let school of school" [value]="school.id">
+                                            {{ school.school_name }}
+                                        </mat-option>
+                                    </mat-select>
                                 </mat-form-field>
 
-                               
-                              
+
+
                             </div>
                         </div>
 
@@ -183,8 +223,8 @@
                 </div>
                 <div class="col-lg-4">
 
-                  
-                 
+
+
                     <div class="col-md-12 col-sm-06">
                         <div class="mb-25">
                             <mat-form-field appearance="outline" class="w-100">
@@ -223,7 +263,7 @@
                         </mat-card-content>
                     </div>
 
-                      <!-- <div class="btn-box">
+                    <!-- <div class="btn-box">
                 <button mat-button type="button" (click)="openDialog()" *ngIf="editMode">
                  
                     <span>Add Expence</span>
@@ -238,9 +278,14 @@
                     <span *ngIf="isSubmitting">Creating...</span>
                     <span *ngIf="!isSubmitting">{{ editMode ? 'Update' : 'Create Task' }}</span>
                 </button>
-                 <button mat-button type="button" (click)="openDialog()" *ngIf="editMode">
-                 
+                <button mat-button type="button" (click)="openDialog()" *ngIf="editMode">
+
                     <span>Add Expence</span>
+                </button>
+
+                <button mat-button type="button" (click)="openDialog_add_student()" *ngIf="editMode">
+
+                    <span>Add Student</span>
                 </button>
                 <!-- <button mat-button type="button" (click)="onCancel()">
                     Cancel
@@ -255,7 +300,7 @@
 
 
 <!-- Angular Material Dialog Template -->
-<ng-template #taskDialog >
+<ng-template #taskDialog>
     <h2 mat-dialog-title>Create Expenses</h2>
     <mat-dialog-content>
         <form *ngIf="expenceForm" [formGroup]="expenceForm" (ngSubmit)="createExpence()">
@@ -290,21 +335,28 @@
                         </mat-form-field>
                     </div>
 
-                    <div class="col-md-4 col-sm-6">
+                    <div class="col-md-3 col-sm-6">
                         <mat-form-field class="w-100">
                             <mat-label>Kilometers</mat-label>
-                            <input matInput formControlName="kilometer">
+                            <input type="number" matInput formControlName="kilometer">
                         </mat-form-field>
                     </div>
 
-                    <div class="col-md-4 col-sm-6">
+                    <div class="col-md-3 col-sm-6">
                         <mat-form-field class="w-100">
                             <mat-label>Food Expense</mat-label>
-                            <input matInput formControlName="food_expence">
+                            <input type="number" matInput formControlName="food_expence">
                         </mat-form-field>
                     </div>
 
-                    <div class="col-md-2 d-flex align-items-center">
+                         <div class="col-md-3 col-sm-6">
+                        <mat-form-field class="w-100">
+                            <mat-label>Other Expense</mat-label>
+                            <input type="number" matInput formControlName="other_expence">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-3 d-flex align-items-center">
                         <button mat-icon-button color="warn" (click)="removeExpense(i)" *ngIf="expenses.length > 1">
                             <mat-icon>delete</mat-icon>
                         </button>
@@ -316,14 +368,75 @@
 
             <mat-dialog-actions align="end" class="w-100">
                 <button mat-button class="warn-btn" type="button" (click)="addExpense()">Add More</button>
-              <button mat-raised-button class="success-btn" type="submit">Save All</button>
+                <button mat-raised-button class="success-btn" type="submit">Save All</button>
             </mat-dialog-actions>
 
-          
 
-            
-        
-    
+
+
+
+
+
+        </form>
+    </mat-dialog-content>
+
+    <mat-dialog-actions>
+        <button mat-button mat-dialog-close>Cancel</button>
+    </mat-dialog-actions>
+
+
+
+</ng-template>
+
+
+
+
+<ng-template #taskDialog_student>
+    <h2 mat-dialog-title>Create Student</h2>
+    <mat-dialog-content>
+        <form *ngIf="studentForm" [formGroup]="studentForm" (ngSubmit)="createStudent()">
+            <div formArrayName="students">
+
+                <div *ngFor="let student of students.controls; let i = index" [formGroupName]="i"
+                    class="row border p-2 mb-25 rounded">
+
+
+
+                    <div class="col-md-5 col-sm-5">
+                        <mat-form-field class="w-100">
+                            <mat-label>Student Name</mat-label>
+                            <input matInput formControlName="student_name">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-5 col-sm-5">
+                        <mat-form-field class="w-100">
+                            <mat-label>Phone</mat-label>
+                            <input matInput formControlName="student_phone">
+                        </mat-form-field>
+                    </div>
+
+
+                    <div class="col-md-2 col-sm-2 d-flex align-items-center">
+                        <button mat-icon-button color="warn" (click)="removeStudent(i)" *ngIf="students.length > 1">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <mat-dialog-actions align="end" class="w-100">
+                <!-- <button mat-button class="warn-btn" type="button" (click)="addStudent()">Add More</button> -->
+                <button mat-raised-button class="success-btn" type="submit">Save All</button>
+            </mat-dialog-actions>
+
+
+
+
+
+
 
         </form>
     </mat-dialog-content>
@@ -332,6 +445,8 @@
         <button mat-button mat-dialog-close>Cancel</button>
     </mat-dialog-actions>
 </ng-template>
+
+
 
 
 
@@ -348,7 +463,7 @@
                     placeholder="Search expence..." (keyup)="applyFilter($event)" #input>
             </form>
         </mat-card-title>
-       
+
     </mat-card-header>
     <mat-card-content>
         <div class="contacts-list-table">
@@ -417,6 +532,15 @@
                         </td>
                     </ng-container>
 
+                        <ng-container matColumnDef="travel_expence">
+                        <th mat-header-cell *matHeaderCellDef>
+                           Travel Expence
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.travel_expence}}
+                        </td>
+                    </ng-container>
+
                     <!-- Last Contacted Column -->
                     <ng-container matColumnDef="food_expence">
                         <th mat-header-cell *matHeaderCellDef>
@@ -424,6 +548,15 @@
                         </th>
                         <td mat-cell *matCellDef="let element">
                             {{element.food_expence}}
+                        </td>
+                    </ng-container>
+
+                      <ng-container matColumnDef="other_expence">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Other Expence
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.other_expence}}
                         </td>
                     </ng-container>
 

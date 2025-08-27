@@ -21,6 +21,10 @@ export class UsersService {
         return this.http.get<any>(url, { params });
     }
 
+       getUserById(id: any): Observable<any> {
+        return this.http.get<any>(`${this.apiUrl}/admin/admin-view/${id}`);
+    }
+
 
 
 
@@ -39,9 +43,7 @@ export class UsersService {
     getUserProfile(): Observable<any> {
         return this.http.get<any>(`${this.apiUrl}/users/profile`);
     }
-    getUserById(id: number): Observable<any> {
-        return this.http.get<any>(`${this.apiUrl}/users/${id}`);
-    }
+ 
 
     // **********************************************///
 
