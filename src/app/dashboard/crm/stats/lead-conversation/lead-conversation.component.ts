@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { LeadConversationService } from './lead-conversation.service';
 import { CustomizerSettingsService } from '../../../../customizer-settings/customizer-settings.service';
 
@@ -9,6 +9,9 @@ import { CustomizerSettingsService } from '../../../../customizer-settings/custo
     styleUrl: './lead-conversation.component.scss'
 })
 export class LeadConversationComponent {
+
+        @Input() data: any;
+
 
     constructor(
         public themeService: CustomizerSettingsService,

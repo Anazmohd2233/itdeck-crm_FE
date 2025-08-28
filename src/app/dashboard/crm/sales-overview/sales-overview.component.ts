@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -43,7 +43,30 @@ export class SalesOverviewComponent implements OnInit {
     });
     }
 
-    @Input() progress: number = 74; 
+    @Input() progress: number = 100; 
+
+
+     @Input() data: any;
+
+    totalStrength: any;
+    total_collected_data: any;
+    balance: any;
+
+
+     ngOnChanges(changes: SimpleChanges): void {
+    if (changes['data'] && this.data) {
+     
+      this.totalStrength = this.data?.totalStrength;
+      this.total_collected_data = this.data?.total_collected_data;
+      this.balance = this.data?.balance;
+
+      this.progress = (this.total_collected_data /this.totalStrength )*100;
+    }
+  }
+
+
+
+ 
     
     
     

@@ -17,6 +17,8 @@ import { NewUsersComponent } from './stats/new-users/new-users.component';
 import { ActiveUsersComponent } from './stats/active-users/active-users.component';
 import { LeadConversationComponent } from './stats/lead-conversation/lead-conversation.component';
 import { RevenueGrowthComponent } from './stats/revenue-growth/revenue-growth.component';
+import { CustomizerSettingsService } from '../../customizer-settings/customizer-settings.service';
+import { DashboardService } from '../../services/dashboard.service';
 
 @Component({
     selector: 'app-crm',
@@ -32,9 +34,45 @@ import { RevenueGrowthComponent } from './stats/revenue-growth/revenue-growth.co
         ClientPaymentStatusComponent,
         TotalLeadsComponent,
         SalesOverviewComponent,
-        MatCardModule, MatMenuModule, MatButtonModule, NewUsersComponent, ActiveUsersComponent, LeadConversationComponent, RevenueGrowthComponent
+        MatCardModule,
+        MatMenuModule,
+        MatButtonModule,
+        NewUsersComponent,
+        ActiveUsersComponent,
+        LeadConversationComponent,
+        RevenueGrowthComponent,
     ],
     templateUrl: './crm.component.html',
     styleUrl: './crm.component.scss',
 })
-export class CrmComponent {}
+export class CrmComponent {
+    dashboardData: any;
+
+    constructor(
+        public themeService: CustomizerSettingsService,
+        private dashboardService: DashboardService
+    ) {}
+
+    ngOnInit(): void {
+        this.getDashboardView();
+    }
+
+    private getDashboardView(): void {
+        this.dashboardService.getDashboardSummary().subscribe({
+            next: (response) => {
+                if (response && response.success) {
+                    this.dashboardData = response.data || [];
+                    console.log('response.data ',response.data )
+                } else {
+                    console.error(
+                        'Failed to load dashboard',
+                        response?.message
+                    );
+                }
+            },
+            error: (error) => {
+                console.error('API error:', error);
+            },
+        });
+    }
+}

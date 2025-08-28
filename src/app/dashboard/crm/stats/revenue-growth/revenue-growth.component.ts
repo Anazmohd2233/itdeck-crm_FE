@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { RevenueGrowthService } from './revenue-growth.service';
 import { CustomizerSettingsService } from '../../../../customizer-settings/customizer-settings.service';
 
@@ -9,6 +9,9 @@ import { CustomizerSettingsService } from '../../../../customizer-settings/custo
     styleUrl: './revenue-growth.component.scss'
 })
 export class RevenueGrowthComponent {
+
+        @Input() data: any;
+
 
     constructor(
         public themeService: CustomizerSettingsService,

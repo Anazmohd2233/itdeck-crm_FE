@@ -4,21 +4,20 @@
     [class.rtl-enabled]="themeService.isRTLEnabled()"
 >
     <h5>
-        Leads
+        Open Tasks
     </h5>
     <div class="number lh-1 fw-medium">
-        94,817
+        {{data}}
     </div>
-    <span class="daxa-up-down-badge position-relative">
+    <!-- <span class="daxa-up-down-badge position-relative">
         <i class="material-symbols-outlined">
             trending_up
         </i>
         8.75%
-    </span>
+    </span> -->
     <div class="chart">
         <div id="crm_active_users_chart"></div>
         <div class="title d-block text-body">
-            This Month
         </div>
     </div>
 </div>

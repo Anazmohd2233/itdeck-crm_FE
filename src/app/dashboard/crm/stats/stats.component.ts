@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
@@ -9,8 +9,37 @@ import { RevenueGrowthComponent } from './revenue-growth/revenue-growth.componen
 
 @Component({
     selector: 'app-stats',
-    imports: [MatCardModule, MatMenuModule, MatButtonModule, NewUsersComponent, ActiveUsersComponent, LeadConversationComponent, RevenueGrowthComponent],
+    imports: [
+        MatCardModule,
+        MatMenuModule,
+        MatButtonModule,
+        NewUsersComponent,
+        ActiveUsersComponent,
+        LeadConversationComponent,
+        RevenueGrowthComponent,
+    ],
     templateUrl: './stats.component.html',
-    styleUrl: './stats.component.scss'
+    styleUrl: './stats.component.scss',
 })
-export class StatsComponent {}
+export class StatsComponent {
+    @Input() data: any;
+
+    total: any;
+    ongoing: any;
+    completed: any;
+    open: any;
+
+    constructor() {}
+
+     ngOnChanges(changes: SimpleChanges): void {
+    if (changes['data'] && this.data) {
+      console.log('data received:', this.data);
+
+      this.total = this.data?.tasks?.total;
+      this.open = this.data?.tasks?.open;
+      this.ongoing = this.data?.tasks?.ongoing;
+      this.completed = this.data?.tasks?.completed;
+    }
+  }
+   
+}

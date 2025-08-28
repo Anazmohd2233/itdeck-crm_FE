@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NewUsersService } from './new-users.service';
 import { CustomizerSettingsService } from '../../../../customizer-settings/customizer-settings.service';
 
@@ -9,6 +9,9 @@ import { CustomizerSettingsService } from '../../../../customizer-settings/custo
     styleUrl: './new-users.component.scss'
 })
 export class NewUsersComponent {
+
+        @Input() data: any;
+
 
     constructor(
         public themeService: CustomizerSettingsService,

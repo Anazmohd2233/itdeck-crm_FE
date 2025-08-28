@@ -4,25 +4,26 @@
             <div class="col-md-6 col-xxxl-3">
 
                 <!-- New Users -->
-                <app-new-users />
+                <app-new-users [data]="total" />
 
             </div>
             <div class="col-md-6 col-xxxl-3">
 
                 <!-- Active Users -->
-                <app-active-users />
+                <app-active-users [data]="open" />
 
             </div>
             <div class="col-md-6 col-xxxl-3">
 
                 <!-- Revenue Growth -->
-                <app-revenue-growth />
+                <app-revenue-growth [data]="ongoing" />
 
             </div>
             <div class="col-md-6 col-xxxl-3">
+                   <!-- <app-revenue-growth [data]="ongoing" /> -->
 
                 <!-- Lead Conversation -->
-                <app-lead-conversation />
+                <app-lead-conversation [data]="completed" />
 
             </div>
         </div>

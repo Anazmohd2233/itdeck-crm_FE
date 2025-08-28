@@ -9,20 +9,48 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { CustomizerSettingsService } from '../../../customizer-settings/customizer-settings.service';
+import { DashboardService } from '../../../services/dashboard.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
     selector: 'app-recent-leads',
-    imports: [MatCardModule, MatMenuModule, MatButtonModule, MatTableModule, MatPaginatorModule, NgIf, MatCheckboxModule, MatTooltipModule],
+    imports: [
+                RouterLink,
+        MatCardModule,
+        MatMenuModule,
+        MatButtonModule,
+        MatTableModule,
+        MatPaginatorModule,
+        NgIf,
+        MatCheckboxModule,
+        MatTooltipModule,
+    ],
     templateUrl: './recent-leads.component.html',
-    styleUrl: './recent-leads.component.scss'
+    styleUrl: './recent-leads.component.scss',
 })
 export class RecentLeadsComponent {
-
-    displayedColumns: string[] = ['select', 'customer', 'email', 'source', 'status', 'action'];
-    dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+        ELEMENT_DATA: PeriodicElement[] = [];
+        taskData:any;
+    
+    displayedColumns: string[] = [
+        'school_name',
+        'location',
+        'strength',
+        'collected_data',
+        'status',
+        'assigned_user',
+        'created_date',
+        'due_date',
+        'action',
+    ];
+    dataSource = new MatTableDataSource<PeriodicElement>(this.ELEMENT_DATA);
     selection = new SelectionModel<PeriodicElement>(true, []);
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+    ngOnInit(): void {
+        this.getDashboardView();
+    }
 
     ngAfterViewInit() {
         this.dataSource.paginator = this.paginator;
@@ -49,212 +77,72 @@ export class RecentLeadsComponent {
         if (!row) {
             return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
         }
-        return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.customer + 1}`;
+        return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
+            row.school_name + 1
+        }`;
     }
 
     constructor(
-        public themeService: CustomizerSettingsService
+        public themeService: CustomizerSettingsService,
+        private dashboardService: DashboardService
     ) {}
 
+    private getDashboardView(): void {
+        this.dashboardService.getDashboardReport(1).subscribe({
+            next: (response) => {
+                if (response && response.success) {
+
+                       const contacts = response.data?.tasks || [];
+                     this.taskData = response.data?.total || contacts.length; 
+
+                    this.ELEMENT_DATA = contacts.map((u: any) => ({
+
+                        
+                        id: u.id,
+                        school_name: u?.school_name || 'N/A',
+
+                        location: u?.location?.name || 'N/A',
+
+                        strength: u?.strength || 'N/A',
+                        collected_data: u?.collected_data,
+                        status: u?.status || 'N/A',
+                        assigned_user: u?.assigned_user?.name || 'N/A',
+                            created_date: u.created_at
+                ? new Date(u.created_at).toLocaleDateString()
+                : 'N/A',
+                        due_date: u?.due_date || 'N/A',
+                       action: {
+                view: 'visibility',
+           
+            },
+                    }));
+
+                    this.dataSource.data = this.ELEMENT_DATA;
+                } else {
+                    console.error(
+                        'Failed to load dashboard',
+                        response?.message
+                    );
+                }
+            },
+            error: (error) => {
+                console.error('API error:', error);
+            },
+        });
+    }
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-    {
-        customer: {
-            img: 'images/users/user1.jpg',
-            name: 'Carlos Daley'
-        },
-        email: 'carlos@daxa.com',
-        source: 'Website',
-        status: {
-            new: 'New',
-            // won: 'Won',
-            // inProgress: 'In Progress',
-            // lost: 'Lost',
-        },
-        action: {
-            view: 'visibility',
-            edit: 'edit',
-            delete: 'delete'
-        }
-    },
-    {
-        customer: {
-            img: 'images/users/user2.jpg',
-            name: 'Dorothy Young'
-        },
-        email: 'dorothy@daxa.com',
-        source: 'Referral',
-        status: {
-            // new: 'New',
-            won: 'Won',
-            // inProgress: 'In Progress',
-            // lost: 'Lost',
-        },
-        action: {
-            view: 'visibility',
-            edit: 'edit',
-            delete: 'delete'
-        }
-    },
-    {
-        customer: {
-            img: 'images/users/user3.jpg',
-            name: 'Greg Woody'
-        },
-        email: 'greg@daxa.com',
-        source: 'Cold Call',
-        status: {
-            // new: 'New',
-            // won: 'Won',
-            inProgress: 'In Progress',
-            // lost: 'Lost',
-        },
-        action: {
-            view: 'visibility',
-            edit: 'edit',
-            delete: 'delete'
-        }
-    },
-    {
-        customer: {
-            img: 'images/users/user4.jpg',
-            name: 'Deborah Rosol'
-        },
-        email: 'deborah@daxa.com',
-        source: 'Email Campaign',
-        status: {
-            // new: 'New',
-            // won: 'Won',
-            // inProgress: 'In Progress',
-            lost: 'Lost',
-        },
-        action: {
-            view: 'visibility',
-            edit: 'edit',
-            delete: 'delete'
-        }
-    }
-    // {
-    //     customer: {
-    //         img: 'images/users/user5.jpg',
-    //         name: 'Kendall Allen'
-    //     },
-    //     email: 'kendall@daxa.com',
-    //     source: 'Online Store',
-    //     status: {
-    //         new: 'New',
-    //         // won: 'Won',
-    //         // inProgress: 'In Progress',
-    //         // lost: 'Lost',
-    //     },
-    //     action: {
-    //         view: 'visibility',
-    //         edit: 'edit',
-    //         delete: 'delete'
-    //     }
-    // },
-    // {
-    //     customer: {
-    //         img: 'images/users/user6.jpg',
-    //         name: 'Mark Stjohn'
-    //     },
-    //     email: 'mark@daxa.com',
-    //     source: 'Online Store',
-    //     status: {
-    //         new: 'New',
-    //         // won: 'Won',
-    //         // inProgress: 'In Progress',
-    //         // lost: 'Lost',
-    //     },
-    //     action: {
-    //         view: 'visibility',
-    //         edit: 'edit',
-    //         delete: 'delete'
-    //     }
-    // },
-    // {
-    //     customer: {
-    //         img: 'images/users/user7.jpg',
-    //         name: 'Joan Stanley'
-    //     },
-    //     email: 'joan@daxa.com',
-    //     source: 'Email Campaign',
-    //     status: {
-    //         new: 'New',
-    //         // won: 'Won',
-    //         // inProgress: 'In Progress',
-    //         // lost: 'Lost',
-    //     },
-    //     action: {
-    //         view: 'visibility',
-    //         edit: 'edit',
-    //         delete: 'delete'
-    //     }
-    // },
-    // {
-    //     customer: {
-    //         img: 'images/users/user8.jpg',
-    //         name: 'Jacob Bell'
-    //     },
-    //     email: 'jacob@daxa.com',
-    //     source: 'Cold Call',
-    //     status: {
-    //         // new: 'New',
-    //         won: 'Won',
-    //         // inProgress: 'In Progress',
-    //         // lost: 'Lost',
-    //     },
-    //     action: {
-    //         view: 'visibility',
-    //         edit: 'edit',
-    //         delete: 'delete'
-    //     }
-    // },
-    // {
-    //     customer: {
-    //         img: 'images/users/user9.jpg',
-    //         name: 'Donald Bryan'
-    //     },
-    //     email: 'donald@daxa.com',
-    //     source: 'Referral',
-    //     status: {
-    //         // new: 'New',
-    //         won: 'Won',
-    //         // inProgress: 'In Progress',
-    //         // lost: 'Lost',
-    //     },
-    //     action: {
-    //         view: 'visibility',
-    //         edit: 'edit',
-    //         delete: 'delete'
-    //     }
-    // },
-    // {
-    //     customer: {
-    //         img: 'images/users/user10.jpg',
-    //         name: 'Kristina Blomquist'
-    //     },
-    //     email: 'kristina@daxa.com',
-    //     source: 'Website',
-    //     status: {
-    //         // new: 'New',
-    //         // won: 'Won',
-    //         // inProgress: 'In Progress',
-    //         lost: 'Lost',
-    //     },
-    //     action: {
-    //         view: 'visibility',
-    //         edit: 'edit',
-    //         delete: 'delete'
-    //     }
-    // }
-];
+
 
 export interface PeriodicElement {
-    customer: any;
-    email: string;
-    source: string;
+    school_name: any;
+    location: any;
+    strength: any;
+    collected_data: any;
     status: any;
+    assigned_user: any;
+    created_date: any;
+    due_date: any;
+
     action: any;
 }
