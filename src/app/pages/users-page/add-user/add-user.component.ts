@@ -19,10 +19,11 @@ import { FileUploadModule } from '@iplab/ngx-file-upload';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CustomizerSettingsService } from '../../../customizer-settings/customizer-settings.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { UsersService } from '../../../services/users.service';
 import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
+import { SchoolService } from '../../../services/school.service';
 
 @Component({
     selector: 'app-add-user',
@@ -52,6 +53,8 @@ export class AddUserComponent {
     isSubmitting = false;
     editMode: boolean = false;
     userId: string | null = null; // 👈 Store the ID here
+    page: number = 1;
+    location: any;
 
     // File Uploader
     public multiple: boolean = false;
@@ -62,11 +65,13 @@ export class AddUserComponent {
         public themeService: CustomizerSettingsService,
         private usersService: UsersService,
         private toastr: ToastrService,
-        private route: ActivatedRoute // 👈 Inject ActivatedRoute
+        private route: ActivatedRoute, // 👈 Inject ActivatedRoute
+        private schoolService: SchoolService
     ) {}
 
     ngOnInit(): void {
         this.initializeUserForm();
+        this.getLocationList();
 
         // ✅ Get ID from query params
         this.route.queryParams.subscribe((params) => {
@@ -92,6 +97,7 @@ export class AddUserComponent {
             status: [''],
             password: [''],
             user_type: ['', Validators.required],
+            location: ['', [Validators.required]],
         });
     }
 
@@ -159,6 +165,8 @@ export class AddUserComponent {
                     this.userForm.patchValue({
                         // contact_id: contact.unique_id,
                         user_name: contact?.user_name || null,
+                        location: contact?.location?.id || '',
+
                         name: contact?.name,
                         email: contact?.email,
                         phone: contact?.phone,
@@ -178,6 +186,29 @@ export class AddUserComponent {
             error: (err) => {
                 console.error('❌ Error loading user:', err);
                 this.toastr.error('Failed to load user details.', 'Error');
+            },
+        });
+    }
+
+    private getLocationList(): void {
+        let params = new HttpParams();
+
+        params = params.set('status', true);
+
+        this.schoolService.getLocation(this.page, params).subscribe({
+            next: (response) => {
+                if (response && response.success) {
+                    this.location = response.data?.location || [];
+                } else {
+                    // this.toastr.error('Failed to load users', 'Failed');
+                    console.error(
+                        'Failed to load location:',
+                        response?.message
+                    );
+                }
+            },
+            error: (error) => {
+                console.error('API error:', error);
             },
         });
     }

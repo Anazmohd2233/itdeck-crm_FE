@@ -170,7 +170,7 @@ export const routes: Routes = [
             { path: 'ticket-details', component: HdTicketDetailsComponent },
             { path: 'agents', component: HdAgentsComponent },
             { path: 'reports', component: HdReportsComponent },
-            { path: 'create-ticket', component: HdCreateTicketComponent },
+            { path: 'create-task', component: HdCreateTicketComponent },
         ],
     },
     {

@@ -223,7 +223,7 @@ export class HdCreateTicketComponent {
 
     private initializeForm(): void {
         this.taskForm = this.formBuilder.group({
-            task_title: ['', [Validators.required, Validators.minLength(3)]],
+            // task_title: ['', [Validators.required, Validators.minLength(3)]],
             activity: [[]],
             priority: ['', Validators.required],
             assigned_to: ['', Validators.required],
@@ -339,9 +339,9 @@ export class HdCreateTicketComponent {
     }
 
     // Getter methods for easy access to form controls in template
-    get task_title() {
-        return this.taskForm.get('task_title');
-    }
+    // get task_title() {
+    //     return this.taskForm.get('task_title');
+    // }
     get task_type() {
         return this.taskForm.get('task_type');
     }
@@ -411,7 +411,7 @@ export class HdCreateTicketComponent {
 
                     // ✅ Patch form values
                     this.taskForm.patchValue({
-                        task_title: task.task_title,
+                        // task_title: task.task_title,
                         priority: task.priority,
                         assigned_to: task.assigned_to.id,
                         due_date: task.due_date,

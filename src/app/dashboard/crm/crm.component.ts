@@ -10,11 +10,31 @@ import { ToDoListComponent } from './to-do-list/to-do-list.component';
 import { ClientPaymentStatusComponent } from './client-payment-status/client-payment-status.component';
 import { TotalLeadsComponent } from './total-leads/total-leads.component';
 import { SalesOverviewComponent } from './sales-overview/sales-overview.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
+import { NewUsersComponent } from './stats/new-users/new-users.component';
+import { ActiveUsersComponent } from './stats/active-users/active-users.component';
+import { LeadConversationComponent } from './stats/lead-conversation/lead-conversation.component';
+import { RevenueGrowthComponent } from './stats/revenue-growth/revenue-growth.component';
 
 @Component({
     selector: 'app-crm',
-    imports: [StatsComponent, MostLeadsComponent, CountryStatsComponent, EarningReportsComponent, TasksStatsComponent, TopCustomersComponent, RecentLeadsComponent, ToDoListComponent, ClientPaymentStatusComponent, TotalLeadsComponent, SalesOverviewComponent],
+    imports: [
+        StatsComponent,
+        MostLeadsComponent,
+        CountryStatsComponent,
+        EarningReportsComponent,
+        TasksStatsComponent,
+        TopCustomersComponent,
+        RecentLeadsComponent,
+        ToDoListComponent,
+        ClientPaymentStatusComponent,
+        TotalLeadsComponent,
+        SalesOverviewComponent,
+        MatCardModule, MatMenuModule, MatButtonModule, NewUsersComponent, ActiveUsersComponent, LeadConversationComponent, RevenueGrowthComponent
+    ],
     templateUrl: './crm.component.html',
-    styleUrl: './crm.component.scss'
+    styleUrl: './crm.component.scss',
 })
 export class CrmComponent {}

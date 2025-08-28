@@ -36,7 +36,7 @@ export class UsersListComponent {
         'id',
         'name',
         'school_type',
-        'email',
+        'location',
         'phone',
         'designation',
         'type',
@@ -80,6 +80,7 @@ export class UsersListComponent {
                         name: u.name || 'N/A',
                         email: u.email || 'N/A',
                         type: u.user_type || 'N/A',
+                        location:u?.location?.name,
 
                         phone: u.phone || '-',
                         designation: u.designation || '-',
@@ -103,7 +104,7 @@ export class UsersListComponent {
 export interface PeriodicElement {
     id: any;
     name: string;
-    email: any;
+    location: any;
     phone: string;
     type: string;
     school_type: any;

@@ -21,23 +21,21 @@
 
 <!-- Add User -->
 <div class="row">
-<form [formGroup]="userForm" (ngSubmit)="createUser()">
+    <form [formGroup]="userForm" (ngSubmit)="createUser()">
 
-    <div class="col-xxl-12 col-xxxl-12">
-        <mat-card
-            class="daxa-card add-user-card mb-25 border-radius bg-white border-none d-block"
-            [class.rtl-enabled]="themeService.isRTLEnabled()"
-        >
-            <mat-card-header>
-                <mat-card-title>
-                    <h5 class="mb-0">
-                        Add User
-                    </h5>
-                </mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <div class="row">
-                    <!-- <div class="col-sm-4">
+        <div class="col-xxl-12 col-xxxl-12">
+            <mat-card class="daxa-card add-user-card mb-25 border-radius bg-white border-none d-block"
+                [class.rtl-enabled]="themeService.isRTLEnabled()">
+                <mat-card-header>
+                    <mat-card-title>
+                        <h5 class="mb-0">
+                            Add User
+                        </h5>
+                    </mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <div class="row">
+                        <!-- <div class="col-sm-4">
                         <div class="mb-25">
                             <label class="main-label d-block lh-1 text-black">
                                 User ID
@@ -50,137 +48,29 @@
                             </mat-form-field>
                         </div>
                     </div> -->
-                    <div class="col-sm-4">
-                        <div class="mb-25">
-                            <label class="main-label d-block lh-1 text-black">
-                                Name
-                            </label>
-                            <mat-form-field>
-                                <mat-label>
-                                     Name
-                                </mat-label>
-                                <input matInput formControlName="name">
-                            </mat-form-field>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="mb-25">
-                            <label class="main-label d-block lh-1 text-black">
-                                Email Address
-                            </label>
-                            <mat-form-field>
-                                <mat-label>
-                                    Email address
-                                </mat-label>
-                                <input matInput formControlName="email">
-                            </mat-form-field>
-                        </div>
-                    </div>
-               
-                    <div class="col-sm-4">
-                        <div class="mb-25">
-                            <label class="main-label d-block lh-1 text-black">
-                                Phone No
-                            </label>
-                            <mat-form-field>
-                                <mat-label>
-                                    Phone no
-                                </mat-label>
-                                <input matInput formControlName="phone">
-                            </mat-form-field>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-4">
-                        <div class="mb-25">
-                            <label class="main-label d-block lh-1 text-black">
-                                Designation
-                            </label>
-                            <mat-form-field>
-                                <mat-label>
-                                 Designation
-                                </mat-label>
-                                <input matInput formControlName="designation">
-                            </mat-form-field>
-                        </div>
-                    </div>
-
-                         <div class="col-md-4 col-sm-6">
-                    <div class="mb-25">
-                        <label class="main-label d-block lh-1 text-black">
-                            Segment
-                        </label>
-                        <mat-form-field>
-                            <mat-label>
-                                College / School
-                            </mat-label>
-                            <mat-select formControlName="school_type">
-                                <mat-option value="SCHOOL">
-                                    School
-                                </mat-option>
-                                <mat-option value="COLLEGE">
-                                    College
-                                </mat-option>
-
-                            </mat-select>
-                        </mat-form-field>
-
-                    </div>
-                </div>
-
-                    <div class="col-sm-4" *ngIf="editMode">
-                        <div class="mb-25">
-                            <label class="main-label d-block lh-1 text-black">
-                                Status
-                            </label>
-                            <mat-form-field>
-                                <mat-label>
-                                    Select status
-                                </mat-label>
-                                <mat-select formControlName="status">
-                                    <mat-option value="true">
-                                        Active
-                                    </mat-option>
-                                    <mat-option value="false">
-                                        Inactive
-                                    </mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-4">
-                        <div class="mb-25">
-                            <label class="main-label d-block lh-1 text-black">
-                                User Type
-                            </label>
-                            <mat-form-field>
-                                <mat-label>
-                                    Select Type
-                                </mat-label>
-                                <mat-select formControlName="user_type">
-                                    <mat-option value="ADMIN">
-                                        Admin
-                                    </mat-option>
-                                    <mat-option value="USER">
-                                        User
-                                    </mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                        </div>
-                    </div>
-
-                    <div class="row">
                         <div class="col-sm-4">
                             <div class="mb-25">
                                 <label class="main-label d-block lh-1 text-black">
-                                    User Name
+                                    Name
                                 </label>
                                 <mat-form-field>
                                     <mat-label>
-                                         User Name
+                                        Name
                                     </mat-label>
-                                    <input matInput formControlName="user_name">
+                                    <input matInput formControlName="name">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="mb-25">
+                                <label class="main-label d-block lh-1 text-black">
+                                    Email Address
+                                </label>
+                                <mat-form-field>
+                                    <mat-label>
+                                        Email address
+                                    </mat-label>
+                                    <input matInput formControlName="email">
                                 </mat-form-field>
                             </div>
                         </div>
@@ -188,27 +78,154 @@
                         <div class="col-sm-4">
                             <div class="mb-25">
                                 <label class="main-label d-block lh-1 text-black">
-                                    Password
+                                    Phone No
                                 </label>
                                 <mat-form-field>
                                     <mat-label>
-                                         Password
+                                        Phone no
                                     </mat-label>
-                                    <input matInput formControlName="password">
+                                    <input matInput formControlName="phone">
                                 </mat-form-field>
                             </div>
                         </div>
+
+                        <div class="col-sm-4">
+                            <div class="mb-25">
+                                <label class="main-label d-block lh-1 text-black">
+                                    Designation
+                                </label>
+                                <mat-form-field>
+                                    <mat-label>
+                                        Designation
+                                    </mat-label>
+                                    <input matInput formControlName="designation">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-sm-6">
+                            <div class="mb-25">
+                                <label class="main-label d-block lh-1 text-black">
+                                    Segment
+                                </label>
+                                <mat-form-field>
+                                    <mat-label>
+                                        College / School
+                                    </mat-label>
+                                    <mat-select formControlName="school_type">
+                                        <mat-option value="SCHOOL">
+                                            School
+                                        </mat-option>
+                                        <mat-option value="COLLEGE">
+                                            College
+                                        </mat-option>
+
+                                    </mat-select>
+                                </mat-form-field>
+
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4" *ngIf="editMode">
+                            <div class="mb-25">
+                                <label class="main-label d-block lh-1 text-black">
+                                    Status
+                                </label>
+                                <mat-form-field>
+                                    <mat-label>
+                                        Select status
+                                    </mat-label>
+                                    <mat-select formControlName="status">
+                                        <mat-option value="true">
+                                            Active
+                                        </mat-option>
+                                        <mat-option value="false">
+                                            Inactive
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <div class="mb-25">
+                                <label class="main-label d-block lh-1 text-black">
+                                    User Type
+                                </label>
+                                <mat-form-field>
+                                    <mat-label>
+                                        Select Type
+                                    </mat-label>
+                                    <mat-select formControlName="user_type">
+                                        <mat-option value="ADMIN">
+                                            Admin
+                                        </mat-option>
+                                        <mat-option value="USER">
+                                            User
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-sm-6">
+                            <div class="mb-25">
+                                <label class="main-label d-block lh-1 text-black">
+                                    Location
+                                </label>
+                                <mat-form-field>
+                                    <mat-label>
+                                        Select Location
+                                    </mat-label>
+                                    <mat-select formControlName="location">
+                                        <mat-option *ngFor="let loc of location" [value]="loc.id">
+                                            {{ loc.name }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="mb-25">
+                                    <label class="main-label d-block lh-1 text-black">
+                                        User Name
+                                    </label>
+                                    <mat-form-field>
+                                        <mat-label>
+                                            User Name
+                                        </mat-label>
+                                        <input matInput formControlName="user_name">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <div class="mb-25">
+                                    <label class="main-label d-block lh-1 text-black">
+                                        Password
+                                    </label>
+                                    <mat-form-field>
+                                        <mat-label>
+                                            Password
+                                        </mat-label>
+                                        <input matInput formControlName="password">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="btn-box">
-                    <button mat-button type="submit">
-                          <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm me-1" role="status"
+                    <div class="btn-box">
+                        <button mat-button type="submit">
+                            <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm me-1" role="status"
                                 aria-hidden="true"></span>
-                        Add User
-                    </button>
-                </div>
-            </mat-card-content>
-        </mat-card>
-    </div>
-</form>
+                            Add User
+                        </button>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </form>
 </div>
