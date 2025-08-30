@@ -103,7 +103,7 @@ export class CCreateContactComponent {
             contact_name: ['', Validators.required],
             email: [''],
             phone: ['', Validators.required],
-            courses: [''],
+            // courses: [''],
             // status: ['', Validators.required],
             // lead_source: [''],
             contact_owner: [''],
@@ -210,7 +210,7 @@ export class CCreateContactComponent {
                         contact_name: contact.contact_name,
                         email: contact.email,
                         phone: contact.phone,
-                        courses: contact.courses?.id,
+                        // courses: contact.courses?.id,
                         // status: contact.status,
                         lead_source: contact.lead_source,
                         contact_owner: contact?.contact_owner?.id || null,
@@ -223,7 +223,7 @@ export class CCreateContactComponent {
             },
             error: (err) => {
                 console.error('❌ Error loading contact:', err);
-                this.toastr.error('Failed to load contact details.', 'Error');
+                // this.toastr.error('Failed to load contact details.', 'Error');
             },
         });
     }

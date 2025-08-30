@@ -1,25 +1,17 @@
-<header
-    class="header-area bg-white border-radius transition"
-    [ngClass]="{'active': isSidebarToggled, 'sticky': isSticky}"
-    [class.component-dark-theme]="themeService.isDark()"
-    [class.right-sidebar]="themeService.isRightSidebar()"
-    [class.hide-sidebar]="themeService.isHideSidebar()"
-    [class.dark-header]="themeService.isHeaderDark()"
-    [class.card-borderd-theme]="themeService.isCardBorder()"
-    [class.rtl-enabled]="themeService.isRTLEnabled()"
->
+<header class="header-area bg-white border-radius transition"
+    [ngClass]="{'active': isSidebarToggled, 'sticky': isSticky}" [class.component-dark-theme]="themeService.isDark()"
+    [class.right-sidebar]="themeService.isRightSidebar()" [class.hide-sidebar]="themeService.isHideSidebar()"
+    [class.dark-header]="themeService.isHeaderDark()" [class.card-borderd-theme]="themeService.isCardBorder()"
+    [class.rtl-enabled]="themeService.isRTLEnabled()">
     <div class="d-md-flex align-items-center justify-content-between">
         <div class="header-left-side d-flex align-items-center">
-            <div
-                class="burger-menu cursor-pointer transition d-xl-none"
-                [ngClass]="{'active': isSidebarToggled}"
-                (click)="toggle()"
-            >
+            <div class="burger-menu cursor-pointer transition d-xl-none" [ngClass]="{'active': isSidebarToggled}"
+                (click)="toggle()">
                 <span class="top-bar d-block bg-black transition"></span>
                 <span class="middle-bar d-block bg-black transition"></span>
                 <span class="bottom-bar d-block bg-black transition"></span>
             </div>
-           <!-- <form class="search-box position-relative">
+            <!-- <form class="search-box position-relative">
                 <i class="material-symbols-outlined">
                     search
                 </i>
@@ -74,11 +66,7 @@
                 </mat-menu>
             </li> -->
             <li>
-                <button
-                    mat-button
-                    class="dark-swtich-btn"
-                    (click)="toggleTheme()"
-                >
+                <button mat-button class="dark-swtich-btn" (click)="toggleTheme()">
                     <i class="material-symbols-outlined">
                         dark_mode
                     </i>
@@ -154,7 +142,7 @@
                     </div>
                 </mat-menu>
             </li> -->
-            <li>
+            <!-- <li>
                 <button mat-icon-button [matMenuTriggerFor]="notificationsMenu" class="notifications-menu-btn p-0">
                     <i class="material-symbols-outlined">
                         notifications
@@ -229,49 +217,46 @@
                         </div>
                     </div>
                 </mat-menu>
-            </li>
+            </li> -->
             <li>
                 <button mat-button [matMenuTriggerFor]="profileMenu" class="profile-menu-btn">
                     <img src="images/admin.png" alt="profile-image">
                     <span class="status d-inline-block rounded-circle position-absolute"></span>
                 </button>
                 <mat-menu class="profile-menu-dropdown" #profileMenu="matMenu" xPosition="before">
-                    <div
-                        [class.dark-menu]="themeService.isDark() || themeService.isHeaderDark()"
-                    >
+                    <div [class.dark-menu]="themeService.isDark() || themeService.isHeaderDark()">
                         <div class="menu-header d-flex align-items-center">
                             <img src="images/admin.png" alt="profile-image">
                             <div class="title">
                                 <a routerLink="/my-profile" class="d-inline-block fw-medium">
-                                    Mateo Luca
+                                    {{users?.name}}
                                 </a>
                                 <span class="designation d-block text-body">
-                                    Admin
-                                </span>
+                                    {{users?.user_type}} </span>
                             </div>
                         </div>
                         <ul class="menu-body pl-0 mb-0 mt-0 list-unstyled">
-                            <li class="position-relative transition fw-medium">
+                            <!-- <li class="position-relative transition fw-medium">
                                 <i class="material-symbols-outlined">
                                     person
                                 </i>
                                 My Profile
                                 <a routerLink="/my-profile" class="link-btn d-block position-absolute"></a>
-                            </li>
-                            <li class="position-relative transition fw-medium">
+                            </li> -->
+                            <!-- <li class="position-relative transition fw-medium">
                                 <i class="material-symbols-outlined">
                                     settings
                                 </i>
                                 Settings
                                 <a routerLink="/settings" class="link-btn d-block position-absolute"></a>
-                            </li>
-                            <li class="position-relative transition fw-medium">
+                            </li> -->
+                            <!-- <li class="position-relative transition fw-medium">
                                 <i class="material-symbols-outlined">
                                     info
                                 </i>
                                 Support
                                 <a routerLink="/settings/connections" class="link-btn d-block position-absolute"></a>
-                            </li>
+                            </li> -->
                             <li class="position-relative transition fw-medium">
                                 <i class="material-symbols-outlined">
                                     logout

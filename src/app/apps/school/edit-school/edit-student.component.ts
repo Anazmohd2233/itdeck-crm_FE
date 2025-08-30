@@ -1,5 +1,5 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
 import {
     FormBuilder,
     FormGroup,
@@ -25,6 +25,7 @@ import { CourseService } from '../../../services/course.service';
 import { LeadStatus } from '../../../services/enums';
 import { SchoolService } from '../../../services/school.service';
 import { HttpParams } from '@angular/common/http';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
     selector: 'app-edit-student',
@@ -73,7 +74,12 @@ export class AddSchoolComponent implements OnInit {
     editMode: boolean = false;
     location: any;
     page: number = 1;
-    LeadStatus = LeadStatus; // <-- Make enum accessible in HTML
+    pageSize: number = 20;
+    totalRecords: number = 0;  
+      LeadStatus = LeadStatus; // <-- Make enum accessible in HTML
+
+        @ViewChild(MatPaginator) paginator!: MatPaginator;
+
 
     // Options for dropdowns
     leadSources = [
@@ -125,6 +131,7 @@ export class AddSchoolComponent implements OnInit {
 
         this.initializeForm();
     }
+       
 
     ngOnDestroy(): void {
         if (isPlatformBrowser(this.platformId) && this.editor) {
@@ -260,6 +267,8 @@ export class AddSchoolComponent implements OnInit {
         this.schoolService.getLocation(this.page, params).subscribe({
             next: (response) => {
                 if (response && response.success) {
+                                        this.totalRecords = response.data?.total;
+
                     this.location = response.data?.location || [];
                 } else {
                     // this.toastr.error('Failed to load users', 'Failed');
@@ -274,4 +283,18 @@ export class AddSchoolComponent implements OnInit {
             },
         });
     }
+
+    searchTimeout: any; // debounce timer
+
+onDropdownOpened(opened: boolean): void {
+  if (opened) {
+    this.getLocationList(); // load initial data when dropdown opens
+  }
+}
+
+onSearchLocation(searchTerm: string): void {
+  clearTimeout(this.searchTimeout);
+console.log('***searchTerm***',searchTerm)
+}
+
 }

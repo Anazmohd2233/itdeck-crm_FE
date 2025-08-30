@@ -43,12 +43,9 @@ import { SchoolService } from '../../services/school.service';
 export class LocationComponent {
     ELEMENT_DATA: PeriodicElement[] = [];
 
-    
-    
-
-
-
     page: number = 1;
+    pageSize: number = 20;
+    totalRecords: number = 0;
     students: any;
 
     displayedColumns: string[] = [
@@ -64,7 +61,13 @@ export class LocationComponent {
     @ViewChild(MatPaginator) paginator!: MatPaginator;
 
     ngAfterViewInit() {
-        this.dataSource.paginator = this.paginator;
+        // listen to paginator changes
+        console.log('**********page changed**********');
+        this.paginator.page.subscribe((event) => {
+            this.page = event.pageIndex + 1; // MatPaginator is 0-based, API is 1-based
+            this.pageSize = event.pageSize;
+            this.getLocationtList();
+        });
     }
 
     /** Whether the number of selected elements matches the total number of rows. */
@@ -111,8 +114,6 @@ export class LocationComponent {
     toggleClass() {
         this.classApplied = !this.classApplied;
     }
-    
-
 
     copyToClipboard(input: HTMLInputElement) {
         input.select();
@@ -129,10 +130,11 @@ export class LocationComponent {
     }
 
     private getLocationtList(): void {
-
         this.schoolService.getLocation(this.page).subscribe({
             next: (response) => {
                 if (response && response.success) {
+                    this.totalRecords = response.data?.total;
+
                     const location = response.data?.location || [];
 
                     this.ELEMENT_DATA = location.map((u: any) => ({
@@ -140,7 +142,6 @@ export class LocationComponent {
                         name: u.name || 'N/A',
                         status: u.status,
 
-                
                         action: '', // we will handle icons directly in template
                     }));
 
@@ -170,8 +171,7 @@ export class LocationComponent {
 export interface PeriodicElement {
     id: any;
     name: any;
-        status: any;
-
+    status: any;
 
     action: any;
 }

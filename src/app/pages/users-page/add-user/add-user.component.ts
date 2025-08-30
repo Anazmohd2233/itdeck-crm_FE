@@ -128,18 +128,20 @@ export class AddUserComponent {
             formValue.user_type === 'admin' ? 'true' : 'false'
         );
 
-        this.usersService.createUser(formData).subscribe({
+        if(this.editMode){
+
+              this.usersService.updateUser(this.userId,formData).subscribe({
             next: (response) => {
                 if (response.success) {
                     this.isSubmitting = false;
-                    this.userForm.reset();
-                    this.toastr.success('User Added successfully', 'Success');
-                    console.log('✅ User Added successfully');
+      
+                    this.toastr.success('User Updated successfully', 'Success');
+                    console.log('✅ User Updated successfully');
                 } else {
                     this.isSubmitting = false;
 
                     this.toastr.error(
-                        response.message || 'Failed to Add Service.',
+                        response.message || 'Failed to Updated user.',
                         'Error'
                     );
                     console.error('❌ add failed:', response.message);
@@ -153,6 +155,36 @@ export class AddUserComponent {
                 console.error('❌ API error:', error);
             },
         });
+
+        }else{
+  this.usersService.createUser(formData).subscribe({
+            next: (response) => {
+                if (response.success) {
+                    this.isSubmitting = false;
+                    this.userForm.reset();
+                    this.toastr.success('User Added successfully', 'Success');
+                    console.log('✅ User Added successfully');
+                } else {
+                    this.isSubmitting = false;
+
+                    this.toastr.error(
+                        response.message || 'Failed to Add User.',
+                        'Error'
+                    );
+                    console.error('❌ add failed:', response.message);
+                }
+            },
+            error: (error) => {
+                this.isSubmitting = false;
+
+                this.toastr.error('Something went wrong.', 'Error');
+
+                console.error('❌ API error:', error);
+            },
+        });
+        }
+
+      
     }
 
     loadUser() {

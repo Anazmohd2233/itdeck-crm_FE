@@ -49,7 +49,8 @@ export class StudentsComponent {
 
 
     page: number = 1;
-    students: any;
+    pageSize: number = 20;
+    totalRecords: number = 0;    students: any;
 
     displayedColumns: string[] = [
         // 'select',
@@ -68,8 +69,14 @@ export class StudentsComponent {
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-    ngAfterViewInit() {
-        this.dataSource.paginator = this.paginator;
+      ngAfterViewInit() {
+        // listen to paginator changes
+        console.log('**********page changed**********');
+        this.paginator.page.subscribe((event) => {
+            this.page = event.pageIndex + 1; // MatPaginator is 0-based, API is 1-based
+            this.pageSize = event.pageSize;
+        this.getStudentList();
+        });
     }
 
     /** Whether the number of selected elements matches the total number of rows. */
@@ -139,6 +146,8 @@ export class StudentsComponent {
             next: (response) => {
                 if (response && response.success) {
                     const students = response.data?.customer || [];
+                                        this.totalRecords = response.data?.total;
+
 
                     this.ELEMENT_DATA = students.map((u: any) => ({
                         id: u.id,

@@ -35,7 +35,7 @@
         </mat-card-title>
         <mat-card-subtitle class="d-flex align-items-center justify-content-between filter-container gap-2">
 
-  <!-- <mat-form-field appearance="fill" class="small-form-field m-0">
+            <!-- <mat-form-field appearance="fill" class="small-form-field m-0">
     <mat-label>Priority</mat-label>
     <mat-select>
       <mat-option value="">All</mat-option>
@@ -45,11 +45,11 @@
     </mat-select>
   </mat-form-field> -->
 
-  <a mat-button class="add-new-btn m-0" routerLink="/crm-page/create-contact">
-    + Add Contact
-  </a>
+            <a mat-button class="add-new-btn m-0" routerLink="/crm-page/create-contact">
+                + Add Contact
+            </a>
 
-</mat-card-subtitle>
+        </mat-card-subtitle>
 
     </mat-card-header>
 
@@ -150,12 +150,21 @@
                     </ng-container>
 
                     <!-- Last Contacted Column -->
-                    <ng-container matColumnDef="courses">
+                    <!-- <ng-container matColumnDef="courses">
                         <th mat-header-cell *matHeaderCellDef>
                             Course
                         </th>
                         <td mat-cell *matCellDef="let element">
                             {{element.courses?.service_name || 'N/A'}}
+                        </td>
+                    </ng-container> -->
+
+                     <ng-container matColumnDef="owner">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Contact Owner
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.owner?.name || 'N/A'}}
                         </td>
                     </ng-container>
 
@@ -267,11 +276,9 @@
                 </table>
             </div>
             <!-- <mat-paginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons></mat-paginator> -->
-             <mat-paginator
-  [length]="totalRecords"
-  [pageSize]="20"
-  showFirstLastButtons>
-</mat-paginator>
+            <mat-paginator [length]="totalRecords" [pageSize]="20" showFirstLastButtons>
+            </mat-paginator>
+
 
 
             <!-- <mat-paginator

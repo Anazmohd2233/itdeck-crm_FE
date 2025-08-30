@@ -5,6 +5,7 @@ import { ToggleService } from '../sidebar/toggle.service';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
 import { CustomizerSettingsService } from '../../customizer-settings/customizer-settings.service';
+import { UsersService } from '../../services/users.service';
 
 @Component({
     selector: 'app-header',
@@ -16,13 +17,15 @@ export class HeaderComponent {
 
     // isSidebarToggled
     isSidebarToggled = false;
+    users:any;
 
     // isToggled
     isToggled = false;
 
     constructor(
         private toggleService: ToggleService,
-        public themeService: CustomizerSettingsService
+        public themeService: CustomizerSettingsService,
+        private usersService: UsersService,
     ) {
         this.toggleService.isSidebarToggled$.subscribe(isSidebarToggled => {
             this.isSidebarToggled = isSidebarToggled;
@@ -30,6 +33,10 @@ export class HeaderComponent {
         this.themeService.isToggled$.subscribe(isToggled => {
             this.isToggled = isToggled;
         });
+    }
+
+      ngOnInit(): void {
+        this.getProfile();
     }
 
     // Burger Menu Toggle
@@ -52,6 +59,23 @@ export class HeaderComponent {
     // Dark Mode
     toggleTheme() {
         this.themeService.toggleTheme();
+    }
+
+      private getProfile(): void {
+        this.usersService.getProfile().subscribe({
+            next: (response) => {
+                if (response && response.success) {
+                    this.users = response.data || [];
+
+                } else {
+                    // this.toastr.error('Failed to load users', 'Failed');
+                    console.error('Failed to load profile:', response?.message);
+                }
+            },
+            error: (error) => {
+                console.error('API error:', error);
+            },
+        });
     }
 
 }

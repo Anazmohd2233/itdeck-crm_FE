@@ -36,7 +36,8 @@
             <div class="row">
                 <div class="col-lg-8">
 
-                    <mat-card class="daxa-card sales-overview-card mb-25 border-radius bg-primary border-none d-block" *ngIf="editMode">
+                    <mat-card class="daxa-card sales-overview-card mb-25 border-radius bg-primary border-none d-block"
+                        *ngIf="editMode">
                         <mat-card-content>
                             <h5 class="text-white">
                                 Lead Progress
@@ -63,7 +64,7 @@
                                         Pending
                                     </span>
                                     <span class="number d-block text-white fw-medium lh-1">
-{{ getRemainingSeats() }}
+                                        {{ getRemainingSeats() }}
                                     </span>
                                 </div>
                             </div>
@@ -76,7 +77,7 @@
                         </mat-card-content>
                     </mat-card>
                     <div class="row">
-                        <!-- <div class="col-md-4 col-sm-6">
+                        <!-- <div class="col-md-4 col-sm-6 mb-25">
                             <div class="mb-25">
                                 <label class="main-label d-block lh-1 text-black">
                                     Task Title *
@@ -94,7 +95,7 @@
                                 </mat-form-field>
                             </div>
                         </div> -->
-                        <div class="col-md-4 col-sm-6">
+                        <div class="col-md-4 col-sm-6 mb-25">
                             <div class="mb-25">
                                 <label class="main-label d-block lh-1 text-black">
                                     School Name
@@ -123,7 +124,7 @@
                             </div>
                         </div>
 
-                        <!-- <div class="col-md-4 col-sm-6">
+                        <!-- <div class="col-md-4 col-sm-6 mb-25">
                             <div class="mb-25">
                                 <label class="main-label d-block lh-1 text-black">
                                     School Location
@@ -137,7 +138,7 @@
                             </div>
                         </div> -->
 
-                        <div class="col-md-4 col-sm-6">
+                        <div class="col-md-4 col-sm-6 mb-25">
                             <div class="mb-25">
                                 <label class="main-label d-block lh-1 text-black">
                                     Priority *
@@ -167,7 +168,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-4 col-sm-6">
+                        <div class="col-md-4 col-sm-6 mb-25">
                             <div class="mb-25">
                                 <label class="main-label d-block lh-1 text-black">
                                     Assign to
@@ -185,7 +186,7 @@
                                 </mat-form-field>
                             </div>
                         </div>
-                        <div class="col-md-4 col-sm-6">
+                        <div class="col-md-4 col-sm-6 mb-25">
                             <div class="mb-25">
                                 <label class="main-label d-block lh-1 text-black">
                                     Due date *
@@ -242,16 +243,30 @@
                         </label>
                         <div class="col-md-12 col-sm-12">
                             <div class="mb-25">
-                                <mat-form-field appearance="outline" class="w-100">
+                                <!-- <mat-form-field appearance="outline" class="w-100">
                                     <mat-label>Select</mat-label>
                                     <mat-select multiple formControlName="activity">
                                         <mat-option *ngFor="let val of taskActivityValues" [value]="val">
                                             {{ val | titlecase }}
                                         </mat-option>
                                     </mat-select>
+                                </mat-form-field> -->
+
+                                <mat-form-field appearance="outline" class="w-100">
+                                    <mat-label>Select</mat-label>
+                                    <mat-select #activitySelect multiple
+                                        (selectionChange)="onActivityChange($event, activitySelect)">
+                                        <mat-option *ngFor="let val of taskActivityValues" [value]="val">
+                                            {{ val | titlecase }}
+                                        </mat-option>
+                                    </mat-select>
                                 </mat-form-field>
+
                             </div>
                         </div>
+
+
+
 
                         <mat-card-content class="example-badges mt-15 mb-25">
                             <span class="badge text-bg-primary me-2" *ngIf="taskData?.school_visited">School
@@ -309,7 +324,7 @@
                 <div *ngFor="let expense of expenses.controls; let i = index" [formGroupName]="i"
                     class="row border p-2 mb-25 rounded">
 
-                    <div class="col-md-4 col-sm-6">
+                    <div class="col-md-4 col-sm-6 mb-25">
                         <div class="mb-25">
                             <mat-form-field class="w-100">
                                 <mat-label>Date</mat-label>
@@ -321,35 +336,35 @@
 
                     </div>
 
-                    <div class="col-md-4 col-sm-6">
+                    <div class="col-md-4 col-sm-6 mb-25 mb-25">
                         <mat-form-field class="w-100">
                             <mat-label>Start Point</mat-label>
                             <input matInput formControlName="start_point">
                         </mat-form-field>
                     </div>
 
-                    <div class="col-md-4 col-sm-6">
+                    <div class="col-md-4 col-sm-6 mb-25">
                         <mat-form-field class="w-100">
                             <mat-label>End Point</mat-label>
                             <input matInput formControlName="end_point">
                         </mat-form-field>
                     </div>
 
-                    <div class="col-md-3 col-sm-6">
+                    <div class="col-md-3 col-sm-6 mb-25">
                         <mat-form-field class="w-100">
                             <mat-label>Kilometers</mat-label>
                             <input type="number" matInput formControlName="kilometer">
                         </mat-form-field>
                     </div>
 
-                    <div class="col-md-3 col-sm-6">
+                    <div class="col-md-3 col-sm-6 mb-25">
                         <mat-form-field class="w-100">
                             <mat-label>Food Expense</mat-label>
                             <input type="number" matInput formControlName="food_expence">
                         </mat-form-field>
                     </div>
 
-                         <div class="col-md-3 col-sm-6">
+                    <div class="col-md-3 col-sm-6 mb-25">
                         <mat-form-field class="w-100">
                             <mat-label>Other Expense</mat-label>
                             <input type="number" matInput formControlName="other_expence">
@@ -367,8 +382,19 @@
 
 
             <mat-dialog-actions align="end" class="w-100">
-                <button mat-button class="warn-btn" type="button" (click)="addExpense()">Add More</button>
-                <button mat-raised-button class="success-btn" type="submit">Save All</button>
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 mb-25">
+                        <button mat-button class="warn-btn" type="button" (click)="addExpense()">Add More</button>
+
+                    </div>
+                    <div class="col-md-6 col-sm-6 mb-25">
+                        <button mat-raised-button class="success-btn" type="submit">Save All</button>
+
+                    </div>
+
+                </div>
+                <!-- <button mat-button class="warn-btn mb-25" type="button" (click)="addExpense()">Add More</button>
+                <button mat-raised-button class="success-btn" type="submit">Save All</button> -->
             </mat-dialog-actions>
 
 
@@ -402,14 +428,14 @@
 
 
 
-                    <div class="col-md-5 col-sm-5">
+                    <div class="col-md-5 col-sm-5 mb-25">
                         <mat-form-field class="w-100">
                             <mat-label>Student Name</mat-label>
                             <input matInput formControlName="student_name">
                         </mat-form-field>
                     </div>
 
-                    <div class="col-md-5 col-sm-5">
+                    <div class="col-md-5 col-sm-5 mb-25">
                         <mat-form-field class="w-100">
                             <mat-label>Phone</mat-label>
                             <input matInput formControlName="student_phone">
@@ -429,7 +455,7 @@
 
             <mat-dialog-actions align="end" class="w-100">
                 <!-- <button mat-button class="warn-btn" type="button" (click)="addStudent()">Add More</button> -->
-                <button mat-raised-button class="success-btn" type="submit">Save All</button>
+                <button mat-raised-button class="success-btn" type="submit">Add Contacts</button>
             </mat-dialog-actions>
 
 
@@ -532,9 +558,9 @@
                         </td>
                     </ng-container>
 
-                        <ng-container matColumnDef="travel_expence">
+                    <ng-container matColumnDef="travel_expence">
                         <th mat-header-cell *matHeaderCellDef>
-                           Travel Expence
+                            Travel Expence
                         </th>
                         <td mat-cell *matCellDef="let element">
                             {{element.travel_expence}}
@@ -551,7 +577,7 @@
                         </td>
                     </ng-container>
 
-                      <ng-container matColumnDef="other_expence">
+                    <ng-container matColumnDef="other_expence">
                         <th mat-header-cell *matHeaderCellDef>
                             Other Expence
                         </th>

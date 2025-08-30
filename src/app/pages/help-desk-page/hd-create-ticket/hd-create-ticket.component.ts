@@ -113,7 +113,7 @@ export class HdCreateTicketComponent {
     selection = new SelectionModel<PeriodicElement>(true, []);
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
-     progress: number = 0;
+    progress: number = 0;
 
     ngAfterViewInit() {
         this.dataSource.paginator = this.paginator;
@@ -163,8 +163,7 @@ export class HdCreateTicketComponent {
     users: any;
     school: any;
     taskSchool: any;
-        contactCount: any;
-
+    contactCount: any;
 
     page: number = 1;
     TaskActivity = TaskActivity;
@@ -224,7 +223,7 @@ export class HdCreateTicketComponent {
     private initializeForm(): void {
         this.taskForm = this.formBuilder.group({
             // task_title: ['', [Validators.required, Validators.minLength(3)]],
-            activity: [[]],
+            // activity: [[]],
             priority: ['', Validators.required],
             assigned_to: ['', Validators.required],
             due_date: ['', Validators.required],
@@ -402,12 +401,13 @@ export class HdCreateTicketComponent {
         this.taskService.getTaskById(this.taskId).subscribe({
             next: (response) => {
                 if (response.success) {
-                    this.contactCount=response.contactCount;
+                    this.contactCount = response.contactCount;
                     this.taskData = response.task;
                     const task = response.task;
                     const expence = response.task.expence;
                     this.taskSchool = response.task.school;
-                    this.progress = (response.contactCount /  task.school?.strength ) * 100;
+                    this.progress =
+                        (response.contactCount / task.school?.strength) * 100;
 
                     // ✅ Patch form values
                     this.taskForm.patchValue({
@@ -427,8 +427,8 @@ export class HdCreateTicketComponent {
                         start_point: u.start_point || 'N/A',
                         end_point: u.end_point || 'N/A',
                         kilometer: u.kilometer || 'N/A',
-other_expence:u.other_expence|| '-',
-travel_expence:u.travel_expence|| '-',
+                        other_expence: u.other_expence || '-',
+                        travel_expence: u.travel_expence || '-',
                         food_expence: u.food_expence || '-',
                         total: u.total || '-',
 
@@ -443,7 +443,7 @@ travel_expence:u.travel_expence|| '-',
             },
             error: (err) => {
                 console.error('❌ Error loading contact:', err);
-                this.toastr.error('Failed to load contact details.', 'Error');
+                // this.toastr.error('Failed to load contact details.', 'Error');
             },
         });
     }
@@ -592,29 +592,26 @@ travel_expence:u.travel_expence|| '-',
             students: this.formBuilder.array([this.createStudentGroup()]),
         });
 
-            // 👇 Only track the last student row
-  this.students.valueChanges.subscribe((students) => {
-    const lastIndex = students.length - 1;
-    const lastStudent = students[lastIndex];
+        // 👇 Only track the last student row
+        this.students.valueChanges.subscribe((students) => {
+            const lastIndex = students.length - 1;
+            const lastStudent = students[lastIndex];
 
-    if (lastStudent.student_name && lastStudent.student_phone) {
-      this.onStudentFilled(lastIndex, lastStudent);
+            if (lastStudent.student_name && lastStudent.student_phone) {
+                this.onStudentFilled(lastIndex, lastStudent);
+            }
+        });
     }
-  });
 
+    onStudentFilled(index: number, student: any) {
+        const lastIndex = this.students.length - 1;
+
+        // Only add if the filled row is the last one
+        if (index === lastIndex) {
+            this.students.push(this.createStudentGroup());
+            console.log('✅ New blank row added automatically', index, student);
+        }
     }
-
-
-onStudentFilled(index: number, student: any) {
-  const lastIndex = this.students.length - 1;
-
-  // Only add if the filled row is the last one
-  if (index === lastIndex) {
-    this.students.push(this.createStudentGroup());
-    console.log("✅ New blank row added automatically", index, student);
-  }
-}
-
 
     createExpenseGroup(): FormGroup {
         return this.formBuilder.group({
@@ -623,7 +620,7 @@ onStudentFilled(index: number, student: any) {
             end_point: ['', Validators.required],
             kilometer: ['', Validators.required],
             food_expence: ['', Validators.required],
-             other_expence: [''],
+            other_expence: [''],
         });
     }
 
@@ -691,10 +688,46 @@ onStudentFilled(index: number, student: any) {
     }
 
     getRemainingSeats(): number {
-  if (!this.taskSchool) return 0;
-  return Math.max(this.taskSchool.strength - this.contactCount, 0);
-}
+        if (!this.taskSchool) return 0;
+        return Math.max(this.taskSchool.strength - this.contactCount, 0);
+    }
 
+    onActivityChange(event: any, select: any) {
+        console.log('Selected activities:', event.value);
+
+        const formData = new FormData();
+        formData.append('activity', event.value);
+
+        this.taskService.updateTask(formData, this.taskId).subscribe({
+            next: (response) => {
+                if (response.success) {
+                    select.close();
+                    this.loadTaskDetails();
+
+                    this.toastr.success(
+                        'Activity Updated successfully',
+                        'Success'
+                    );
+                    console.log('✅ Activity Updated successfully');
+                } else {
+                    this.isSubmitting = false;
+
+                    this.toastr.error(
+                        response.message || 'Failed to Update Activity.',
+                        'Error'
+                    );
+                    console.error('❌ add failed:', response.message);
+                }
+            },
+            error: (error) => {
+                this.isSubmitting = false;
+
+                this.toastr.error('Something went wrong.', 'Error');
+
+                console.error('❌ API error:', error);
+            },
+        });
+    }
 }
 
 interface Expense {
@@ -703,8 +736,7 @@ interface Expense {
     end_point: string;
     kilometer: number;
     food_expence: number;
-        other_expence: number;
-
+    other_expence: number;
 }
 
 interface Students {
@@ -718,10 +750,10 @@ export interface PeriodicElement {
     start_point: any;
     end_point: string;
     kilometer: string;
-        travel_expence: string;
+    travel_expence: string;
 
     food_expence: string;
-            other_expence: number;
+    other_expence: number;
 
     total: Number;
     // action: any;

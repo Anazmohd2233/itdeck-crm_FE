@@ -44,7 +44,9 @@ import { ToastrService } from 'ngx-toastr';
 export class CLeadsComponent {
     ELEMENT_DATA: PeriodicElement[] = [];
 
-    page: number = 1;
+     page: number = 1;
+    pageSize: number = 20;
+    totalRecords: number = 0;
     leads: any;
 
     displayedColumns: string[] = [
@@ -65,8 +67,14 @@ export class CLeadsComponent {
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-    ngAfterViewInit() {
-        this.dataSource.paginator = this.paginator;
+     ngAfterViewInit() {
+        // listen to paginator changes
+        console.log('**********page changed**********');
+        this.paginator.page.subscribe((event) => {
+            this.page = event.pageIndex + 1; // MatPaginator is 0-based, API is 1-based
+            this.pageSize = event.pageSize;
+        this.getLeadsList();
+        });
     }
 
     /** Whether the number of selected elements matches the total number of rows. */
@@ -115,6 +123,8 @@ export class CLeadsComponent {
         this.leadsService.getLead(this.page).subscribe({
             next: (response) => {
                 if (response && response.success) {
+                                                            this.totalRecords = response.data?.total;
+
                     const leads = response.data?.leads || [];
 
                     this.ELEMENT_DATA = leads.map((u: any) => ({

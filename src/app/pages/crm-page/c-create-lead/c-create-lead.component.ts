@@ -146,7 +146,7 @@ this.getCourseList();
             },
             error: (err) => {
                 console.error('❌ Error loading contact:', err);
-                this.toastr.error('Failed to load contact details.', 'Error');
+                // this.toastr.error('Failed to load contact details.', 'Error');
             },
         });
     }

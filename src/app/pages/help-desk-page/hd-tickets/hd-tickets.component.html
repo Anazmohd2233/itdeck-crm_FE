@@ -140,7 +140,7 @@
                     </ng-container>
 
                     <!-- Subject Column -->
-                    <ng-container matColumnDef="title">
+                    <!-- <ng-container matColumnDef="title">
                         <th mat-header-cell *matHeaderCellDef>
                             Title
                         </th>
@@ -150,7 +150,7 @@
                                 {{element.title}}
                             </a>
                         </td>
-                    </ng-container>
+                    </ng-container> -->
 
                     <!-- Contact Column -->
                     <ng-container matColumnDef="school">
@@ -261,11 +261,11 @@
                                     </i>
                                 </a>
                               
-                                <button type="button" mat-button  matTooltip="Delete Task" matTooltipPosition="above">
+                                <!-- <button type="button" mat-button  matTooltip="Delete Task" matTooltipPosition="above">
                                     <i class="material-symbols-outlined">
                                         {{element.action.delete}}
                                     </i>
-                                </button>
+                                </button> -->
                             </div>
                         </td>
                     </ng-container>
@@ -279,7 +279,7 @@
                       </tr>
                 </table>
             </div>
-            <mat-paginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons></mat-paginator>
-        </div>
+ <mat-paginator [length]="totalRecords" [pageSize]="20" showFirstLastButtons>
+            </mat-paginator>        </div>
     </mat-card-content>
 </mat-card>

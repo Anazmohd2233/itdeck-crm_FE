@@ -44,6 +44,8 @@ export class SchoolComponent {
     ELEMENT_DATA: PeriodicElement[] = [];
 
     page: number = 1;
+    pageSize: number = 20;
+    totalRecords: number = 0;
     students: any;
 
     displayedColumns: string[] = [
@@ -62,7 +64,13 @@ export class SchoolComponent {
     @ViewChild(MatPaginator) paginator!: MatPaginator;
 
     ngAfterViewInit() {
-        this.dataSource.paginator = this.paginator;
+        // listen to paginator changes
+        console.log('**********page changed**********');
+        this.paginator.page.subscribe((event) => {
+            this.page = event.pageIndex + 1; // MatPaginator is 0-based, API is 1-based
+            this.pageSize = event.pageSize;
+            this.getLocationtList();
+        });
     }
 
     /** Whether the number of selected elements matches the total number of rows. */
@@ -128,6 +136,8 @@ export class SchoolComponent {
         this.schoolService.getSchool(this.page).subscribe({
             next: (response) => {
                 if (response && response.success) {
+                    this.totalRecords = response.data?.total;
+
                     const location = response.data?.school || [];
 
                     this.ELEMENT_DATA = location.map((u: any) => ({

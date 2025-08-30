@@ -16,25 +16,25 @@ export class UsersService {
         return this.http.post<any>(apiUrl, formData);
     }
 
+    updateUser(id: any, formData: any): Observable<any> {
+        const apiUrl = `${this.apiUrl}/admin/update_admin/${id}`;
+        return this.http.post<any>(apiUrl, formData);
+    }
+
     getUsers(page: number, params?: HttpParams): Observable<any> {
         const url = `${this.apiUrl}/admin/list/${page}`;
         return this.http.get<any>(url, { params });
     }
 
-       getUserById(id: any): Observable<any> {
+    getUserById(id: any): Observable<any> {
         return this.http.get<any>(`${this.apiUrl}/admin/admin-view/${id}`);
     }
 
-
-
-
-// ********************  need to remove  **************************///
-
-
-
-    updateUser(id: number, data: any): Observable<any> {
-        return this.http.put(`${this.apiUrl}/users/${id}`, data);
+    getProfile(): Observable<any> {
+        return this.http.get<any>(`${this.apiUrl}/admin/profile`);
     }
+
+    // ********************  need to remove  **************************///
 
     deleteUser(id: number): Observable<any> {
         return this.http.delete(`${this.apiUrl}/users/${id}`);
@@ -43,9 +43,6 @@ export class UsersService {
     getUserProfile(): Observable<any> {
         return this.http.get<any>(`${this.apiUrl}/users/profile`);
     }
- 
 
     // **********************************************///
-
-    
 }

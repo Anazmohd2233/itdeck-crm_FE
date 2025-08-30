@@ -1,7 +1,7 @@
 <!-- Breadcrumb -->
 <div class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between">
     <h5 class="mb-0">
-        Add User
+       {{ editMode ? 'Edit User' : 'Create User' }}
     </h5>
     <ol class="breadcrumb list-unstyled mt-0 mb-0 pl-0">
         <li class="breadcrumb-item position-relative">
@@ -14,7 +14,9 @@
             Users
         </li>
         <li class="breadcrumb-item position-relative">
-            Add User
+                        {{ editMode ? 'Edit User' : 'Create User' }}
+
+       
         </li>
     </ol>
 </div>
@@ -29,7 +31,8 @@
                 <mat-card-header>
                     <mat-card-title>
                         <h5 class="mb-0">
-                            Add User
+                                                  {{ editMode ? 'Edit User' : 'Create User' }}
+
                         </h5>
                     </mat-card-title>
                 </mat-card-header>
@@ -221,7 +224,8 @@
                         <button mat-button type="submit">
                             <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm me-1" role="status"
                                 aria-hidden="true"></span>
-                            Add User
+                                             {{ editMode ? 'Edit User' : 'Create User' }}
+
                         </button>
                     </div>
                 </mat-card-content>

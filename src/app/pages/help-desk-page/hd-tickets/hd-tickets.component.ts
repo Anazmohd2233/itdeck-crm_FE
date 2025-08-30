@@ -50,7 +50,7 @@ import { HttpParams } from '@angular/common/http';
 export class HdTicketsComponent implements OnInit {
     displayedColumns: string[] = [
         'ticketID',
-        'title',
+        // 'title',
         'school',
         'priority',
         'createdDate',
@@ -67,7 +67,9 @@ export class HdTicketsComponent implements OnInit {
     dueDateFilter: Date | null = null;
     priorityFilter: string = '';
     statusFilter: string = '';
-    page = 1;
+        page: number = 1;
+    pageSize: number = 20;
+    totalRecords: number = 0;
 
     constructor(
         public themeService: CustomizerSettingsService,
@@ -79,14 +81,22 @@ export class HdTicketsComponent implements OnInit {
         this.loadTasks();
     }
 
-    ngAfterViewInit() {
-        this.dataSource.paginator = this.paginator;
+      ngAfterViewInit() {
+        // listen to paginator changes
+        console.log('**********page changed**********');
+        this.paginator.page.subscribe((event) => {
+            this.page = event.pageIndex + 1; // MatPaginator is 0-based, API is 1-based
+            this.pageSize = event.pageSize;
+            this.loadTasks();
+        });
     }
 
     loadTasks(): void {
         this.isLoading = true;
         this.taskService.getTasks(this.page).subscribe({
             next: (response: any) => {
+                                                        this.totalRecords = response.data?.total;
+
                 // Map API response to TaskElement format
                 const tasks =
                     response.data?.tasks?.map((task: any) =>
@@ -117,7 +127,7 @@ export class HdTicketsComponent implements OnInit {
         return {
             id: task.id,
             ticketID: `#${task.id || 'N/A'}`,
-            title: task.task_title || 'No Title',
+            // title: task.task_title || 'No Title',
             // type: task.task_type,
             createdDate: task.createdAt
                 ? new Date(task.createdAt).toLocaleDateString()
@@ -233,7 +243,7 @@ export class HdTicketsComponent implements OnInit {
 export interface TaskElement {
     id: any;
     ticketID: string;
-    title: string;
+    // title: string;
     school: any;
     priority: string;
     createdDate: string;

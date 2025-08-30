@@ -57,23 +57,25 @@ export class CContactsComponent {
     ELEMENT_DATA: PeriodicElement[] = [];
 
     page: number = 1;
-    pageSize: number = 10;
+    pageSize: number = 20;
     totalRecords: number = 0;
     contacts: any;
 
+    
     displayedColumns: string[] = [
         // 'select',
         'contactID',
         'name',
         'email',
         'phone',
-        'courses',
+        // 'courses',
+          'owner',
         // 'lead_source',
         'status',
         'lead_status',
         'action',
     ];
-    
+
     dataSource = new MatTableDataSource<PeriodicElement>(this.ELEMENT_DATA);
     selection = new SelectionModel<PeriodicElement>(true, []);
 
@@ -81,7 +83,7 @@ export class CContactsComponent {
 
     ngAfterViewInit() {
         // listen to paginator changes
-        console.log('**********page changed**********')
+        console.log('**********page changed**********');
         this.paginator.page.subscribe((event) => {
             this.page = event.pageIndex + 1; // MatPaginator is 0-based, API is 1-based
             this.pageSize = event.pageSize;
@@ -176,18 +178,19 @@ export class CContactsComponent {
             next: (response) => {
                 if (response && response.success) {
                     const contacts = response.data?.contacts || [];
-                     this.totalRecords = response.data?.total || contacts.length; 
+                    this.totalRecords = response.data?.total || contacts.length;
 
                     this.ELEMENT_DATA = contacts.map((u: any) => ({
                         id: u.id,
                         contactID: u.school || 'N/A',
+                        owner:u?.contact_owner || 'N/A',
 
                         name: u.contact_name || 'N/A',
                         email: u.email || 'N/A',
                         // lead_source: u.lead_source || 'N/A',
                         lead_status: u.lead_status || 'OTHER',
                         phone: u.phone || '-',
-                        courses: u?.courses ,
+                        courses: u?.courses,
 
                         status: u.status,
                         action: '', // we will handle icons directly in template
@@ -213,6 +216,7 @@ export interface PeriodicElement {
     email: string;
     phone: string;
     courses: string;
+     owner: string;
     // lead_source: string;
     status: any;
     lead_status: any;
