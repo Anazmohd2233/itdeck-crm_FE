@@ -7,10 +7,12 @@ import { FooterComponent } from './common/footer/footer.component';
 import { CustomizerSettingsComponent } from './customizer-settings/customizer-settings.component';
 import { CustomizerSettingsService } from './customizer-settings/customizer-settings.service';
 import { ToggleService } from './common/sidebar/toggle.service';
+import { GoogleMapsModule } from '@angular/google-maps';
+
 
 @Component({
     selector: 'app-root',
-    imports: [RouterOutlet, CommonModule, SidebarComponent, HeaderComponent, FooterComponent, CustomizerSettingsComponent, NgClass],
+    imports: [RouterOutlet, CommonModule, SidebarComponent, HeaderComponent, FooterComponent, CustomizerSettingsComponent, NgClass, GoogleMapsModule],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss'
 })

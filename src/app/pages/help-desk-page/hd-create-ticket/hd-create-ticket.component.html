@@ -4,6 +4,13 @@
 
         {{ editMode ? 'Edit Task' : 'Create Task' }}
     </h5>
+
+<mat-slide-toggle 
+  *ngIf="editMode"
+    [checked]="tracking"
+  (change)="onToggle($event)">
+</mat-slide-toggle>
+
     <ol class="breadcrumb list-unstyled mt-0 mb-0 pl-0">
         <li class="breadcrumb-item position-relative">
             <a routerLink="/" class="d-inline-block position-relative">
@@ -29,6 +36,7 @@
             <h5 class="mb-0">
                 {{ editMode ? 'Update Task' : 'Create New Task' }}
             </h5>
+
         </mat-card-title>
     </mat-card-header>
     <mat-card-content>
@@ -643,3 +651,22 @@
         </div>
     </mat-card-content>
 </mat-card>
+
+<div class="map-container">
+  <google-map
+    height="500px"
+    width="100%"
+    [zoom]="zoom"
+    [center]="center"
+  >
+    <!-- markers -->
+    <map-marker *ngFor="let m of markers" [position]="m.position" [title]="m.title"></map-marker>
+
+    <!-- polyline path -->
+    <map-polyline
+      [path]="path"
+      [options]="{ strokeColor: 'blue', strokeWeight: 3 }"
+    >
+    </map-polyline>
+  </google-map>
+</div>

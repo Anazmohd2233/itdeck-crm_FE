@@ -47,6 +47,14 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { SelectionModel } from '@angular/cdk/collections';
 import { SchoolService } from '../../../services/school.service';
+import {
+    MatSlideToggleChange,
+    MatSlideToggleModule,
+} from '@angular/material/slide-toggle';
+import { SocketService } from '../../../services/socket.service';
+import { GoogleMap } from '@angular/google-maps';
+import { GoogleMapsModule } from '@angular/google-maps';
+
 
 @Component({
     selector: 'app-hd-create-ticket',
@@ -76,6 +84,9 @@ import { SchoolService } from '../../../services/school.service';
 
         MatCheckboxModule,
         MatTooltipModule,
+
+        MatSlideToggleModule,
+        GoogleMapsModule
     ],
     templateUrl: './hd-create-ticket.component.html',
     styleUrls: ['./hd-create-ticket.component.scss'],
@@ -164,15 +175,28 @@ export class HdCreateTicketComponent {
     school: any;
     taskSchool: any;
     contactCount: any;
+    locations: any[] = []; // timeline of received locations
 
     page: number = 1;
     TaskActivity = TaskActivity;
     taskActivityValues = Object.values(TaskActivity);
     taskId: string | null = null; // 👈 Store the ID here
     editMode: boolean = false;
+    tracking: boolean = false;
+
     taskData: any;
     dialogRef!: MatDialogRef<any>; // store reference
     dialogRef_Students!: MatDialogRef<any>; // store reference
+
+
+        @ViewChild(GoogleMap, { static: false }) map!: GoogleMap;
+
+  zoom = 14;
+  center: google.maps.LatLngLiteral = { lat: 10.0, lng: 76.0 }; // default
+  markers: any[] = [];
+  path: google.maps.LatLngLiteral[] = [];
+
+
 
     @ViewChild('taskDialog') taskDialog!: TemplateRef<any>;
     @ViewChild('taskDialog_student') taskDialog_student!: TemplateRef<any>;
@@ -187,7 +211,8 @@ export class HdCreateTicketComponent {
         private toastr: ToastrService,
         private route: ActivatedRoute,
         private dialog: MatDialog,
-        private schoolService: SchoolService
+        private schoolService: SchoolService,
+        private socketService: SocketService
     ) {
         this.initializeForm();
         this.initializeExpenceForm();
@@ -208,6 +233,26 @@ export class HdCreateTicketComponent {
                 this.loadTaskDetails();
             }
         });
+
+        this.socketService.onLocationUpdate().subscribe((data) => {
+      console.log('📍 New location:', data);
+
+      const newPoint = { lat: +data.lat, lng: +data.lng };
+      this.path.push(newPoint);
+
+      // Add marker
+      this.markers.push({
+        position: newPoint,
+        title: `User ${data.taskId} @ ${data.timestamp}`,
+      });
+
+      // Center map on new location
+      this.center = newPoint;
+    });
+
+ 
+
+
         if (isPlatformBrowser(this.platformId)) {
             // Initialize the editor only in the browser
             this.editor = new Editor();
@@ -406,6 +451,11 @@ export class HdCreateTicketComponent {
                     const task = response.task;
                     const expence = response.task.expence;
                     this.taskSchool = response.task.school;
+                    this.tracking = response.task.tracking;
+                    if (response.task.tracking) {
+                        // If tracking is ON in DB, restart socket tracking
+                        this.startTracking();
+                    }
                     this.progress =
                         (response.contactCount / task.school?.strength) * 100;
 
@@ -722,6 +772,55 @@ export class HdCreateTicketComponent {
             error: (error) => {
                 this.isSubmitting = false;
 
+                this.toastr.error('Something went wrong.', 'Error');
+
+                console.error('❌ API error:', error);
+            },
+        });
+    }
+
+    onToggle(event: MatSlideToggleChange) {
+        if (event.checked) {
+            console.log('Toggle ON');
+
+            this.startTracking(); // Example function
+            this.updateForTracking('true');
+        } else {
+            console.log('Toggle OFF');
+
+            this.stopTracking(); // Example function
+            this.updateForTracking('false');
+        }
+    }
+
+    startTracking() {
+        console.log('Tracking Started');
+
+        this.socketService.startTracking(this.taskId);
+    }
+
+    stopTracking() {
+        console.log('Tracking Ended');
+
+        this.socketService.stopTracking();
+    }
+
+    updateForTracking(tracking: any) {
+        const formData = new FormData();
+        formData.append('tracking', tracking);
+        this.taskService.updateTask(formData, this.taskId).subscribe({
+            next: (response) => {
+                if (response.success) {
+                    this.toastr.success('Successfully Updated', 'Success');
+                } else {
+                    this.toastr.error(
+                        response.message || 'Failed to Update.',
+                        'Error'
+                    );
+                    console.error('❌ add failed:', response.message);
+                }
+            },
+            error: (error) => {
                 this.toastr.error('Something went wrong.', 'Error');
 
                 console.error('❌ API error:', error);
