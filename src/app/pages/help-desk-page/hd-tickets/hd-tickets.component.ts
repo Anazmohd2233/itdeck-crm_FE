@@ -1,4 +1,4 @@
-import { NgIf } from '@angular/common';
+import { formatDate, NgFor, NgIf } from '@angular/common';
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -20,6 +20,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { TaskService } from '../../../services/task.service';
 import { HttpParams } from '@angular/common/http';
+import { SchoolService } from '../../../services/school.service';
+import { UsersService } from '../../../services/users.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-hd-tickets',
@@ -42,8 +45,11 @@ import { HttpParams } from '@angular/common/http';
         NgIf,
         MatTooltipModule,
         MatProgressBarModule,
+        NgFor,
+        FormsModule,
+        ReactiveFormsModule,
     ],
-    
+
     templateUrl: './hd-tickets.component.html',
     styleUrls: ['./hd-tickets.component.scss'],
 })
@@ -52,10 +58,13 @@ export class HdTicketsComponent implements OnInit {
         'ticketID',
         // 'title',
         'school',
+        'division',
         'priority',
+        'user',
         'createdDate',
         'dueDate',
         'status',
+
         'action',
     ];
     dataSource = new MatTableDataSource<TaskElement>();
@@ -67,21 +76,30 @@ export class HdTicketsComponent implements OnInit {
     dueDateFilter: Date | null = null;
     priorityFilter: string = '';
     statusFilter: string = '';
-        page: number = 1;
+    page: number = 1;
     pageSize: number = 20;
     totalRecords: number = 0;
+    school: any;
+    users: any;
+    user_type: any;
 
     constructor(
         public themeService: CustomizerSettingsService,
         private taskService: TaskService,
-        private router: Router
+        private router: Router,
+        private schoolService: SchoolService,
+        private usersService: UsersService
     ) {}
 
     ngOnInit(): void {
+                this.user_type = localStorage.getItem('user_type');
+
         this.loadTasks();
+        this.getSchoolList();
+        this.getUserList();
     }
 
-      ngAfterViewInit() {
+    ngAfterViewInit() {
         // listen to paginator changes
         console.log('**********page changed**********');
         this.paginator.page.subscribe((event) => {
@@ -91,11 +109,31 @@ export class HdTicketsComponent implements OnInit {
         });
     }
 
-    loadTasks(): void {
+    private getUserList(): void {
+        let params = new HttpParams();
+
+        params = params.set('user_type', 'USER');
+
+        this.usersService.getUsers(this.page, params).subscribe({
+            next: (response) => {
+                if (response && response.success) {
+                    this.users = response.data?.users || [];
+                } else {
+                    // this.toastr.error('Failed to load users', 'Failed');
+                    console.error('Failed to load users:', response?.message);
+                }
+            },
+            error: (error) => {
+                console.error('API error:', error);
+            },
+        });
+    }
+
+    loadTasks(params?: any): void {
         this.isLoading = true;
-        this.taskService.getTasks(this.page).subscribe({
+        this.taskService.getTasks(this.page, params).subscribe({
             next: (response: any) => {
-                                                        this.totalRecords = response.data?.total;
+                this.totalRecords = response.data?.total;
 
                 // Map API response to TaskElement format
                 const tasks =
@@ -136,7 +174,9 @@ export class HdTicketsComponent implements OnInit {
                 ? new Date(task.due_date).toLocaleDateString()
                 : 'N/A',
             priority: task.priority || 'Medium',
-            school:task?.school?.school_name || 'N/A',
+            division: task?.division || 'N/A',
+            user: task?.assigned_to?.name || 'N/A',
+            school: task?.school?.school_name || 'N/A',
 
             status: task.status,
             action: {
@@ -147,13 +187,46 @@ export class HdTicketsComponent implements OnInit {
     }
 
     filterCreatedDate(event: any) {
-        this.createdDateFilter = event.value;
-        this.applyAllFilters();
+        if (event.value) {
+            const formattedDate = formatDate(
+                event.value,
+                'yyyy-MM-dd',
+                'en-US'
+            );
+            let params = new HttpParams().set('createdDate', formattedDate);
+            this.loadTasks(params);
+        }
     }
 
     filterDueDate(event: any) {
-        this.dueDateFilter = event.value;
-        this.applyAllFilters();
+        if (event.value) {
+            const formattedDate = formatDate(
+                event.value,
+                'yyyy-MM-dd',
+                'en-US'
+            );
+            let params = new HttpParams().set('dueDate', formattedDate);
+            this.loadTasks(params);
+        }
+    }
+
+    filterSchool(event: any) {
+        console.log('***event***', event.value);
+
+        let params = new HttpParams();
+
+        params = params.set('schoolId', event.value);
+
+        this.loadTasks(params);
+    }
+
+    filterUser(event: any) {
+        console.log('***event***', event.value);
+
+        let params = new HttpParams();
+
+        params = params.set('userId', event.value);
+        this.loadTasks(params);
     }
 
     filterPriority(event: any) {
@@ -205,16 +278,19 @@ export class HdTicketsComponent implements OnInit {
     }
 
     filterStatus(event: any) {
-        this.statusFilter = event.value;
-        this.applyAllFilters();
+        console.log('***event***', event.value);
+
+        let params = new HttpParams();
+
+        params = params.set('status', event.value);
+
+        this.loadTasks(params);
     }
 
     resetFilters() {
         this.createdDateFilter = null;
         this.dueDateFilter = null;
-        this.priorityFilter = '';
-        this.statusFilter = '';
-        this.applyAllFilters();
+        this.loadTasks();
     }
 
     applyFilter(event: Event) {
@@ -238,6 +314,26 @@ export class HdTicketsComponent implements OnInit {
         // Navigate to task edit page
         this.router.navigate(['/task/edit-ticket', taskId]);
     }
+
+    private getSchoolList(): void {
+        let params = new HttpParams();
+
+        params = params.set('status', true);
+
+        this.schoolService.getSchool(this.page, params).subscribe({
+            next: (response) => {
+                if (response && response.success) {
+                    this.school = response.data?.school || [];
+                } else {
+                    // this.toastr.error('Failed to load users', 'Failed');
+                    console.error('Failed to load school:', response?.message);
+                }
+            },
+            error: (error) => {
+                console.error('API error:', error);
+            },
+        });
+    }
 }
 
 export interface TaskElement {
@@ -245,7 +341,9 @@ export interface TaskElement {
     ticketID: string;
     // title: string;
     school: any;
+    division: any;
     priority: string;
+    user: any;
     createdDate: string;
     dueDate: string;
     status: any;

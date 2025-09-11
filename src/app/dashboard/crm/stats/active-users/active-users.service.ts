@@ -22,8 +22,8 @@ export class ActiveUsersService {
                 const options = {
                     series: [
                         {
-                            name: "Active Users",
-                            data: [2300, 2000, 2122, 1988]
+                            name: "chart",
+                            data: [1,2 ,3 , 4]
                         }
                     ],
                     chart: {

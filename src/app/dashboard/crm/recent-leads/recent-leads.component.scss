@@ -214,3 +214,10 @@
 
 /* Min width 1600px */
 @media only screen and (min-width: 1600px) {}
+
+
+.filter-container {
+  display: flex;
+  gap: 25px; /* space between buttons */
+  align-items: center;
+}

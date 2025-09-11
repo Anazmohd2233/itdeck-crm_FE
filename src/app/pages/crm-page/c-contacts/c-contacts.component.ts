@@ -1,4 +1,4 @@
-import { NgIf } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -19,6 +19,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { SchoolService } from '../../../services/school.service';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import { UsersService } from '../../../services/users.service';
 
 @Component({
     selector: 'app-c-contacts',
@@ -49,6 +52,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
         NgIf,
         MatTooltipModule,
         MatProgressBarModule,
+        NgFor,
+        NgxMatSelectSearchModule,
     ],
     templateUrl: './c-contacts.component.html',
     styleUrl: './c-contacts.component.scss',
@@ -60,8 +65,13 @@ export class CContactsComponent {
     pageSize: number = 20;
     totalRecords: number = 0;
     contacts: any;
+    school: any;
+    selectedSchool: string = '';
+        users: any;
+            user_type: any;
 
-    
+
+
     displayedColumns: string[] = [
         // 'select',
         'contactID',
@@ -69,7 +79,7 @@ export class CContactsComponent {
         'email',
         'phone',
         // 'courses',
-          'owner',
+        'owner',
         // 'lead_source',
         'status',
         'lead_status',
@@ -117,8 +127,25 @@ export class CContactsComponent {
     }
 
     filterPriority(event: any) {
-        // this.priorityFilter = event.value;
-        this.applyAllFilters();
+        console.log('***event***', event);
+    }
+
+    filterSchool(event: any) {
+        console.log('***event***', event.value);
+
+        let params = new HttpParams();
+
+        params = params.set('schoolId', event.value);
+        this.getContactList(params);
+    }
+
+    filterUser(event: any) {
+        console.log('***event***', event.value);
+
+        let params = new HttpParams();
+
+        params = params.set('userId', event.value);
+        this.getContactList(params);
     }
 
     applyAllFilters() {
@@ -166,11 +193,39 @@ export class CContactsComponent {
     constructor(
         public themeService: CustomizerSettingsService,
         private contactService: ContactService,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private schoolService: SchoolService,
+                private usersService: UsersService,
+        
     ) {}
 
     ngOnInit(): void {
+                this.user_type = localStorage.getItem('user_type');
+
         this.getContactList();
+        this.getSchoolList();
+                this.getUserList();
+
+    }
+
+        private getUserList(): void {
+        let params = new HttpParams();
+
+        params = params.set('user_type', 'USER');
+
+        this.usersService.getUsers(this.page, params).subscribe({
+            next: (response) => {
+                if (response && response.success) {
+                    this.users = response.data?.users || [];
+                } else {
+                    // this.toastr.error('Failed to load users', 'Failed');
+                    console.error('Failed to load users:', response?.message);
+                }
+            },
+            error: (error) => {
+                console.error('API error:', error);
+            },
+        });
     }
 
     private getContactList(params?: any): void {
@@ -183,7 +238,7 @@ export class CContactsComponent {
                     this.ELEMENT_DATA = contacts.map((u: any) => ({
                         id: u.id,
                         contactID: u.school || 'N/A',
-                        owner:u?.contact_owner || 'N/A',
+                        owner: u?.contact_owner || 'N/A',
 
                         name: u.contact_name || 'N/A',
                         email: u.email || 'N/A',
@@ -207,6 +262,26 @@ export class CContactsComponent {
             },
         });
     }
+
+    private getSchoolList(): void {
+        let params = new HttpParams();
+
+        params = params.set('status', true);
+
+        this.schoolService.getSchool(this.page, params).subscribe({
+            next: (response) => {
+                if (response && response.success) {
+                    this.school = response.data?.school || [];
+                } else {
+                    // this.toastr.error('Failed to load users', 'Failed');
+                    console.error('Failed to load school:', response?.message);
+                }
+            },
+            error: (error) => {
+                console.error('API error:', error);
+            },
+        });
+    }
 }
 
 export interface PeriodicElement {
@@ -216,7 +291,7 @@ export interface PeriodicElement {
     email: string;
     phone: string;
     courses: string;
-     owner: string;
+    owner: string;
     // lead_source: string;
     status: any;
     lead_status: any;

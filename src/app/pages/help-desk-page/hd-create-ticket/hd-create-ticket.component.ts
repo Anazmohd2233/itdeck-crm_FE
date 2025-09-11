@@ -33,7 +33,7 @@ import { TaskService } from '../../../services/task.service';
 import { UsersService } from '../../../services/users.service';
 import { HttpParams } from '@angular/common/http';
 import { MatDividerModule } from '@angular/material/divider';
-import { TaskActivity } from '../../../services/enums';
+import { Division, TaskActivity } from '../../../services/enums';
 import { ToastrService } from 'ngx-toastr';
 import {
     MatDialog,
@@ -183,6 +183,7 @@ export class HdCreateTicketComponent {
     taskId: string | null = null; // 👈 Store the ID here
     editMode: boolean = false;
     tracking: boolean = false;
+    divisions = Object.values(Division);
 
     taskData: any;
     dialogRef!: MatDialogRef<any>; // store reference
@@ -274,6 +275,7 @@ export class HdCreateTicketComponent {
             due_date: ['', Validators.required],
             due_time: [''],
             note: [''],
+            division: [''],
             taskImage: [''],
             // location: [''],
             school_name: [[]],
@@ -401,6 +403,9 @@ export class HdCreateTicketComponent {
     get due_date() {
         return this.taskForm.get('due_date');
     }
+     get division() {
+        return this.taskForm.get('division');
+    }
 
     private getUserList(): void {
         let params = new HttpParams();
@@ -465,6 +470,7 @@ export class HdCreateTicketComponent {
                         priority: task.priority,
                         assigned_to: task.assigned_to.id,
                         due_date: task.due_date,
+                        division:task.division,
                         note: task.note,
                         taskImage: task.task_image_url,
                         school_name_edit: task?.school?.id,

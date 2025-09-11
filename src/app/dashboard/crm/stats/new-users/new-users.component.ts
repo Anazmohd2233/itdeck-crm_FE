@@ -19,7 +19,7 @@ export class NewUsersComponent {
     ) {}
 
     ngOnInit(): void {
-        this.newUsersService.loadChart();
+        this.newUsersService.loadChart(this.data);
     }
 
 }

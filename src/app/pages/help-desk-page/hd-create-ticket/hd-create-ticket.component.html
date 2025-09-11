@@ -5,11 +5,11 @@
         {{ editMode ? 'Edit Task' : 'Create Task' }}
     </h5>
 
-<mat-slide-toggle 
+    <!-- <mat-slide-toggle 
   *ngIf="editMode"
     [checked]="tracking"
   (change)="onToggle($event)">
-</mat-slide-toggle>
+</mat-slide-toggle> -->
 
     <ol class="breadcrumb list-unstyled mt-0 mb-0 pl-0">
         <li class="breadcrumb-item position-relative">
@@ -114,7 +114,7 @@
                                         Select
                                     </mat-label>
                                     <!-- 'multiple' for multiple select -->
-                                    <mat-select multiple formControlName="school_name" *ngIf="!editMode">
+                                    <mat-select formControlName="school_name" *ngIf="!editMode">
                                         <mat-option *ngFor="let school of school" [value]="school.id">
                                             {{ school.school_name }}
                                         </mat-option>
@@ -131,6 +131,24 @@
 
                             </div>
                         </div>
+
+
+                        <div class="col-md-4 col-sm-6 mb-25">
+                            <div class="mb-25">
+                                <label class="main-label d-block lh-1 text-black">
+                                    Division
+                                </label>
+                                <mat-form-field>
+                                    <mat-label>Select</mat-label>
+                                    <mat-select formControlName="division">
+                                        <mat-option *ngFor="let div of divisions" [value]="div">
+                                            {{ div }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
 
                         <!-- <div class="col-md-4 col-sm-6 mb-25">
                             <div class="mb-25">
@@ -652,21 +670,20 @@
     </mat-card-content>
 </mat-card>
 
-<div class="map-container">
+<!-- <div class="map-container">
   <google-map
     height="500px"
     width="100%"
     [zoom]="zoom"
     [center]="center"
   >
-    <!-- markers -->
     <map-marker *ngFor="let m of markers" [position]="m.position" [title]="m.title"></map-marker>
 
-    <!-- polyline path -->
+    
     <map-polyline
       [path]="path"
       [options]="{ strokeColor: 'blue', strokeWeight: 3 }"
     >
     </map-polyline>
   </google-map>
-</div>
+</div> -->

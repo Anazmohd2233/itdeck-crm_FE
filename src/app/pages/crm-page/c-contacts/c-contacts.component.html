@@ -33,17 +33,53 @@
                     placeholder="Search contact..." (keyup)="applyFilter($event)" #input>
             </form>
         </mat-card-title>
-        <mat-card-subtitle class="d-flex align-items-center justify-content-between filter-container gap-2">
+        <mat-card-subtitle class="filter-container">
 
-            <!-- <mat-form-field appearance="fill" class="small-form-field m-0">
-    <mat-label>Priority</mat-label>
-    <mat-select>
-      <mat-option value="">All</mat-option>
-      <mat-option value="High">High</mat-option>
-      <mat-option value="Medium">Medium</mat-option>
-      <mat-option value="Low">Low</mat-option>
-    </mat-select>
-  </mat-form-field> -->
+
+       <!-- ✅ Search box inside dropdown -->
+                    <!-- <ngx-mat-select-search [placeholderLabel]="'Search school...'"
+                           >
+    </ngx-mat-select-search> -->
+            <mat-form-field appearance="fill" class="small-form-field m-0">
+                <mat-label>School</mat-label>
+                <mat-select (selectionChange)="filterSchool($event)">
+             
+                    <mat-option value="">All</mat-option>
+                    <mat-option *ngFor="let s of school" [value]="s.id">
+                        {{ s.school_name }} ({{ s.location?.name }})
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            
+
+
+
+
+
+
+
+            <mat-form-field appearance="fill" class="small-form-field m-0" *ngIf="user_type == 'ADMIN'">
+                <mat-label>User</mat-label>
+                <mat-select (selectionChange)="filterUser($event)">
+
+                    <mat-option value="">All</mat-option>
+                    <mat-option *ngFor="let s of users" [value]="s.id">
+                        {{ s.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+
+
+
+
+           
+
+
+
+
+
 
             <a mat-button class="add-new-btn m-0" routerLink="/crm-page/create-contact">
                 + Add Contact
@@ -159,7 +195,7 @@
                         </td>
                     </ng-container> -->
 
-                     <ng-container matColumnDef="owner">
+                    <ng-container matColumnDef="owner">
                         <th mat-header-cell *matHeaderCellDef>
                             Contact Owner
                         </th>

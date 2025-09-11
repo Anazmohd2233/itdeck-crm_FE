@@ -2,29 +2,72 @@
     [class.rtl-enabled]="themeService.isRTLEnabled()">
     <mat-card-header>
         <mat-card-title>
-            <h5 class="mb-0">
+            <!-- <h5 class="me-25">
+                Reports
+            </h5> -->
+        </mat-card-title>
+        <mat-card-subtitle class="d-flex flex-wrap gap-2 align-items-center filter-container">
+
+              <h5 class="me-25">
                 Reports
             </h5>
-        </mat-card-title>
-        <!-- <mat-card-subtitle>
-            <button type="button" mat-button class="card-header-menu-btn" [matMenuTriggerFor]="cardHeaderMenu">
-                This Week
+
+            <mat-form-field appearance="fill" class="small-form-field" style="flex: 1 1 150px;">
+                <mat-label>School</mat-label>
+                <mat-select (selectionChange)="filterSchool($event)">
+                    <mat-option value="">All</mat-option>
+                    <mat-option *ngFor="let s of school" [value]="s.id">{{ s.school_name }} ({{ s.location?.name
+                        }})</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="small-form-field" style="flex: 1 1 120px;" *ngIf="user_type == 'ADMIN'">
+                <mat-label>User</mat-label>
+                <mat-select (selectionChange)="filterUser($event)">
+                    <mat-option value="">All</mat-option>
+                    <mat-option *ngFor="let s of users" [value]="s.id">{{ s.name }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="small-form-field" style="flex: 1 1 120px;">
+                <mat-label>Location</mat-label>
+                <mat-select (selectionChange)="filterLocation($event)">
+                    <mat-option value="">All</mat-option>
+                    <mat-option *ngFor="let s of location" [value]="s.id">{{ s.name }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="small-form-field" style="flex: 1 1 100px;">
+      <mat-label>Status</mat-label>
+      <mat-select (selectionChange)="filterStatus($event)">
+        <mat-option value="">All</mat-option>
+        <mat-option value="OPEN">OPEN</mat-option>
+        <mat-option value="ONGOING">ONGOING</mat-option>
+        <mat-option value="COMPLETED">COMPLETED</mat-option>
+        <mat-option value="OTHER">OTHER</mat-option>
+      </mat-select>
+  </mat-form-field>
+
+            <mat-form-field style="flex: 1 1 130px;">
+                <mat-label>Start Date</mat-label>
+                <input matInput [matDatepicker]="startPicker" [(ngModel)]="startDate" (dateChange)="filterDateRange()">
+                <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+                <mat-datepicker #startPicker></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field style="flex: 1 1 130px;">
+                <mat-label>End Date</mat-label>
+                <input matInput [matDatepicker]="endPicker" [(ngModel)]="endDate" (dateChange)="filterDateRange()">
+                <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+                <mat-datepicker #endPicker></mat-datepicker>
+            </mat-form-field>
+
+            <button mat-button class="add-new-btn" color="primary" (click)="resetFilters()">
+                <i class="material-symbols-outlined" style="font-size: 14px;"> backspace </i>
+                Clear
             </button>
-            <mat-menu #cardHeaderMenu="matMenu" class="card-header-menu" xPosition="before">
-                <button mat-menu-item>
-                    This Day
-                </button>
-                <button mat-menu-item>
-                    This Week
-                </button>
-                <button mat-menu-item>
-                    This Month
-                </button>
-                <button mat-menu-item>
-                    This Year
-                </button>
-            </mat-menu>
-        </mat-card-subtitle> -->
+
+        </mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
         <div class="recent-leads-table">
@@ -144,8 +187,9 @@
                         </th>
                         <td mat-cell *matCellDef="let element" class="text-body">
                             <div class="action-info">
-                                 <a type="button" mat-button  [routerLink]="'/task/create-task'"
-                                    [queryParams]="{ task_id: element.id }" matTooltip="View Task" matTooltipPosition="above">
+                                <a type="button" mat-button [routerLink]="'/task/create-task'"
+                                    [queryParams]="{ task_id: element.id }" matTooltip="View Task"
+                                    matTooltipPosition="above">
                                     <i class="material-symbols-outlined">
                                         {{element.action.view}}
                                     </i>
@@ -169,7 +213,7 @@
 
                 </table>
             </div>
-            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-        </div>
+<mat-paginator [length]="totalRecords" [pageSize]="20" showFirstLastButtons>
+            </mat-paginator>        </div>
     </mat-card-content>
 </mat-card>

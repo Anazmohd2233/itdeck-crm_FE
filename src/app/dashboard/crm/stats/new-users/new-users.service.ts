@@ -12,7 +12,7 @@ export class NewUsersService {
         this.isBrowser = isPlatformBrowser(this.platformId);
     }
 
-    async loadChart(): Promise<void> {
+    async loadChart(data:any): Promise<void> {
         if (this.isBrowser) {
             try {
                 // Dynamically import ApexCharts
@@ -22,8 +22,8 @@ export class NewUsersService {
                 const options = {
                     series: [
                         {
-                            name: "New Users",
-                            data: [198, 212, 200, 230]
+                            name: "chart",
+                            data: [1, 2, 3, 4]
                         }
                     ],
                     chart: {

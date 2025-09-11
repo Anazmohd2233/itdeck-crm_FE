@@ -12,9 +12,9 @@ export class DashboardService {
     constructor(private http: HttpClient) {}
 
 
-    getDashboardSummary(): Observable<any> {
+    getDashboardSummary(params?:any): Observable<any> {
         const url = `${this.apiUrl}/admin/dashboard/view`;
-        return this.http.get<any>(url);
+        return this.http.get<any>(url, { params });
     }
 
      

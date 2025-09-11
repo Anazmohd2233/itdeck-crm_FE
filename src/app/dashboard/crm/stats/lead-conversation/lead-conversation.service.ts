@@ -22,8 +22,8 @@ export class LeadConversationService {
                 const options = {
                     series: [
                         {
-                            name: "Lead Conversation",
-                            data: [23, 20, 21, 19]
+                            name: "chart",
+                            data: [1, 2, 3, 4]
                         }
                     ],
                     chart: {

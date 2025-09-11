@@ -22,8 +22,8 @@ export class RevenueGrowthService {
                 const options = {
                     series: [
                         {
-                            name: "Revenue Growth",
-                            data: [211, 222, 100, 288, 166, 211, 300]
+                            name: "chart",
+                            data: [1, 2, 3, 4, 5,6]
                         }
                     ],
                     chart: {

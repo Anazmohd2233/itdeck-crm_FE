@@ -1,45 +1,112 @@
-<!-- Stats -->
+<mat-card class="daxa-card contacts-list-card mb-25 border-radius bg-white border-none d-block"
+    [class.rtl-enabled]="themeService.isRTLEnabled()">
+    <mat-card-header>
+
+        <mat-card-subtitle class="filter-container" style="display: flex; flex-wrap: wrap; gap: 10px;">
+
+            <mat-form-field appearance="fill" class="small-form-field" style="flex: 1 1 150px;">
+                <mat-label>School</mat-label>
+                <mat-select (selectionChange)="filterSchool($event)">
+                    <mat-option value="">All</mat-option>
+                    <mat-option *ngFor="let s of school" [value]="s.id">{{ s.school_name }} ({{ s.location?.name
+                        }})</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="small-form-field" style="flex: 1 1 120px;" *ngIf="user_type == 'ADMIN'">
+                <mat-label>User</mat-label>
+                <mat-select (selectionChange)="filterUser($event)">
+                    <mat-option value="">All</mat-option>
+                    <mat-option *ngFor="let s of users" [value]="s.id">{{ s.name }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="small-form-field" style="flex: 1 1 120px;">
+                <mat-label>Location</mat-label>
+                <mat-select (selectionChange)="filterLocation($event)">
+                    <mat-option value="">All</mat-option>
+                    <mat-option *ngFor="let s of location" [value]="s.id">{{ s.name }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <!-- <mat-form-field appearance="fill" class="small-form-field" style="flex: 1 1 100px;">
+      <mat-label>Status</mat-label>
+      <mat-select (selectionChange)="filterStatus($event)">
+        <mat-option value="">All</mat-option>
+        <mat-option value="OPEN">OPEN</mat-option>
+        <mat-option value="ONGOING">ONGOING</mat-option>
+        <mat-option value="COMPLETED">COMPLETED</mat-option>
+        <mat-option value="OTHER">OTHER</mat-option>
+      </mat-select>
+  </mat-form-field> -->
+
+            <mat-form-field style="flex: 1 1 130px;">
+                <mat-label>Start Date</mat-label>
+                <input matInput [matDatepicker]="startPicker" [(ngModel)]="startDate" (dateChange)="filterDateRange()">
+                <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+                <mat-datepicker #startPicker></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field style="flex: 1 1 130px;">
+                <mat-label>End Date</mat-label>
+                <input matInput [matDatepicker]="endPicker" [(ngModel)]="endDate" (dateChange)="filterDateRange()">
+                <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+                <mat-datepicker #endPicker></mat-datepicker>
+            </mat-form-field>
+
+            <button mat-button class="add-new-btn" color="primary" (click)="resetFilters()">
+                <i class="material-symbols-outlined" style="font-size: 14px;"> backspace </i>
+                Clear
+            </button>
+
+        </mat-card-subtitle>
+
+
+    </mat-card-header>
+</mat-card>
+
+
 <app-stats [data]="dashboardData"></app-stats>
 
 <div class="row">
     <!-- <div class="col-lg-6 col-xxxl-4"> -->
 
-        <!-- Most Leads -->
-        <!-- <app-most-leads /> -->
+    <!-- Most Leads -->
+    <!-- <app-most-leads /> -->
 
     <!-- </div> -->
     <!-- <div class="col-lg-6 col-xxxl-4"> -->
 
-        <!-- Country Stats -->
-        <!-- <app-country-stats /> -->
+    <!-- Country Stats -->
+    <!-- <app-country-stats /> -->
 
     <!-- </div> -->
     <!-- <div class="col-lg-12 col-xxxl-4"> -->
-        <!-- <div class="row"> -->
-            <!-- <div class="col-lg-6 col-xxxl-12"> -->
+    <!-- <div class="row"> -->
+    <!-- <div class="col-lg-6 col-xxxl-12"> -->
 
-                <!-- Tasks Stats -->
-                <!-- <app-tasks-stats /> -->
+    <!-- Tasks Stats -->
+    <!-- <app-tasks-stats /> -->
 
-            <!-- </div> -->
-            <!-- <div class="col-lg-6 col-xxxl-12"> -->
+    <!-- </div> -->
+    <!-- <div class="col-lg-6 col-xxxl-12"> -->
 
-                <!-- Earning Reports -->
-                <!-- <app-earning-reports /> -->
-                
-            <!-- </div> -->
-        <!-- </div> -->
+    <!-- Earning Reports -->
+    <!-- <app-earning-reports /> -->
+
+    <!-- </div> -->
+    <!-- </div> -->
     <!-- </div> -->
     <div class="col-lg-12 col-xxxl-4">
         <div class="row">
             <div class="col-lg-12 col-xxxl-12">
 
-                <app-sales-overview [data]="dashboardData"/>
+                <app-sales-overview [data]="dashboardData" />
                 <!-- Client Payment Status -->
                 <!-- <app-client-payment-status /> -->
 
             </div>
-        
+
         </div>
     </div>
     <div class="col-lg-12 col-xxxl-8">
@@ -61,5 +128,5 @@
 
     </div>
 
-    
+
 </div>

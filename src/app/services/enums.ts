@@ -19,3 +19,15 @@ export enum TaskActivity {
 
 
 }
+
+
+export enum Division {
+  CLASS_8 = "8th",
+  CLASS_9 = "9th",
+  CLASS_10 = "10th",
+  PLUS_ONE = "Plus One",
+  PLUS_TWO = "Plus Two",
+  DEGREE = "Degree",
+    OTHER = "Other",
+
+}

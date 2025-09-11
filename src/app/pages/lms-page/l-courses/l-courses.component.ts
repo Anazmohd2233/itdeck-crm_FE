@@ -33,7 +33,7 @@ import { RevenueGrowthComponent } from '../../crm-page/c-leads/revenue-growth/re
         AllCoursesComponent,
         PaidCoursesComponent,
         FreeCoursesComponent,
-        TopRatedCoursesComponent,
+        // TopRatedCoursesComponent,
         // BestSellerCoursesComponent,
          RouterLink,
         MatCardModule,

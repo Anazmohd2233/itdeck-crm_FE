@@ -18,6 +18,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ToastrService } from 'ngx-toastr';
 import { StudentService } from '../../services/student.services';
 import { environment } from '../../../environments/environment';
+import { MatSelectModule } from '@angular/material/select';
+
 
 @Component({
     selector: 'app-students',
@@ -35,6 +37,7 @@ import { environment } from '../../../environments/environment';
         MatIconModule,
         ReactiveFormsModule,
         MatInputModule,
+        MatSelectModule,
     ],
     templateUrl: './students.component.html',
     styleUrl: './students.component.scss',
@@ -77,6 +80,10 @@ export class StudentsComponent {
             this.pageSize = event.pageSize;
         this.getStudentList();
         });
+    }
+
+     filterPriority(event: any) {
+       console.log('***event***',event)
     }
 
     /** Whether the number of selected elements matches the total number of rows. */

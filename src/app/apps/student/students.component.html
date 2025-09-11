@@ -33,13 +33,29 @@
             </form>
 
         </mat-card-title>
-        <mat-card-subtitle>
-            <button class="me-25" type="button" mat-button matTooltip="Copy Link" matTooltipPosition="above"
+        <mat-card-subtitle class="filter-container">
+            <!-- <button class="me-25" type="button" mat-button matTooltip="Copy Link" matTooltipPosition="above"
                 class="link-share-btn" (click)="toggleClass()">
                 <i class="material-symbols-outlined">
                     link
                 </i>
-            </button>
+            </button> -->
+
+
+
+            <mat-form-field appearance="fill" class="small-form-field">
+                <mat-label>Priority</mat-label>
+                <mat-select (selectionChange)="filterPriority($event)">
+                    <mat-option value="">All</mat-option>
+                    <mat-option value="High">High</mat-option>
+                    <mat-option value="Medium">Medium</mat-option>
+                    <mat-option value="Low">Low</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+
+
+
             <button type="button" mat-button class="card-header-menu-btn" [matMenuTriggerFor]="cardHeaderMenu">
                 All
             </button>
@@ -54,6 +70,8 @@
                     Deactive
                 </button>
             </mat-menu>
+
+
         </mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
@@ -195,9 +213,8 @@
                         <td mat-cell *matCellDef="let element">
                             <div class="action-info">
 
-                                   <a routerLink="/profile"
-                                [queryParams]="{ student_id: element.id }" mat-button matTooltip="View Student"
-                                    matTooltipPosition="above">
+                                <a routerLink="/profile" [queryParams]="{ student_id: element.id }" mat-button
+                                    matTooltip="View Student" matTooltipPosition="above">
                                     <i class="material-symbols-outlined">
                                         visibility </i>
                                 </a>
@@ -234,8 +251,9 @@
 
                 </table>
             </div>
- <mat-paginator [length]="totalRecords" [pageSize]="20" showFirstLastButtons>
-            </mat-paginator>        </div>
+            <mat-paginator [length]="totalRecords" [pageSize]="20" showFirstLastButtons>
+            </mat-paginator>
+        </div>
     </mat-card-content>
 </mat-card>
 
