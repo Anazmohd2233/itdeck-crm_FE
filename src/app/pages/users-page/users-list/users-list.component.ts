@@ -11,6 +11,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { CustomizerSettingsService } from '../../../customizer-settings/customizer-settings.service';
 import { UsersService } from '../../../services/users.service';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
     selector: 'app-users-list',
@@ -58,6 +59,14 @@ export class UsersListComponent {
         this.dataSource.filter = filterValue.trim().toLowerCase();
     }
 
+    applySearch(event: Event) {
+        const filterValue = (event.target as HTMLInputElement).value;
+        // this.dataSource.filter = filterValue.trim().toLowerCase();
+
+        let params = new HttpParams().set('search', filterValue);
+        this.getUserList(params);
+    }
+
     constructor(
         public themeService: CustomizerSettingsService,
         private usersService: UsersService,
@@ -68,8 +77,8 @@ export class UsersListComponent {
         this.getUserList();
     }
 
-    private getUserList(): void {
-        this.usersService.getUsers(this.page).subscribe({
+    private getUserList(params?:any): void {
+        this.usersService.getUsers(this.page,params).subscribe({
             next: (response) => {
                 if (response && response.success) {
                     const users = response.data?.users || [];

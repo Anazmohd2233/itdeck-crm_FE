@@ -23,6 +23,7 @@ import { HttpParams } from '@angular/common/http';
 import { SchoolService } from '../../../services/school.service';
 import { UsersService } from '../../../services/users.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Division } from '../../../services/enums';
 
 @Component({
     selector: 'app-hd-tickets',
@@ -82,6 +83,8 @@ export class HdTicketsComponent implements OnInit {
     school: any;
     users: any;
     user_type: any;
+        divisions = Object.values(Division);
+    
 
     constructor(
         public themeService: CustomizerSettingsService,
@@ -216,6 +219,16 @@ export class HdTicketsComponent implements OnInit {
         let params = new HttpParams();
 
         params = params.set('schoolId', event.value);
+
+        this.loadTasks(params);
+    }
+
+        filterDivision(event: any) {
+        console.log('***event***', event.value);
+
+        let params = new HttpParams();
+
+        params = params.set('division', event.value);
 
         this.loadTasks(params);
     }

@@ -102,8 +102,14 @@ export class CCreateContactComponent {
             school_name: [''],
             contact_name: ['', Validators.required],
             email: [''],
-            phone: ['', Validators.required],
-            // courses: [''],
+            phone: [
+                '',
+                [
+                    Validators.required,
+
+                    Validators.pattern(/^\d{10}$/), // ✅ exactly 10 digits
+                ],
+            ], // courses: [''],
             // status: ['', Validators.required],
             // lead_source: [''],
             contact_owner: [''],

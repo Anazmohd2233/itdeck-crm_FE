@@ -19,6 +19,7 @@ import { ToastrService } from 'ngx-toastr';
 import { StudentService } from '../../services/student.services';
 import { environment } from '../../../environments/environment';
 import { SchoolService } from '../../services/school.service';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
     selector: 'app-students',
@@ -102,6 +103,15 @@ export class LocationComponent {
         this.dataSource.filter = filterValue.trim().toLowerCase();
     }
 
+    applySearch(event: Event) {
+        const filterValue = (event.target as HTMLInputElement).value;
+        // this.dataSource.filter = filterValue.trim().toLowerCase();
+
+        let params = new HttpParams().set('search', filterValue);
+        this.getLocationtList(params);
+
+    }
+
     constructor(
         public themeService: CustomizerSettingsService,
         private snackBar: MatSnackBar,
@@ -129,8 +139,8 @@ export class LocationComponent {
         this.getLocationtList();
     }
 
-    private getLocationtList(): void {
-        this.schoolService.getLocation(this.page).subscribe({
+    private getLocationtList(params?:any): void {
+        this.schoolService.getLocation(this.page,params).subscribe({
             next: (response) => {
                 if (response && response.success) {
                     this.totalRecords = response.data?.total;

@@ -44,30 +44,30 @@
                     </div>
                 </div> -->
 
-                 <div class="col-md-4 col-sm-6">
-                            <div class="mb-25">
-                                <label class="main-label d-block lh-1 text-black">
-                                    School Name
-                                </label>
+                <div class="col-md-4 col-sm-6">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">
+                            School Name
+                        </label>
 
-                                 <mat-form-field>
-                                    <mat-label>
-                                        Select
-                                    </mat-label>
-                                    <!-- 'multiple' for multiple select -->
-                                   <mat-select  formControlName="school_name">
+                        <mat-form-field>
+                            <mat-label>
+                                Select
+                            </mat-label>
+                            <!-- 'multiple' for multiple select -->
+                            <mat-select formControlName="school_name">
                                 <mat-option *ngFor="let school of school" [value]="school.id">
                                     {{ school.school_name }}
                                 </mat-option>
                             </mat-select>
 
-                        
-                                </mat-form-field>
 
-                               
-                              
-                            </div>
-                        </div>
+                        </mat-form-field>
+
+
+
+                    </div>
+                </div>
                 <div class="col-md-4 col-sm-6">
                     <div class="mb-25">
                         <label class="main-label d-block lh-1 text-black">
@@ -100,13 +100,19 @@
                             Phone Number
                         </label>
                         <mat-form-field>
-                            <mat-label>
-                                Enter phone number
-                            </mat-label>
-                            <input matInput formControlName="phone">
+                            <mat-label>Enter phone number</mat-label>
+                            <input matInput type="number" formControlName="phone" />
+
+                            <mat-error *ngIf="contactForm.get('phone')?.hasError('required')">
+                                Phone number is required
+                            </mat-error>
+                            <mat-error *ngIf="contactForm.get('phone')?.hasError('pattern')">
+                                Phone number must be 10 digits
+                            </mat-error>
                         </mat-form-field>
                     </div>
                 </div>
+
                 <!-- <div class="col-md-4 col-sm-6">
                     <div class="mb-25">
                         <label class="main-label d-block lh-1 text-black">
@@ -153,9 +159,9 @@
                         </mat-form-field>
                     </div>
                 </div> -->
-           
 
-                
+
+
                 <!-- <div class="col-md-4 col-sm-6">
                     <div class="mb-25">
                         <label class="main-label d-block lh-1 text-black">
@@ -185,9 +191,9 @@
                         </mat-form-field>
                     </div>
                 </div> -->
-                
 
-                           <div class="col-md-4 col-sm-6" *ngIf="user_type == 'ADMIN'">
+
+                <div class="col-md-4 col-sm-6" *ngIf="user_type == 'ADMIN'">
                     <div class="mb-25">
                         <label class="main-label d-block lh-1 text-black">
                             Contact Owner
@@ -206,7 +212,7 @@
                     </div>
                 </div>
 
-                     <!-- <div class="col-md-4 col-sm-6">
+                <!-- <div class="col-md-4 col-sm-6">
                     <div class="mb-25">
                         <label class="main-label d-block lh-1 text-black">
                             Contact Status
@@ -226,7 +232,7 @@
                         </mat-form-field>
                     </div>
                 </div> -->
-                
+
                 <!-- <div class="col-md-12 col-sm-12">
                     <div class="mb-25">
                         <label class="main-label d-block lh-1 text-black">
@@ -244,12 +250,12 @@
                     {{ editMode ? 'Edit Contact' : 'Create Contact' }}
                 </button>
 
-                 <button mat-button type="button" (click)="onCancel()">
+                <button mat-button type="button" (click)="onCancel()">
                     Cancel
                 </button>
-               
 
-              
+
+
             </div>
         </form>
     </mat-card-content>

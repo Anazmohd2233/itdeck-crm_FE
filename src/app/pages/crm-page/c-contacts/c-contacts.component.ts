@@ -22,6 +22,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { SchoolService } from '../../../services/school.service';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { UsersService } from '../../../services/users.service';
+import { Division } from '../../../services/enums';
 
 @Component({
     selector: 'app-c-contacts',
@@ -69,12 +70,15 @@ export class CContactsComponent {
     selectedSchool: string = '';
         users: any;
             user_type: any;
+        divisions = Object.values(Division);
 
 
 
     displayedColumns: string[] = [
         // 'select',
         'contactID',
+                'division',
+
         'name',
         'email',
         'phone',
@@ -82,7 +86,7 @@ export class CContactsComponent {
         'owner',
         // 'lead_source',
         'status',
-        'lead_status',
+        // 'lead_status',
         'action',
     ];
 
@@ -136,6 +140,16 @@ export class CContactsComponent {
         let params = new HttpParams();
 
         params = params.set('schoolId', event.value);
+        this.getContactList(params);
+    }
+
+        filterDivision(event: any) {
+        console.log('***event***', event.value);
+
+        let params = new HttpParams();
+
+        params = params.set('division', event.value);
+
         this.getContactList(params);
     }
 
@@ -239,7 +253,7 @@ export class CContactsComponent {
                         id: u.id,
                         contactID: u.school || 'N/A',
                         owner: u?.contact_owner || 'N/A',
-
+division:u?.task?.division || 'N/A',
                         name: u.contact_name || 'N/A',
                         email: u.email || 'N/A',
                         // lead_source: u.lead_source || 'N/A',
@@ -292,6 +306,7 @@ export interface PeriodicElement {
     phone: string;
     courses: string;
     owner: string;
+    division: string;
     // lead_source: string;
     status: any;
     lead_status: any;

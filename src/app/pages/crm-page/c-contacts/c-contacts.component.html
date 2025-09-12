@@ -51,6 +51,18 @@
                 </mat-select>
             </mat-form-field>
 
+                <mat-form-field appearance="fill" class="small-form-field">
+                <mat-label>Division</mat-label>
+                <mat-select (selectionChange)="filterDivision($event)">
+
+                    <mat-option value="">All</mat-option>
+                     <mat-option *ngFor="let div of divisions" [value]="div">
+                                            {{ div }}
+                                        </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+
             
 
 
@@ -58,8 +70,9 @@
 
 
 
+<div *ngIf="user_type == 'ADMIN'">
 
-            <mat-form-field appearance="fill" class="small-form-field m-0" *ngIf="user_type == 'ADMIN'">
+            <mat-form-field appearance="fill" class="small-form-field m-0" >
                 <mat-label>User</mat-label>
                 <mat-select (selectionChange)="filterUser($event)">
 
@@ -69,6 +82,7 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
+        </div>
 
 
 
@@ -147,6 +161,15 @@
                         </th>
                         <td mat-cell *matCellDef="let element">
                             {{element.contactID?.school_name}}
+                        </td>
+                    </ng-container>
+
+                           <ng-container matColumnDef="division">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Division
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.division}}
                         </td>
                     </ng-container>
 
@@ -233,7 +256,7 @@
 
 
                     <!-- Status Column -->
-                    <ng-container matColumnDef="lead_status">
+                    <!-- <ng-container matColumnDef="lead_status">
                         <th mat-header-cell *matHeaderCellDef>
                             Lead Status
                         </th>
@@ -259,7 +282,7 @@
                             </span>
                         </td>
 
-                    </ng-container>
+                    </ng-container> -->
 
                     <!-- Action Column -->
                     <ng-container matColumnDef="action">

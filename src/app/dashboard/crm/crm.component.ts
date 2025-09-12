@@ -24,7 +24,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { HttpParams } from '@angular/common/http';
 import { SchoolService } from '../../services/school.service';
 import { UsersService } from '../../services/users.service';
-import { formatDate, NgFor } from '@angular/common';
+import { formatDate, NgFor, NgIf } from '@angular/common';
 import {
     FormBuilder,
     FormGroup,
@@ -64,6 +64,7 @@ import { MatNativeDateModule } from '@angular/material/core';
         MatDatepickerModule,
         MatNativeDateModule, // <-- required for Date adapter
         ReactiveFormsModule,
+        NgIf
     ],
     templateUrl: './crm.component.html',
     styleUrl: './crm.component.scss',

@@ -270,7 +270,7 @@ export class HdCreateTicketComponent {
         this.taskForm = this.formBuilder.group({
             // task_title: ['', [Validators.required, Validators.minLength(3)]],
             // activity: [[]],
-            priority: ['', Validators.required],
+            priority: [''],
             assigned_to: ['', Validators.required],
             due_date: ['', Validators.required],
             due_time: [''],
@@ -278,7 +278,7 @@ export class HdCreateTicketComponent {
             division: [''],
             taskImage: [''],
             // location: [''],
-            school_name: [[]],
+            school_name: ['', Validators.required],
             school_name_edit: [''],
         });
     }
@@ -390,6 +390,9 @@ export class HdCreateTicketComponent {
     // }
     get task_type() {
         return this.taskForm.get('task_type');
+    }
+     get school_name() {
+        return this.taskForm.get('school_name');
     }
     get contact_id() {
         return this.taskForm.get('contact_id');

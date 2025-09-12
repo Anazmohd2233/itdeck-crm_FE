@@ -72,7 +72,8 @@
             </form> -->
         </mat-card-title>
 
-        <mat-card-subtitle class="d-flex flex-wrap gap-2 align-items-center filter-container">
+        <mat-card-subtitle style="display: flex; flex-wrap: wrap; gap: 10px;" class="filter-container">
+            
 
             <!-- <mat-form-field appearance="fill" class="small-form-field">
                 <mat-label>Created Date</mat-label>
@@ -131,6 +132,16 @@
                 </mat-select>
             </mat-form-field>
 
+              <mat-form-field appearance="fill" class="small-form-field">
+                <mat-label>Division</mat-label>
+                <mat-select (selectionChange)="filterDivision($event)">
+
+                    <mat-option value="">All</mat-option>
+                     <mat-option *ngFor="let div of divisions" [value]="div">
+                                            {{ div }}
+                                        </mat-option>
+                </mat-select>
+            </mat-form-field>
 
 
 
@@ -139,7 +150,9 @@
 
 
 
-            <mat-form-field appearance="fill" class="small-form-field" *ngIf="user_type == 'ADMIN'">
+<div *ngIf="user_type == 'ADMIN'">
+
+            <mat-form-field appearance="fill" class="small-form-field">
                 <mat-label>User</mat-label>
                 <mat-select (selectionChange)="filterUser($event)">
 
@@ -149,6 +162,7 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
+        </div>
 
 
 

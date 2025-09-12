@@ -20,14 +20,16 @@
                         }})</mat-option>
                 </mat-select>
             </mat-form-field>
+<div *ngIf="user_type == 'ADMIN'">
 
-            <mat-form-field appearance="fill" class="small-form-field" style="flex: 1 1 120px;" *ngIf="user_type == 'ADMIN'">
+            <mat-form-field appearance="fill" class="small-form-field" style="flex: 1 1 120px;" >
                 <mat-label>User</mat-label>
                 <mat-select (selectionChange)="filterUser($event)">
                     <mat-option value="">All</mat-option>
                     <mat-option *ngFor="let s of users" [value]="s.id">{{ s.name }}</mat-option>
                 </mat-select>
             </mat-form-field>
+        </div>
 
             <mat-form-field appearance="fill" class="small-form-field" style="flex: 1 1 120px;">
                 <mat-label>Location</mat-label>

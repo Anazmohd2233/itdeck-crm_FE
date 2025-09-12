@@ -118,6 +118,7 @@
                                         <mat-option *ngFor="let school of school" [value]="school.id">
                                             {{ school.school_name }}
                                         </mat-option>
+                                         
                                     </mat-select>
 
                                     <mat-select formControlName="school_name_edit" *ngIf="editMode">
@@ -125,6 +126,9 @@
                                             {{ school.school_name }}
                                         </mat-option>
                                     </mat-select>
+                                       <mat-error *ngIf="school_name?.invalid && school_name?.touched">
+                                                School name is required
+                                            </mat-error>
                                 </mat-form-field>
 
 
@@ -464,7 +468,7 @@
                     <div class="col-md-5 col-sm-5 mb-25">
                         <mat-form-field class="w-100">
                             <mat-label>Phone</mat-label>
-                            <input matInput formControlName="student_phone">
+                            <input type="number" matInput formControlName="student_phone">
                         </mat-form-field>
                     </div>
 
