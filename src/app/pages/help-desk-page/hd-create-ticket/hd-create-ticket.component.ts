@@ -55,7 +55,6 @@ import { SocketService } from '../../../services/socket.service';
 import { GoogleMap } from '@angular/google-maps';
 import { GoogleMapsModule } from '@angular/google-maps';
 
-
 @Component({
     selector: 'app-hd-create-ticket',
     imports: [
@@ -86,7 +85,7 @@ import { GoogleMapsModule } from '@angular/google-maps';
         MatTooltipModule,
 
         MatSlideToggleModule,
-        GoogleMapsModule
+        GoogleMapsModule,
     ],
     templateUrl: './hd-create-ticket.component.html',
     styleUrls: ['./hd-create-ticket.component.scss'],
@@ -189,18 +188,18 @@ export class HdCreateTicketComponent {
     dialogRef!: MatDialogRef<any>; // store reference
     dialogRef_Students!: MatDialogRef<any>; // store reference
 
+    @ViewChild(GoogleMap, { static: false }) map!: GoogleMap;
 
-        @ViewChild(GoogleMap, { static: false }) map!: GoogleMap;
-
-  zoom = 14;
-  center: google.maps.LatLngLiteral = { lat: 10.0, lng: 76.0 }; // default
-  markers: any[] = [];
-  path: google.maps.LatLngLiteral[] = [];
-
-
+    zoom = 14;
+    center: google.maps.LatLngLiteral = { lat: 10.0, lng: 76.0 }; // default
+    markers: any[] = [];
+    path: google.maps.LatLngLiteral[] = [];
 
     @ViewChild('taskDialog') taskDialog!: TemplateRef<any>;
     @ViewChild('taskDialog_student') taskDialog_student!: TemplateRef<any>;
+
+    searchFieldSchool: string = '';
+    searchFieldUser: string = '';
 
     constructor(
         @Inject(PLATFORM_ID) private platformId: Object,
@@ -236,23 +235,20 @@ export class HdCreateTicketComponent {
         });
 
         this.socketService.onLocationUpdate().subscribe((data) => {
-      console.log('📍 New location:', data);
+            console.log('📍 New location:', data);
 
-      const newPoint = { lat: +data.lat, lng: +data.lng };
-      this.path.push(newPoint);
+            const newPoint = { lat: +data.lat, lng: +data.lng };
+            this.path.push(newPoint);
 
-      // Add marker
-      this.markers.push({
-        position: newPoint,
-        title: `User ${data.taskId} @ ${data.timestamp}`,
-      });
+            // Add marker
+            this.markers.push({
+                position: newPoint,
+                title: `User ${data.taskId} @ ${data.timestamp}`,
+            });
 
-      // Center map on new location
-      this.center = newPoint;
-    });
-
- 
-
+            // Center map on new location
+            this.center = newPoint;
+        });
 
         if (isPlatformBrowser(this.platformId)) {
             // Initialize the editor only in the browser
@@ -264,6 +260,28 @@ export class HdCreateTicketComponent {
         if (isPlatformBrowser(this.platformId) && this.editor) {
             this.editor.destroy();
         }
+    }
+
+    // Search Filter
+    searchSchool() {
+        console.log('school search keyword', this.searchFieldSchool);
+        this.getSchoolList(this.searchFieldSchool);
+    }
+
+    searchUser() {
+        console.log('user search keyword', this.searchFieldUser);
+        this.getUserList(this.searchFieldUser);
+    }
+
+    clearSearchSchool() {
+        this.getSchoolList();
+
+        this.searchFieldSchool = ''; // Clear the input by setting the property to an empty string
+    }
+    clearSearchUser() {
+        this.getUserList();
+
+        this.searchFieldUser = ''; // Clear the input by setting the property to an empty string
     }
 
     private initializeForm(): void {
@@ -279,7 +297,6 @@ export class HdCreateTicketComponent {
             taskImage: [''],
             // location: [''],
             school_name: ['', Validators.required],
-            school_name_edit: [''],
         });
     }
 
@@ -391,7 +408,7 @@ export class HdCreateTicketComponent {
     get task_type() {
         return this.taskForm.get('task_type');
     }
-     get school_name() {
+    get school_name() {
         return this.taskForm.get('school_name');
     }
     get contact_id() {
@@ -406,14 +423,16 @@ export class HdCreateTicketComponent {
     get due_date() {
         return this.taskForm.get('due_date');
     }
-     get division() {
+    get division() {
         return this.taskForm.get('division');
     }
 
-    private getUserList(): void {
-        let params = new HttpParams();
+    private getUserList(search?: any): void {
+        let params = new HttpParams().set('user_type', 'USER');
 
-        params = params.set('user_type', 'USER');
+        if (search) {
+            params = params.set('search', search);
+        }
 
         this.usersService.getUsers(this.page, params).subscribe({
             next: (response) => {
@@ -430,10 +449,12 @@ export class HdCreateTicketComponent {
         });
     }
 
-    private getSchoolList(): void {
-        let params = new HttpParams();
+    private getSchoolList(search?: any): void {
+        let params = new HttpParams().set('status', true);
 
-        params = params.set('status', true);
+        if (search) {
+            params = params.set('search', search);
+        }
 
         this.schoolService.getSchool(this.page, params).subscribe({
             next: (response) => {
@@ -473,10 +494,10 @@ export class HdCreateTicketComponent {
                         priority: task.priority,
                         assigned_to: task.assigned_to.id,
                         due_date: task.due_date,
-                        division:task.division,
+                        division: task.division,
                         note: task.note,
                         taskImage: task.task_image_url,
-                        school_name_edit: task?.school?.id,
+                        school_name: task?.school?.id,
                     });
 
                     this.ELEMENT_DATA = expence.map((u: any) => ({
@@ -559,7 +580,6 @@ export class HdCreateTicketComponent {
     }
 
     createStudent(): void {
-        if (this.studentForm.valid) {
             // Cast your form value to correct type
             const students: Students[] = this.studentForm.value.students;
 
@@ -606,11 +626,7 @@ export class HdCreateTicketComponent {
                     console.error('❌ API error:', error);
                 },
             });
-        } else {
-            // Mark all fields as touched to show validation errors
-            this.markFormGroupTouched();
-            console.log('*****student form not validates****');
-        }
+      
     }
 
     openDialog() {
@@ -683,12 +699,26 @@ export class HdCreateTicketComponent {
         });
     }
 
+    // createStudentGroup(): FormGroup {
+    //     return this.formBuilder.group({
+    //         student_name: [''],
+    //         student_phone: [''],
+    //     });
+    // }
+
     createStudentGroup(): FormGroup {
-        return this.formBuilder.group({
-            student_name: [''],
-            student_phone: [''],
-        });
-    }
+  return this.formBuilder.group({
+    student_name: ['', Validators.required],
+    student_phone: [
+      '',
+      [
+        Validators.required,
+        Validators.pattern(/^\d{10}$/), // ✅ exactly 10 digits
+      ],
+    ],
+  });
+}
+
 
     get expenses(): FormArray {
         return this.expenceForm.get('expenses') as FormArray;

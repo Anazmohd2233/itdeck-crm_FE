@@ -1,4 +1,4 @@
-import { NgIf } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -12,7 +12,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { CustomizerSettingsService } from '../../customizer-settings/customizer-settings.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ToastrService } from 'ngx-toastr';
@@ -20,6 +20,7 @@ import { StudentService } from '../../services/student.services';
 import { environment } from '../../../environments/environment';
 import { SchoolService } from '../../services/school.service';
 import { HttpParams } from '@angular/common/http';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
     selector: 'app-students',
@@ -37,6 +38,9 @@ import { HttpParams } from '@angular/common/http';
         MatIconModule,
         ReactiveFormsModule,
         MatInputModule,
+         FormsModule, // ✅ needed for [(ngModel)]
+            MatSelectModule,
+        NgFor,
     ],
     templateUrl: './students.component.html',
     styleUrl: './students.component.scss',
@@ -48,6 +52,8 @@ export class LocationComponent {
     pageSize: number = 20;
     totalRecords: number = 0;
     students: any;
+            searchField: string = ''; // Initialize the property
+
 
     displayedColumns: string[] = [
         // 'select',
@@ -98,9 +104,12 @@ export class LocationComponent {
     }
 
     // Search Filter
-    applyFilter(event: Event) {
-        const filterValue = (event.target as HTMLInputElement).value;
-        this.dataSource.filter = filterValue.trim().toLowerCase();
+       applyFilter() {
+        // const filterValue = (event.target as HTMLInputElement).value;
+        // this.dataSource.filter = filterValue.trim().toLowerCase();
+
+        let params = new HttpParams().set('search', this.searchField);
+        this.getLocationtList(params);
     }
 
     applySearch(event: Event) {
@@ -176,6 +185,12 @@ export class LocationComponent {
     // editStudent(id: number) {
     //     this.router.navigate(['/edit-student', id]);
     // }
+
+      clearSearch() {
+                this.getLocationtList();
+
+        this.searchField = ''; // Clear the input by setting the property to an empty string
+    }
 }
 
 export interface PeriodicElement {

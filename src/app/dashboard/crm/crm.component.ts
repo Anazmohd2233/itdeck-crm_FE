@@ -34,6 +34,7 @@ import {
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'app-crm',
@@ -64,7 +65,8 @@ import { MatNativeDateModule } from '@angular/material/core';
         MatDatepickerModule,
         MatNativeDateModule, // <-- required for Date adapter
         ReactiveFormsModule,
-        NgIf
+        NgIf,
+        MatIconModule,
     ],
     templateUrl: './crm.component.html',
     styleUrl: './crm.component.scss',
@@ -80,8 +82,10 @@ export class CrmComponent {
     startDate: Date | null = null;
     endDate: Date | null = null;
     locationFilter: string | null = null;
-        user_type: any;
-
+    user_type: any;
+    searchFieldSchool: string = '';
+    searchFieldUser: string = '';
+    searchFieldLocation: string = '';
 
     constructor(
         public themeService: CustomizerSettingsService,
@@ -91,7 +95,7 @@ export class CrmComponent {
     ) {}
 
     ngOnInit(): void {
-                this.user_type = localStorage.getItem('user_type');
+        this.user_type = localStorage.getItem('user_type');
 
         this.getDashboardView();
         this.getSchoolList();
@@ -99,10 +103,40 @@ export class CrmComponent {
         this.getLocationList();
     }
 
-    private getSchoolList(): void {
-        let params = new HttpParams();
+    searchSchool() {
+        console.log('school search keyword', this.searchFieldSchool);
+        this.getSchoolList(this.searchFieldSchool);
+    }
 
-        params = params.set('status', true);
+    searchUser() {
+        console.log('user search keyword', this.searchFieldUser);
+        this.getUserList(this.searchFieldUser);
+    }
+
+    searchLocation() {
+        console.log('location search keyword', this.searchFieldLocation);
+        this.getLocationList(this.searchFieldLocation);
+    }
+
+    clearSearchUser() {
+        this.searchFieldUser = ''; // Clear the input by setting the property to an empty string
+        this.getUserList();
+    }
+    clearSearchSchool() {
+        this.searchFieldSchool = ''; // Clear the input by setting the property to an empty string
+        this.getSchoolList();
+    }
+    clearSearchLocation() {
+        this.searchFieldLocation = ''; // Clear the input by setting the property to an empty string
+        this.getLocationList();
+    }
+
+    private getSchoolList(search?: any): void {
+        let params = new HttpParams().set('status', true);
+
+        if (search) {
+            params = params.set('search', search);
+        }
 
         this.schoolService.getSchool(this.page, params).subscribe({
             next: (response) => {
@@ -119,10 +153,12 @@ export class CrmComponent {
         });
     }
 
-    private getUserList(): void {
-        let params = new HttpParams();
+    private getUserList(search?: any): void {
+        let params = new HttpParams().set('user_type', 'USER');
 
-        params = params.set('user_type', 'USER');
+        if (search) {
+            params = params.set('search', search);
+        }
 
         this.usersService.getUsers(this.page, params).subscribe({
             next: (response) => {
@@ -139,10 +175,12 @@ export class CrmComponent {
         });
     }
 
-    private getLocationList(): void {
-        let params = new HttpParams();
+    private getLocationList(search?: any): void {
+        let params = new HttpParams().set('status', true);
 
-        params = params.set('status', true);
+        if (search) {
+            params = params.set('search', search);
+        }
 
         this.schoolService.getLocation(this.page, params).subscribe({
             next: (response) => {
@@ -245,10 +283,9 @@ export class CrmComponent {
     }
 
     resetFilters() {
-  this.startDate = null;
-  this.endDate = null;
-//    this.locationFilter = null;
-            this.getDashboardView();
-
-}
+        this.startDate = null;
+        this.endDate = null;
+        //    this.locationFilter = null;
+        this.getDashboardView();
+    }
 }

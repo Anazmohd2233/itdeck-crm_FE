@@ -97,7 +97,7 @@ export class AddUserComponent {
             status: [''],
             password: [''],
             user_type: ['', Validators.required],
-            location: ['', [Validators.required]],
+            location: [''],
         });
     }
 

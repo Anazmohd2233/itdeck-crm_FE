@@ -24,6 +24,7 @@ import { SchoolService } from '../../../services/school.service';
 import { UsersService } from '../../../services/users.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Division } from '../../../services/enums';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'app-hd-tickets',
@@ -49,6 +50,7 @@ import { Division } from '../../../services/enums';
         NgFor,
         FormsModule,
         ReactiveFormsModule,
+        MatIconModule,
     ],
 
     templateUrl: './hd-tickets.component.html',
@@ -83,8 +85,9 @@ export class HdTicketsComponent implements OnInit {
     school: any;
     users: any;
     user_type: any;
-        divisions = Object.values(Division);
-    
+    divisions = Object.values(Division);
+    searchFieldSchool: string = '';
+    searchFieldUser: string = '';
 
     constructor(
         public themeService: CustomizerSettingsService,
@@ -95,7 +98,7 @@ export class HdTicketsComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-                this.user_type = localStorage.getItem('user_type');
+        this.user_type = localStorage.getItem('user_type');
 
         this.loadTasks();
         this.getSchoolList();
@@ -112,10 +115,12 @@ export class HdTicketsComponent implements OnInit {
         });
     }
 
-    private getUserList(): void {
-        let params = new HttpParams();
+    private getUserList(search?: any): void {
+        let params = new HttpParams().set('user_type', 'USER');
 
-        params = params.set('user_type', 'USER');
+        if (search) {
+            params = params.set('search', search);
+        }
 
         this.usersService.getUsers(this.page, params).subscribe({
             next: (response) => {
@@ -223,7 +228,7 @@ export class HdTicketsComponent implements OnInit {
         this.loadTasks(params);
     }
 
-        filterDivision(event: any) {
+    filterDivision(event: any) {
         console.log('***event***', event.value);
 
         let params = new HttpParams();
@@ -328,10 +333,12 @@ export class HdTicketsComponent implements OnInit {
         this.router.navigate(['/task/edit-ticket', taskId]);
     }
 
-    private getSchoolList(): void {
-        let params = new HttpParams();
+    private getSchoolList(search?: any): void {
+        let params = new HttpParams().set('status', true);
 
-        params = params.set('status', true);
+        if (search) {
+            params = params.set('search', search);
+        }
 
         this.schoolService.getSchool(this.page, params).subscribe({
             next: (response) => {
@@ -346,6 +353,24 @@ export class HdTicketsComponent implements OnInit {
                 console.error('API error:', error);
             },
         });
+    }
+    searchSchool() {
+        console.log('school search keyword', this.searchFieldSchool);
+        this.getSchoolList(this.searchFieldSchool);
+    }
+
+    searchUser() {
+        console.log('user search keyword', this.searchFieldUser);
+        this.getUserList(this.searchFieldUser);
+    }
+
+    clearSearchUser() {
+        this.searchFieldUser = ''; // Clear the input by setting the property to an empty string
+        this.getUserList();
+    }
+    clearSearchSchool() {
+        this.searchFieldSchool = ''; // Clear the input by setting the property to an empty string
+        this.getSchoolList();
     }
 }
 

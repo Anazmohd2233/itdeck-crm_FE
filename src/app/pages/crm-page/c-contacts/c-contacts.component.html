@@ -25,25 +25,53 @@
     [class.rtl-enabled]="themeService.isRTLEnabled()">
     <mat-card-header>
         <mat-card-title>
-            <form class="search-box position-relative">
+            <!-- <form class="search-box position-relative">
                 <i class="material-symbols-outlined">
                     search
                 </i>
                 <input type="text" class="input-search d-block w-100 border-none outline-0"
                     placeholder="Search contact..." (keyup)="applyFilter($event)" #input>
-            </form>
+
+                <i class="material-symbols-outlined">
+                    search
+                </i>
+
+
+            </form> -->
+
+            <mat-form-field appearance="outline" class="w-80">
+                <mat-label>Search contact</mat-label>
+                <input matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="searchField" (keyup)="applyFilter()">
+
+                <!-- Clear button -->
+                <button *ngIf="searchField" mat-icon-button matSuffix (click)="clearSearch()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+
+
+
         </mat-card-title>
         <mat-card-subtitle class="filter-container">
 
 
-       <!-- ✅ Search box inside dropdown -->
-                    <!-- <ngx-mat-select-search [placeholderLabel]="'Search school...'"
+            <!-- ✅ Search box inside dropdown -->
+            <!-- <ngx-mat-select-search [placeholderLabel]="'Search school...'"
                            >
     </ngx-mat-select-search> -->
             <mat-form-field appearance="fill" class="small-form-field m-0">
                 <mat-label>School</mat-label>
                 <mat-select (selectionChange)="filterSchool($event)">
-             
+                    <mat-form-field appearance="outline" class="w-80">
+
+                        <input [ngModelOptions]="{standalone: true}" matInput [(ngModel)]="searchFieldSchool"
+                            (keyup)="searchSchool()" placeholder="search school...">
+
+                        <!-- Clear button -->
+                        <button *ngIf="searchFieldSchool" mat-icon-button matSuffix (click)="clearSearchSchool()">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-form-field>
                     <mat-option value="">All</mat-option>
                     <mat-option *ngFor="let s of school" [value]="s.id">
                         {{ s.school_name }} ({{ s.location?.name }})
@@ -51,44 +79,53 @@
                 </mat-select>
             </mat-form-field>
 
-                <mat-form-field appearance="fill" class="small-form-field">
+            <mat-form-field appearance="fill" class="small-form-field">
                 <mat-label>Division</mat-label>
                 <mat-select (selectionChange)="filterDivision($event)">
 
                     <mat-option value="">All</mat-option>
-                     <mat-option *ngFor="let div of divisions" [value]="div">
-                                            {{ div }}
-                                        </mat-option>
-                </mat-select>
-            </mat-form-field>
-
-
-            
-
-
-
-
-
-
-<div *ngIf="user_type == 'ADMIN'">
-
-            <mat-form-field appearance="fill" class="small-form-field m-0" >
-                <mat-label>User</mat-label>
-                <mat-select (selectionChange)="filterUser($event)">
-
-                    <mat-option value="">All</mat-option>
-                    <mat-option *ngFor="let s of users" [value]="s.id">
-                        {{ s.name }}
+                    <mat-option *ngFor="let div of divisions" [value]="div">
+                        {{ div }}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-        </div>
 
 
 
 
 
-           
+
+
+
+
+            <div *ngIf="user_type == 'ADMIN'">
+
+                <mat-form-field appearance="fill" class="small-form-field m-0">
+                    <mat-label>User</mat-label>
+                    <mat-select (selectionChange)="filterUser($event)">
+                        <mat-form-field appearance="outline" class="w-80">
+
+                            <input [ngModelOptions]="{standalone: true}" matInput [(ngModel)]="searchFieldUser"
+                                (keyup)="searchUser()" placeholder="search user...">
+
+                            <!-- Clear button -->
+                            <button *ngIf="searchFieldUser" mat-icon-button matSuffix (click)="clearSearchUser()">
+                                <mat-icon>close</mat-icon>
+                            </button>
+                        </mat-form-field>
+                        <mat-option value="">All</mat-option>
+                        <mat-option *ngFor="let s of users" [value]="s.id">
+                            {{ s.name }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+
+
+
+
+
 
 
 
@@ -164,7 +201,7 @@
                         </td>
                     </ng-container>
 
-                           <ng-container matColumnDef="division">
+                    <ng-container matColumnDef="division">
                         <th mat-header-cell *matHeaderCellDef>
                             Division
                         </th>
@@ -329,7 +366,7 @@
 
                     <!-- Row shown when there is no matching data. -->
                     <tr class="mat-row" *matNoDataRow>
-                        <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                        <td class="mat-cell" colspan="4">No data matching the filter</td>
                     </tr>
 
                 </table>

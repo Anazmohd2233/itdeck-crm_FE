@@ -12,6 +12,12 @@ import { CustomizerSettingsService } from '../../../customizer-settings/customiz
 import { UsersService } from '../../../services/users.service';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { HttpParams } from '@angular/common/http';
+import { MatSelectModule } from '@angular/material/select';
+import { NgFor, NgIf } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
     selector: 'app-users-list',
@@ -24,6 +30,15 @@ import { HttpParams } from '@angular/common/http';
         MatPaginatorModule,
         MatCheckboxModule,
         MatTooltipModule,
+        MatSelectModule,
+        NgFor,
+        FormsModule, // ✅ needed for [(ngModel)]
+        MatIconModule,
+        NgIf,
+        MatFormFieldModule,
+        
+    MatInputModule,
+             // for mat-icon-button
     ],
     templateUrl: './users-list.component.html',
     styleUrl: './users-list.component.scss',
@@ -32,6 +47,7 @@ export class UsersListComponent {
     page: number = 1;
     users: any;
     ELEMENT_DATA: PeriodicElement[] = [];
+    searchField: string = ''; // Initialize the property
 
     displayedColumns: string[] = [
         'id',
@@ -53,10 +69,12 @@ export class UsersListComponent {
         this.dataSource.paginator = this.paginator;
     }
 
-    // Search Filter
-    applyFilter(event: Event) {
-        const filterValue = (event.target as HTMLInputElement).value;
-        this.dataSource.filter = filterValue.trim().toLowerCase();
+    applyFilter() {
+        // const filterValue = (event.target as HTMLInputElement).value;
+        // this.dataSource.filter = filterValue.trim().toLowerCase();
+
+        let params = new HttpParams().set('search', this.searchField);
+        this.getUserList(params);
     }
 
     applySearch(event: Event) {
@@ -77,19 +95,19 @@ export class UsersListComponent {
         this.getUserList();
     }
 
-    private getUserList(params?:any): void {
-        this.usersService.getUsers(this.page,params).subscribe({
+    private getUserList(params?: any): void {
+        this.usersService.getUsers(this.page, params).subscribe({
             next: (response) => {
                 if (response && response.success) {
                     const users = response.data?.users || [];
 
                     this.ELEMENT_DATA = users.map((u: any) => ({
                         id: u.id || 'N/A',
-                        school_type : u.school_type || 'N/A',
+                        school_type: u.school_type || 'N/A',
                         name: u.name || 'N/A',
                         email: u.email || 'N/A',
                         type: u.user_type || 'N/A',
-                        location:u?.location?.name,
+                        location: u?.location?.name,
 
                         phone: u.phone || '-',
                         designation: u.designation || '-',
@@ -107,6 +125,12 @@ export class UsersListComponent {
                 console.error('API error:', error);
             },
         });
+    }
+
+    clearSearch() {
+        this.getUserList();
+
+        this.searchField = ''; // Clear the input by setting the property to an empty string
     }
 }
 

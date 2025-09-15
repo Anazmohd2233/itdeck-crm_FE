@@ -113,22 +113,37 @@
                                     <mat-label>
                                         Select
                                     </mat-label>
-                                    <!-- 'multiple' for multiple select -->
-                                    <mat-select formControlName="school_name" *ngIf="!editMode">
+                                    <mat-select formControlName="school_name">
+
+
+                                        <!-- <input type="text"
+                                                    class="input-search d-block w-100 outline-2 mb-2"
+                                                    placeholder="Search school..." (keyup)="searchSchool($event)"
+                                                    #input> -->
+
+                                        <mat-form-field appearance="outline" class="w-80">
+
+                                            <input [ngModelOptions]="{standalone: true}" matInput
+                                                [(ngModel)]="searchFieldSchool" (keyup)="searchSchool()"
+                                                placeholder="search school...">
+
+                                            <!-- Clear button -->
+                                            <button *ngIf="searchFieldSchool" mat-icon-button matSuffix
+                                                (click)="clearSearchSchool()">
+                                                <mat-icon>close</mat-icon>
+                                            </button>
+                                        </mat-form-field>
+
                                         <mat-option *ngFor="let school of school" [value]="school.id">
                                             {{ school.school_name }}
                                         </mat-option>
-                                         
+
                                     </mat-select>
 
-                                    <mat-select formControlName="school_name_edit" *ngIf="editMode">
-                                        <mat-option *ngFor="let school of school" [value]="school.id">
-                                            {{ school.school_name }}
-                                        </mat-option>
-                                    </mat-select>
-                                       <mat-error *ngIf="school_name?.invalid && school_name?.touched">
-                                                School name is required
-                                            </mat-error>
+
+                                    <mat-error *ngIf="school_name?.invalid && school_name?.touched">
+                                        School name is required
+                                    </mat-error>
                                 </mat-form-field>
 
 
@@ -209,6 +224,18 @@
                                     </mat-label>
                                     <!-- 'multiple' for multiple select -->
                                     <mat-select formControlName="assigned_to">
+                                        <mat-form-field appearance="outline" class="w-80">
+
+                                            <input [ngModelOptions]="{standalone: true}" matInput
+                                                [(ngModel)]="searchFieldUser" (keyup)="searchUser()"
+                                                placeholder="search user...">
+
+                                            <!-- Clear button -->
+                                            <button *ngIf="searchFieldUser" mat-icon-button matSuffix
+                                                (click)="clearSearchUser()">
+                                                <mat-icon>close</mat-icon>
+                                            </button>
+                                        </mat-form-field>
                                         <mat-option *ngFor="let user of users" [value]="user.id">
                                             {{ user.name }}
                                         </mat-option>
@@ -461,16 +488,28 @@
                     <div class="col-md-5 col-sm-5 mb-25">
                         <mat-form-field class="w-100">
                             <mat-label>Student Name</mat-label>
-                            <input matInput formControlName="student_name">
+                            <input matInput formControlName="student_name" />
+
+                            <mat-error *ngIf="student.get('student_name')?.hasError('required')">
+                                Student name is required
+                            </mat-error>
                         </mat-form-field>
                     </div>
 
                     <div class="col-md-5 col-sm-5 mb-25">
                         <mat-form-field class="w-100">
                             <mat-label>Phone</mat-label>
-                            <input type="number" matInput formControlName="student_phone">
+                            <input type="number" matInput formControlName="student_phone" />
+
+                            <mat-error *ngIf="student.get('student_phone')?.hasError('required')">
+                                Phone number is required
+                            </mat-error>
+                            <mat-error *ngIf="student.get('student_phone')?.hasError('pattern')">
+                                Phone number must be 10 digits
+                            </mat-error>
                         </mat-form-field>
                     </div>
+
 
 
                     <div class="col-md-2 col-sm-2 d-flex align-items-center">
@@ -664,7 +703,7 @@
 
                     <!-- Row shown when there is no matching data. -->
                     <tr class="mat-row" *matNoDataRow>
-                        <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                        <td class="mat-cell" colspan="4">No data matching the filter </td>
                     </tr>
 
                 </table>

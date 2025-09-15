@@ -23,6 +23,8 @@ import { SchoolService } from '../../../services/school.service';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { UsersService } from '../../../services/users.service';
 import { Division } from '../../../services/enums';
+import { MatIconModule } from '@angular/material/icon';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-c-contacts',
@@ -55,6 +57,9 @@ import { Division } from '../../../services/enums';
         MatProgressBarModule,
         NgFor,
         NgxMatSelectSearchModule,
+        MatIconModule,
+        FormsModule, // ✅ needed for [(ngModel)]
+        ReactiveFormsModule,
     ],
     templateUrl: './c-contacts.component.html',
     styleUrl: './c-contacts.component.scss',
@@ -68,16 +73,17 @@ export class CContactsComponent {
     contacts: any;
     school: any;
     selectedSchool: string = '';
-        users: any;
-            user_type: any;
-        divisions = Object.values(Division);
-
-
+    users: any;
+    user_type: any;
+    divisions = Object.values(Division);
+    searchField: string = ''; // Initialize the property
+    searchFieldSchool: string = '';
+    searchFieldUser: string = '';
 
     displayedColumns: string[] = [
         // 'select',
         'contactID',
-                'division',
+        'division',
 
         'name',
         'email',
@@ -94,6 +100,22 @@ export class CContactsComponent {
     selection = new SelectionModel<PeriodicElement>(true, []);
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+    constructor(
+        public themeService: CustomizerSettingsService,
+        private contactService: ContactService,
+        private toastr: ToastrService,
+        private schoolService: SchoolService,
+        private usersService: UsersService
+    ) {}
+
+    ngOnInit(): void {
+        this.user_type = localStorage.getItem('user_type');
+
+        this.getContactList();
+        this.getSchoolList();
+        this.getUserList();
+    }
 
     ngAfterViewInit() {
         // listen to paginator changes
@@ -143,7 +165,7 @@ export class CContactsComponent {
         this.getContactList(params);
     }
 
-        filterDivision(event: any) {
+    filterDivision(event: any) {
         console.log('***event***', event.value);
 
         let params = new HttpParams();
@@ -160,6 +182,16 @@ export class CContactsComponent {
 
         params = params.set('userId', event.value);
         this.getContactList(params);
+    }
+
+    searchSchool() {
+        console.log('school search keyword', this.searchFieldSchool);
+        this.getSchoolList(this.searchFieldSchool);
+    }
+
+    searchUser() {
+        console.log('user search keyword', this.searchFieldUser);
+        this.getUserList(this.searchFieldUser);
     }
 
     applyAllFilters() {
@@ -196,36 +228,20 @@ export class CContactsComponent {
     }
 
     // Search Filter
-    applyFilter(event: Event) {
-        const filterValue = (event.target as HTMLInputElement).value;
+    applyFilter() {
+        // const filterValue = (event.target as HTMLInputElement).value;
         // this.dataSource.filter = filterValue.trim().toLowerCase();
 
-        let params = new HttpParams().set('search', filterValue);
+        let params = new HttpParams().set('search', this.searchField);
         this.getContactList(params);
     }
 
-    constructor(
-        public themeService: CustomizerSettingsService,
-        private contactService: ContactService,
-        private toastr: ToastrService,
-        private schoolService: SchoolService,
-                private usersService: UsersService,
-        
-    ) {}
+    private getUserList(search?: any): void {
+        let params = new HttpParams().set('user_type', 'USER');
 
-    ngOnInit(): void {
-                this.user_type = localStorage.getItem('user_type');
-
-        this.getContactList();
-        this.getSchoolList();
-                this.getUserList();
-
-    }
-
-        private getUserList(): void {
-        let params = new HttpParams();
-
-        params = params.set('user_type', 'USER');
+        if (search) {
+            params = params.set('search', search);
+        }
 
         this.usersService.getUsers(this.page, params).subscribe({
             next: (response) => {
@@ -253,7 +269,7 @@ export class CContactsComponent {
                         id: u.id,
                         contactID: u.school || 'N/A',
                         owner: u?.contact_owner || 'N/A',
-division:u?.task?.division || 'N/A',
+                        division: u?.task?.division || 'N/A',
                         name: u.contact_name || 'N/A',
                         email: u.email || 'N/A',
                         // lead_source: u.lead_source || 'N/A',
@@ -277,10 +293,21 @@ division:u?.task?.division || 'N/A',
         });
     }
 
-    private getSchoolList(): void {
-        let params = new HttpParams();
+    clearSearchUser() {
+        this.searchFieldUser = ''; // Clear the input by setting the property to an empty string
+        this.getUserList();
+    }
+    clearSearchSchool() {
+        this.searchFieldSchool = ''; // Clear the input by setting the property to an empty string
+        this.getSchoolList();
+    }
 
-        params = params.set('status', true);
+    private getSchoolList(search?: any): void {
+        let params = new HttpParams().set('status', true);
+
+        if (search) {
+            params = params.set('search', search);
+        }
 
         this.schoolService.getSchool(this.page, params).subscribe({
             next: (response) => {
@@ -295,6 +322,12 @@ division:u?.task?.division || 'N/A',
                 console.error('API error:', error);
             },
         });
+    }
+
+    clearSearch() {
+                this.getContactList();
+
+        this.searchField = ''; // Clear the input by setting the property to an empty string
     }
 }
 

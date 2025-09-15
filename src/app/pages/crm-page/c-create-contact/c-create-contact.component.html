@@ -56,6 +56,18 @@
                             </mat-label>
                             <!-- 'multiple' for multiple select -->
                             <mat-select formControlName="school_name">
+                                <mat-form-field appearance="outline" class="w-80">
+
+                                    <input [ngModelOptions]="{standalone: true}" matInput
+                                        [(ngModel)]="searchFieldSchool" (keyup)="searchSchool()"
+                                        placeholder="search school...">
+
+                                    <!-- Clear button -->
+                                    <button *ngIf="searchFieldSchool" mat-icon-button matSuffix
+                                        (click)="clearSearchSchool()">
+                                        <mat-icon>close</mat-icon>
+                                    </button>
+                                </mat-form-field>
                                 <mat-option *ngFor="let school of school" [value]="school.id">
                                     {{ school.school_name }}
                                 </mat-option>
@@ -204,6 +216,17 @@
                             </mat-label>
                             <!-- 'multiple' for multiple select -->
                             <mat-select formControlName="contact_owner">
+                                <mat-form-field appearance="outline" class="w-80">
+
+                                    <input [ngModelOptions]="{standalone: true}" matInput [(ngModel)]="searchFieldUser"
+                                        (keyup)="searchUser()" placeholder="search user...">
+
+                                    <!-- Clear button -->
+                                    <button *ngIf="searchFieldUser" mat-icon-button matSuffix
+                                        (click)="clearSearchUser()">
+                                        <mat-icon>close</mat-icon>
+                                    </button>
+                                </mat-form-field>
                                 <mat-option *ngFor="let user of users" [value]="user.id">
                                     {{ user.name }}
                                 </mat-option>

@@ -20,6 +20,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'app-recent-leads',
@@ -41,6 +42,9 @@ import { MatNativeDateModule } from '@angular/material/core';
         MatInputModule,
         MatNativeDateModule, // <-- required for Date adapter
         ReactiveFormsModule,
+                MatIconModule,
+          
+
     ],
     templateUrl: './recent-leads.component.html',
     styleUrl: './recent-leads.component.scss',
@@ -57,6 +61,9 @@ export class RecentLeadsComponent {
     pageSize: number = 20;
     totalRecords: number = 0;
         user_type: any;
+        searchFieldSchool: string = '';
+    searchFieldUser: string = '';
+    searchFieldLocation: string = '';
 
 
     displayedColumns: string[] = [
@@ -74,6 +81,13 @@ export class RecentLeadsComponent {
     selection = new SelectionModel<PeriodicElement>(true, []);
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+        constructor(
+        public themeService: CustomizerSettingsService,
+        private dashboardService: DashboardService,
+        private schoolService: SchoolService,
+        private usersService: UsersService
+    ) {}
 
     ngOnInit(): void {
                 this.user_type = localStorage.getItem('user_type');
@@ -93,6 +107,35 @@ export class RecentLeadsComponent {
         this.getDashboardView();
         });
     }
+
+     searchSchool() {
+        console.log('school search keyword', this.searchFieldSchool);
+        this.getSchoolList(this.searchFieldSchool);
+    }
+
+    searchUser() {
+        console.log('user search keyword', this.searchFieldUser);
+        this.getUserList(this.searchFieldUser);
+    }
+
+    searchLocation() {
+        console.log('location search keyword', this.searchFieldLocation);
+        this.getLocationList(this.searchFieldLocation);
+    }
+
+    clearSearchUser() {
+        this.searchFieldUser = ''; // Clear the input by setting the property to an empty string
+        this.getUserList();
+    }
+    clearSearchSchool() {
+        this.searchFieldSchool = ''; // Clear the input by setting the property to an empty string
+        this.getSchoolList();
+    }
+    clearSearchLocation() {
+        this.searchFieldLocation = ''; // Clear the input by setting the property to an empty string
+        this.getLocationList();
+    }
+
 
     /** Whether the number of selected elements matches the total number of rows. */
     isAllSelected() {
@@ -120,12 +163,7 @@ export class RecentLeadsComponent {
         }`;
     }
 
-    constructor(
-        public themeService: CustomizerSettingsService,
-        private dashboardService: DashboardService,
-        private schoolService: SchoolService,
-        private usersService: UsersService
-    ) {}
+
 
     private getDashboardView(params?: any): void {
         this.dashboardService.getDashboardReport(this.page, params).subscribe({
@@ -237,10 +275,12 @@ export class RecentLeadsComponent {
         this.getDashboardView();
     }
 
-    private getSchoolList(): void {
-        let params = new HttpParams();
+  private getSchoolList(search?: any): void {
+        let params = new HttpParams().set('status', true);
 
-        params = params.set('status', true);
+        if (search) {
+            params = params.set('search', search);
+        }
 
         this.schoolService.getSchool(this.page, params).subscribe({
             next: (response) => {
@@ -257,10 +297,12 @@ export class RecentLeadsComponent {
         });
     }
 
-    private getUserList(): void {
-        let params = new HttpParams();
+     private getUserList(search?: any): void {
+        let params = new HttpParams().set('user_type', 'USER');
 
-        params = params.set('user_type', 'USER');
+        if (search) {
+            params = params.set('search', search);
+        }
 
         this.usersService.getUsers(this.page, params).subscribe({
             next: (response) => {
@@ -277,10 +319,12 @@ export class RecentLeadsComponent {
         });
     }
 
-    private getLocationList(): void {
-        let params = new HttpParams();
+    private getLocationList(search?: any): void {
+        let params = new HttpParams().set('status', true);
 
-        params = params.set('status', true);
+        if (search) {
+            params = params.set('search', search);
+        }
 
         this.schoolService.getLocation(this.page, params).subscribe({
             next: (response) => {

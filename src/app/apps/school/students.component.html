@@ -22,38 +22,59 @@
 <!-- Contacts -->
 <mat-card class="daxa-card contacts-list-card mb-25 border-radius bg-white border-none d-block"
     [class.rtl-enabled]="themeService.isRTLEnabled()">
+
+
     <mat-card-header>
         <mat-card-title>
-            <form class="search-box position-relative">
+            <!-- <form class="search-box position-relative">
                 <i class="material-symbols-outlined">
                     search
                 </i>
                 <input type="text" class="input-search d-block w-100 border-none outline-0"
                     placeholder="Search school..." (keyup)="applySearch($event)" #input>
-            </form>
+            </form> -->
+
+            <mat-form-field appearance="outline" class="w-80">
+                <mat-label>Search school</mat-label>
+                <input matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="searchField" (keyup)="applyFilter()">
+
+                <!-- Clear button -->
+                <button *ngIf="searchField" mat-icon-button matSuffix (click)="clearSearch()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
 
         </mat-card-title>
-        <mat-card-subtitle>
-            <!-- <button class="me-25" type="button" mat-button matTooltip="Copy Link" matTooltipPosition="above"
-                class="link-share-btn" (click)="toggleClass()">
-                <i class="material-symbols-outlined">
-                    link
-                </i>
-            </button> -->
-            <!-- <button type="button" mat-button class="card-header-menu-btn" [matMenuTriggerFor]="cardHeaderMenu">
-                All
-            </button>
-            <mat-menu #cardHeaderMenu="matMenu" class="card-header-menu" xPosition="before">
-                <button mat-menu-item>
-                    All
-                </button>
-                <button mat-menu-item>
-                    Active
-                </button>
-                <button mat-menu-item>
-                    Deactive
-                </button>
-            </mat-menu> -->
+        <mat-card-subtitle class="filter-container">
+
+            <mat-form-field appearance="fill" class="small-form-field m-0">
+                <mat-label>Location</mat-label>
+                <mat-select (selectionChange)="filterLocation($event)">
+                    <mat-form-field appearance="outline" class="w-80">
+
+                        <input [ngModelOptions]="{standalone: true}" matInput [(ngModel)]="searchFieldLocation"
+                            (keyup)="searchLocation()" placeholder="search location...">
+
+                        <!-- Clear button -->
+                        <button *ngIf="searchFieldLocation" mat-icon-button matSuffix (click)="clearSearchLocation()">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-form-field>
+                    <mat-option value="">All</mat-option>
+                    <mat-option *ngFor="let s of location" [value]="s.id">{{ s.name }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="small-form-field m-0">
+                <mat-label>Type</mat-label>
+                <mat-select (selectionChange)="filterStatus($event)">
+                    <mat-option value="">All</mat-option>
+                    <mat-option value="SCHOOL">SCHOOL</mat-option>
+                    <mat-option value="COLLEGE">COLLEGE</mat-option>
+                    <mat-option value="OTHER">OTHER</mat-option>
+                </mat-select>
+            </mat-form-field>
+
 
             <a mat-button class="add-new-btn m-0" [routerLink]="'/create-school'">
                 + Add School
@@ -184,7 +205,7 @@
 
                     <!-- Row shown when there is no matching data. -->
                     <tr class="mat-row" *matNoDataRow>
-                        <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                        <td class="mat-cell" colspan="4">No data matching the filter</td>
                     </tr>
 
                 </table>

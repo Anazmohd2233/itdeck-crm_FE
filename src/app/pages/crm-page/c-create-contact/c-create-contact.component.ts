@@ -24,6 +24,7 @@ import { CourseService } from '../../../services/course.service';
 import { UsersService } from '../../../services/users.service';
 import { HttpParams } from '@angular/common/http';
 import { SchoolService } from '../../../services/school.service';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
     selector: 'app-c-create-contact',
@@ -41,6 +42,7 @@ import { SchoolService } from '../../../services/school.service';
         ReactiveFormsModule,
         FileUploadModule,
         CommonModule,
+        MatIcon,
     ],
     templateUrl: './c-create-contact.component.html',
     styleUrl: './c-create-contact.component.scss',
@@ -56,6 +58,8 @@ export class CCreateContactComponent {
     user_type: any;
     users: any;
     school: any;
+    searchFieldSchool: string = '';
+    searchFieldUser: string = '';
 
     // File Uploader
     public multiple: boolean = false;
@@ -254,10 +258,12 @@ export class CCreateContactComponent {
         });
     }
 
-    private getUserList(): void {
-        let params = new HttpParams();
+    private getUserList(search?: any): void {
+        let params = new HttpParams().set('user_type', 'USER');
 
-        params = params.set('user_type', 'USER');
+        if (search) {
+            params = params.set('search', search);
+        }
 
         this.usersService.getUsers(this.page, params).subscribe({
             next: (response) => {
@@ -277,10 +283,12 @@ export class CCreateContactComponent {
         this.router.navigate(['/crm-page']);
     }
 
-    private getSchoolList(): void {
-        let params = new HttpParams();
+    private getSchoolList(search?: any): void {
+        let params = new HttpParams().set('status', true);
 
-        params = params.set('status', true);
+        if (search) {
+            params = params.set('search', search);
+        }
 
         this.schoolService.getSchool(this.page, params).subscribe({
             next: (response) => {
@@ -295,5 +303,27 @@ export class CCreateContactComponent {
                 console.error('API error:', error);
             },
         });
+    }
+
+    // Search Filter
+    searchSchool() {
+        console.log('school search keyword', this.searchFieldSchool);
+        this.getSchoolList(this.searchFieldSchool);
+    }
+
+    searchUser() {
+        console.log('user search keyword', this.searchFieldUser);
+        this.getUserList(this.searchFieldUser);
+    }
+
+    clearSearchSchool() {
+        this.getSchoolList();
+
+        this.searchFieldSchool = ''; // Clear the input by setting the property to an empty string
+    }
+    clearSearchUser() {
+        this.getUserList();
+
+        this.searchFieldUser = ''; // Clear the input by setting the property to an empty string
     }
 }

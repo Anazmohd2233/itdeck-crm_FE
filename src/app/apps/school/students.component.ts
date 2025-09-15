@@ -1,4 +1,4 @@
-import { NgIf } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -12,7 +12,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { CustomizerSettingsService } from '../../customizer-settings/customizer-settings.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ToastrService } from 'ngx-toastr';
@@ -20,6 +20,7 @@ import { StudentService } from '../../services/student.services';
 import { environment } from '../../../environments/environment';
 import { SchoolService } from '../../services/school.service';
 import { HttpParams } from '@angular/common/http';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
     selector: 'app-students',
@@ -37,6 +38,9 @@ import { HttpParams } from '@angular/common/http';
         MatIconModule,
         ReactiveFormsModule,
         MatInputModule,
+        FormsModule, // ✅ needed for [(ngModel)]
+        MatSelectModule,
+        NgFor,
     ],
     templateUrl: './students.component.html',
     styleUrl: './students.component.scss',
@@ -48,6 +52,9 @@ export class SchoolComponent {
     pageSize: number = 20;
     totalRecords: number = 0;
     students: any;
+    searchField: string = ''; // Initialize the property
+    searchFieldLocation: string = '';
+    location: any;
 
     displayedColumns: string[] = [
         // 'select',
@@ -64,13 +71,26 @@ export class SchoolComponent {
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
 
+    constructor(
+        public themeService: CustomizerSettingsService,
+        private snackBar: MatSnackBar,
+        private toastr: ToastrService,
+        private schoolService: SchoolService,
+        private router: Router
+    ) {}
+
+    ngOnInit(): void {
+        this.getSchooltList();
+        this.getLocationList();
+    }
+
     ngAfterViewInit() {
         // listen to paginator changes
         console.log('**********page changed**********');
         this.paginator.page.subscribe((event) => {
             this.page = event.pageIndex + 1; // MatPaginator is 0-based, API is 1-based
             this.pageSize = event.pageSize;
-            this.getLocationtList();
+            this.getSchooltList();
         });
     }
 
@@ -101,26 +121,21 @@ export class SchoolComponent {
     }
 
     // Search Filter
-    applyFilter(event: Event) {
-        const filterValue = (event.target as HTMLInputElement).value;
-        this.dataSource.filter = filterValue.trim().toLowerCase();
+    applyFilter() {
+        // const filterValue = (event.target as HTMLInputElement).value;
+        // this.dataSource.filter = filterValue.trim().toLowerCase();
+
+        let params = new HttpParams().set('search', this.searchField);
+        this.getSchooltList(params);
     }
 
-       applySearch(event: Event) {
+    applySearch(event: Event) {
         const filterValue = (event.target as HTMLInputElement).value;
         // this.dataSource.filter = filterValue.trim().toLowerCase();
 
         let params = new HttpParams().set('search', filterValue);
-        this.getLocationtList(params);
+        this.getSchooltList(params);
     }
-
-    constructor(
-        public themeService: CustomizerSettingsService,
-        private snackBar: MatSnackBar,
-        private toastr: ToastrService,
-        private schoolService: SchoolService,
-        private router: Router
-    ) {}
 
     classApplied = false;
     toggleClass() {
@@ -137,12 +152,14 @@ export class SchoolComponent {
         });
     }
 
-    ngOnInit(): void {
-        this.getLocationtList();
+    clearSearch() {
+        this.getSchooltList();
+
+        this.searchField = ''; // Clear the input by setting the property to an empty string
     }
 
-    private getLocationtList(params?:any): void {
-        this.schoolService.getSchool(this.page,params).subscribe({
+    private getSchooltList(params?: any): void {
+        this.schoolService.getSchool(this.page, params).subscribe({
             next: (response) => {
                 if (response && response.success) {
                     this.totalRecords = response.data?.total;
@@ -180,6 +197,61 @@ export class SchoolComponent {
     // editStudent(id: number) {
     //     this.router.navigate(['/edit-student', id]);
     // }
+
+    filterLocation(event: any) {
+        console.log('***event***', event.value);
+
+        let params = new HttpParams();
+
+        params = params.set('location', event.value);
+
+        this.getSchooltList(params);
+    }
+    searchLocation() {
+        console.log('location search keyword', this.searchFieldLocation);
+        this.getLocationList(this.searchFieldLocation);
+    }
+    clearSearchLocation() {
+        this.searchFieldLocation = ''; // Clear the input by setting the property to an empty string
+        this.getLocationList();
+    }
+
+    private getLocationList(search?: any): void {
+        let params = new HttpParams().set('status', true);
+
+        if (search) {
+            params = params.set('search', search);
+        }
+
+        this.schoolService.getLocation(this.page, params).subscribe({
+            next: (response) => {
+                if (response && response.success) {
+                    this.totalRecords = response.data?.total;
+
+                    this.location = response.data?.location || [];
+                } else {
+                    // this.toastr.error('Failed to load users', 'Failed');
+                    console.error(
+                        'Failed to load location:',
+                        response?.message
+                    );
+                }
+            },
+            error: (error) => {
+                console.error('API error:', error);
+            },
+        });
+    }
+
+    filterStatus(event: any) {
+        console.log('***event***', event.value);
+
+        let params = new HttpParams();
+
+        params = params.set('type', event.value);
+
+        this.getSchooltList(params);
+    }
 }
 
 export interface PeriodicElement {

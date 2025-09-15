@@ -8,47 +8,77 @@
         </mat-card-title>
         <mat-card-subtitle class="d-flex flex-wrap gap-2 align-items-center filter-container">
 
-              <h5 class="me-25">
+            <h5 class="me-25">
                 Reports
             </h5>
 
             <mat-form-field appearance="fill" class="small-form-field" style="flex: 1 1 150px;">
                 <mat-label>School</mat-label>
                 <mat-select (selectionChange)="filterSchool($event)">
+                           <mat-form-field appearance="outline" class="w-80">
+
+                        <input [ngModelOptions]="{standalone: true}" matInput [(ngModel)]="searchFieldSchool"
+                            (keyup)="searchSchool()" placeholder="search school...">
+
+                        <!-- Clear button -->
+                        <button *ngIf="searchFieldSchool" mat-icon-button matSuffix (click)="clearSearchSchool()">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-form-field>
                     <mat-option value="">All</mat-option>
                     <mat-option *ngFor="let s of school" [value]="s.id">{{ s.school_name }} ({{ s.location?.name
                         }})</mat-option>
                 </mat-select>
             </mat-form-field>
-<div *ngIf="user_type == 'ADMIN'">
+            <div *ngIf="user_type == 'ADMIN'">
 
-            <mat-form-field appearance="fill" class="small-form-field" style="flex: 1 1 120px;" >
-                <mat-label>User</mat-label>
-                <mat-select (selectionChange)="filterUser($event)">
-                    <mat-option value="">All</mat-option>
-                    <mat-option *ngFor="let s of users" [value]="s.id">{{ s.name }}</mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
+                <mat-form-field appearance="fill" class="small-form-field" style="flex: 1 1 120px;">
+                    <mat-label>User</mat-label>
+                    <mat-select (selectionChange)="filterUser($event)">
+                          <mat-form-field appearance="outline" class="w-80">
+
+                            <input [ngModelOptions]="{standalone: true}" matInput [(ngModel)]="searchFieldUser"
+                                (keyup)="searchUser()" placeholder="search user...">
+
+                            <!-- Clear button -->
+                            <button *ngIf="searchFieldUser" mat-icon-button matSuffix (click)="clearSearchUser()">
+                                <mat-icon>close</mat-icon>
+                            </button>
+                        </mat-form-field>
+                        <mat-option value="">All</mat-option>
+                        <mat-option *ngFor="let s of users" [value]="s.id">{{ s.name }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
 
             <mat-form-field appearance="fill" class="small-form-field" style="flex: 1 1 120px;">
                 <mat-label>Location</mat-label>
                 <mat-select (selectionChange)="filterLocation($event)">
+                     <mat-form-field appearance="outline" class="w-80">
+
+                        <input [ngModelOptions]="{standalone: true}" matInput [(ngModel)]="searchFieldLocation"
+                            (keyup)="searchLocation()" placeholder="search location...">
+
+                        <!-- Clear button -->
+                        <button *ngIf="searchFieldLocation" mat-icon-button matSuffix (click)="clearSearchLocation()">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-form-field>
                     <mat-option value="">All</mat-option>
                     <mat-option *ngFor="let s of location" [value]="s.id">{{ s.name }}</mat-option>
                 </mat-select>
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="small-form-field" style="flex: 1 1 100px;">
-      <mat-label>Status</mat-label>
-      <mat-select (selectionChange)="filterStatus($event)">
-        <mat-option value="">All</mat-option>
-        <mat-option value="OPEN">OPEN</mat-option>
-        <mat-option value="ONGOING">ONGOING</mat-option>
-        <mat-option value="COMPLETED">COMPLETED</mat-option>
-        <mat-option value="OTHER">OTHER</mat-option>
-      </mat-select>
-  </mat-form-field>
+                <mat-label>Status</mat-label>
+                <mat-select (selectionChange)="filterStatus($event)">
+                    <mat-option value="">All</mat-option>
+                    <mat-option value="OPEN">OPEN</mat-option>
+                    <mat-option value="ONGOING">ONGOING</mat-option>
+                    <mat-option value="COMPLETED">COMPLETED</mat-option>
+                    <mat-option value="OTHER">OTHER</mat-option>
+                </mat-select>
+            </mat-form-field>
 
             <mat-form-field style="flex: 1 1 130px;">
                 <mat-label>Start Date</mat-label>
@@ -215,7 +245,8 @@
 
                 </table>
             </div>
-<mat-paginator [length]="totalRecords" [pageSize]="20" showFirstLastButtons>
-            </mat-paginator>        </div>
+            <mat-paginator [length]="totalRecords" [pageSize]="20" showFirstLastButtons>
+            </mat-paginator>
+        </div>
     </mat-card-content>
 </mat-card>
