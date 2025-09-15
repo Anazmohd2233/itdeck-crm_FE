@@ -475,11 +475,13 @@ export class HdCreateTicketComponent {
         this.taskService.getTaskById(this.taskId).subscribe({
             next: (response) => {
                 if (response.success) {
+
                     this.contactCount = response.contactCount;
                     this.taskData = response.task;
                     const task = response.task;
                     const expence = response.task.expence;
                     this.taskSchool = response.task.school;
+                    this.getSchoolList(response?.task?.school?.school_name);
                     this.tracking = response.task.tracking;
                     if (response.task.tracking) {
                         // If tracking is ON in DB, restart socket tracking
@@ -492,11 +494,11 @@ export class HdCreateTicketComponent {
                     this.taskForm.patchValue({
                         // task_title: task.task_title,
                         priority: task.priority,
-                        assigned_to: task.assigned_to.id,
+                        assigned_to: task?.assigned_to.id,
                         due_date: task.due_date,
                         division: task.division,
                         note: task.note,
-                        taskImage: task.task_image_url,
+                        taskImage: task?.task_image_url,
                         school_name: task?.school?.id,
                     });
 
