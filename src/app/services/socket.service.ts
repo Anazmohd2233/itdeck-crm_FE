@@ -20,43 +20,43 @@ export class SocketService {
     });
   }
 
-  startTracking(taskId:any) {
-    this.socket.emit('start-tracking', { taskId: taskId });
+  // startTracking(userId?:any) {
+  //   this.socket.emit('start-tracking', { userId: this.userId });
 
-    this.trackingInterval = setInterval(() => {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((position) => {
-          const lat = position.coords.latitude;
-          const lng = position.coords.longitude;
-          const timestamp = new Date().toISOString();
+  //   this.trackingInterval = setInterval(() => {
+  //     if (navigator.geolocation) {
+  //       navigator.geolocation.getCurrentPosition((position) => {
+  //         const lat = position.coords.latitude;
+  //         const lng = position.coords.longitude;
+  //         const timestamp = new Date().toISOString();
 
-          this.socket.emit('send-location', { 
-            taskId: taskId, 
-            lat, 
-            lng, 
-            timestamp 
-          });
+  //         this.socket.emit('send-location', { 
+  //           userId: userId, 
+  //           lat, 
+  //           lng, 
+  //           timestamp 
+  //         });
 
-          console.log('Sent location:', lat, lng);
-        });
-      }
-    }, 15 * 1000); // every 15 sec
-  }
+  //         console.log('Sent location:', lat, lng);
+  //       });
+  //     }
+  //   }, 15 * 1000); 
+  // }
 
-  stopTracking() {
-    if (this.trackingInterval) {
-      clearInterval(this.trackingInterval);
-      this.trackingInterval = null;
-    }
-    this.socket.emit('stop-tracking', { userId: this.userId });
-    console.log('Stopped tracking');
-  }
+  // stopTracking(userId?:any) {
+  //   if (this.trackingInterval) {
+  //     clearInterval(this.trackingInterval);
+  //     this.trackingInterval = null;
+  //   }
+  //   this.socket.emit('stop-tracking', { userId: this.userId });
+  //   console.log('Stopped tracking');
+  // }
 
-    onLocationUpdate(): Observable<any> {
-    return new Observable((subscriber) => {
-      this.socket.on('location-update', (data) => {
-        subscriber.next(data);
-      });
-    });
-  }
+  //   onLocationUpdate(): Observable<any> {
+  //   return new Observable((subscriber) => {
+  //     this.socket.on('location-update', (data) => {
+  //       subscriber.next(data);
+  //     });
+  //   });
+  // }
 }

@@ -212,7 +212,6 @@ export class HdCreateTicketComponent {
         private route: ActivatedRoute,
         private dialog: MatDialog,
         private schoolService: SchoolService,
-        private socketService: SocketService
     ) {
         this.initializeForm();
         this.initializeExpenceForm();
@@ -234,21 +233,7 @@ export class HdCreateTicketComponent {
             }
         });
 
-        this.socketService.onLocationUpdate().subscribe((data) => {
-            console.log('📍 New location:', data);
-
-            const newPoint = { lat: +data.lat, lng: +data.lng };
-            this.path.push(newPoint);
-
-            // Add marker
-            this.markers.push({
-                position: newPoint,
-                title: `User ${data.taskId} @ ${data.timestamp}`,
-            });
-
-            // Center map on new location
-            this.center = newPoint;
-        });
+      
 
         if (isPlatformBrowser(this.platformId)) {
             // Initialize the editor only in the browser
@@ -483,10 +468,7 @@ export class HdCreateTicketComponent {
                     this.taskSchool = response.task.school;
                     this.getSchoolList(response?.task?.school?.school_name);
                     this.tracking = response.task.tracking;
-                    if (response.task.tracking) {
-                        // If tracking is ON in DB, restart socket tracking
-                        this.startTracking();
-                    }
+                   
                     this.progress =
                         (response.contactCount / task.school?.strength) * 100;
 
@@ -820,54 +802,33 @@ export class HdCreateTicketComponent {
         });
     }
 
-    onToggle(event: MatSlideToggleChange) {
-        if (event.checked) {
-            console.log('Toggle ON');
+    // onToggle(event: MatSlideToggleChange) {
+    //     if (event.checked) {
+    //         console.log('Toggle ON');
 
-            this.startTracking(); // Example function
-            this.updateForTracking('true');
-        } else {
-            console.log('Toggle OFF');
+    //         this.startTracking(); // Example function
+    //         this.updateForTracking('true');
+    //     } else {
+    //         console.log('Toggle OFF');
 
-            this.stopTracking(); // Example function
-            this.updateForTracking('false');
-        }
-    }
+    //         this.stopTracking(); // Example function
+    //         this.updateForTracking('false');
+    //     }
+    // }
 
-    startTracking() {
-        console.log('Tracking Started');
+    // startTracking() {
+    //     console.log('Tracking Started');
 
-        this.socketService.startTracking(this.taskId);
-    }
+    //     this.socketService.startTracking(this.taskId);
+    // }
 
-    stopTracking() {
-        console.log('Tracking Ended');
+    // stopTracking() {
+    //     console.log('Tracking Ended');
 
-        this.socketService.stopTracking();
-    }
+    //     this.socketService.stopTracking();
+    // }
 
-    updateForTracking(tracking: any) {
-        const formData = new FormData();
-        formData.append('tracking', tracking);
-        this.taskService.updateTask(formData, this.taskId).subscribe({
-            next: (response) => {
-                if (response.success) {
-                    this.toastr.success('Successfully Updated', 'Success');
-                } else {
-                    this.toastr.error(
-                        response.message || 'Failed to Update.',
-                        'Error'
-                    );
-                    console.error('❌ add failed:', response.message);
-                }
-            },
-            error: (error) => {
-                this.toastr.error('Something went wrong.', 'Error');
 
-                console.error('❌ API error:', error);
-            },
-        });
-    }
 }
 
 interface Expense {

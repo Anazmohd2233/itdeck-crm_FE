@@ -64,7 +64,13 @@
                         </ul>
                     </div>
                 </mat-menu>
-            </li> -->
+            </li>   -->
+            <li>
+                <!-- <button mat-flat-button class="daxa me-25"  (click)="checkIn()">CheckIn</button>
+                                <button mat-flat-button color="warn"  (click)="checkOut()">Check Out</button> -->
+
+
+            </li>
             <li>
                 <button mat-button class="dark-swtich-btn" (click)="toggleTheme()">
                     <i class="material-symbols-outlined">
@@ -262,7 +268,9 @@
                                     logout
                                 </i>
                                 Logout
-                                <a routerLink="/authentication/logout" class="link-btn d-block position-absolute"></a>
+
+                                <a (click)="onLogout()" class="link-btn d-block position-absolute">Logout</a>
+
                             </li>
                         </ul>
                     </div>

@@ -72,6 +72,7 @@ import { LocationComponent } from './apps/location/students.component';
 import { EditLocationComponent } from './apps/location/edit-location/edit-student.component';
 import { SchoolComponent } from './apps/school/students.component';
 import { AddSchoolComponent } from './apps/school/edit-school/edit-student.component';
+import { UserLocationComponent } from './apps/user_location/students.component';
 
 // import { HdReportsComponent } from './pages/hd-reports/hd-reports.component';
 
@@ -122,6 +123,8 @@ export const routes: Routes = [
     },
 
     { path: 'school', component: SchoolComponent, canActivate: [AuthGuard] },
+        { path: 'user-location', component: UserLocationComponent, canActivate: [AuthGuard] },
+
 
     {
         path: 'create-school',
