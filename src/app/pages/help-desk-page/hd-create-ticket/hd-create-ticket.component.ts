@@ -90,6 +90,18 @@ import { GoogleMapsModule } from '@angular/google-maps';
     styleUrls: ['./hd-create-ticket.component.scss'],
 })
 export class HdCreateTicketComponent {
+
+     expenceDisplayedColumns: string[] = [
+    'date',
+    'food_expence',
+    'other_expence',
+    'totalKm',
+    'totalTravelExp',
+    'grandTotal',
+    'action',
+  ];
+  expenceDataSource = new MatTableDataSource<Expence>([]);
+  expandedElement: Expence | null = null;
     // Text Editor
     editor!: Editor | null;
     editorContent: string = '';
@@ -126,6 +138,8 @@ export class HdCreateTicketComponent {
 
     ngAfterViewInit() {
         this.dataSource.paginator = this.paginator;
+            this.expenceDataSource.paginator = this.paginator;
+
     }
 
     /** Whether the number of selected elements matches the total number of rows. */
@@ -508,10 +522,21 @@ export class HdCreateTicketComponent {
         });
     }
 
+      toggleExpand(element: Expence) {
+    this.expandedElement = this.expandedElement === element ? null : element;
+  }
+
+  applyExpenceFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.expenceDataSource.filter = filterValue.trim().toLowerCase();
+  }
+
     loadTaskDetails() {
         this.taskService.getTaskById(this.taskId).subscribe({
             next: (response) => {
                 if (response.success) {
+                              this.expenceDataSource.data = response.expences;
+
                     this.contactCount = response.contactCount;
                     this.taskData = response.task;
                     const task = response.task;
@@ -891,6 +916,16 @@ interface Expense {
     food_expence: number;
     other_expence: number;
     action:any;
+}
+
+interface Expence {
+  date: string;
+  food_expence: number;
+  other_expence: number;
+  totalKm: number;
+  totalTravelExp: number;
+  grandTotal: number;
+  details: { start_point: string; end_point: string; kilometer: number; travel_expence: number }[];
 }
 
 interface Students {

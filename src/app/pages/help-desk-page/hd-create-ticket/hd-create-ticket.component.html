@@ -415,32 +415,32 @@
     <mat-dialog-content>
         <form *ngIf="expenceForm" [formGroup]="expenceForm" (ngSubmit)="createExpence()">
 
-                <div class="row">
-                    <div class="col-md-4 col-sm-6 mb-25">
-                        <mat-form-field class="w-100">
-                            <mat-label>Date</mat-label>
-                            <input matInput [matDatepicker]="picker" formControlName="date">
-                            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                            <mat-datepicker #picker></mat-datepicker>
-                        </mat-form-field>
+            <div class="row">
+                <div class="col-md-4 col-sm-6 mb-25">
+                    <mat-form-field class="w-100">
+                        <mat-label>Date</mat-label>
+                        <input matInput [matDatepicker]="picker" formControlName="date">
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
 
-                    </div>
-
-
-                    <div class="col-md-4 col-sm-6 mb-25">
-                        <mat-form-field class="w-100">
-                            <mat-label>Food Expense</mat-label>
-                            <input type="number" matInput formControlName="food_expence">
-                        </mat-form-field>
-                    </div>
-
-                    <div class="col-md-4 col-sm-6 mb-25">
-                        <mat-form-field class="w-100">
-                            <mat-label>Other Expense</mat-label>
-                            <input type="number" matInput formControlName="other_expence">
-                        </mat-form-field>
-                    </div>
                 </div>
+
+
+                <div class="col-md-4 col-sm-6 mb-25">
+                    <mat-form-field class="w-100">
+                        <mat-label>Food Expense</mat-label>
+                        <input type="number" matInput formControlName="food_expence">
+                    </mat-form-field>
+                </div>
+
+                <div class="col-md-4 col-sm-6 mb-25">
+                    <mat-form-field class="w-100">
+                        <mat-label>Other Expense</mat-label>
+                        <input type="number" matInput formControlName="other_expence">
+                    </mat-form-field>
+                </div>
+            </div>
             <div formArrayName="expenses">
 
                 <div *ngFor="let expense of expenses.controls; let i = index" [formGroupName]="i"
@@ -587,177 +587,6 @@
 
 
 
-<!-- Contacts -->
-<mat-card *ngIf="editMode" class="daxa-card contacts-list-card mb-25 border-radius bg-white border-none d-block"
-    [class.rtl-enabled]="themeService.isRTLEnabled()">
-    <mat-card-header>
-        <mat-card-title>
-            <form class="search-box position-relative">
-                <i class="material-symbols-outlined">
-                    search
-                </i>
-                <input type="text" class="input-search d-block w-100 border-none outline-0"
-                    placeholder="Search expence..." (keyup)="applyFilter($event)" #input>
-            </form>
-        </mat-card-title>
-
-    </mat-card-header>
-    <mat-card-content>
-        <div class="contacts-list-table">
-            <div class="table-responsive">
-                <table mat-table [dataSource]="dataSource">
-
-                    <!-- Checkbox Column -->
-                    <!-- <ng-container matColumnDef="select">
-                        <th mat-header-cell *matHeaderCellDef>
-                            <mat-checkbox (change)="$event ? toggleAllRows() : null"
-                                [checked]="selection.hasValue() && isAllSelected()"
-                                [indeterminate]="selection.hasValue() && !isAllSelected()"
-                                [aria-label]="checkboxLabel()">
-                            </mat-checkbox>
-                        </th>
-                        <td mat-cell *matCellDef="let row">
-                            <mat-checkbox (click)="$event.stopPropagation()"
-                                (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)"
-                                [aria-label]="checkboxLabel(row)">
-                            </mat-checkbox>
-                        </td>
-                    </ng-container> -->
-
-                    <!-- School Name Column -->
-                    <ng-container matColumnDef="date">
-                        <th mat-header-cell *matHeaderCellDef>
-                            Date
-                        </th>
-                        <td mat-cell *matCellDef="let element">
-                            {{element.date}}
-                        </td>
-                    </ng-container>
-
-                    <!-- Customer Column -->
-                    <ng-container matColumnDef="start_point">
-                        <th mat-header-cell *matHeaderCellDef>
-                            Start Point
-                        </th>
-                        <td mat-cell *matCellDef="let element" class="text-black">
-                            <div class="info d-flex align-items-center">
-
-                                <span class="d-block fw-medium">
-                                    {{element.start_point}}
-                                </span>
-                            </div>
-                        </td>
-                    </ng-container>
-
-                    <!-- Email Column -->
-                    <ng-container matColumnDef="end_point">
-                        <th mat-header-cell *matHeaderCellDef>
-                            End Point
-                        </th>
-                        <td mat-cell *matCellDef="let element">
-                            {{element.end_point}}
-                        </td>
-                    </ng-container>
-
-                    <!-- Phone Column -->
-                    <ng-container matColumnDef="kilometer">
-                        <th mat-header-cell *matHeaderCellDef>
-                            Kilometer
-                        </th>
-                        <td mat-cell *matCellDef="let element">
-                            {{element.kilometer}}
-                        </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="travel_expence">
-                        <th mat-header-cell *matHeaderCellDef>
-                            Travel Expence
-                        </th>
-                        <td mat-cell *matCellDef="let element">
-                            {{element.travel_expence}}
-                        </td>
-                    </ng-container>
-
-                    <!-- Last Contacted Column -->
-                    <ng-container matColumnDef="food_expence">
-                        <th mat-header-cell *matHeaderCellDef>
-                            Food Expence
-                        </th>
-                        <td mat-cell *matCellDef="let element">
-                            {{element.food_expence}}
-                        </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="other_expence">
-                        <th mat-header-cell *matHeaderCellDef>
-                            Other Expence
-                        </th>
-                        <td mat-cell *matCellDef="let element">
-                            {{element.other_expence}}
-                        </td>
-                    </ng-container>
-
-                    <!-- Company Column -->
-                    <ng-container matColumnDef="total">
-                        <th mat-header-cell *matHeaderCellDef>
-                            Total Amount
-                        </th>
-                        <td mat-cell *matCellDef="let element">
-                            {{element.total}}
-                        </td>
-                    </ng-container>
-
-
-
-
-                    <!-- Action Column -->
-                    <ng-container matColumnDef="action">
-                        <th mat-header-cell *matHeaderCellDef>
-                            Action
-                        </th>
-                        
-                        <td mat-cell *matCellDef="let element">
-                            <div class="action-info">
-                                <!-- <a mat-button [routerLink]="'/crm-page/create-contact'"
-                                    [queryParams]="{ contact_id: element.id }" matTooltip="Edit Contact"
-                                    matTooltipPosition="above">
-                                    <i class="material-symbols-outlined">
-                                        edit
-                                    </i>
-                                </a> -->
-  <!-- <button mat-icon-button (click)="toggleExpand(element)">
-        <mat-icon>{{ expandedElement === element ? 'expand_less' : 'expand_more' }}</mat-icon>
-      </button> -->
-                                
-
-                                <!-- <a mat-button
-                                    matTooltip="Expand"
-                                    matTooltipPosition="above">
-                                    <i class="material-symbols-outlined">
-                                        open_in_browser
-                                    </i>
-                                </a> -->
-                             
-                            </div>
-                        </td>
-                    </ng-container>
-
-                    
-
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-                    <!-- Row shown when there is no matching data. -->
-                    <tr class="mat-row" *matNoDataRow>
-                        <td class="mat-cell" colspan="4">No data matching the filter </td>
-                    </tr>
-
-                </table>
-            </div>
-            <mat-paginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons></mat-paginator>
-        </div>
-    </mat-card-content>
-</mat-card>
 
 <!-- <div class="map-container">
   <google-map
@@ -776,3 +605,145 @@
     </map-polyline>
   </google-map>
 </div> -->
+
+
+
+<mat-card *ngIf="editMode" class="daxa-card contacts-list-card mb-25 border-radius bg-white border-none d-block"
+    [class.rtl-enabled]="themeService.isRTLEnabled()">
+    <mat-card-header>
+        <mat-card-title>
+            <form class="search-box position-relative">
+                <i class="material-symbols-outlined">search</i>
+                <input type="text" class="input-search d-block w-100 border-none outline-0"
+                    placeholder="Search expenses..." (keyup)="applyExpenceFilter($event)" #input>
+            </form>
+        </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+        <div class="contacts-list-table">
+            <div class="table-responsive">
+                <table mat-table [dataSource]="expenceDataSource" multiTemplateDataRows>
+
+                    <!-- Date -->
+                    <ng-container matColumnDef="date">
+                        <th mat-header-cell *matHeaderCellDef>Date</th>
+                        <td mat-cell *matCellDef="let element">{{element.date}}</td>
+                    </ng-container>
+
+                    <!-- Food Expence -->
+                    <ng-container matColumnDef="food_expence">
+                        <th mat-header-cell *matHeaderCellDef>Food Expence</th>
+                        <td mat-cell *matCellDef="let element">{{element.food_expence}}</td>
+                    </ng-container>
+
+                    <!-- Other Expence -->
+                    <ng-container matColumnDef="other_expence">
+                        <th mat-header-cell *matHeaderCellDef>Other Expence</th>
+                        <td mat-cell *matCellDef="let element">{{element.other_expence}}</td>
+                    </ng-container>
+
+                    <!-- Total KM -->
+                    <ng-container matColumnDef="totalKm">
+                        <th mat-header-cell *matHeaderCellDef>Total KM</th>
+                        <td mat-cell *matCellDef="let element">{{element.totalKm}}</td>
+                    </ng-container>
+
+                    <!-- Travel Expence -->
+                    <ng-container matColumnDef="totalTravelExp">
+                        <th mat-header-cell *matHeaderCellDef>Total Travel Exp.</th>
+                        <td mat-cell *matCellDef="let element">{{element.totalTravelExp}}</td>
+                    </ng-container>
+
+                    <!-- Grand Total -->
+                    <ng-container matColumnDef="grandTotal">
+                        <th mat-header-cell *matHeaderCellDef>Grand Total</th>
+                        <td mat-cell *matCellDef="let element">{{element.grandTotal}}</td>
+                    </ng-container>
+
+                    <!-- Action (Expand/Collapse) -->
+                    <ng-container matColumnDef="action">
+                        <th mat-header-cell *matHeaderCellDef>Action</th>
+                        <td mat-cell *matCellDef="let element">
+                            <button mat-icon-button (click)="toggleExpand(element)">
+                                <mat-icon matTooltip="Show Details">
+                                    {{expandedElement === element ? 'expand_less' : 'expand_more'}}
+                                </mat-icon>
+                            </button>
+                        </td>
+                    </ng-container>
+
+                    <!-- Template for details -->
+                    <ng-container matColumnDef="expandedDetail">
+                        <td mat-cell *matCellDef="let element" [attr.colspan]="expenceDisplayedColumns.length">
+                            <div class="p-3 bg-light" *ngIf="expandedElement === element">
+
+                                <!-- 🔹 Header Row -->
+                                <div class="row fw-bold text-center mb-25">
+                                    <div class="col-3">Start Point</div>
+                                    <div class="col-1"></div>
+
+                                    <div class="col-3">End Point</div>
+                                    <div class="col-1"></div>
+
+                                    <div class="col-1">Kilometer</div>
+                                    <div class="col-1"></div>
+
+                                    <div class="col-1">Travel Exp</div>
+                                    <div class="col-1"></div>
+
+                                </div>
+
+                                <!-- 🔹 Data Rows -->
+                                <div *ngFor="let d of element.details" class="row mb-2 me-2 text-center">
+                                    <div class="col-3 alert alert-dark">
+                                        {{ d.start_point }}
+                                    </div>
+                                    <div class="col-1"></div>
+
+                                    <div class="col-3 alert alert-dark">
+                                        {{ d.end_point }}
+                                    </div>
+                                                                        <div class="col-1"></div>
+
+                                    <div class="col-1 alert alert-dark">
+                                        {{ d.kilometer }}
+                                    </div>
+                                                                        <div class="col-1"></div>
+
+                                    <div class="col-1 alert alert-dark">
+                                        {{ d.travel_expence }}
+                                    </div>
+                                                                        <div class="col-1"></div>
+
+                                </div>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <!-- Parent Row -->
+                    <tr mat-header-row *matHeaderRowDef="expenceDisplayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: expenceDisplayedColumns;" class="element-row"
+                        [class.expanded]="expandedElement === row">
+                    </tr>
+
+                    <!-- Expanded Detail Row -->
+                    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row">
+                    </tr>
+
+
+
+
+
+
+                    <!-- No Data Row -->
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="6">No expenses found.</td>
+                    </tr>
+
+                </table>
+            </div>
+            <mat-paginator [pageSizeOptions]="[5, 10]" showFirstLastButtons></mat-paginator>
+        </div>
+    </mat-card-content>
+</mat-card>
