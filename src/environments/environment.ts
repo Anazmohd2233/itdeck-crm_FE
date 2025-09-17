@@ -4,6 +4,8 @@ export const environment = {
     //Backend url
     apiBaseUrl: 'http://localhost:5007',
     // apiBaseUrl: 'https://catalyst.nestcrm.app',
+        // apiBaseUrl: 'https://demo.nestcrm.app',
+
 
     //Domain name
     //for ip rulers

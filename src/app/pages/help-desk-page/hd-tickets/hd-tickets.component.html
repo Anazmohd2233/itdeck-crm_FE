@@ -63,7 +63,7 @@
             </form>
         </mat-card-title> -->
         <mat-card-title class="d-flex align-items-center justify-content-between flex-wrap gap-3">
-            <h5 class="mb-0">All Task</h5>
+            <!-- <h5 class="mb-0">All Task</h5> -->
             <!-- <form class="search-box position-relative ms-3">
                 <i class="material-symbols-outlined">
                     search
@@ -140,6 +140,27 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
+
+            <mat-form-field appearance="fill" class="small-form-field m-0">
+                <mat-label>Location</mat-label>
+                <mat-select (selectionChange)="filterLocation($event)">
+                    <mat-form-field appearance="outline" class="w-80">
+
+                        <input [ngModelOptions]="{standalone: true}" matInput [(ngModel)]="searchFieldLocation"
+                            (keyup)="searchLocation()" placeholder="search location...">
+
+                        <!-- Clear button -->
+                        <button *ngIf="searchFieldLocation" mat-icon-button matSuffix (click)="clearSearchLocation()">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-form-field>
+                    <mat-option value="">All</mat-option>
+                    <mat-option *ngFor="let s of location" [value]="s.id">{{ s.name }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+
+
 
             <mat-form-field appearance="fill" class="small-form-field">
                 <mat-label>Division</mat-label>
@@ -240,6 +261,19 @@
 
                             <span class="d-block fw-medium">
                                 {{element.school}}
+                            </span>
+
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="location">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Location
+                        </th>
+                        <td mat-cell *matCellDef="let element" class="text-black">
+
+                            <span class="d-block fw-medium">
+                                {{element.location}}
                             </span>
 
                         </td>

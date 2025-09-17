@@ -123,8 +123,11 @@ export const routes: Routes = [
     },
 
     { path: 'school', component: SchoolComponent, canActivate: [AuthGuard] },
-        { path: 'user-location', component: UserLocationComponent, canActivate: [AuthGuard] },
-
+    {
+        path: 'user-location',
+        component: UserLocationComponent,
+        canActivate: [AuthGuard],
+    },
 
     {
         path: 'create-school',

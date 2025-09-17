@@ -51,7 +51,6 @@ import {
     MatSlideToggleChange,
     MatSlideToggleModule,
 } from '@angular/material/slide-toggle';
-import { SocketService } from '../../../services/socket.service';
 import { GoogleMap } from '@angular/google-maps';
 import { GoogleMapsModule } from '@angular/google-maps';
 
@@ -117,7 +116,7 @@ export class HdCreateTicketComponent {
         'other_expence',
         'total',
 
-        // 'action',
+        'action',
     ];
     dataSource = new MatTableDataSource<PeriodicElement>(this.ELEMENT_DATA);
     selection = new SelectionModel<PeriodicElement>(true, []);
@@ -171,7 +170,11 @@ export class HdCreateTicketComponent {
 
     isSubmitting = false;
     users: any;
+    location: any;
+
     school: any;
+        user_type: any;
+
     taskSchool: any;
     contactCount: any;
     locations: any[] = []; // timeline of received locations
@@ -183,6 +186,7 @@ export class HdCreateTicketComponent {
     editMode: boolean = false;
     tracking: boolean = false;
     divisions = Object.values(Division);
+    
 
     taskData: any;
     dialogRef!: MatDialogRef<any>; // store reference
@@ -200,6 +204,7 @@ export class HdCreateTicketComponent {
 
     searchFieldSchool: string = '';
     searchFieldUser: string = '';
+    searchFieldLocation: string = '';
 
     constructor(
         @Inject(PLATFORM_ID) private platformId: Object,
@@ -211,16 +216,19 @@ export class HdCreateTicketComponent {
         private toastr: ToastrService,
         private route: ActivatedRoute,
         private dialog: MatDialog,
-        private schoolService: SchoolService,
+        private schoolService: SchoolService
     ) {
         this.initializeForm();
         this.initializeExpenceForm();
     }
 
     ngOnInit(): void {
+                this.user_type = localStorage.getItem('user_type');
+
         //  this.getExpenceList();
         this.getUserList();
         this.getSchoolList();
+        this.getLocationList();
 
         this.route.queryParams.subscribe((params) => {
             this.taskId = params['task_id'] || null;
@@ -232,8 +240,6 @@ export class HdCreateTicketComponent {
                 this.loadTaskDetails();
             }
         });
-
-      
 
         if (isPlatformBrowser(this.platformId)) {
             // Initialize the editor only in the browser
@@ -253,6 +259,11 @@ export class HdCreateTicketComponent {
         this.getSchoolList(this.searchFieldSchool);
     }
 
+    searchLocation() {
+        console.log('school search keyword', this.searchFieldLocation);
+        this.getLocationList(this.searchFieldLocation);
+    }
+
     searchUser() {
         console.log('user search keyword', this.searchFieldUser);
         this.getUserList(this.searchFieldUser);
@@ -262,6 +273,11 @@ export class HdCreateTicketComponent {
         this.getSchoolList();
 
         this.searchFieldSchool = ''; // Clear the input by setting the property to an empty string
+    }
+    clearSearchLocation() {
+        this.getLocationList();
+
+        this.searchFieldLocation = ''; // Clear the input by setting the property to an empty string
     }
     clearSearchUser() {
         this.getUserList();
@@ -274,7 +290,7 @@ export class HdCreateTicketComponent {
             // task_title: ['', [Validators.required, Validators.minLength(3)]],
             // activity: [[]],
             priority: [''],
-            assigned_to: ['', Validators.required],
+            assigned_to: [''],
             due_date: ['', Validators.required],
             due_time: [''],
             note: [''],
@@ -282,6 +298,39 @@ export class HdCreateTicketComponent {
             taskImage: [''],
             // location: [''],
             school_name: ['', Validators.required],
+            location: [''],
+        });
+    }
+
+    onLocationSelected(loc: any) {
+        if (loc) {
+            console.log('Selected Location:', loc);
+            this.getSchoolList(null, loc);
+        }
+    }
+
+    private getLocationList(search?: any): void {
+        let params = new HttpParams().set('status', true);
+
+        if (search) {
+            params = params.set('search', search);
+        }
+
+        this.schoolService.getLocation(this.page, params).subscribe({
+            next: (response) => {
+                if (response && response.success) {
+                    this.location = response.data?.location || [];
+                } else {
+                    // this.toastr.error('Failed to load users', 'Failed');
+                    console.error(
+                        'Failed to load location:',
+                        response?.message
+                    );
+                }
+            },
+            error: (error) => {
+                console.error('API error:', error);
+            },
         });
     }
 
@@ -434,11 +483,14 @@ export class HdCreateTicketComponent {
         });
     }
 
-    private getSchoolList(search?: any): void {
+    private getSchoolList(search?: any, locId?: any): void {
         let params = new HttpParams().set('status', true);
 
         if (search) {
             params = params.set('search', search);
+        }
+        if (locId) {
+            params = params.set('location', locId);
         }
 
         this.schoolService.getSchool(this.page, params).subscribe({
@@ -460,7 +512,6 @@ export class HdCreateTicketComponent {
         this.taskService.getTaskById(this.taskId).subscribe({
             next: (response) => {
                 if (response.success) {
-
                     this.contactCount = response.contactCount;
                     this.taskData = response.task;
                     const task = response.task;
@@ -468,7 +519,7 @@ export class HdCreateTicketComponent {
                     this.taskSchool = response.task.school;
                     this.getSchoolList(response?.task?.school?.school_name);
                     this.tracking = response.task.tracking;
-                   
+
                     this.progress =
                         (response.contactCount / task.school?.strength) * 100;
 
@@ -482,6 +533,7 @@ export class HdCreateTicketComponent {
                         note: task.note,
                         taskImage: task?.task_image_url,
                         school_name: task?.school?.id,
+                        location: task?.school?.location?.id,
                     });
 
                     this.ELEMENT_DATA = expence.map((u: any) => ({
@@ -496,7 +548,7 @@ export class HdCreateTicketComponent {
                         food_expence: u.food_expence || '-',
                         total: u.total || '-',
 
-                        // action: '', // we will handle icons directly in template
+                        action: '', // we will handle icons directly in template
                     }));
 
                     this.dataSource.data = this.ELEMENT_DATA;
@@ -519,6 +571,9 @@ export class HdCreateTicketComponent {
 
             const payload = {
                 task_id: this.taskId,
+                date:this.expenceForm.value.date,
+                food_expence:this.expenceForm.value.food_expence,
+                other_expence:this.expenceForm.value.other_expence,
                 expenses: expenses.map((exp: Expense) => ({
                     ...exp,
                 })),
@@ -564,53 +619,52 @@ export class HdCreateTicketComponent {
     }
 
     createStudent(): void {
-            // Cast your form value to correct type
-            const students: Students[] = this.studentForm.value.students;
+        // Cast your form value to correct type
+        const students: Students[] = this.studentForm.value.students;
 
-            const payload = {
-                task_id: this.taskId,
-                school_id: this.taskSchool.id,
-                assigned_to: this.taskData.assigned_to.id,
+        const payload = {
+            task_id: this.taskId,
+            school_id: this.taskSchool.id,
+            assigned_to: this.taskData.assigned_to.id,
 
-                students: students.map((std: Students) => ({
-                    ...std,
-                })),
-            };
+            students: students.map((std: Students) => ({
+                ...std,
+            })),
+        };
 
-            console.log('payload', JSON.stringify(payload));
+        console.log('payload', JSON.stringify(payload));
 
-            this.isSubmitting = true;
+        this.isSubmitting = true;
 
-            this.taskService.createBulkContact(payload).subscribe({
-                next: (response) => {
-                    if (response.success) {
-                        this.loadTaskDetails();
-                        this.isSubmitting = false;
-                        this.closeDialog();
-                        this.toastr.success(
-                            'Students Added successfully',
-                            'Success'
-                        );
-                        console.log('✅ Students Added successfully');
-                    } else {
-                        this.isSubmitting = false;
-
-                        this.toastr.error(
-                            response.message || 'Failed to Add Students.',
-                            'Error'
-                        );
-                        console.error('❌ add failed:', response.message);
-                    }
-                },
-                error: (error) => {
+        this.taskService.createBulkContact(payload).subscribe({
+            next: (response) => {
+                if (response.success) {
+                    this.loadTaskDetails();
+                    this.isSubmitting = false;
+                    this.closeDialog();
+                    this.toastr.success(
+                        'Students Added successfully',
+                        'Success'
+                    );
+                    console.log('✅ Students Added successfully');
+                } else {
                     this.isSubmitting = false;
 
-                    this.toastr.error('Something went wrong.', 'Error');
+                    this.toastr.error(
+                        response.message || 'Failed to Add Students.',
+                        'Error'
+                    );
+                    console.error('❌ add failed:', response.message);
+                }
+            },
+            error: (error) => {
+                this.isSubmitting = false;
 
-                    console.error('❌ API error:', error);
-                },
-            });
-      
+                this.toastr.error('Something went wrong.', 'Error');
+
+                console.error('❌ API error:', error);
+            },
+        });
     }
 
     openDialog() {
@@ -641,6 +695,9 @@ export class HdCreateTicketComponent {
     // component.ts
     initializeExpenceForm(): void {
         this.expenceForm = this.formBuilder.group({
+                        date: ['', Validators.required],
+   food_expence: ['', Validators.required],
+            other_expence: [''],
             expenses: this.formBuilder.array([this.createExpenseGroup()]),
         });
     }
@@ -674,12 +731,10 @@ export class HdCreateTicketComponent {
 
     createExpenseGroup(): FormGroup {
         return this.formBuilder.group({
-            date: ['', Validators.required],
             start_point: ['', Validators.required],
             end_point: ['', Validators.required],
             kilometer: ['', Validators.required],
-            food_expence: ['', Validators.required],
-            other_expence: [''],
+          
         });
     }
 
@@ -691,18 +746,17 @@ export class HdCreateTicketComponent {
     // }
 
     createStudentGroup(): FormGroup {
-  return this.formBuilder.group({
-    student_name: ['', Validators.required],
-    student_phone: [
-      '',
-      [
-        Validators.required,
-        Validators.pattern(/^\d{10}$/), // ✅ exactly 10 digits
-      ],
-    ],
-  });
-}
-
+        return this.formBuilder.group({
+            student_name: ['', Validators.required],
+            student_phone: [
+                '',
+                [
+                    Validators.required,
+                    Validators.pattern(/^\d{10}$/), // ✅ exactly 10 digits
+                ],
+            ],
+        });
+    }
 
     get expenses(): FormArray {
         return this.expenceForm.get('expenses') as FormArray;
@@ -827,8 +881,6 @@ export class HdCreateTicketComponent {
 
     //     this.socketService.stopTracking();
     // }
-
-
 }
 
 interface Expense {
@@ -838,6 +890,7 @@ interface Expense {
     kilometer: number;
     food_expence: number;
     other_expence: number;
+    action:any;
 }
 
 interface Students {
@@ -857,5 +910,5 @@ export interface PeriodicElement {
     other_expence: number;
 
     total: Number;
-    // action: any;
+    action: any;
 }

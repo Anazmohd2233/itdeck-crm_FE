@@ -14,7 +14,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FileUploadModule } from '@iplab/ngx-file-upload';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -24,6 +24,7 @@ import { UsersService } from '../../../services/users.service';
 import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 import { SchoolService } from '../../../services/school.service';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
     selector: 'app-add-user',
@@ -43,6 +44,8 @@ import { SchoolService } from '../../../services/school.service';
         MatRadioModule,
         MatCheckboxModule,
         CommonModule,
+                MatIcon,
+
     ],
     templateUrl: './add-user.component.html',
     styleUrl: './add-user.component.scss',
@@ -55,6 +58,7 @@ export class AddUserComponent {
     userId: string | null = null; // 👈 Store the ID here
     page: number = 1;
     location: any;
+    searchFieldLocation: string = '';
 
     // File Uploader
     public multiple: boolean = false;
@@ -66,7 +70,9 @@ export class AddUserComponent {
         private usersService: UsersService,
         private toastr: ToastrService,
         private route: ActivatedRoute, // 👈 Inject ActivatedRoute
-        private schoolService: SchoolService
+        private schoolService: SchoolService,
+                private router: Router,
+        
     ) {}
 
     ngOnInit(): void {
@@ -128,63 +134,67 @@ export class AddUserComponent {
             formValue.user_type === 'admin' ? 'true' : 'false'
         );
 
-        if(this.editMode){
+        if (this.editMode) {
+            this.usersService.updateUser(this.userId, formData).subscribe({
+                next: (response) => {
+                    if (response.success) {
+                        this.isSubmitting = false;
 
-              this.usersService.updateUser(this.userId,formData).subscribe({
-            next: (response) => {
-                if (response.success) {
-                    this.isSubmitting = false;
-      
-                    this.toastr.success('User Updated successfully', 'Success');
-                    console.log('✅ User Updated successfully');
-                } else {
-                    this.isSubmitting = false;
+                        this.toastr.success(
+                            'User Updated successfully',
+                            'Success'
+                        );
+                        console.log('✅ User Updated successfully');
+                    } else {
+                        this.isSubmitting = false;
 
-                    this.toastr.error(
-                        response.message || 'Failed to Updated user.',
-                        'Error'
-                    );
-                    console.error('❌ add failed:', response.message);
-                }
-            },
-            error: (error) => {
-                this.isSubmitting = false;
-
-                this.toastr.error('Something went wrong.', 'Error');
-
-                console.error('❌ API error:', error);
-            },
-        });
-
-        }else{
-  this.usersService.createUser(formData).subscribe({
-            next: (response) => {
-                if (response.success) {
-                    this.isSubmitting = false;
-                    this.userForm.reset();
-                    this.toastr.success('User Added successfully', 'Success');
-                    console.log('✅ User Added successfully');
-                } else {
+                        this.toastr.error(
+                            response.message || 'Failed to Updated user.',
+                            'Error'
+                        );
+                        console.error('❌ add failed:', response.message);
+                    }
+                },
+                error: (error) => {
                     this.isSubmitting = false;
 
-                    this.toastr.error(
-                        response.message || 'Failed to Add User.',
-                        'Error'
-                    );
-                    console.error('❌ add failed:', response.message);
-                }
-            },
-            error: (error) => {
-                this.isSubmitting = false;
+                    this.toastr.error('Something went wrong.', 'Error');
 
-                this.toastr.error('Something went wrong.', 'Error');
+                    console.error('❌ API error:', error);
+                },
+            });
+        } else {
+            this.usersService.createUser(formData).subscribe({
+                next: (response) => {
+                    if (response.success) {
+                                                        this.router.navigate(['/users']);
 
-                console.error('❌ API error:', error);
-            },
-        });
+                        this.isSubmitting = false;
+                        this.userForm.reset();
+                        this.toastr.success(
+                            'User Added successfully',
+                            'Success'
+                        );
+                        console.log('✅ User Added successfully');
+                    } else {
+                        this.isSubmitting = false;
+
+                        this.toastr.error(
+                            response.message || 'Failed to Add User.',
+                            'Error'
+                        );
+                        console.error('❌ add failed:', response.message);
+                    }
+                },
+                error: (error) => {
+                    this.isSubmitting = false;
+
+                    this.toastr.error('Something went wrong.', 'Error');
+
+                    console.error('❌ API error:', error);
+                },
+            });
         }
-
-      
     }
 
     loadUser() {
@@ -222,10 +232,12 @@ export class AddUserComponent {
         });
     }
 
-    private getLocationList(): void {
-        let params = new HttpParams();
+    private getLocationList(search?: any): void {
+        let params = new HttpParams().set('status', true);
 
-        params = params.set('status', true);
+        if (search) {
+            params = params.set('search', search);
+        }
 
         this.schoolService.getLocation(this.page, params).subscribe({
             next: (response) => {
@@ -243,5 +255,15 @@ export class AddUserComponent {
                 console.error('API error:', error);
             },
         });
+    }
+    searchLocation() {
+        console.log('school search keyword', this.searchFieldLocation);
+        this.getLocationList(this.searchFieldLocation);
+    }
+
+    clearSearchLocation() {
+        this.getLocationList();
+
+        this.searchFieldLocation = ''; // Clear the input by setting the property to an empty string
     }
 }

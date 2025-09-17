@@ -161,11 +161,11 @@
 
                         </span>
                     </a> -->
-                    
+                    <div *ngIf="user_type == 'ADMIN'">
                     <span class="sub-title text-body">
                         Users
                     </span>
-                    <a routerLink="/users" class="sidebar-menu-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                    <a  routerLink="/users" class="sidebar-menu-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                         <i class="material-symbols-outlined">
                             person
                         </i>
@@ -183,7 +183,7 @@
 
                         </span>
                     </a>
-
+</div>
 
                      <span class="sub-title text-body">
                         School

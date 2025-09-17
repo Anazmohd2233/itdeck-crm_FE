@@ -9,15 +9,15 @@ import { Observable } from 'rxjs';
 export class SocketService {
       private apiUrl = environment.apiBaseUrl;
   
-  private socket: Socket;
+  // private socket: Socket;
   private userId: string = '2'; 
   private trackingInterval: any;
 
   constructor() {
     // Connect to your backend
-    this.socket = io(this.apiUrl, {
-      transports: ['websocket']
-    });
+    // this.socket = io(this.apiUrl, {
+    //   transports: ['websocket']
+    // });
   }
 
   // startTracking(userId?:any) {

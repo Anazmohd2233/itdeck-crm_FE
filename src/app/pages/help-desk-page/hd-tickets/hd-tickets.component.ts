@@ -61,6 +61,10 @@ export class HdTicketsComponent implements OnInit {
         'ticketID',
         // 'title',
         'school',
+        // 'district',
+
+        'location',
+
         'division',
         'priority',
         'user',
@@ -88,6 +92,8 @@ export class HdTicketsComponent implements OnInit {
     divisions = Object.values(Division);
     searchFieldSchool: string = '';
     searchFieldUser: string = '';
+    searchFieldLocation: string = '';
+    location: any;
 
     constructor(
         public themeService: CustomizerSettingsService,
@@ -103,6 +109,7 @@ export class HdTicketsComponent implements OnInit {
         this.loadTasks();
         this.getSchoolList();
         this.getUserList();
+        this.getLocationList();
     }
 
     ngAfterViewInit() {
@@ -112,6 +119,32 @@ export class HdTicketsComponent implements OnInit {
             this.page = event.pageIndex + 1; // MatPaginator is 0-based, API is 1-based
             this.pageSize = event.pageSize;
             this.loadTasks();
+        });
+    }
+    private getLocationList(search?: any): void {
+        let params = new HttpParams().set('status', true);
+
+        if (search) {
+            params = params.set('search', search);
+        }
+
+        this.schoolService.getLocation(this.page, params).subscribe({
+            next: (response) => {
+                if (response && response.success) {
+                    this.totalRecords = response.data?.total;
+
+                    this.location = response.data?.location || [];
+                } else {
+                    // this.toastr.error('Failed to load users', 'Failed');
+                    console.error(
+                        'Failed to load location:',
+                        response?.message
+                    );
+                }
+            },
+            error: (error) => {
+                console.error('API error:', error);
+            },
         });
     }
 
@@ -183,6 +216,10 @@ export class HdTicketsComponent implements OnInit {
                 : 'N/A',
             priority: task.priority || 'Medium',
             division: task?.division || 'N/A',
+
+            location: task?.school?.location?.name || 'N/A',
+            district: task?.district || 'N/A',
+
             user: task?.assigned_to?.name || 'N/A',
             school: task?.school?.school_name || 'N/A',
 
@@ -254,6 +291,24 @@ export class HdTicketsComponent implements OnInit {
 
     applyAllFilters() {
         this.dataSource.filter = '' + Math.random(); // Trigger table refresh
+    }
+
+    filterLocation(event: any) {
+        console.log('***event***', event.value);
+
+        let params = new HttpParams();
+
+        params = params.set('location', event.value);
+
+        this.loadTasks(params);
+    }
+    searchLocation() {
+        console.log('location search keyword', this.searchFieldLocation);
+        this.loadTasks(this.searchFieldLocation);
+    }
+    clearSearchLocation() {
+        this.searchFieldLocation = ''; // Clear the input by setting the property to an empty string
+        this.loadTasks();
     }
 
     customFilterPredicate() {
@@ -379,6 +434,10 @@ export interface TaskElement {
     ticketID: string;
     // title: string;
     school: any;
+    location: any;
+
+    district: any;
+
     division: any;
     priority: string;
     user: any;

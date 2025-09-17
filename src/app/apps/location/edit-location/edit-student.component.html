@@ -25,6 +25,7 @@
         <form [formGroup]="studentForm" (ngSubmit)="onSubmit()">
             <div class="row">
 
+               
                 <div class="col-md-4 col-sm-6">
                     <div class="mb-25">
                         <label class="main-label d-block lh-1 text-black">
@@ -34,7 +35,7 @@
                             <mat-label>
                                 Enter Location name
                             </mat-label>
-                            <input matInput placeholder="district..etc" formControlName="name">
+                            <input matInput formControlName="name">
                         </mat-form-field>
                     </div>
                 </div>

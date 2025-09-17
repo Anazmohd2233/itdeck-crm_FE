@@ -75,6 +75,22 @@
 
                     </div>
                 </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">
+                            District
+                        </label>
+                        <mat-form-field>
+                            <mat-label>Select</mat-label>
+                            <mat-select formControlName="district">
+                                <mat-option *ngFor="let div of district" [value]="div">
+                                    {{ div }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+
 
                 <div class="col-md-4 col-sm-6">
                     <div class="mb-25">

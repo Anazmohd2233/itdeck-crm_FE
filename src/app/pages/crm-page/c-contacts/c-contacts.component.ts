@@ -22,9 +22,10 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { SchoolService } from '../../../services/school.service';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { UsersService } from '../../../services/users.service';
-import { Division } from '../../../services/enums';
+import { Districts, Division } from '../../../services/enums';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Router } from 'express';
 
 @Component({
     selector: 'app-c-contacts',
@@ -79,6 +80,11 @@ export class CContactsComponent {
     searchField: string = ''; // Initialize the property
     searchFieldSchool: string = '';
     searchFieldUser: string = '';
+    searchFieldLocation: string = '';
+        location: any;
+
+
+    district = Object.values(Districts);
 
     displayedColumns: string[] = [
         // 'select',
@@ -90,6 +96,8 @@ export class CContactsComponent {
         'phone',
         // 'courses',
         'owner',
+                'createdDate',
+
         // 'lead_source',
         'status',
         // 'lead_status',
@@ -106,7 +114,8 @@ export class CContactsComponent {
         private contactService: ContactService,
         private toastr: ToastrService,
         private schoolService: SchoolService,
-        private usersService: UsersService
+        private usersService: UsersService,
+
     ) {}
 
     ngOnInit(): void {
@@ -115,6 +124,8 @@ export class CContactsComponent {
         this.getContactList();
         this.getSchoolList();
         this.getUserList();
+                this.getLocationList();
+
     }
 
     ngAfterViewInit() {
@@ -183,7 +194,33 @@ export class CContactsComponent {
         params = params.set('userId', event.value);
         this.getContactList(params);
     }
+  filterDistrict(event: any) {
+        console.log('***event***', event.value);
 
+        let params = new HttpParams();
+
+        params = params.set('district', event.value);
+
+        this.getUserList(params);
+    }
+    
+    filterLocation(event: any) {
+        console.log('***event***', event.value);
+
+        let params = new HttpParams();
+
+        params = params.set('location', event.value);
+
+        this.getUserList(params);
+    }
+    searchLocation() {
+        console.log('location search keyword', this.searchFieldLocation);
+        this.getUserList(this.searchFieldLocation);
+    }
+    clearSearchLocation() {
+        this.searchFieldLocation = ''; // Clear the input by setting the property to an empty string
+        this.getUserList();
+    }
     searchSchool() {
         console.log('school search keyword', this.searchFieldSchool);
         this.getSchoolList(this.searchFieldSchool);
@@ -272,6 +309,9 @@ export class CContactsComponent {
                         division: u?.task?.division || 'N/A',
                         name: u.contact_name || 'N/A',
                         email: u.email || 'N/A',
+createdDate: u?.createdAt
+  ? new Date(u.createdAt).toLocaleDateString("en-GB").replace(/\//g, "-")
+  : "N/A",
                         // lead_source: u.lead_source || 'N/A',
                         lead_status: u.lead_status || 'OTHER',
                         phone: u.phone || '-',
@@ -325,9 +365,35 @@ export class CContactsComponent {
     }
 
     clearSearch() {
-                this.getContactList();
+        this.getContactList();
 
         this.searchField = ''; // Clear the input by setting the property to an empty string
+    }
+       private getLocationList(search?: any): void {
+        let params = new HttpParams().set('status', true);
+
+        if (search) {
+            params = params.set('search', search);
+        }
+
+        this.schoolService.getLocation(this.page, params).subscribe({
+            next: (response) => {
+                if (response && response.success) {
+                    this.totalRecords = response.data?.total;
+
+                    this.location = response.data?.location || [];
+                } else {
+                    // this.toastr.error('Failed to load users', 'Failed');
+                    console.error(
+                        'Failed to load location:',
+                        response?.message
+                    );
+                }
+            },
+            error: (error) => {
+                console.error('API error:', error);
+            },
+        });
     }
 }
 
@@ -340,6 +406,7 @@ export interface PeriodicElement {
     courses: string;
     owner: string;
     division: string;
+    createdDate: string;
     // lead_source: string;
     status: any;
     lead_status: any;

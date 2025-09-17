@@ -181,6 +181,19 @@
                                         Select Location
                                     </mat-label>
                                     <mat-select formControlName="location">
+
+                                          <mat-form-field appearance="outline" class="w-80">
+
+                                            <input [ngModelOptions]="{standalone: true}" matInput
+                                                [(ngModel)]="searchFieldLocation" (keyup)="searchLocation()"
+                                                placeholder="search location...">
+
+                                            <!-- Clear button -->
+                                            <button *ngIf="searchFieldLocation" mat-icon-button matSuffix
+                                                (click)="clearSearchLocation()">
+                                                <mat-icon>close</mat-icon>
+                                            </button>
+                                        </mat-form-field>
                                         <mat-option *ngFor="let loc of location" [value]="loc.id">
                                             {{ loc.name }}
                                         </mat-option>

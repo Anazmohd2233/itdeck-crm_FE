@@ -179,13 +179,15 @@ export class CCreateContactComponent {
             this.contactService.createContact(formData).subscribe({
                 next: (response) => {
                     if (response.success) {
+                                this.router.navigate(['/crm-page']);
+
                         this.isSubmitting = false;
                         this.contactForm.reset();
                         this.toastr.success(
                             'Contact Added successfully',
                             'Success'
                         );
-                        console.log('✅ Contact Added successfully');
+                        console.log('✅✅ Contact Added successfully');
                     } else {
                         this.isSubmitting = false;
 
@@ -212,6 +214,7 @@ export class CCreateContactComponent {
             next: (response) => {
                 if (response.success) {
                     const contact = response.contact;
+                    this.getSchoolList(response?.contact?.school?.school_name);
 
                     // ✅ Patch form values
                     this.contactForm.patchValue({

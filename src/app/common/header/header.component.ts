@@ -11,7 +11,7 @@ import {
     MatSlideToggleChange,
     MatSlideToggleModule,
 } from '@angular/material/slide-toggle';
-import { SocketService } from '../../services/socket.service';
+// import { SocketService } from '../../services/socket.service';
 import { GoogleMap } from '@angular/google-maps';
 
 @Component({
@@ -32,6 +32,8 @@ export class HeaderComponent {
     // isSidebarToggled
     isSidebarToggled = false;
     users: any;
+        user_type: any;
+
 
     // isToggled
     isToggled = false;
@@ -47,7 +49,7 @@ export class HeaderComponent {
         private toggleService: ToggleService,
         public themeService: CustomizerSettingsService,
         private usersService: UsersService,
-        private socketService: SocketService,
+        // private socketService: SocketService,
         private router: Router
     ) {
         this.toggleService.isSidebarToggled$.subscribe((isSidebarToggled) => {
@@ -59,6 +61,8 @@ export class HeaderComponent {
     }
 
     ngOnInit(): void {
+                this.user_type = localStorage.getItem('user_type');
+
         this.getProfile();
         // this.socketService.onLocationUpdate().subscribe((data) => {
         //     console.log('📍 New location:', data);

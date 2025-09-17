@@ -3,12 +3,12 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
 import { ToggleService } from './toggle.service';
-import { NgClass } from '@angular/common';
+import { NgClass, NgIf } from '@angular/common';
 import { CustomizerSettingsService } from '../../customizer-settings/customizer-settings.service';
 
 @Component({
     selector: 'app-sidebar',
-    imports: [NgScrollbarModule, MatExpansionModule, RouterLinkActive, RouterModule, RouterLink, NgClass],
+    imports: [NgScrollbarModule, MatExpansionModule, RouterLinkActive, RouterModule, RouterLink, NgClass,NgIf],
     templateUrl: './sidebar.component.html',
     styleUrl: './sidebar.component.scss'
 })
@@ -16,6 +16,7 @@ export class SidebarComponent {
 
     // isSidebarToggled
     isSidebarToggled = false;
+        user_type: any;
 
     // isToggled
     isToggled = false;
@@ -30,7 +31,11 @@ export class SidebarComponent {
         this.themeService.isToggled$.subscribe(isToggled => {
             this.isToggled = isToggled;
         });
+        
     }
+      ngOnInit(): void {
+                this.user_type = localStorage.getItem('user_type');
+            }
 
     // Burger Menu Toggle
     toggle() {

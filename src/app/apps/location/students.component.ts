@@ -53,6 +53,7 @@ export class LocationComponent {
     totalRecords: number = 0;
     students: any;
             searchField: string = ''; // Initialize the property
+    user_type: any;
 
 
     displayedColumns: string[] = [
@@ -145,6 +146,8 @@ export class LocationComponent {
     }
 
     ngOnInit(): void {
+                this.user_type = localStorage.getItem('user_type');
+
         this.getLocationtList();
     }
 

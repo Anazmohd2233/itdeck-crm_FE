@@ -21,6 +21,7 @@ import { environment } from '../../../environments/environment';
 import { SchoolService } from '../../services/school.service';
 import { HttpParams } from '@angular/common/http';
 import { MatSelectModule } from '@angular/material/select';
+import { Districts } from '../../services/enums';
 
 @Component({
     selector: 'app-students',
@@ -55,12 +56,16 @@ export class SchoolComponent {
     searchField: string = ''; // Initialize the property
     searchFieldLocation: string = '';
     location: any;
+    user_type: any;
+    district = Object.values(Districts);
 
     displayedColumns: string[] = [
         // 'select',
 
         'school_name',
         'location',
+        'district',
+
         'type',
         'strength',
         'status',
@@ -80,6 +85,8 @@ export class SchoolComponent {
     ) {}
 
     ngOnInit(): void {
+        this.user_type = localStorage.getItem('user_type');
+
         this.getSchooltList();
         this.getLocationList();
     }
@@ -170,6 +177,8 @@ export class SchoolComponent {
                         id: u.id,
                         school_name: u.school_name || 'N/A',
                         location: u?.location?.name || 'N/A',
+                        district: u?.district?.name || 'N/A',
+
                         type: u.type || 'N/A',
                         strength: u.strength || 'N/A',
                         status: u.status,
@@ -252,12 +261,24 @@ export class SchoolComponent {
 
         this.getSchooltList(params);
     }
+
+    filterDistrict(event: any) {
+        console.log('***event***', event.value);
+
+        let params = new HttpParams();
+
+        params = params.set('district', event.value);
+
+        this.getSchooltList(params);
+    }
 }
 
 export interface PeriodicElement {
     id: any;
     school_name: any;
     location: any;
+    district: any;
+
     type: any;
     strength: any;
     status: any;

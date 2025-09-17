@@ -255,9 +255,25 @@
 
 /* Min width 1600px */
 @media only screen and (min-width: 1600px) {}
-
 .filter-container {
   display: flex;
-  gap: 25px; /* space between buttons */
+  flex-wrap: wrap; /* allow wrapping on small screens */
+  gap: 12px;       /* smaller gap for mobile */
   align-items: center;
+}
+
+.small-form-field {
+  flex: 1 1 120px; /* grow/shrink, minimum 120px */
+  max-width: 180px; /* cap width for big screens */
+}
+
+@media (max-width: 768px) {
+  .filter-container {
+    gap: 8px; /* tighter spacing on mobile */
+  }
+
+  .small-form-field {
+    flex: 1 1 100%;  /* each filter takes full row on very small screens */
+    max-width: 100%;
+  }
 }

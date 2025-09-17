@@ -22,7 +22,7 @@ import { CustomizerSettingsService } from '../../../customizer-settings/customiz
 import { StudentService } from '../../../services/student.services';
 import { ToastrService } from 'ngx-toastr';
 import { CourseService } from '../../../services/course.service';
-import { LeadStatus } from '../../../services/enums';
+import { Districts, LeadStatus } from '../../../services/enums';
 import { SchoolService } from '../../../services/school.service';
 import { HttpParams } from '@angular/common/http';
 import { MatPaginator } from '@angular/material/paginator';
@@ -77,6 +77,7 @@ export class AddSchoolComponent implements OnInit {
     pageSize: number = 20;
     totalRecords: number = 0;  
       LeadStatus = LeadStatus; // <-- Make enum accessible in HTML
+    district = Object.values(Districts);
 
         @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -144,7 +145,8 @@ export class AddSchoolComponent implements OnInit {
             school_name: ['', [Validators.required]],
             location: ['', [Validators.required]],
             strength: ['', [Validators.required]],
-            type: ['', [Validators.required]],
+            type: [''],
+            district: [''],
             status: [''],
         });
     }
@@ -162,6 +164,7 @@ export class AddSchoolComponent implements OnInit {
                         school_name: student.school_name || '',
                         location: student?.location?.id || '',
                         strength: student.strength || '',
+                        district: student.district || '',
 
                         type: student.type || '',
 
@@ -191,6 +194,8 @@ export class AddSchoolComponent implements OnInit {
             formData.append('location', this.studentForm.value.location);
             formData.append('type', this.studentForm.value.type);
             formData.append('strength', this.studentForm.value.strength);
+                        formData.append('district', this.studentForm.value.district);
+
 
             if (this.editMode) {
                 formData.append('status', this.studentForm.value.status);
