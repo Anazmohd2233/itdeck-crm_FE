@@ -177,7 +177,7 @@ export class SchoolComponent {
                         id: u.id,
                         school_name: u.school_name || 'N/A',
                         location: u?.location?.name || 'N/A',
-                        district: u?.district?.name || 'N/A',
+                        district: u?.district || 'N/A',
 
                         type: u.type || 'N/A',
                         strength: u.strength || 'N/A',

@@ -123,14 +123,15 @@
                                 Select status
                             </mat-label>
                             <mat-select formControlName="status">
-                                <mat-option value="true">
+                                <mat-option [value]="true">
                                     Active
                                 </mat-option>
-                                <mat-option value="false">
+                                <mat-option [value]="false">
                                     Inctive
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
+                        
 
                     </div>
                 </div>
