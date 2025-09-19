@@ -1,4 +1,4 @@
-import { NgFor, NgIf } from '@angular/common';
+import { formatDate, NgFor, NgIf } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -21,6 +21,11 @@ import { environment } from '../../../environments/environment';
 import { SchoolService } from '../../services/school.service';
 import { HttpParams } from '@angular/common/http';
 import { MatSelectModule } from '@angular/material/select';
+import { GoogleMap, GoogleMapsModule } from '@angular/google-maps';
+import { TaskService } from '../../services/task.service';
+import { UsersService } from '../../services/users.service';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @Component({
     selector: 'app-user-location',
@@ -41,6 +46,9 @@ import { MatSelectModule } from '@angular/material/select';
         FormsModule, // ✅ needed for [(ngModel)]
         MatSelectModule,
         NgFor,
+        GoogleMapsModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
     ],
     templateUrl: './students.component.html',
     styleUrl: './students.component.scss',
@@ -55,7 +63,21 @@ export class UserLocationComponent {
     searchField: string = ''; // Initialize the property
     searchFieldLocation: string = '';
     location: any;
+    liveLocation: any;
+    filterUserValue: any;
+    filterDateValue: any;
+    profile: any;
+    createdDateFilter: Date | null = null;
+    users: any;
+    searchFieldUser: string = '';
+    user_type: any;
 
+    @ViewChild(GoogleMap, { static: false }) map!: GoogleMap;
+
+    zoom = 14;
+    center: google.maps.LatLngLiteral = { lat: 11.259007, lng: 75.792014 }; // default
+    markers: any[] = [];
+    path: google.maps.LatLngLiteral[] = [];
     displayedColumns: string[] = [
         // 'select',
 
@@ -76,22 +98,17 @@ export class UserLocationComponent {
         private snackBar: MatSnackBar,
         private toastr: ToastrService,
         private schoolService: SchoolService,
+        private taskService: TaskService,
+        private usersService: UsersService,
+
         private router: Router
     ) {}
 
     ngOnInit(): void {
-        this.getSchooltList();
-        this.getLocationList();
-    }
+        this.user_type = localStorage.getItem('user_type');
 
-    ngAfterViewInit() {
-        // listen to paginator changes
-        console.log('**********page changed**********');
-        this.paginator.page.subscribe((event) => {
-            this.page = event.pageIndex + 1; // MatPaginator is 0-based, API is 1-based
-            this.pageSize = event.pageSize;
-            this.getSchooltList();
-        });
+        this.getUserList();
+        this.getLiveLocation();
     }
 
     /** Whether the number of selected elements matches the total number of rows. */
@@ -119,22 +136,46 @@ export class UserLocationComponent {
             row.school_name + 1
         }`;
     }
+    private getUserList(search?: any): void {
+        let params = new HttpParams().set('user_type', 'USER');
 
-    // Search Filter
-    applyFilter() {
-        // const filterValue = (event.target as HTMLInputElement).value;
-        // this.dataSource.filter = filterValue.trim().toLowerCase();
+        if (search) {
+            params = params.set('search', search);
+        }
 
-        let params = new HttpParams().set('search', this.searchField);
-        this.getSchooltList(params);
+        this.usersService.getUsers(this.page, params).subscribe({
+            next: (response) => {
+                if (response && response.success) {
+                    this.users = response.data?.users || [];
+                } else {
+                    // this.toastr.error('Failed to load users', 'Failed');
+                    console.error('Failed to load users:', response?.message);
+                }
+            },
+            error: (error) => {
+                console.error('API error:', error);
+            },
+        });
     }
 
-    applySearch(event: Event) {
-        const filterValue = (event.target as HTMLInputElement).value;
-        // this.dataSource.filter = filterValue.trim().toLowerCase();
+    searchUser() {
+        console.log('user search keyword', this.searchFieldUser);
+        this.getUserList(this.searchFieldUser);
+    }
 
-        let params = new HttpParams().set('search', filterValue);
-        this.getSchooltList(params);
+    clearSearchUser() {
+        this.searchFieldUser = ''; // Clear the input by setting the property to an empty string
+        this.getUserList();
+    }
+
+    resetFilters() {
+        // this.filterUserValue = null;
+        this.filterDateValue = null;
+        this.createdDateFilter = null;
+        this.getLiveLocation();
+    }
+    clearSearch() {
+        this.searchField = ''; // Clear the input by setting the property to an empty string
     }
 
     classApplied = false;
@@ -152,85 +193,66 @@ export class UserLocationComponent {
         });
     }
 
-    clearSearch() {
-        this.getSchooltList();
+    filterCreatedDate(event: any) {
+        if (event.value) {
+            const formattedDate = formatDate(
+                event.value,
+                'yyyy-MM-dd',
+                'en-US'
+            );
+            this.filterDateValue = formattedDate;
 
-        this.searchField = ''; // Clear the input by setting the property to an empty string
+            this.getLiveLocation();
+        }
     }
 
-    private getSchooltList(params?: any): void {
-        this.schoolService.getSchool(this.page, params).subscribe({
+    filterUser(event: any) {
+        console.log('***event***', event.value);
+
+        this.filterUserValue = event.value;
+        this.getLiveLocation();
+    }
+
+    private getLiveLocation(): void {
+                let params = new HttpParams();
+               
+                if(this.filterUserValue){
+                            params = params.set('userId', this.filterUserValue);
+
+                }
+                if(this.filterDateValue){
+                            params = params.set('date', this.filterDateValue);
+
+                }
+
+        this.taskService.getLiveLocation(params).subscribe({
             next: (response) => {
                 if (response && response.success) {
-                    this.totalRecords = response.data?.total;
+                    this.liveLocation = response.data?.locations || [];
 
-                    const location = response.data?.school || [];
+                    // 👉 Convert liveLocation into map markers + path
+                    this.markers = this.liveLocation.map(
+                        (loc: any, index: number) => ({
+                            position: {
+                                lat: +loc.live_latitude,
+                                lng: +loc.live_longitude,
+                            },
+                            title: `${new Date(
+                                loc.createdAt
+                            ).toLocaleTimeString()}`,
+                        })
+                    );
 
-                    this.ELEMENT_DATA = location.map((u: any) => ({
-                        id: u.id,
-                        school_name: u.school_name || 'N/A',
-                        location: u?.location?.name || 'N/A',
-                        type: u.type || 'N/A',
-                        strength: u.strength || 'N/A',
-                        status: u.status,
-                        action: '', // we will handle icons directly in template
+                    this.path = this.liveLocation.map((loc: any) => ({
+                        lat: +loc.live_latitude,
+                        lng: +loc.live_longitude,
                     }));
 
-                    console.log('this.ELEMENT_DATA', this.ELEMENT_DATA);
-
-                    this.dataSource.data = this.ELEMENT_DATA;
+                    // Center on the first point if available
+                    if (this.path.length > 0) {
+                        this.center = this.path[0];
+                    }
                 } else {
-                    // this.toastr.error('Failed to load students', 'Error');
-                    console.error(
-                        'Failed to load location:',
-                        response?.message
-                    );
-                }
-            },
-            error: (error) => {
-                // this.toastr.error('Error loading students', 'Error');
-                console.error('API error:', error);
-            },
-        });
-    }
-
-    // editStudent(id: number) {
-    //     this.router.navigate(['/edit-student', id]);
-    // }
-
-    filterLocation(event: any) {
-        console.log('***event***', event.value);
-
-        let params = new HttpParams();
-
-        params = params.set('location', event.value);
-
-        this.getSchooltList(params);
-    }
-    searchLocation() {
-        console.log('location search keyword', this.searchFieldLocation);
-        this.getLocationList(this.searchFieldLocation);
-    }
-    clearSearchLocation() {
-        this.searchFieldLocation = ''; // Clear the input by setting the property to an empty string
-        this.getLocationList();
-    }
-
-    private getLocationList(search?: any): void {
-        let params = new HttpParams().set('status', true);
-
-        if (search) {
-            params = params.set('search', search);
-        }
-
-        this.schoolService.getLocation(this.page, params).subscribe({
-            next: (response) => {
-                if (response && response.success) {
-                    this.totalRecords = response.data?.total;
-
-                    this.location = response.data?.location || [];
-                } else {
-                    // this.toastr.error('Failed to load users', 'Failed');
                     console.error(
                         'Failed to load location:',
                         response?.message
@@ -241,16 +263,6 @@ export class UserLocationComponent {
                 console.error('API error:', error);
             },
         });
-    }
-
-    filterStatus(event: any) {
-        console.log('***event***', event.value);
-
-        let params = new HttpParams();
-
-        params = params.set('type', event.value);
-
-        this.getSchooltList(params);
     }
 }
 

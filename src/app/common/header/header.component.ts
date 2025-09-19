@@ -1,6 +1,12 @@
-import { NgClass, NgIf } from '@angular/common';
+import { isPlatformBrowser, NgClass, NgIf } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
-import { Component, HostListener, ViewChild } from '@angular/core';
+import {
+    Component,
+    HostListener,
+    Inject,
+    PLATFORM_ID,
+    ViewChild,
+} from '@angular/core';
 import { ToggleService } from '../sidebar/toggle.service';
 import { MatButtonModule } from '@angular/material/button';
 import { Router, RouterLink } from '@angular/router';
@@ -13,6 +19,9 @@ import {
 } from '@angular/material/slide-toggle';
 // import { SocketService } from '../../services/socket.service';
 import { GoogleMap } from '@angular/google-maps';
+import { SocketService } from '../../services/socket.service';
+import { SharedService } from '../../services/sharedService';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
     selector: 'app-header',
@@ -32,26 +41,25 @@ export class HeaderComponent {
     // isSidebarToggled
     isSidebarToggled = false;
     users: any;
-        user_type: any;
-
+    user_type: any;
 
     // isToggled
     isToggled = false;
 
-    @ViewChild(GoogleMap, { static: false }) map!: GoogleMap;
-
-    zoom = 14;
-    center: google.maps.LatLngLiteral = { lat: 10.0, lng: 76.0 }; // default
-    markers: any[] = [];
-    path: google.maps.LatLngLiteral[] = [];
+   
 
     constructor(
         private toggleService: ToggleService,
         public themeService: CustomizerSettingsService,
         private usersService: UsersService,
-        // private socketService: SocketService,
-        private router: Router
+        private router: Router,
+        @Inject(PLATFORM_ID) private platformId: Object,
+        private sharedService: SharedService,
+        private authService: AuthService,
+
     ) {
+          console.log('🟢 Header constructor');
+
         this.toggleService.isSidebarToggled$.subscribe((isSidebarToggled) => {
             this.isSidebarToggled = isSidebarToggled;
         });
@@ -61,25 +69,23 @@ export class HeaderComponent {
     }
 
     ngOnInit(): void {
-                this.user_type = localStorage.getItem('user_type');
+        console.log('************Header loaded*************')
+        if (isPlatformBrowser(this.platformId)) {
+            this.user_type = localStorage.getItem('user_type');
+        }
+         this.getProfile(); // call once on app load
 
-        this.getProfile();
-        // this.socketService.onLocationUpdate().subscribe((data) => {
-        //     console.log('📍 New location:', data);
-
-        //     const newPoint = { lat: +data.lat, lng: +data.lng };
-        //     this.path.push(newPoint);
-
-        //     // Add marker
-        //     this.markers.push({
-        //         position: newPoint,
-        //         title: `User ${data.taskId} @ ${data.timestamp}`,
-        //     });
-
-        //     // Center map on new location
-        //     this.center = newPoint;
-        // });
+  
+  this.authService.loginSuccess$.subscribe(() => {
+    console.log('🔔🔔🔔🔔🔔🔔 Login detected in header  🔔🔔🔔🔔🔔');
+    this.getProfile(); // call your important API
+  });
+  
     }
+
+    ngAfterViewInit(): void {
+  console.log('🟢 Header ngAfterViewInit');
+}
 
     // Burger Menu Toggle
     toggle() {
@@ -123,18 +129,6 @@ export class HeaderComponent {
         });
     }
 
-    checkIn(): void {
-        console.log('CheckIn');
-
-        // this.socketService.startTracking();
-    }
-
-    checkOut(): void {
-        console.log('Checkout');
-
-        // this.socketService.stopTracking();
-    }
-
     onLogout() {
         // 🟢 Example: Clear local storage/session
         localStorage.removeItem('token');
@@ -152,4 +146,15 @@ export class HeaderComponent {
         // 🟢 Redirect after logout
         this.router.navigate(['/authentication/logout']);
     }
+
+checkIn() {
+    console.log('checkin from header');
+    this.sharedService.triggerCheckIn();
+  }
+
+  checkOut() {
+    console.log('checkout from header');
+    this.sharedService.triggerCheckOut();
+  }
+  
 }

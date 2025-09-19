@@ -73,6 +73,7 @@ import { EditLocationComponent } from './apps/location/edit-location/edit-studen
 import { SchoolComponent } from './apps/school/students.component';
 import { AddSchoolComponent } from './apps/school/edit-school/edit-student.component';
 import { UserLocationComponent } from './apps/user_location/students.component';
+import { ExpencesComponent } from './apps/expences/students.component';
 
 // import { HdReportsComponent } from './pages/hd-reports/hd-reports.component';
 
@@ -126,6 +127,11 @@ export const routes: Routes = [
     {
         path: 'user-location',
         component: UserLocationComponent,
+        canActivate: [AuthGuard],
+    },
+     {
+        path: 'expences',
+        component: ExpencesComponent,
         canActivate: [AuthGuard],
     },
 

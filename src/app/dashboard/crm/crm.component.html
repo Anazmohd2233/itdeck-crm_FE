@@ -1,65 +1,85 @@
 <mat-card class="daxa-card contacts-list-card mb-25 border-radius bg-white border-none d-block"
     [class.rtl-enabled]="themeService.isRTLEnabled()">
-    <mat-card-header>
 
-        <mat-card-subtitle class="filter-container" style="display: flex; flex-wrap: wrap; gap: 10px;">
 
-            <mat-form-field appearance="fill" class="small-form-field" style="flex: 1 1 150px;">
-                <mat-label>School</mat-label>
-                <mat-select (selectionChange)="filterSchool($event)">
-                    <mat-form-field appearance="outline" class="w-80">
+        <mat-card-header>
 
-                        <input [ngModelOptions]="{standalone: true}" matInput [(ngModel)]="searchFieldSchool"
-                            (keyup)="searchSchool()" placeholder="search school...">
 
-                        <!-- Clear button -->
-                        <button *ngIf="searchFieldSchool" mat-icon-button matSuffix (click)="clearSearchSchool()">
-                            <mat-icon>close</mat-icon>
-                        </button>
+            <div class="row">
+
+                <div class="row" *ngIf="user_type == 'USER'"> 
+                    <button
+                        *ngIf="!profile?.attendance?.checkin || profile?.attendance?.checkin && profile?.attendance?.checkout"
+                        mat-flat-button class="daxa me-25" (click)="checkIn()">Check In</button>
+                    <button *ngIf="profile?.attendance?.checkin && !profile?.attendance?.checkout" mat-flat-button
+                        color="warn" (click)="checkOut()">Check Out</button>
+                </div>
+
+<br><br>            <div class="row"> 
+                <mat-card-subtitle class="filter-container"
+                    style="display: flex; flex-wrap: wrap; gap: 10px;">
+
+
+
+                    <mat-form-field appearance="fill" class="small-form-field" style="flex: 1 1 150px;">
+                        <mat-label>School</mat-label>
+                        <mat-select (selectionChange)="filterSchool($event)">
+                            <mat-form-field appearance="outline" class="w-80">
+
+                                <input [ngModelOptions]="{standalone: true}" matInput [(ngModel)]="searchFieldSchool"
+                                    (keyup)="searchSchool()" placeholder="search school...">
+
+                                <!-- Clear button -->
+                                <button *ngIf="searchFieldSchool" mat-icon-button matSuffix
+                                    (click)="clearSearchSchool()">
+                                    <mat-icon>close</mat-icon>
+                                </button>
+                            </mat-form-field>
+                            <mat-option value="">All</mat-option>
+                            <mat-option *ngFor="let s of school" [value]="s.id">{{ s.school_name }} ({{ s.location?.name
+                                }})</mat-option>
+                        </mat-select>
                     </mat-form-field>
-                    <mat-option value="">All</mat-option>
-                    <mat-option *ngFor="let s of school" [value]="s.id">{{ s.school_name }} ({{ s.location?.name
-                        }})</mat-option>
-                </mat-select>
-            </mat-form-field>
-            <div *ngIf="user_type == 'ADMIN'">
-                <mat-form-field appearance="fill" class="small-form-field" style="flex: 1 1 120px;">
-                    <mat-label>User</mat-label>
-                    <mat-select (selectionChange)="filterUser($event)">
-                        <mat-form-field appearance="outline" class="w-80">
+                    <div *ngIf="user_type == 'ADMIN'">
+                        <mat-form-field appearance="fill" class="small-form-field" style="flex: 1 1 120px;">
+                            <mat-label>User</mat-label>
+                            <mat-select (selectionChange)="filterUser($event)">
+                                <mat-form-field appearance="outline" class="w-80">
 
-                            <input [ngModelOptions]="{standalone: true}" matInput [(ngModel)]="searchFieldUser"
-                                (keyup)="searchUser()" placeholder="search user...">
+                                    <input [ngModelOptions]="{standalone: true}" matInput [(ngModel)]="searchFieldUser"
+                                        (keyup)="searchUser()" placeholder="search user...">
 
-                            <!-- Clear button -->
-                            <button *ngIf="searchFieldUser" mat-icon-button matSuffix (click)="clearSearchUser()">
-                                <mat-icon>close</mat-icon>
-                            </button>
+                                    <!-- Clear button -->
+                                    <button *ngIf="searchFieldUser" mat-icon-button matSuffix
+                                        (click)="clearSearchUser()">
+                                        <mat-icon>close</mat-icon>
+                                    </button>
+                                </mat-form-field>
+                                <mat-option value="">All</mat-option>
+                                <mat-option *ngFor="let s of users" [value]="s.id">{{ s.name }}</mat-option>
+                            </mat-select>
                         </mat-form-field>
-                        <mat-option value="">All</mat-option>
-                        <mat-option *ngFor="let s of users" [value]="s.id">{{ s.name }}</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            <mat-form-field appearance="fill" class="small-form-field" style="flex: 1 1 120px;">
-                <mat-label>Location</mat-label>
-                <mat-select (selectionChange)="filterLocation($event)">
-                    <mat-form-field appearance="outline" class="w-80">
+                    </div>
+                    <mat-form-field appearance="fill" class="small-form-field" style="flex: 1 1 120px;">
+                        <mat-label>Location</mat-label>
+                        <mat-select (selectionChange)="filterLocation($event)">
+                            <mat-form-field appearance="outline" class="w-80">
 
-                        <input [ngModelOptions]="{standalone: true}" matInput [(ngModel)]="searchFieldLocation"
-                            (keyup)="searchLocation()" placeholder="search location...">
+                                <input [ngModelOptions]="{standalone: true}" matInput [(ngModel)]="searchFieldLocation"
+                                    (keyup)="searchLocation()" placeholder="search location...">
 
-                        <!-- Clear button -->
-                        <button *ngIf="searchFieldLocation" mat-icon-button matSuffix (click)="clearSearchLocation()">
-                            <mat-icon>close</mat-icon>
-                        </button>
+                                <!-- Clear button -->
+                                <button *ngIf="searchFieldLocation" mat-icon-button matSuffix
+                                    (click)="clearSearchLocation()">
+                                    <mat-icon>close</mat-icon>
+                                </button>
+                            </mat-form-field>
+                            <mat-option value="">All</mat-option>
+                            <mat-option *ngFor="let s of location" [value]="s.id">{{ s.name }}</mat-option>
+                        </mat-select>
                     </mat-form-field>
-                    <mat-option value="">All</mat-option>
-                    <mat-option *ngFor="let s of location" [value]="s.id">{{ s.name }}</mat-option>
-                </mat-select>
-            </mat-form-field>
 
-            <!-- <mat-form-field appearance="fill" class="small-form-field" style="flex: 1 1 100px;">
+                    <!-- <mat-form-field appearance="fill" class="small-form-field" style="flex: 1 1 100px;">
       <mat-label>Status</mat-label>
       <mat-select (selectionChange)="filterStatus($event)">
         <mat-option value="">All</mat-option>
@@ -70,26 +90,32 @@
       </mat-select>
   </mat-form-field> -->
 
-            <mat-form-field style="flex: 1 1 130px;">
-                <mat-label>Start Date</mat-label>
-                <input matInput [matDatepicker]="startPicker" [(ngModel)]="startDate" (dateChange)="filterDateRange()">
-                <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
-                <mat-datepicker #startPicker></mat-datepicker>
-            </mat-form-field>
+                    <mat-form-field style="flex: 1 1 130px;">
+                        <mat-label>Start Date</mat-label>
+                        <input matInput [matDatepicker]="startPicker" [(ngModel)]="startDate"
+                            (dateChange)="filterDateRange()">
+                        <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+                        <mat-datepicker #startPicker></mat-datepicker>
+                    </mat-form-field>
 
-            <mat-form-field style="flex: 1 1 130px;">
-                <mat-label>End Date</mat-label>
-                <input matInput [matDatepicker]="endPicker" [(ngModel)]="endDate" (dateChange)="filterDateRange()">
-                <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
-                <mat-datepicker #endPicker></mat-datepicker>
-            </mat-form-field>
+                    <mat-form-field style="flex: 1 1 130px;">
+                        <mat-label>End Date</mat-label>
+                        <input matInput [matDatepicker]="endPicker" [(ngModel)]="endDate"
+                            (dateChange)="filterDateRange()">
+                        <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+                        <mat-datepicker #endPicker></mat-datepicker>
+                    </mat-form-field>
 
-            <button mat-button class="add-new-btn" color="primary" (click)="resetFilters()">
-                <i class="material-symbols-outlined" style="font-size: 14px;"> backspace </i>
-                Clear
-            </button>
+                    <button mat-button class="add-new-btn" color="primary" (click)="resetFilters()">
+                        <i class="material-symbols-outlined" style="font-size: 14px;"> backspace </i>
+                        Clear
+                    </button>
 
-        </mat-card-subtitle>
+                </mat-card-subtitle></div>
+
+    </div>
+
+
 
 
     </mat-card-header>
@@ -99,6 +125,8 @@
 <app-stats [data]="dashboardData"></app-stats>
 
 <div class="row">
+    <!-- <button mat-flat-button class="daxa me-25" (click)="checkIn()">CheckIn</button>
+    <button mat-flat-button color="warn" (click)="checkOut()">Check Out</button> -->
     <!-- <div class="col-lg-6 col-xxxl-4"> -->
 
     <!-- Most Leads -->

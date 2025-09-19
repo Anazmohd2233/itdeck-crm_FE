@@ -65,12 +65,12 @@
                     </div>
                 </mat-menu>
             </li>   -->
-            <li>
-                <!-- <button mat-flat-button class="daxa me-25"  (click)="checkIn()">CheckIn</button>
-                                <button mat-flat-button color="warn"  (click)="checkOut()">Check Out</button> -->
+            <!-- <li>
+                <button *ngIf="!users?.attendance?.checkin || users?.attendance?.checkin && users?.attendance?.checkout" mat-flat-button class="daxa me-25" (click)="checkIn()">CheckIn</button>
+                <button  *ngIf="users?.attendance?.checkin && !users?.attendance?.checkout" mat-flat-button color="warn" (click)="checkOut()">Check Out</button>
 
 
-            </li>
+            </li> -->
             <li>
                 <button mat-button class="dark-swtich-btn" (click)="toggleTheme()">
                     <i class="material-symbols-outlined">
@@ -267,7 +267,7 @@
                                 <i class="material-symbols-outlined">
                                     logout
                                 </i>
-Logout
+                                Logout
                                 <a (click)="onLogout()" class="link-btn d-block position-absolute"></a>
 
                             </li>

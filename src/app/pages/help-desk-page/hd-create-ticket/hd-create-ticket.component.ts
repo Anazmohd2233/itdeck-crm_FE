@@ -90,18 +90,17 @@ import { GoogleMapsModule } from '@angular/google-maps';
     styleUrls: ['./hd-create-ticket.component.scss'],
 })
 export class HdCreateTicketComponent {
-
-     expenceDisplayedColumns: string[] = [
-    'date',
-    'food_expence',
-    'other_expence',
-    'totalKm',
-    'totalTravelExp',
-    'grandTotal',
-    'action',
-  ];
-  expenceDataSource = new MatTableDataSource<Expence>([]);
-  expandedElement: Expence | null = null;
+    expenceDisplayedColumns: string[] = [
+        'date',
+        'food_expence',
+        'other_expence',
+        'totalKm',
+        'totalTravelExp',
+        'grandTotal',
+        'action',
+    ];
+    expenceDataSource = new MatTableDataSource<Expence>([]);
+    expandedElement: Expence | null = null;
     // Text Editor
     editor!: Editor | null;
     editorContent: string = '';
@@ -138,8 +137,7 @@ export class HdCreateTicketComponent {
 
     ngAfterViewInit() {
         this.dataSource.paginator = this.paginator;
-            this.expenceDataSource.paginator = this.paginator;
-
+        this.expenceDataSource.paginator = this.paginator;
     }
 
     /** Whether the number of selected elements matches the total number of rows. */
@@ -187,7 +185,7 @@ export class HdCreateTicketComponent {
     location: any;
 
     school: any;
-        user_type: any;
+    user_type: any;
 
     taskSchool: any;
     contactCount: any;
@@ -200,7 +198,6 @@ export class HdCreateTicketComponent {
     editMode: boolean = false;
     tracking: boolean = false;
     divisions = Object.values(Division);
-    
 
     taskData: any;
     dialogRef!: MatDialogRef<any>; // store reference
@@ -237,7 +234,7 @@ export class HdCreateTicketComponent {
     }
 
     ngOnInit(): void {
-                this.user_type = localStorage.getItem('user_type');
+        this.user_type = localStorage.getItem('user_type');
 
         //  this.getExpenceList();
         this.getUserList();
@@ -425,7 +422,6 @@ export class HdCreateTicketComponent {
                             console.error(
                                 'Authentication failed, redirecting to login'
                             );
-                            localStorage.removeItem('Authorization');
                             this.router.navigate(['/authentication']);
                         }
                         // You can add other error handling/notification here
@@ -522,20 +518,21 @@ export class HdCreateTicketComponent {
         });
     }
 
-      toggleExpand(element: Expence) {
-    this.expandedElement = this.expandedElement === element ? null : element;
-  }
+    toggleExpand(element: Expence) {
+        this.expandedElement =
+            this.expandedElement === element ? null : element;
+    }
 
-  applyExpenceFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.expenceDataSource.filter = filterValue.trim().toLowerCase();
-  }
+    applyExpenceFilter(event: Event) {
+        const filterValue = (event.target as HTMLInputElement).value;
+        this.expenceDataSource.filter = filterValue.trim().toLowerCase();
+    }
 
     loadTaskDetails() {
         this.taskService.getTaskById(this.taskId).subscribe({
             next: (response) => {
                 if (response.success) {
-                              this.expenceDataSource.data = response.expences;
+                    this.expenceDataSource.data = response.expences;
 
                     this.contactCount = response.contactCount;
                     this.taskData = response.task;
@@ -596,9 +593,9 @@ export class HdCreateTicketComponent {
 
             const payload = {
                 task_id: this.taskId,
-                date:this.expenceForm.value.date,
-                food_expence:this.expenceForm.value.food_expence,
-                other_expence:this.expenceForm.value.other_expence,
+                date: this.expenceForm.value.date,
+                food_expence: this.expenceForm.value.food_expence,
+                other_expence: this.expenceForm.value.other_expence,
                 expenses: expenses.map((exp: Expense) => ({
                     ...exp,
                 })),
@@ -645,6 +642,9 @@ export class HdCreateTicketComponent {
 
     createStudent(): void {
         // Cast your form value to correct type
+
+                if (this.studentForm.valid) {
+
         const students: Students[] = this.studentForm.value.students;
 
         const payload = {
@@ -690,8 +690,11 @@ export class HdCreateTicketComponent {
                 console.error('❌ API error:', error);
             },
         });
-    }
+    } else {
+                        this.toastr.error('Missing mandaratory fields', 'Error');
 
+    }
+    }
     openDialog() {
         this.initializeExpenceForm();
         this.dialogRef = this.dialog.open(this.taskDialog, {
@@ -720,8 +723,8 @@ export class HdCreateTicketComponent {
     // component.ts
     initializeExpenceForm(): void {
         this.expenceForm = this.formBuilder.group({
-                        date: ['', Validators.required],
-   food_expence: ['', Validators.required],
+            date: ['', Validators.required],
+            food_expence: ['', Validators.required],
             other_expence: [''],
             expenses: this.formBuilder.array([this.createExpenseGroup()]),
         });
@@ -759,7 +762,6 @@ export class HdCreateTicketComponent {
             start_point: ['', Validators.required],
             end_point: ['', Validators.required],
             kilometer: ['', Validators.required],
-          
         });
     }
 
@@ -915,17 +917,22 @@ interface Expense {
     kilometer: number;
     food_expence: number;
     other_expence: number;
-    action:any;
+    action: any;
 }
 
 interface Expence {
-  date: string;
-  food_expence: number;
-  other_expence: number;
-  totalKm: number;
-  totalTravelExp: number;
-  grandTotal: number;
-  details: { start_point: string; end_point: string; kilometer: number; travel_expence: number }[];
+    date: string;
+    food_expence: number;
+    other_expence: number;
+    totalKm: number;
+    totalTravelExp: number;
+    grandTotal: number;
+    details: {
+        start_point: string;
+        end_point: string;
+        kilometer: number;
+        travel_expence: number;
+    }[];
 }
 
 interface Students {

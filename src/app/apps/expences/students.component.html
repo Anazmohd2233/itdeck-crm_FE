@@ -1,0 +1,328 @@
+<!-- Breadcrumb -->
+<div class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between">
+    <h5 class="mb-0">
+        User Location </h5>
+    <ol class="breadcrumb list-unstyled mt-0 mb-0 pl-0">
+        <li class="breadcrumb-item position-relative">
+            <a routerLink="/" class="d-inline-block position-relative">
+                <i class="ri-home-8-line"></i>
+                Dashboard
+            </a>
+        </li>
+        <li class="breadcrumb-item position-relative">
+            CRM
+        </li>
+        <li class="breadcrumb-item position-relative">
+            School
+        </li>
+    </ol>
+</div>
+
+<!-- Contacts -->
+<mat-card class="daxa-card contacts-list-card mb-25 border-radius bg-white border-none d-block"
+    [class.rtl-enabled]="themeService.isRTLEnabled()">
+
+
+    <mat-card-header>
+        <mat-card-title>
+            <!-- <form class="search-box position-relative">
+                <i class="material-symbols-outlined">
+                    search
+                </i>
+                <input type="text" class="input-search d-block w-100 border-none outline-0"
+                    placeholder="Search school..." (keyup)="applySearch($event)" #input>
+            </form> -->
+
+
+
+        </mat-card-title>
+        <mat-card-subtitle class="filter-container">
+
+            <mat-form-field appearance="fill" class="small-form-field">
+                <mat-label>Date</mat-label>
+                <input matInput [matDatepicker]="createdPicker" [(ngModel)]="createdDateFilter"
+                    (dateChange)="filterCreatedDate($event)" placeholder="Date" />
+                <mat-datepicker-toggle matSuffix [for]="createdPicker"></mat-datepicker-toggle>
+                <mat-datepicker #createdPicker></mat-datepicker>
+            </mat-form-field>
+             <button mat-button class="add-new-btn" color="primary" (click)="resetFilters()"
+                style="height: 36px; padding: 0 10px; min-width: auto; margin-right: 15px;">
+                <i class="material-symbols-outlined" style="font-size: 14px;"> backspace </i>
+                Clear
+            </button>
+
+            <div *ngIf="user_type == 'ADMIN'">
+
+                <mat-form-field appearance="fill" class="small-form-field">
+                    <mat-label>User</mat-label>
+                    <mat-select (selectionChange)="filterUser($event)">
+                        <mat-form-field appearance="outline" class="w-80">
+
+                            <input [ngModelOptions]="{standalone: true}" matInput [(ngModel)]="searchFieldUser"
+                                (keyup)="searchUser()" placeholder="search user...">
+
+                            <!-- Clear button -->
+                            <button *ngIf="searchFieldUser" mat-icon-button matSuffix (click)="clearSearchUser()">
+                                <mat-icon>close</mat-icon>
+                            </button>
+                        </mat-form-field>
+                        <mat-option value="">All</mat-option>
+                        <mat-option *ngFor="let s of users" [value]="s.id">
+                            {{ s.name }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+
+
+            <a mat-button class="add-new-btn m-0" (click)="openDialog(taskDialog)">
+                + Add Expence
+            </a>
+
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-card class="daxa-card contacts-list-card mb-25 border-radius bg-white border-none d-block"
+            [class.rtl-enabled]="themeService.isRTLEnabled()">
+            <mat-card-header>
+                <mat-card-title>
+
+                </mat-card-title>
+            </mat-card-header>
+
+            <mat-card-content>
+                <div class="contacts-list-table">
+                    <div class="table-responsive">
+                        <table mat-table [dataSource]="expenceDataSource" multiTemplateDataRows>
+
+                            <!-- Date -->
+                            <ng-container matColumnDef="date">
+                                <th mat-header-cell *matHeaderCellDef>Date</th>
+                                <td mat-cell *matCellDef="let element">{{element.date}}</td>
+                            </ng-container>
+
+                            <!-- Food Expence -->
+                            <ng-container matColumnDef="food_expence">
+                                <th mat-header-cell *matHeaderCellDef>Food Expence</th>
+                                <td mat-cell *matCellDef="let element">{{element.food_expence}}</td>
+                            </ng-container>
+
+                            <!-- Other Expence -->
+                            <ng-container matColumnDef="other_expence">
+                                <th mat-header-cell *matHeaderCellDef>Other Expence</th>
+                                <td mat-cell *matCellDef="let element">{{element.other_expence}}</td>
+                            </ng-container>
+
+                            <!-- Total KM -->
+                            <ng-container matColumnDef="totalKm">
+                                <th mat-header-cell *matHeaderCellDef>Total KM</th>
+                                <td mat-cell *matCellDef="let element">{{element.totalKm}}</td>
+                            </ng-container>
+
+                            <!-- Travel Expence -->
+                            <ng-container matColumnDef="totalTravelExp">
+                                <th mat-header-cell *matHeaderCellDef>Total Travel Exp.</th>
+                                <td mat-cell *matCellDef="let element">{{element.totalTravelExp}}</td>
+                            </ng-container>
+
+                            <!-- Grand Total -->
+                            <ng-container matColumnDef="grandTotal">
+                                <th mat-header-cell *matHeaderCellDef>Grand Total</th>
+                                <td mat-cell *matCellDef="let element">{{element.grandTotal}}</td>
+                            </ng-container>
+
+                            <!-- Action (Expand/Collapse) -->
+                            <ng-container matColumnDef="action">
+                                <th mat-header-cell *matHeaderCellDef>Action</th>
+                                <td mat-cell *matCellDef="let element">
+                                    <button mat-icon-button (click)="toggleExpand(element)">
+                                        <mat-icon matTooltip="Show Details">
+                                            {{expandedElement === element ? 'expand_less' : 'expand_more'}}
+                                        </mat-icon>
+                                    </button>
+                                </td>
+                            </ng-container>
+
+                            <!-- Template for details -->
+                            <ng-container matColumnDef="expandedDetail">
+                                <td mat-cell *matCellDef="let element" [attr.colspan]="expenceDisplayedColumns.length">
+                                    <div class="p-3 bg-light" *ngIf="expandedElement === element">
+
+                                        <!-- 🔹 Header Row -->
+                                        <div class="row fw-bold text-center mb-25">
+                                            <div class="col-3">Start Point</div>
+                                            <div class="col-1"></div>
+
+                                            <div class="col-3">End Point</div>
+                                            <div class="col-1"></div>
+
+                                            <div class="col-1">Kilometer</div>
+                                            <div class="col-1"></div>
+
+                                            <div class="col-1">Travel Exp</div>
+                                            <div class="col-1"></div>
+
+                                        </div>
+
+                                        <!-- 🔹 Data Rows -->
+                                        <div *ngFor="let d of element.details" class="row mb-2 me-2 text-center">
+                                            <div class="col-3 alert alert-dark">
+                                                {{ d.start_point }}
+                                            </div>
+                                            <div class="col-1"></div>
+
+                                            <div class="col-3 alert alert-dark">
+                                                {{ d.end_point }}
+                                            </div>
+                                            <div class="col-1"></div>
+
+                                            <div class="col-1 alert alert-dark">
+                                                {{ d.kilometer }}
+                                            </div>
+                                            <div class="col-1"></div>
+
+                                            <div class="col-1 alert alert-dark">
+                                                {{ d.travel_expence }}
+                                            </div>
+                                            <div class="col-1"></div>
+
+                                        </div>
+                                    </div>
+                                </td>
+                            </ng-container>
+
+                            <!-- Parent Row -->
+                            <tr mat-header-row *matHeaderRowDef="expenceDisplayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: expenceDisplayedColumns;" class="element-row"
+                                [class.expanded]="expandedElement === row">
+                            </tr>
+
+                            <!-- Expanded Detail Row -->
+                            <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row">
+                            </tr>
+
+
+
+
+
+
+                            <!-- No Data Row -->
+                            <tr class="mat-row" *matNoDataRow>
+                                <td class="mat-cell" colspan="6">No expenses found.</td>
+                            </tr>
+
+                        </table>
+                    </div>
+   <mat-paginator [length]="totalRecords" [pageSize]="20" showFirstLastButtons>
+            </mat-paginator>                </div>
+            </mat-card-content>
+        </mat-card>
+    </mat-card-content>
+</mat-card>
+
+
+
+<!-- Angular Material Dialog Template -->
+<ng-template #taskDialog>
+    <h2 mat-dialog-title>Create Expenses</h2>
+    <mat-dialog-content>
+        <form *ngIf="expenceForm" [formGroup]="expenceForm" (ngSubmit)="createExpence()">
+
+            <div class="row">
+                <div class="col-md-4 col-sm-6 mb-25">
+                    <mat-form-field class="w-100">
+                        <mat-label>Date</mat-label>
+                        <input matInput [matDatepicker]="picker" formControlName="date">
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+
+                </div>
+
+
+                <div class="col-md-4 col-sm-6 mb-25">
+                    <mat-form-field class="w-100">
+                        <mat-label>Food Expense</mat-label>
+                        <input type="number" matInput formControlName="food_expence">
+                    </mat-form-field>
+                </div>
+
+                <div class="col-md-4 col-sm-6 mb-25">
+                    <mat-form-field class="w-100">
+                        <mat-label>Other Expense</mat-label>
+                        <input type="number" matInput formControlName="other_expence">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div formArrayName="expenses">
+
+                <div *ngFor="let expense of expenses.controls; let i = index" [formGroupName]="i"
+                    class="row border p-2 mb-25 rounded">
+
+
+
+                    <div class="col-md-3 col-sm-6 mb-25 mb-25">
+                        <mat-form-field class="w-100">
+                            <mat-label>Start Point</mat-label>
+                            <input matInput formControlName="start_point">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-3 col-sm-6 mb-25">
+                        <mat-form-field class="w-100">
+                            <mat-label>End Point</mat-label>
+                            <input matInput formControlName="end_point">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-3 col-sm-6 mb-25">
+                        <mat-form-field class="w-100">
+                            <mat-label>Kilometers</mat-label>
+                            <input type="number" matInput formControlName="kilometer">
+                        </mat-form-field>
+                    </div>
+
+
+                    <div class="col-md-3 col-sm-6  d-flex align-items-center">
+                        <button mat-icon-button color="warn" (click)="removeExpense(i)" *ngIf="expenses.length > 1">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <mat-dialog-actions align="end" class="w-100">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 mb-25 me-25">
+                        <button mat-button class="warn-btn" type="button" (click)="addExpense()">Add</button>
+
+                    </div>
+                    <div class="col-md-6 col-sm-6 mb-25 me-25">
+                        <button mat-raised-button class="success-btn" type="submit">Save</button>
+
+                    </div>
+
+                </div>
+                <!-- <button mat-button class="warn-btn mb-25" type="button" (click)="addExpense()">Add More</button>
+                <button mat-raised-button class="success-btn" type="submit">Save All</button> -->
+            </mat-dialog-actions>
+
+
+
+
+
+
+
+        </form>
+    </mat-dialog-content>
+
+    <mat-dialog-actions>
+        <button mat-button mat-dialog-close>Cancel</button>
+    </mat-dialog-actions>
+
+
+
+</ng-template>

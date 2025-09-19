@@ -1,24 +1,14 @@
-<div
-    class="sidebar-area bg-white"
-    [ngClass]="{'active': isSidebarToggled}"
-    [class.component-dark-theme]="themeService.isDark()"
-    [class.dark-sidebar]="themeService.isSidebarDark()"
-    [class.right-sidebar]="themeService.isRightSidebar()"
-    [class.hide-sidebar]="themeService.isHideSidebar()"
-    [class.card-borderd-theme]="themeService.isCardBorder()"
-    [class.rtl-enabled]="themeService.isRTLEnabled()"
->
+<div class="sidebar-area bg-white" [ngClass]="{'active': isSidebarToggled}"
+    [class.component-dark-theme]="themeService.isDark()" [class.dark-sidebar]="themeService.isSidebarDark()"
+    [class.right-sidebar]="themeService.isRightSidebar()" [class.hide-sidebar]="themeService.isHideSidebar()"
+    [class.card-borderd-theme]="themeService.isCardBorder()" [class.rtl-enabled]="themeService.isRTLEnabled()">
     <div class="logo bg-white">
         <a routerLink="/" class="d-flex align-items-center">
             <img src="images/logo.png" width="155" alt="logo-icon">
             <!-- <span class="fw-semibold">ITDECK</span> -->
         </a>
     </div>
-    <div
-        (click)="toggle()"
-        class="burger-menu"
-        [ngClass]="{'active': isSidebarToggled}"
-    >
+    <div (click)="toggle()" class="burger-menu" [ngClass]="{'active': isSidebarToggled}">
         <span class="top-bar"></span>
         <span class="middle-bar"></span>
         <span class="bottom-bar"></span>
@@ -30,7 +20,8 @@
                     <span class="sub-title text-body">
                         MAIN
                     </span>
-                    <a routerLink="/crm" class="sidebar-menu-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                    <a routerLink="/crm" class="sidebar-menu-link" routerLinkActive="active"
+                        [routerLinkActiveOptions]="{exact: true}">
                         <i class="material-symbols-outlined">
                             dashboard
                         </i>
@@ -83,7 +74,8 @@
                     <span class="sub-title text-body">
                         CRM
                     </span>
-                    <a routerLink="/crm-page" class="sidebar-menu-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                    <a routerLink="/crm-page" class="sidebar-menu-link" routerLinkActive="active"
+                        [routerLinkActiveOptions]="{exact: true}">
                         <i class="material-symbols-outlined">
                             perm_contact_calendar
                         </i>
@@ -107,12 +99,23 @@
                             Student
                         </span>
                     </a> -->
-                    <a routerLink="/task" class="sidebar-menu-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                    <a routerLink="/task" class="sidebar-menu-link" routerLinkActive="active"
+                        [routerLinkActiveOptions]="{exact: true}">
                         <i class="material-symbols-outlined">
                             work_history
                         </i>
                         <span class="title">
                             Task
+                        </span>
+                    </a>
+
+                     <a routerLink="/expences" class="sidebar-menu-link" routerLinkActive="active"
+                        [routerLinkActiveOptions]="{exact: true}">
+                        <i class="material-symbols-outlined">
+                            auto_stories
+                        </i>
+                        <span class="title">
+                            Expence
                         </span>
                     </a>
                     <!-- <a routerLink="/kanban-board" class="sidebar-menu-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
@@ -149,7 +152,7 @@
                         </span>
                     </a> -->
 
-                          <!-- <span class="sub-title text-body">
+                    <!-- <span class="sub-title text-body">
                         COURSES
                     </span>
                     <a routerLink="/lms-page" class="sidebar-menu-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
@@ -161,49 +164,53 @@
 
                         </span>
                     </a> -->
-                    <div *ngIf="user_type == 'ADMIN'">
-                    <span class="sub-title text-body">
-                        Users
-                    </span>
-                    <a  routerLink="/users" class="sidebar-menu-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                        <i class="material-symbols-outlined">
-                            person
-                        </i>
-                        <span class="title">
+                    <div *ngIf="user_type == 'ADMIN' || users?.user_type == 'ADMIN'">
+                        <span class="sub-title text-body">
                             Users
-
                         </span>
-                    </a>
-                     <a routerLink="/user-location" class="sidebar-menu-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                        <i class="material-symbols-outlined">
-                             approval
-                        </i>
-                        <span class="title">
-                           User Location
+                        <a routerLink="/users" class="sidebar-menu-link" routerLinkActive="active"
+                            [routerLinkActiveOptions]="{exact: true}">
+                            <i class="material-symbols-outlined">
+                                person
+                            </i>
+                            <span class="title">
+                                Users
 
-                        </span>
-                    </a>
-</div>
+                            </span>
+                        </a>
+                        <a routerLink="/user-location" class="sidebar-menu-link" routerLinkActive="active"
+                            [routerLinkActiveOptions]="{exact: true}">
+                            <i class="material-symbols-outlined">
+                                approval
+                            </i>
+                            <span class="title">
+                                User Location
 
-                     <span class="sub-title text-body">
+                            </span>
+                        </a>
+                    </div>
+
+                    <span class="sub-title text-body">
                         School
                     </span>
-                    <a routerLink="/location" class="sidebar-menu-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                    <a routerLink="/location" class="sidebar-menu-link" routerLinkActive="active"
+                        [routerLinkActiveOptions]="{exact: true}">
                         <i class="material-symbols-outlined">
-                             approval
+                            approval
                         </i>
                         <span class="title">
-                           Location
+                            Location
 
                         </span>
                     </a>
 
-                      <a routerLink="/school" class="sidebar-menu-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                    <a routerLink="/school" class="sidebar-menu-link" routerLinkActive="active"
+                        [routerLinkActiveOptions]="{exact: true}">
                         <i class="material-symbols-outlined">
-                             school
+                            school
                         </i>
                         <span class="title">
-                           School
+                            School
 
                         </span>
                     </a>
@@ -346,7 +353,7 @@
                             </li>
                         </ul>
                     </mat-expansion-panel> -->
-                    
+
 
                     <!-- <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = true">
                         <mat-expansion-panel-header>

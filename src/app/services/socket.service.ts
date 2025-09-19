@@ -1,62 +1,62 @@
 import { Injectable } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
 import { environment } from '../../environments/environment';
-import { Observable } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class SocketService {
-      private apiUrl = environment.apiBaseUrl;
-  
-  // private socket: Socket;
-  private userId: string = '2'; 
+  private apiUrl = environment.apiBaseUrl;
+  private socket: Socket;
   private trackingInterval: any;
 
-  constructor() {
-    // Connect to your backend
-    // this.socket = io(this.apiUrl, {
-    //   transports: ['websocket']
-    // });
+constructor() {
+  this.socket = io(this.apiUrl, { transports: ['websocket'] });
+
+  this.socket.on("connect", () => {
+    console.log("✅ Connected to socket server:", this.socket.id);
+  });
+
+  this.socket.on("connect_error", (err) => {
+    console.error("❌ Socket connection error:", err.message);
+  });
+}
+
+
+  startTracking(userId: string) {
+      console.log("➡️ startTracking called for user:", userId);
+
+    // ✅ Notify backend check-in
+    this.socket.emit('start-tracking', { userId });
+
+    this.trackingInterval = setInterval(() => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          const lat = position.coords.latitude;
+          const lng = position.coords.longitude;
+          const timestamp = new Date().toISOString();
+
+          // ✅ Send live location
+          this.socket.emit('send-location', { userId, lat, lng, timestamp });
+          console.log('Sent location:', lat, lng);
+        });
+      }
+    }, 15 * 1000); // every 15 sec
   }
 
-  // startTracking(userId?:any) {
-  //   this.socket.emit('start-tracking', { userId: this.userId });
+  stopTracking(userId: string) {
+    if (this.trackingInterval) {
+      clearInterval(this.trackingInterval);
+      this.trackingInterval = null;
+    }
 
-  //   this.trackingInterval = setInterval(() => {
-  //     if (navigator.geolocation) {
-  //       navigator.geolocation.getCurrentPosition((position) => {
-  //         const lat = position.coords.latitude;
-  //         const lng = position.coords.longitude;
-  //         const timestamp = new Date().toISOString();
-
-  //         this.socket.emit('send-location', { 
-  //           userId: userId, 
-  //           lat, 
-  //           lng, 
-  //           timestamp 
-  //         });
-
-  //         console.log('Sent location:', lat, lng);
-  //       });
-  //     }
-  //   }, 15 * 1000); 
-  // }
-
-  // stopTracking(userId?:any) {
-  //   if (this.trackingInterval) {
-  //     clearInterval(this.trackingInterval);
-  //     this.trackingInterval = null;
-  //   }
-  //   this.socket.emit('stop-tracking', { userId: this.userId });
-  //   console.log('Stopped tracking');
-  // }
-
-  //   onLocationUpdate(): Observable<any> {
-  //   return new Observable((subscriber) => {
-  //     this.socket.on('location-update', (data) => {
-  //       subscriber.next(data);
-  //     });
-  //   });
-  // }
+    // ✅ Notify backend checkout
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const lat = position.coords.latitude;
+        const lng = position.coords.longitude;
+        const timestamp = new Date().toISOString();
+        this.socket.emit('stop-tracking', { userId, lat, lng, timestamp });
+        console.log('Stopped tracking:', lat, lng);
+      });
+    }
+  }
 }

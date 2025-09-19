@@ -72,6 +72,7 @@ export class SignInComponent {
                             'user_type',
                             response.data.user_type
                         );
+                        this.authService.notifyLoginSuccess();
 
                         console.log('response', response);
                         this.router.navigate(['crm']);

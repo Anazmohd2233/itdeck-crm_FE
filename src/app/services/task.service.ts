@@ -45,4 +45,28 @@ export class TaskService {
         const apiUrl = `${this.apiUrl}/admin/contacts/create_bulk`;
         return this.http.post<any>(apiUrl, formData);
     }
+   
+
+     getLiveLocation(params?: HttpParams): Observable<any> {
+        const url =  `${this.apiUrl}/admin/expence/fetchLocation`;
+       
+       
+       
+        return this.http.get<any>(url, { params });
+    }
+
+
+
+        createAttendence(formData: any): Observable<any> {
+        const apiUrl = `${this.apiUrl}/admin/expence/createAttendence`;
+        return this.http.post<any>(apiUrl, formData);
+    }
+
+        updateAttendence(formData: any): Observable<any> {
+        const apiUrl = `${this.apiUrl}/admin/expence/updateAttendence`;
+        return this.http.patch<any>(apiUrl, formData);
+    }
+   
+   
+
 }

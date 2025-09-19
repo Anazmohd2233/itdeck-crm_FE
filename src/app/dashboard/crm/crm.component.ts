@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Inject, PLATFORM_ID } from '@angular/core';
 import { StatsComponent } from './stats/stats.component';
 import { MostLeadsComponent } from './most-leads/most-leads.component';
 import { CountryStatsComponent } from './country-stats/country-stats.component';
@@ -24,7 +24,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { HttpParams } from '@angular/common/http';
 import { SchoolService } from '../../services/school.service';
 import { UsersService } from '../../services/users.service';
-import { formatDate, NgFor, NgIf } from '@angular/common';
+import { formatDate, isPlatformBrowser, NgFor, NgIf } from '@angular/common';
 import {
     FormBuilder,
     FormGroup,
@@ -35,6 +35,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
+import { SocketService } from '../../services/socket.service';
+import { SharedService } from '../../services/sharedService';
+import { TaskService } from '../../services/task.service';
+import { ToastrService } from 'ngx-toastr';
+import { Subject, takeUntil } from 'rxjs';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
     selector: 'app-crm',
@@ -86,21 +92,154 @@ export class CrmComponent {
     searchFieldSchool: string = '';
     searchFieldUser: string = '';
     searchFieldLocation: string = '';
+    profile: any;
+  private destroy$ = new Subject<void>();
+
+    private watchId: number | null = null;
 
     constructor(
         public themeService: CustomizerSettingsService,
         private dashboardService: DashboardService,
         private schoolService: SchoolService,
-        private usersService: UsersService
+        private usersService: UsersService,
+        private socketService: SocketService,
+        @Inject(PLATFORM_ID) private platformId: Object,
+        private sharedService: SharedService,
+        private taskService: TaskService,
+        private toastr: ToastrService,
+                private authService: AuthService,
+        
     ) {}
 
     ngOnInit(): void {
         this.user_type = localStorage.getItem('user_type');
 
+        this.getProfile();
+
         this.getDashboardView();
         this.getSchoolList();
         this.getUserList();
         this.getLocationList();
+
+         this.sharedService.checkIn$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.checkIn());
+
+    this.sharedService.checkOut$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.checkOut());
+    }
+
+      ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+    private getProfile(): void {
+        this.usersService.getProfile().subscribe({
+            next: (response) => {
+                if (response && response.success) {
+                    this.profile = response.data || [];
+                } else {
+                    // this.toastr.error('Failed to load users', 'Failed');
+                    console.error('Failed to load profile:', response?.message);
+                }
+            },
+            error: (error) => {
+                console.error('API error:', error);
+            },
+        });
+    }
+
+    checkIn(): void {
+        const formData = new FormData();
+
+        formData.append('user_id', this.profile?.id);
+        this.taskService.createAttendence(formData).subscribe({
+            next: (response) => {
+                if (response.success) {
+        this.getProfile();
+
+
+                        this.toastr.success(
+                            'Checkined successfully',
+                            'Success'
+                        );
+                    console.log('Checkined successfully:', response);
+                } else {
+                    this.toastr.error(
+                        response.message || 'Failed to Checkin.',
+                        'Error'
+                    );
+                    console.error('❌ add failed:', response.message);
+                }
+            },
+            error: (error) => {
+                console.error('Error checkin', error);
+
+                // You can add other error handling/notification here
+            },
+        });
+
+        console.log('CheckIn from Dashboard');
+        console.log('this.profile?.id', this.profile?.id);
+
+        if (isPlatformBrowser(this.platformId) && 'geolocation' in navigator) {
+            this.watchId = navigator.geolocation.watchPosition(
+                (pos) => {
+                    console.log(
+                        '📍',
+                        pos.coords.latitude,
+                        pos.coords.longitude
+                    );
+                    this.socketService.startTracking(this.profile?.id); // pass logged-in userId
+                },
+                (err) => console.error('❌ Location error:', err),
+                { enableHighAccuracy: true }
+            );
+        } else {
+            console.log('********else working for checkin**********');
+        }
+    }
+
+    checkOut(): void {
+        const formData = new FormData();
+
+        formData.append('user_id', this.profile?.id);
+        this.taskService.updateAttendence(formData).subscribe({
+            next: (response) => {
+                if (response.success) {
+                     this.toastr.success(
+                            'Checkout successfully',
+                            'Success'
+                        );
+        this.getProfile();
+                    console.log('Checkout successfully:', response);
+                } else {
+                    this.toastr.error(
+                        response.message || 'Failed to Checkout.',
+                        'Error'
+                    );
+                    console.error('❌ add failed:', response.message);
+                }
+            },
+            error: (error) => {
+                console.error('Error Checkout', error);
+
+                // You can add other error handling/notification here
+            },
+        });
+
+        console.log('CheckOut from Dashboard');
+        console.log('this.profile?.id', this.profile?.id);
+
+        if (isPlatformBrowser(this.platformId) && this.watchId !== null) {
+            navigator.geolocation.clearWatch(this.watchId);
+            this.watchId = null;
+            this.socketService.stopTracking(this.profile?.id); // pass logged-in userId
+        } else {
+            console.log('********else working for checkout**********');
+        }
     }
 
     searchSchool() {
