@@ -99,6 +99,9 @@ export class ExpencesComponent {
     searchFieldUser: string = '';
     user_type: any;
 
+    filterCreatedDateValue: any;
+filterUserValue: any;
+
     dialogRef!: MatDialogRef<any>; // store reference
 
     @ViewChild(GoogleMap, { static: false }) map!: GoogleMap;
@@ -217,6 +220,8 @@ export class ExpencesComponent {
 
        resetFilters() {
         this.createdDateFilter = null;
+        this.filterCreatedDateValue = null;
+
         this.getExpenceList();
     }
 
@@ -248,7 +253,12 @@ export class ExpencesComponent {
         });
     }
 
-    private getExpenceList(params?: any): void {
+    private getExpenceList(): void {
+          let params = new HttpParams();
+
+  if (this.filterCreatedDateValue) params = params.set('date', this.filterCreatedDateValue);
+  if (this.filterUserValue) params = params.set('userId', this.filterUserValue);
+
         this.taskService.getExpences(this.page, params).subscribe({
             next: (response) => {
                 if (response && response.success) {
@@ -374,26 +384,18 @@ export class ExpencesComponent {
         this.expenses.removeAt(index);
     }
 
-    filterCreatedDate(event: any) {
-        if (event.value) {
-            const formattedDate = formatDate(
-                event.value,
-                'yyyy-MM-dd',
-                'en-US'
-            );
-            let params = new HttpParams().set('date', formattedDate);
-            this.getExpenceList(params);
-        }
-    }
+// Filters
+filterCreatedDate(event: any) {
+  if (event.value) {
+    this.filterCreatedDateValue = formatDate(event.value, 'yyyy-MM-dd', 'en-US');
+    this.getExpenceList();
+  }
+}
 
-    filterUser(event: any) {
-        console.log('***event***', event.value);
-
-        let params = new HttpParams();
-
-        params = params.set('userId', event.value);
-        this.getExpenceList(params);
-    }
+filterUser(event: any) {
+  this.filterUserValue = event.value;
+  this.getExpenceList();
+}
 }
 
 export interface PeriodicElement {

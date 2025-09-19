@@ -254,6 +254,11 @@ filterDateRange() {
     resetFilters() {
         this.startDate = null;
         this.endDate = null;
+
+          this.filterStartDate = null;
+        this.filterEndDate = null;
+
+ 
         //    this.locationFilter = null;
         this.getDashboardView();
     }

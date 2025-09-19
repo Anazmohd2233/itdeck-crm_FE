@@ -172,6 +172,7 @@ export class UserLocationComponent {
         // this.filterUserValue = null;
         this.filterDateValue = null;
         this.createdDateFilter = null;
+        
         this.getLiveLocation();
     }
     clearSearch() {

@@ -81,8 +81,13 @@ export class CContactsComponent {
     searchFieldSchool: string = '';
     searchFieldUser: string = '';
     searchFieldLocation: string = '';
-        location: any;
+    location: any;
 
+    filterDivisionValue: any;
+    filterUserValue: any;
+    filterDistrictValue: any;
+    filterLocationValue: any;
+    filterSchoolValue: any;
 
     district = Object.values(Districts);
 
@@ -96,7 +101,7 @@ export class CContactsComponent {
         'phone',
         // 'courses',
         'owner',
-                'createdDate',
+        'createdDate',
 
         // 'lead_source',
         'status',
@@ -114,8 +119,7 @@ export class CContactsComponent {
         private contactService: ContactService,
         private toastr: ToastrService,
         private schoolService: SchoolService,
-        private usersService: UsersService,
-
+        private usersService: UsersService
     ) {}
 
     ngOnInit(): void {
@@ -124,8 +128,7 @@ export class CContactsComponent {
         this.getContactList();
         this.getSchoolList();
         this.getUserList();
-                this.getLocationList();
-
+        this.getLocationList();
     }
 
     ngAfterViewInit() {
@@ -166,53 +169,36 @@ export class CContactsComponent {
     filterPriority(event: any) {
         console.log('***event***', event);
     }
-
     filterSchool(event: any) {
-        console.log('***event***', event.value);
-
-        let params = new HttpParams();
-
-        params = params.set('schoolId', event.value);
-        this.getContactList(params);
+        console.log('***school***', event.value);
+        this.filterSchoolValue = event.value;
+        this.getContactList();
     }
 
     filterDivision(event: any) {
-        console.log('***event***', event.value);
-
-        let params = new HttpParams();
-
-        params = params.set('division', event.value);
-
-        this.getContactList(params);
+        console.log('***division***', event.value);
+        this.filterDivisionValue = event.value;
+        this.getContactList();
     }
 
     filterUser(event: any) {
-        console.log('***event***', event.value);
-
-        let params = new HttpParams();
-
-        params = params.set('userId', event.value);
-        this.getContactList(params);
+        console.log('***user***', event.value);
+        this.filterUserValue = event.value;
+        this.getContactList();
     }
-  filterDistrict(event: any) {
-        console.log('***event***', event.value);
 
-        let params = new HttpParams();
-
-        params = params.set('district', event.value);
-
-        this.getUserList(params);
+    filterDistrict(event: any) {
+        console.log('***district***', event.value);
+        this.filterDistrictValue = event.value;
+        this.getContactList();
     }
-    
+
     filterLocation(event: any) {
-        console.log('***event***', event.value);
-
-        let params = new HttpParams();
-
-        params = params.set('location', event.value);
-
-        this.getUserList(params);
+        console.log('***location***', event.value);
+        this.filterLocationValue = event.value;
+        this.getContactList();
     }
+
     searchLocation() {
         console.log('location search keyword', this.searchFieldLocation);
         this.getUserList(this.searchFieldLocation);
@@ -269,8 +255,7 @@ export class CContactsComponent {
         // const filterValue = (event.target as HTMLInputElement).value;
         // this.dataSource.filter = filterValue.trim().toLowerCase();
 
-        let params = new HttpParams().set('search', this.searchField);
-        this.getContactList(params);
+        this.getContactList();
     }
 
     private getUserList(search?: any): void {
@@ -295,7 +280,21 @@ export class CContactsComponent {
         });
     }
 
-    private getContactList(params?: any): void {
+    private getContactList(): void {
+        let params = new HttpParams();
+        if (this.searchField) params = params.set('search', this.searchField);
+
+        if (this.filterSchoolValue)
+            params = params.set('schoolId', this.filterSchoolValue);
+        if (this.filterUserValue)
+            params = params.set('userId', this.filterUserValue);
+        if (this.filterDivisionValue)
+            params = params.set('division', this.filterDivisionValue);
+        if (this.filterDistrictValue)
+            params = params.set('district', this.filterDistrictValue);
+        if (this.filterLocationValue)
+            params = params.set('location', this.filterLocationValue);
+
         this.contactService.getContact(this.page, params).subscribe({
             next: (response) => {
                 if (response && response.success) {
@@ -309,9 +308,11 @@ export class CContactsComponent {
                         division: u?.task?.division || 'N/A',
                         name: u.contact_name || 'N/A',
                         email: u.email || 'N/A',
-createdDate: u?.createdAt
-  ? new Date(u.createdAt).toLocaleDateString("en-GB").replace(/\//g, "-")
-  : "N/A",
+                        createdDate: u?.createdAt
+                            ? new Date(u.createdAt)
+                                  .toLocaleDateString('en-GB')
+                                  .replace(/\//g, '-')
+                            : 'N/A',
                         // lead_source: u.lead_source || 'N/A',
                         lead_status: u.lead_status || 'OTHER',
                         phone: u.phone || '-',
@@ -365,11 +366,12 @@ createdDate: u?.createdAt
     }
 
     clearSearch() {
+                this.searchField = ''; // Clear the input by setting the property to an empty string
+
         this.getContactList();
 
-        this.searchField = ''; // Clear the input by setting the property to an empty string
     }
-       private getLocationList(search?: any): void {
+    private getLocationList(search?: any): void {
         let params = new HttpParams().set('status', true);
 
         if (search) {

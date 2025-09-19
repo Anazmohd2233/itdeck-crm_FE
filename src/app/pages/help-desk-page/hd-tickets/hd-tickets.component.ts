@@ -95,6 +95,14 @@ export class HdTicketsComponent implements OnInit {
     searchFieldLocation: string = '';
     location: any;
 
+    filterCreatedDateValue: any;
+    filterDueDateValue: any;
+    filterSchoolValue: any;
+    filterDivisionValue: any;
+    filterUserValue: any;
+    filterLocationValue: any;
+    filterStatusValue: any;
+
     constructor(
         public themeService: CustomizerSettingsService,
         private taskService: TaskService,
@@ -170,7 +178,23 @@ export class HdTicketsComponent implements OnInit {
         });
     }
 
-    loadTasks(params?: any): void {
+    loadTasks(): void {
+        let params = new HttpParams();
+
+        if (this.filterCreatedDateValue)
+            params = params.set('createdDate', this.filterCreatedDateValue);
+        if (this.filterDueDateValue)
+            params = params.set('dueDate', this.filterDueDateValue);
+        if (this.filterSchoolValue)
+            params = params.set('schoolId', this.filterSchoolValue);
+        if (this.filterDivisionValue)
+            params = params.set('division', this.filterDivisionValue);
+        if (this.filterUserValue)
+            params = params.set('userId', this.filterUserValue);
+        if (this.filterLocationValue)
+            params = params.set('location', this.filterLocationValue);
+        if (this.filterStatusValue)
+            params = params.set('status', this.filterStatusValue);
         this.isLoading = true;
         this.taskService.getTasks(this.page, params).subscribe({
             next: (response: any) => {
@@ -233,78 +257,54 @@ export class HdTicketsComponent implements OnInit {
 
     filterCreatedDate(event: any) {
         if (event.value) {
-            const formattedDate = formatDate(
+            this.filterCreatedDateValue = formatDate(
                 event.value,
                 'yyyy-MM-dd',
                 'en-US'
             );
-            let params = new HttpParams().set('createdDate', formattedDate);
-            this.loadTasks(params);
+            this.loadTasks();
         }
     }
 
     filterDueDate(event: any) {
         if (event.value) {
-            const formattedDate = formatDate(
+            this.filterDueDateValue = formatDate(
                 event.value,
                 'yyyy-MM-dd',
                 'en-US'
             );
-            let params = new HttpParams().set('dueDate', formattedDate);
-            this.loadTasks(params);
+            this.loadTasks();
         }
     }
 
     filterSchool(event: any) {
-        console.log('***event***', event.value);
-
-        let params = new HttpParams();
-
-        params = params.set('schoolId', event.value);
-
-        this.loadTasks(params);
+        this.filterSchoolValue = event.value;
+        this.loadTasks();
     }
 
     filterDivision(event: any) {
-        console.log('***event***', event.value);
-
-        let params = new HttpParams();
-
-        params = params.set('division', event.value);
-
-        this.loadTasks(params);
+        this.filterDivisionValue = event.value;
+        this.loadTasks();
     }
 
     filterUser(event: any) {
-        console.log('***event***', event.value);
-
-        let params = new HttpParams();
-
-        params = params.set('userId', event.value);
-        this.loadTasks(params);
-    }
-
-    filterPriority(event: any) {
-        this.priorityFilter = event.value;
-        this.applyAllFilters();
-    }
-
-    applyAllFilters() {
-        this.dataSource.filter = '' + Math.random(); // Trigger table refresh
+        this.filterUserValue = event.value;
+        this.loadTasks();
     }
 
     filterLocation(event: any) {
-        console.log('***event***', event.value);
-
-        let params = new HttpParams();
-
-        params = params.set('location', event.value);
-
-        this.loadTasks(params);
+        this.filterLocationValue = event.value;
+        this.loadTasks();
     }
+
+    filterStatus(event: any) {
+        this.filterStatusValue = event.value;
+        this.loadTasks();
+    }
+
     searchLocation() {
         console.log('location search keyword', this.searchFieldLocation);
-        this.loadTasks(this.searchFieldLocation);
+        this.getLocationList(this.searchFieldLocation);
     }
     clearSearchLocation() {
         this.searchFieldLocation = ''; // Clear the input by setting the property to an empty string
@@ -350,19 +350,13 @@ export class HdTicketsComponent implements OnInit {
         };
     }
 
-    filterStatus(event: any) {
-        console.log('***event***', event.value);
-
-        let params = new HttpParams();
-
-        params = params.set('status', event.value);
-
-        this.loadTasks(params);
-    }
-
     resetFilters() {
         this.createdDateFilter = null;
         this.dueDateFilter = null;
+
+        this.filterCreatedDateValue = null;
+        this.filterDueDateValue = null;
+
         this.loadTasks();
     }
 

@@ -128,9 +128,10 @@ export class UsersListComponent {
     }
 
     clearSearch() {
+                this.searchField = ''; // Clear the input by setting the property to an empty string
+
         this.getUserList();
 
-        this.searchField = ''; // Clear the input by setting the property to an empty string
     }
 }
 

@@ -43,8 +43,8 @@ export class SignInComponent {
         private userService: UsersService
     ) {
         this.authForm = this.fb.group({
-            username: ['super_admin', [Validators.required]],
-            password: ['admin@123', [Validators.required]],
+            username: ['', [Validators.required]],
+            password: ['', [Validators.required]],
         });
     }
 

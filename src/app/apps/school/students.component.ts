@@ -59,6 +59,10 @@ export class SchoolComponent {
     user_type: any;
     district = Object.values(Districts);
 
+    filterLocationValue: any;
+    filterStatusValue: any;
+    filterDistrictValue: any;
+
     displayedColumns: string[] = [
         // 'select',
 
@@ -87,7 +91,7 @@ export class SchoolComponent {
     ngOnInit(): void {
         this.user_type = localStorage.getItem('user_type');
 
-        this.getSchooltList();
+        this.getSchoolList();
         this.getLocationList();
     }
 
@@ -97,7 +101,7 @@ export class SchoolComponent {
         this.paginator.page.subscribe((event) => {
             this.page = event.pageIndex + 1; // MatPaginator is 0-based, API is 1-based
             this.pageSize = event.pageSize;
-            this.getSchooltList();
+            this.getSchoolList();
         });
     }
 
@@ -132,16 +136,7 @@ export class SchoolComponent {
         // const filterValue = (event.target as HTMLInputElement).value;
         // this.dataSource.filter = filterValue.trim().toLowerCase();
 
-        let params = new HttpParams().set('search', this.searchField);
-        this.getSchooltList(params);
-    }
-
-    applySearch(event: Event) {
-        const filterValue = (event.target as HTMLInputElement).value;
-        // this.dataSource.filter = filterValue.trim().toLowerCase();
-
-        let params = new HttpParams().set('search', filterValue);
-        this.getSchooltList(params);
+        this.getSchoolList();
     }
 
     classApplied = false;
@@ -160,12 +155,23 @@ export class SchoolComponent {
     }
 
     clearSearch() {
-        this.getSchooltList();
+        this.searchField = '';
+        this.getSchoolList();
 
-        this.searchField = ''; // Clear the input by setting the property to an empty string
+        // Clear the input by setting the property to an empty string
     }
 
-    private getSchooltList(params?: any): void {
+    private getSchoolList(): void {
+        let params = new HttpParams();
+
+        if (this.filterLocationValue)
+            params = params.set('location', this.filterLocationValue);
+        if (this.filterStatusValue)
+            params = params.set('type', this.filterStatusValue);
+        if (this.filterDistrictValue)
+            params = params.set('district', this.filterDistrictValue);
+        if (this.searchField) params = params.set('serach', this.searchField);
+
         this.schoolService.getSchool(this.page, params).subscribe({
             next: (response) => {
                 if (response && response.success) {
@@ -207,14 +213,20 @@ export class SchoolComponent {
     //     this.router.navigate(['/edit-student', id]);
     // }
 
+    // Filters
     filterLocation(event: any) {
-        console.log('***event***', event.value);
+        this.filterLocationValue = event.value;
+        this.getSchoolList();
+    }
 
-        let params = new HttpParams();
+    filterStatus(event: any) {
+        this.filterStatusValue = event.value;
+        this.getSchoolList();
+    }
 
-        params = params.set('location', event.value);
-
-        this.getSchooltList(params);
+    filterDistrict(event: any) {
+        this.filterDistrictValue = event.value;
+        this.getSchoolList();
     }
     searchLocation() {
         console.log('location search keyword', this.searchFieldLocation);
@@ -250,26 +262,6 @@ export class SchoolComponent {
                 console.error('API error:', error);
             },
         });
-    }
-
-    filterStatus(event: any) {
-        console.log('***event***', event.value);
-
-        let params = new HttpParams();
-
-        params = params.set('type', event.value);
-
-        this.getSchooltList(params);
-    }
-
-    filterDistrict(event: any) {
-        console.log('***event***', event.value);
-
-        let params = new HttpParams();
-
-        params = params.set('district', event.value);
-
-        this.getSchooltList(params);
     }
 }
 

@@ -190,9 +190,10 @@ export class LocationComponent {
     // }
 
       clearSearch() {
+         this.searchField = ''; 
                 this.getLocationtList();
 
-        this.searchField = ''; // Clear the input by setting the property to an empty string
+       // Clear the input by setting the property to an empty string
     }
 }
 

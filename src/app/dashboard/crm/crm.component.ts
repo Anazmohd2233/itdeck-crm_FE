@@ -1,4 +1,10 @@
-import { Component, Inject, PLATFORM_ID, TemplateRef, ViewChild } from '@angular/core';
+import {
+    Component,
+    Inject,
+    PLATFORM_ID,
+    TemplateRef,
+    ViewChild,
+} from '@angular/core';
 import { StatsComponent } from './stats/stats.component';
 import { MostLeadsComponent } from './most-leads/most-leads.component';
 import { CountryStatsComponent } from './country-stats/country-stats.component';
@@ -94,20 +100,19 @@ export class CrmComponent {
     searchFieldUser: string = '';
     searchFieldLocation: string = '';
     profile: any;
-  private destroy$ = new Subject<void>();
+    private destroy$ = new Subject<void>();
 
     private watchId: number | null = null;
 
     filterSchoolValue: any;
-filterUserValue: any;
-filterStatusValue: any;
-filterLocationValue: any;
-startDateValue: any;
-endDateValue: any;
+    filterUserValue: any;
+    filterStatusValue: any;
+    filterLocationValue: any;
+    startDateValue: any;
+    endDateValue: any;
 
-  @ViewChild('confirmDialog') confirmDialog!: TemplateRef<any>;
-  dialogRef!: MatDialogRef<any>;
-
+    @ViewChild('confirmDialog') confirmDialog!: TemplateRef<any>;
+    dialogRef!: MatDialogRef<any>;
 
     constructor(
         public themeService: CustomizerSettingsService,
@@ -119,9 +124,8 @@ endDateValue: any;
         private sharedService: SharedService,
         private taskService: TaskService,
         private toastr: ToastrService,
-                private authService: AuthService,
-                private dialog: MatDialog
-        
+        private authService: AuthService,
+        private dialog: MatDialog
     ) {}
 
     ngOnInit(): void {
@@ -134,35 +138,35 @@ endDateValue: any;
         this.getUserList();
         this.getLocationList();
 
-         this.sharedService.checkIn$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(() => this.checkIn());
+        this.sharedService.checkIn$
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(() => this.checkIn());
 
-    this.sharedService.checkOut$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(() => this.checkOut());
+        this.sharedService.checkOut$
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(() => this.checkOut());
     }
 
-      ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
+    ngOnDestroy(): void {
+        this.destroy$.next();
+        this.destroy$.complete();
+    }
 
-   openConfirmDialog(title: string, message: string) {
-    this.dialogRef = this.dialog.open(this.confirmDialog, {
-      data: { title, message }
-    });
+    openConfirmDialog(title: string, message: string) {
+        this.dialogRef = this.dialog.open(this.confirmDialog, {
+            data: { title, message },
+        });
 
-    this.dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        if (title === 'Check In') {
-          this.checkIn();
-        } else if (title === 'Check Out') {
-          this.checkOut();
-        }
-      }
-    });
-  }
+        this.dialogRef.afterClosed().subscribe((result) => {
+            if (result) {
+                if (title === 'Check In') {
+                    this.checkIn();
+                } else if (title === 'Check Out') {
+                    this.checkOut();
+                }
+            }
+        });
+    }
 
     private getProfile(): void {
         this.usersService.getProfile().subscribe({
@@ -187,13 +191,9 @@ endDateValue: any;
         this.taskService.createAttendence(formData).subscribe({
             next: (response) => {
                 if (response.success) {
-        this.getProfile();
+                    this.getProfile();
 
-
-                        this.toastr.success(
-                            'Checkined successfully',
-                            'Success'
-                        );
+                    this.toastr.success('Checkined successfully', 'Success');
                     console.log('Checkined successfully:', response);
                 } else {
                     this.toastr.error(
@@ -238,11 +238,8 @@ endDateValue: any;
         this.taskService.updateAttendence(formData).subscribe({
             next: (response) => {
                 if (response.success) {
-                     this.toastr.success(
-                            'Checkout successfully',
-                            'Success'
-                        );
-        this.getProfile();
+                    this.toastr.success('Checkout successfully', 'Success');
+                    this.getProfile();
                     console.log('Checkout successfully:', response);
                 } else {
                     this.toastr.error(
@@ -371,17 +368,20 @@ endDateValue: any;
     }
 
     private getDashboardView(): void {
+        let params = new HttpParams();
 
-                let params = new HttpParams();
-
-
-         if (this.filterSchoolValue) params = params.set('schoolId', this.filterSchoolValue);
-  if (this.filterUserValue) params = params.set('userId', this.filterUserValue);
-  if (this.filterStatusValue) params = params.set('taskStatus', this.filterStatusValue);
-  if (this.filterLocationValue) params = params.set('location', this.filterLocationValue);
-    if (this.startDateValue) params = params.set('startDate', this.startDateValue);
-  if (this.endDateValue) params = params.set('endDate', this.endDateValue);
-
+        if (this.filterSchoolValue)
+            params = params.set('schoolId', this.filterSchoolValue);
+        if (this.filterUserValue)
+            params = params.set('userId', this.filterUserValue);
+        if (this.filterStatusValue)
+            params = params.set('taskStatus', this.filterStatusValue);
+        if (this.filterLocationValue)
+            params = params.set('location', this.filterLocationValue);
+        if (this.startDateValue)
+            params = params.set('startDate', this.startDateValue);
+        if (this.endDateValue)
+            params = params.set('endDate', this.endDateValue);
 
         this.dashboardService.getDashboardSummary(params).subscribe({
             next: (response) => {
@@ -400,45 +400,51 @@ endDateValue: any;
             },
         });
     }
-filterSchool(event: any) {
-  console.log('***event***', event.value);
-  this.filterSchoolValue = event.value;
-  this.getDashboardView();
-}
+    filterSchool(event: any) {
+        console.log('***event***', event.value);
+        this.filterSchoolValue = event.value;
+        this.getDashboardView();
+    }
 
-filterUser(event: any) {
-  console.log('***event***', event.value);
-  this.filterUserValue = event.value;
-  this.getDashboardView();
-}
+    filterUser(event: any) {
+        console.log('***event***', event.value);
+        this.filterUserValue = event.value;
+        this.getDashboardView();
+    }
 
-filterStatus(event: any) {
-  console.log('***event***', event.value);
-  this.filterStatusValue = event.value;
-  this.getDashboardView();
-}
+    filterStatus(event: any) {
+        console.log('***event***', event.value);
+        this.filterStatusValue = event.value;
+        this.getDashboardView();
+    }
 
-filterLocation(event: any) {
-  console.log('***event***', event.value);
-  this.filterLocationValue = event.value;
-  this.getDashboardView();
-}
+    filterLocation(event: any) {
+        console.log('***event***', event.value);
+        this.filterLocationValue = event.value;
+        this.getDashboardView();
+    }
 
- filterDateRange() {
-  if (this.startDate && this.endDate) {
-    this.startDateValue = formatDate(this.startDate, 'yyyy-MM-dd', 'en-US');
-    this.endDateValue = formatDate(this.endDate, 'yyyy-MM-dd', 'en-US');
+    filterDateRange() {
+        if (this.startDate && this.endDate) {
+            this.startDateValue = formatDate(
+                this.startDate,
+                'yyyy-MM-dd',
+                'en-US'
+            );
+            this.endDateValue = formatDate(this.endDate, 'yyyy-MM-dd', 'en-US');
 
-    console.log('Start Date:', this.startDateValue);
-    console.log('End Date:', this.endDateValue);
+            console.log('Start Date:', this.startDateValue);
+            console.log('End Date:', this.endDateValue);
 
-    this.getDashboardView();
-  }
-}
+            this.getDashboardView();
+        }
+    }
 
     resetFilters() {
         this.startDate = null;
         this.endDate = null;
+        this.startDateValue = null;
+        this.endDateValue = null;
         // this.filterLocationValue='';
         // this.filterStatusValue='';
         // this.filterUserValue='';
