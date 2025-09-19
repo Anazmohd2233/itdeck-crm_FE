@@ -214,16 +214,14 @@ export class UserLocationComponent {
     }
 
     private getLiveLocation(): void {
-                let params = new HttpParams();
-               
-                if(this.filterUserValue){
-                            params = params.set('userId', this.filterUserValue);
+        let params = new HttpParams();
 
-                }
-                if(this.filterDateValue){
-                            params = params.set('date', this.filterDateValue);
-
-                }
+        if (this.filterUserValue) {
+            params = params.set('userId', this.filterUserValue);
+        }
+        if (this.filterDateValue) {
+            params = params.set('date', this.filterDateValue);
+        }
 
         this.taskService.getLiveLocation(params).subscribe({
             next: (response) => {
@@ -238,7 +236,7 @@ export class UserLocationComponent {
                                 lng: +loc.live_longitude,
                             },
                             title: `${new Date(
-                                loc.createdAt
+                                loc.live_time
                             ).toLocaleTimeString()}`,
                         })
                     );

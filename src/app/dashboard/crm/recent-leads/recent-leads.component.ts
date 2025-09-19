@@ -65,6 +65,13 @@ export class RecentLeadsComponent {
     searchFieldUser: string = '';
     searchFieldLocation: string = '';
 
+    filterSchoolValue: any;
+filterUserValue: any;
+filterStatusValue: any;
+filterLocationValue: any;
+filterStartDate: any;
+filterEndDate: any;
+
 
     displayedColumns: string[] = [
         'school_name',
@@ -165,7 +172,16 @@ export class RecentLeadsComponent {
 
 
 
-    private getDashboardView(params?: any): void {
+    private getDashboardView(): void {
+
+          let params = new HttpParams();
+
+  if (this.filterSchoolValue) params = params.set('schoolId', this.filterSchoolValue);
+  if (this.filterUserValue) params = params.set('userId', this.filterUserValue);
+  if (this.filterStatusValue) params = params.set('taskStatus', this.filterStatusValue);
+  if (this.filterLocationValue) params = params.set('location', this.filterLocationValue);
+  if (this.filterStartDate) params = params.set('startDate', this.filterStartDate);
+  if (this.filterEndDate) params = params.set('endDate', this.filterEndDate);
         this.dashboardService.getDashboardReport(this.page, params).subscribe({
             next: (response) => {
                 if (response && response.success) {
@@ -207,66 +223,33 @@ export class RecentLeadsComponent {
         });
     }
 
-    filterSchool(event: any) {
-        console.log('***event***', event.value);
+  filterSchool(event: any) {
+  this.filterSchoolValue = event.value;
+  this.getDashboardView();
+}
 
-        let params = new HttpParams();
+filterUser(event: any) {
+  this.filterUserValue = event.value;
+  this.getDashboardView();
+}
 
-        params = params.set('schoolId', event.value);
+filterStatus(event: any) {
+  this.filterStatusValue = event.value;
+  this.getDashboardView();
+}
 
-        this.getDashboardView(params);
-    }
+filterLocation(event: any) {
+  this.filterLocationValue = event.value;
+  this.getDashboardView();
+}
 
-    filterUser(event: any) {
-        console.log('***event***', event.value);
-
-        let params = new HttpParams();
-
-        params = params.set('userId', event.value);
-        this.getDashboardView(params);
-    }
-
-    filterStatus(event: any) {
-        console.log('***event***', event.value);
-
-        let params = new HttpParams();
-
-        params = params.set('taskStatus', event.value);
-
-        this.getDashboardView(params);
-    }
-    filterLocation(event: any) {
-        console.log('***event***', event.value);
-
-        let params = new HttpParams();
-
-        params = params.set('location', event.value);
-
-        this.getDashboardView(params);
-    }
-    filterDateRange() {
-        if (this.startDate && this.endDate) {
-            const formattedStart = formatDate(
-                this.startDate,
-                'yyyy-MM-dd',
-                'en-US'
-            );
-            const formattedEnd = formatDate(
-                this.endDate,
-                'yyyy-MM-dd',
-                'en-US'
-            );
-
-            console.log('formattedStart', formattedStart);
-            console.log('formattedEnd', formattedEnd);
-
-            const params = new HttpParams()
-                .set('startDate', formattedStart)
-                .set('endDate', formattedEnd);
-
-            this.getDashboardView(params);
-        }
-    }
+filterDateRange() {
+  if (this.startDate && this.endDate) {
+    this.filterStartDate = this.startDate;
+    this.filterEndDate = this.endDate;
+    this.getDashboardView();
+  }
+}
 
     resetFilters() {
         this.startDate = null;

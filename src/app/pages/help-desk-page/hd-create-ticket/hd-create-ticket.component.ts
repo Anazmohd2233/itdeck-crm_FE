@@ -640,61 +640,7 @@ export class HdCreateTicketComponent {
         }
     }
 
-    createStudent(): void {
-        // Cast your form value to correct type
 
-                if (this.studentForm.valid) {
-
-        const students: Students[] = this.studentForm.value.students;
-
-        const payload = {
-            task_id: this.taskId,
-            school_id: this.taskSchool.id,
-            assigned_to: this.taskData.assigned_to.id,
-
-            students: students.map((std: Students) => ({
-                ...std,
-            })),
-        };
-
-        console.log('payload', JSON.stringify(payload));
-
-        this.isSubmitting = true;
-
-        this.taskService.createBulkContact(payload).subscribe({
-            next: (response) => {
-                if (response.success) {
-                    this.loadTaskDetails();
-                    this.isSubmitting = false;
-                    this.closeDialog();
-                    this.toastr.success(
-                        'Students Added successfully',
-                        'Success'
-                    );
-                    console.log('✅ Students Added successfully');
-                } else {
-                    this.isSubmitting = false;
-
-                    this.toastr.error(
-                        response.message || 'Failed to Add Students.',
-                        'Error'
-                    );
-                    console.error('❌ add failed:', response.message);
-                }
-            },
-            error: (error) => {
-                this.isSubmitting = false;
-
-                this.toastr.error('Something went wrong.', 'Error');
-
-                console.error('❌ API error:', error);
-            },
-        });
-    } else {
-                        this.toastr.error('Missing mandaratory fields', 'Error');
-
-    }
-    }
     openDialog() {
         this.initializeExpenceForm();
         this.dialogRef = this.dialog.open(this.taskDialog, {
@@ -729,33 +675,122 @@ export class HdCreateTicketComponent {
             expenses: this.formBuilder.array([this.createExpenseGroup()]),
         });
     }
+initializeStudentForm(): void {
+  this.studentForm = this.formBuilder.group({
+    students: this.formBuilder.array([this.createStudentGroup()]),
+  });
 
-    // component.ts
-    initializeStudentForm(): void {
-        this.studentForm = this.formBuilder.group({
-            students: this.formBuilder.array([this.createStudentGroup()]),
-        });
+  // 👇 subscribe to changes of the students array
+  this.students.valueChanges.subscribe((students) => {
+    const lastIndex = students.length - 1;
+    const lastStudent = students[lastIndex];
 
-        // 👇 Only track the last student row
-        this.students.valueChanges.subscribe((students) => {
-            const lastIndex = students.length - 1;
-            const lastStudent = students[lastIndex];
-
-            if (lastStudent.student_name && lastStudent.student_phone) {
-                this.onStudentFilled(lastIndex, lastStudent);
-            }
-        });
+    // ✅ Only add if last row is FULLY valid
+    if (
+      lastStudent &&
+      lastStudent.student_name?.trim() &&
+      /^\d{10}$/.test(lastStudent.student_phone)
+    ) {
+      const control = this.students.at(lastIndex);
+      if (control.valid) {
+        this.onStudentFilled(lastIndex, lastStudent);
+      }
     }
+  });
+}
 
-    onStudentFilled(index: number, student: any) {
-        const lastIndex = this.students.length - 1;
 
-        // Only add if the filled row is the last one
-        if (index === lastIndex) {
-            this.students.push(this.createStudentGroup());
-            console.log('✅ New blank row added automatically', index, student);
-        }
-    }
+createStudent(): void {
+  let students: Students[] = this.studentForm.value.students;
+
+  // ✅ Remove empty rows
+  students = students.filter(
+    (s) => s.student_name?.trim() || s.student_phone?.toString().trim()
+  );
+
+  if (students.length === 0) {
+    this.toastr.error('Please enter at least one student', 'Error');
+    return;
+  }
+
+  // ✅ Now build a temporary FormArray just for validation
+  const tempArray = this.formBuilder.array(
+    students.map((s) =>
+      this.formBuilder.group({
+        student_name: [s.student_name, Validators.required],
+        student_phone: [
+          s.student_phone,
+          [Validators.required, Validators.pattern(/^\d{10}$/)],
+        ],
+      })
+    )
+  );
+
+  if (tempArray.invalid) {
+    this.toastr.error('Missing mandatory fields', 'Error');
+    return;
+  }
+
+  const payload = {
+    task_id: this.taskId,
+    school_id: this.taskSchool.id,
+    assigned_to: this.taskData.assigned_to.id,
+    students: students,
+  };
+
+  console.log('payload', JSON.stringify(payload));
+
+  this.isSubmitting = true;
+  this.taskService.createBulkContact(payload).subscribe({
+    next: (response) => {
+      if (response.success) {
+        this.loadTaskDetails();
+        this.isSubmitting = false;
+        this.closeDialog();
+        this.toastr.success('Students Added successfully', 'Success');
+      } else {
+        this.isSubmitting = false;
+        this.toastr.error(
+          response.message || 'Failed to Add Students.',
+          'Error'
+        );
+      }
+    },
+    error: (error) => {
+      this.isSubmitting = false;
+      this.toastr.error('Something went wrong.', 'Error');
+      console.error('❌ API error:', error);
+    },
+  });
+}
+
+
+onStudentFilled(index: number, student: any) {
+  const lastIndex = this.students.length - 1;
+
+  if (index === lastIndex) {
+    this.students.push(this.createStudentGroup());
+    console.log('✅ New blank row added automatically', index, student);
+  }
+}
+
+
+
+removeStudent(index: number): void {
+  const student = this.students.at(index).value;
+
+  // Remove blank row without side effects
+  if (!student.student_name && !student.student_phone) {
+    console.log('Removing blank row silentyly', index);
+    this.students.removeAt(index);
+    return;
+  }
+
+  // Remove normally
+  this.students.removeAt(index);
+}
+
+
 
     createExpenseGroup(): FormGroup {
         return this.formBuilder.group({
@@ -805,10 +840,7 @@ export class HdCreateTicketComponent {
         this.students.push(this.createStudentGroup());
     }
 
-    removeStudent(index: number): void {
-        this.students.removeAt(index);
-    }
-
+ 
     private getExpenceList(): void {
         this.taskService.getExpences(this.page).subscribe({
             next: (response) => {

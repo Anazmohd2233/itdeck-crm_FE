@@ -1,4 +1,4 @@
-import { Component, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, Inject, PLATFORM_ID, TemplateRef, ViewChild } from '@angular/core';
 import { StatsComponent } from './stats/stats.component';
 import { MostLeadsComponent } from './most-leads/most-leads.component';
 import { CountryStatsComponent } from './country-stats/country-stats.component';
@@ -41,6 +41,7 @@ import { TaskService } from '../../services/task.service';
 import { ToastrService } from 'ngx-toastr';
 import { Subject, takeUntil } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-crm',
@@ -97,6 +98,17 @@ export class CrmComponent {
 
     private watchId: number | null = null;
 
+    filterSchoolValue: any;
+filterUserValue: any;
+filterStatusValue: any;
+filterLocationValue: any;
+startDateValue: any;
+endDateValue: any;
+
+  @ViewChild('confirmDialog') confirmDialog!: TemplateRef<any>;
+  dialogRef!: MatDialogRef<any>;
+
+
     constructor(
         public themeService: CustomizerSettingsService,
         private dashboardService: DashboardService,
@@ -108,6 +120,7 @@ export class CrmComponent {
         private taskService: TaskService,
         private toastr: ToastrService,
                 private authService: AuthService,
+                private dialog: MatDialog
         
     ) {}
 
@@ -133,6 +146,22 @@ export class CrmComponent {
       ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+   openConfirmDialog(title: string, message: string) {
+    this.dialogRef = this.dialog.open(this.confirmDialog, {
+      data: { title, message }
+    });
+
+    this.dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        if (title === 'Check In') {
+          this.checkIn();
+        } else if (title === 'Check Out') {
+          this.checkOut();
+        }
+      }
+    });
   }
 
     private getProfile(): void {
@@ -341,7 +370,19 @@ export class CrmComponent {
         });
     }
 
-    private getDashboardView(params?: any): void {
+    private getDashboardView(): void {
+
+                let params = new HttpParams();
+
+
+         if (this.filterSchoolValue) params = params.set('schoolId', this.filterSchoolValue);
+  if (this.filterUserValue) params = params.set('userId', this.filterUserValue);
+  if (this.filterStatusValue) params = params.set('taskStatus', this.filterStatusValue);
+  if (this.filterLocationValue) params = params.set('location', this.filterLocationValue);
+    if (this.startDateValue) params = params.set('startDate', this.startDateValue);
+  if (this.endDateValue) params = params.set('endDate', this.endDateValue);
+
+
         this.dashboardService.getDashboardSummary(params).subscribe({
             next: (response) => {
                 if (response && response.success) {
@@ -359,72 +400,49 @@ export class CrmComponent {
             },
         });
     }
+filterSchool(event: any) {
+  console.log('***event***', event.value);
+  this.filterSchoolValue = event.value;
+  this.getDashboardView();
+}
 
-    filterSchool(event: any) {
-        console.log('***event***', event.value);
+filterUser(event: any) {
+  console.log('***event***', event.value);
+  this.filterUserValue = event.value;
+  this.getDashboardView();
+}
 
-        let params = new HttpParams();
+filterStatus(event: any) {
+  console.log('***event***', event.value);
+  this.filterStatusValue = event.value;
+  this.getDashboardView();
+}
 
-        params = params.set('schoolId', event.value);
+filterLocation(event: any) {
+  console.log('***event***', event.value);
+  this.filterLocationValue = event.value;
+  this.getDashboardView();
+}
 
-        this.getDashboardView(params);
-    }
+ filterDateRange() {
+  if (this.startDate && this.endDate) {
+    this.startDateValue = formatDate(this.startDate, 'yyyy-MM-dd', 'en-US');
+    this.endDateValue = formatDate(this.endDate, 'yyyy-MM-dd', 'en-US');
 
-    filterUser(event: any) {
-        console.log('***event***', event.value);
+    console.log('Start Date:', this.startDateValue);
+    console.log('End Date:', this.endDateValue);
 
-        let params = new HttpParams();
-
-        params = params.set('userId', event.value);
-        this.getDashboardView(params);
-    }
-
-    filterStatus(event: any) {
-        console.log('***event***', event.value);
-
-        let params = new HttpParams();
-
-        params = params.set('taskStatus', event.value);
-
-        this.getDashboardView(params);
-    }
-    filterLocation(event: any) {
-        console.log('***event***', event.value);
-
-        let params = new HttpParams();
-
-        params = params.set('location', event.value);
-
-        this.getDashboardView(params);
-    }
-    filterDateRange() {
-        if (this.startDate && this.endDate) {
-            const formattedStart = formatDate(
-                this.startDate,
-                'yyyy-MM-dd',
-                'en-US'
-            );
-            const formattedEnd = formatDate(
-                this.endDate,
-                'yyyy-MM-dd',
-                'en-US'
-            );
-
-            console.log('formattedStart', formattedStart);
-            console.log('formattedEnd', formattedEnd);
-
-            const params = new HttpParams()
-                .set('startDate', formattedStart)
-                .set('endDate', formattedEnd);
-
-            this.getDashboardView(params);
-        }
-    }
+    this.getDashboardView();
+  }
+}
 
     resetFilters() {
         this.startDate = null;
         this.endDate = null;
-        //    this.locationFilter = null;
+        // this.filterLocationValue='';
+        // this.filterStatusValue='';
+        // this.filterUserValue='';
+        // this.filterSchoolValue='';
         this.getDashboardView();
     }
 }

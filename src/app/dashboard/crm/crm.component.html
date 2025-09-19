@@ -1,4 +1,18 @@
+<ng-template #confirmDialog let-data>
+  <h1 mat-dialog-title class="confirm-title">{{ data.title }}</h1>
+  <div mat-dialog-content class="confirm-content">
+    <p>{{ data.message }}</p>
+  </div>
+  <div mat-dialog-actions class="confirm-actions">
+    <button mat-flat-button color="warn" class="confirm-btn" (click)="dialogRef.close(false)">No</button>
+    <button mat-flat-button color="primary" class="confirm-btn" (click)="dialogRef.close(true)" cdkFocusInitial>Yes</button>
+  </div>
+</ng-template>
+
+
+
 <mat-card class="daxa-card contacts-list-card mb-25 border-radius bg-white border-none d-block"
+
     [class.rtl-enabled]="themeService.isRTLEnabled()">
 
 
@@ -8,14 +22,34 @@
             <div class="row">
 
                 <div class="row" *ngIf="user_type == 'USER'"> 
+                                    <!-- <div class="row" >  -->
+
+                    <!-- <button
+                        *ngIf="!profile?.attendance?.checkin || profile?.attendance?.checkin && profile?.attendance?.checkout"
+                        mat-button class="daxa small-btn me-25" (click)="checkIn()">Check In</button>
+                    <button *ngIf="profile?.attendance?.checkin && !profile?.attendance?.checkout" mat-flat-button
+                        color="warn" (click)="checkOut()">Check Out</button> -->
+
+                          <div class="check-buttons">
                     <button
                         *ngIf="!profile?.attendance?.checkin || profile?.attendance?.checkin && profile?.attendance?.checkout"
-                        mat-flat-button class="daxa me-25" (click)="checkIn()">Check In</button>
+                        mat-flat-button color="primary" class="small-btn me-2"  (click)="openConfirmDialog('Check In', 'Are you sure you want to Check In?')"
+                        >Check In</button>
+
                     <button *ngIf="profile?.attendance?.checkin && !profile?.attendance?.checkout" mat-flat-button
-                        color="warn" (click)="checkOut()">Check Out</button>
+                        color="warn" class="small-btn" 
+                            (click)="openConfirmDialog('Check Out', 'Are you sure you want to Check Out?')">
+
+                        Check Out</button>
                 </div>
 
-<br><br>            <div class="row"> 
+                </div>
+
+                
+
+
+   <div class="row"> <br><br> </div>
+          <div class="row"> 
                 <mat-card-subtitle class="filter-container"
                     style="display: flex; flex-wrap: wrap; gap: 10px;">
 

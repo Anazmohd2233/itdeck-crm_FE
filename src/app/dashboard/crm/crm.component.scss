@@ -306,3 +306,54 @@
   gap: 25px; /* space between buttons */
   align-items: center;
 }
+
+.check-buttons {
+  display: flex;
+  justify-content: center; /* centers horizontally */
+  gap: 10px;               /* space between buttons */
+  width: 100%;
+}
+
+.small-btn {
+  min-width: 100px !important;
+  padding: 4px 12px !important;
+  font-size: 15px;
+}
+
+
+
+/* Dialog Title */
+.confirm-title {
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  color: #333;
+  padding-bottom: 8px;
+  margin-top: 8px;
+}
+
+/* Dialog Content */
+.confirm-content {
+  text-align: center;
+  font-size: 14px;
+  color: #555;
+  padding: 8px 24px;
+}
+
+/* Dialog Actions */
+.confirm-actions {
+  display: flex;
+  justify-content: center; /* Center buttons */
+  gap: 10px; /* Space between buttons */
+  padding: 12px 24px;
+}
+
+/* Buttons */
+.confirm-btn {
+  min-width: 80px; /* smaller width */
+  height: 36px; /* smaller height */
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 6px;
+  text-transform: none; /* Keep button text normal case */
+}

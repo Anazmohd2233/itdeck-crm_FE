@@ -50,11 +50,19 @@ export class SidebarComponent {
     ngOnInit(): void {
         if (isPlatformBrowser(this.platformId)) {
             this.user_type = localStorage.getItem('user_type');
+               window.addEventListener('resize', () => {
+    if (!this.isMobile() && this.isSidebarToggled) {
+      // make sure sidebar stays open on desktop
+      this.isSidebarToggled = true;
+    }
+  });
         }
           this.authService.loginSuccess$.subscribe(() => {
-    console.log('🔔🔔🔔🔔🔔🔔 Login detected in header  🔔🔔🔔🔔🔔');
+    console.log('🔔🔔🔔🔔🔔🔔 Login detected in sidebar  🔔🔔🔔🔔🔔');
     this.getProfile(); // call your important API
   });
+
+ 
     }
 
     // Burger Menu Toggleg
@@ -81,4 +89,17 @@ export class SidebarComponent {
             },
         });
     }
+
+    closeSidebarOnMobile() {
+  if (this.isMobile()) {
+    this.toggleService.toggle(); // ✅ same toggle as burger button
+  }
+}
+  isMobile(): boolean {
+    if (isPlatformBrowser(this.platformId)) {
+      return window.innerWidth <= 768;
+    }
+    return false; // default for server-side
+  }
+
 }
