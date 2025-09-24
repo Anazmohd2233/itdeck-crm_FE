@@ -87,6 +87,7 @@ export const routes: Routes = [
     {
         path: 'users',
         component: UsersPageComponent,
+         canActivate: [AuthGuard],
         children: [
             { path: '', component: UsersListComponent },
             { path: 'add-user', component: AddUserComponent },
