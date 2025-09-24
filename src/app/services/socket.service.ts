@@ -39,7 +39,7 @@ constructor() {
           console.log('Sent location:', lat, lng);
         });
       }
-    }, 15 * 1000); // every 15 sec
+}, 2 * 60 * 1000); // every 2 minutes
   }
 
   stopTracking(userId: string) {

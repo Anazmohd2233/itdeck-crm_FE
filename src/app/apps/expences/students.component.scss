@@ -401,11 +401,27 @@
 /* Min width 1200px to Max width 1399px */
 @media only screen and (min-width: 1200px) and (max-width: 1399px) {}
 
-/* Min width 1600px */
-@media only screen and (min-width: 1600px) {}
 
+/* Laptop/desktop: 3 across */
 .filter-container {
-  display: flex;
-  gap: 25px; /* space between buttons */
+  display: grid;
+  grid-template-columns: 1fr auto 1fr; /* date | clear | user */
   align-items: center;
+  gap: 12px;
+}
+
+/* Make mat fields behave nicely inside grid */
+.filter-container > * { min-width: 0; }
+.filter-container .mat-form-field { width: 100%; }
+
+/* Mobile: stack */
+@media (max-width: 767px) {
+  .filter-container {
+    grid-template-columns: 1fr;
+  }
+  /* optional: make the Clear button full-width for easier tap */
+  .filter-container .add-new-btn {
+    width: 80%;
+    justify-content: center;
+  }
 }

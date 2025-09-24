@@ -36,25 +36,34 @@
 
 
         </mat-card-title>
-        <mat-card-subtitle class="filter-container">
 
-            <mat-form-field appearance="fill" class="small-form-field">
+
+
+
+
+
+<mat-card-subtitle class="filter-container">
+  <mat-form-field appearance="fill" class="small-form-field">
                 <mat-label>Date</mat-label>
                 <input matInput [matDatepicker]="createdPicker" [(ngModel)]="createdDateFilter"
                     (dateChange)="filterCreatedDate($event)" placeholder="Date" />
                 <mat-datepicker-toggle matSuffix [for]="createdPicker"></mat-datepicker-toggle>
                 <mat-datepicker #createdPicker></mat-datepicker>
-            </mat-form-field>
+      
+    
+  </mat-form-field>
 
-            <button mat-button class="add-new-btn" color="primary" (click)="resetFilters()"
-                style="height: 36px; padding: 0 10px; min-width: auto; margin-right: 15px;">
-                <i class="material-symbols-outlined" style="font-size: 14px;"> backspace </i>
-                Clear
-            </button>
-            <div *ngIf="user_type == 'ADMIN'">
 
-                <mat-form-field appearance="fill" class="small-form-field">
-                    <mat-label>User</mat-label>
+  
+
+  <button mat-button class="add-new-btn" color="primary" (click)="resetFilters()">
+    <i class="material-symbols-outlined">backspace</i>
+    Clear
+  </button>
+
+  <div *ngIf="user_type == 'ADMIN'">
+    <mat-form-field appearance="fill" class="small-form-field">
+          <mat-label>User</mat-label>
                     <mat-select (selectionChange)="filterUser($event)">
                         <mat-form-field appearance="outline" class="w-80">
 
@@ -71,14 +80,29 @@
                             {{ s.name }}
                         </mat-option>
                     </mat-select>
-                </mat-form-field>
-            </div>
+    </mat-form-field>
+  </div>
+</mat-card-subtitle>
 
 
-            <!-- <a mat-button class="add-new-btn m-0" [routerLink]="'/create-school'">
-                + Add School
-            </a> -->
-        </mat-card-subtitle>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
     </mat-card-header>
     <mat-card-content>
         <div class="map-container">

@@ -4,7 +4,7 @@
         Expences </h5>
     <ol class="breadcrumb list-unstyled mt-0 mb-0 pl-0">
         <li class="breadcrumb-item position-relative">
-            <a routerLink="/" class="d-inline-block position-relative">
+            <a routerLink="/crm" class="d-inline-block position-relative">
                 <i class="ri-home-8-line"></i>
                 Dashboard
             </a>
@@ -36,25 +36,29 @@
 
 
         </mat-card-title>
-        <mat-card-subtitle class="filter-container">
 
-            <mat-form-field appearance="fill" class="small-form-field">
+<mat-card-subtitle class="filter-container">
+  <mat-form-field appearance="fill" class="small-form-field">
                 <mat-label>Date</mat-label>
                 <input matInput [matDatepicker]="createdPicker" [(ngModel)]="createdDateFilter"
                     (dateChange)="filterCreatedDate($event)" placeholder="Date" />
                 <mat-datepicker-toggle matSuffix [for]="createdPicker"></mat-datepicker-toggle>
                 <mat-datepicker #createdPicker></mat-datepicker>
-            </mat-form-field>
-             <button mat-button class="add-new-btn" color="primary" (click)="resetFilters()"
-                style="height: 36px; padding: 0 10px; min-width: auto; margin-right: 15px;">
-                <i class="material-symbols-outlined" style="font-size: 14px;"> backspace </i>
-                Clear
-            </button>
+      
+    
+  </mat-form-field>
 
-            <div *ngIf="user_type == 'ADMIN'">
 
-                <mat-form-field appearance="fill" class="small-form-field">
-                    <mat-label>User</mat-label>
+  
+
+  <button mat-button class="add-new-btn" color="primary" (click)="resetFilters()">
+    <i class="material-symbols-outlined">backspace</i>
+    Clear
+  </button>
+
+  <div *ngIf="user_type == 'ADMIN'">
+    <mat-form-field appearance="fill" class="small-form-field">
+          <mat-label>User</mat-label>
                     <mat-select (selectionChange)="filterUser($event)">
                         <mat-form-field appearance="outline" class="w-80">
 
@@ -71,16 +75,9 @@
                             {{ s.name }}
                         </mat-option>
                     </mat-select>
-                </mat-form-field>
-            </div>
-
-
-
-            <a mat-button class="add-new-btn m-0" (click)="openDialog(taskDialog)">
-                + Add Expence
-            </a>
-
-        </mat-card-subtitle>
+    </mat-form-field>
+  </div>
+</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
         <mat-card class="daxa-card contacts-list-card mb-25 border-radius bg-white border-none d-block"
@@ -201,6 +198,7 @@
                             <!-- Expanded Detail Row -->
                             <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row">
                             </tr>
+
 
 
 
