@@ -3,21 +3,20 @@ import { Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 
 export const AuthGuard = () => {
-  const platformId = inject(PLATFORM_ID);
-  const router = inject(Router);
+    const platformId = inject(PLATFORM_ID);
+    const router = inject(Router);
 
-  let token: string | null = null;
+    let token: string | null = null;
 
- 
-  if (isPlatformBrowser(platformId)) {
-    token = localStorage.getItem('token');
-  }
+    if (isPlatformBrowser(platformId)) {
+        token = localStorage.getItem('token');
+    }
 
-  if (!token) {
+    if (!token) {
+        console.log('No token found, redirecting to login');
+        router.navigate(['/authentication']);
+        return false;
+    }
 
-    router.navigate(['/authentication']);
-    return false;
-  }
-
-  return true;
+    return true;
 };

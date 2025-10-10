@@ -25,6 +25,7 @@ import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 import { SchoolService } from '../../../services/school.service';
 import { MatIcon } from '@angular/material/icon';
+import { Districts } from '../../../services/enums';
 
 @Component({
     selector: 'app-add-user',
@@ -59,6 +60,7 @@ export class AddUserComponent {
     page: number = 1;
     location: any;
     searchFieldLocation: string = '';
+    district = Object.values(Districts);
 
     // File Uploader
     public multiple: boolean = false;
