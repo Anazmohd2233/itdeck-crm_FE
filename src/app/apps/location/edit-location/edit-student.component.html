@@ -14,7 +14,7 @@
             CRM
         </li>
         <li class="breadcrumb-item position-relative">
-            {{ editMode ? 'Edit Location' : 'Create Location' }}
+            {{ editMode ? 'Edit' : 'Create' }}
         </li>
     </ol>
 </div>
@@ -73,7 +73,7 @@
                 <button mat-button type="submit">
                     <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm me-1" role="status"
                         aria-hidden="true"></span>
-                    {{ editMode ? 'Edit Location' : 'Create Location' }}
+                    {{ editMode ? 'Edit' : 'Create' }}
 
                 </button>
 
