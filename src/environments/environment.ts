@@ -2,9 +2,8 @@ export const environment = {
     production: false,
 
     //Backend url
-    // apiBaseUrl: 'http://localhost:5007',
+    // apiBaseUrl: 'http://localhost:5009',
     apiBaseUrl: 'https://catalyst.nestcrm.app',
-        // apiBaseUrl: 'https://demo.nestcrm.app',
 
 
     //Domain name

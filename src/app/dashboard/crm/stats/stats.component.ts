@@ -6,6 +6,7 @@ import { NewUsersComponent } from './new-users/new-users.component';
 import { ActiveUsersComponent } from './active-users/active-users.component';
 import { LeadConversationComponent } from './lead-conversation/lead-conversation.component';
 import { RevenueGrowthComponent } from './revenue-growth/revenue-growth.component';
+import { TotalDataCollectedComponent } from './total-data-collected/total-data.component';
 
 @Component({
     selector: 'app-stats',
@@ -17,6 +18,7 @@ import { RevenueGrowthComponent } from './revenue-growth/revenue-growth.componen
         ActiveUsersComponent,
         LeadConversationComponent,
         RevenueGrowthComponent,
+        TotalDataCollectedComponent
     ],
     templateUrl: './stats.component.html',
     styleUrl: './stats.component.scss',

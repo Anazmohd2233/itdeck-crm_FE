@@ -1,29 +1,44 @@
 <mat-card class="daxa-card stats-card mb-25 border-radius bg-white border-none d-block">
     <mat-card-content>
         <div class="row">
-            <div class="col-md-6 col-xxxl-3">
+            <div class="col-md-6 col-xl-4">
 
                 <!-- New Users -->
                 <app-new-users [data]="total" />
 
             </div>
-            <div class="col-md-6 col-xxxl-3">
+            <div class="col-md-6 col-xl-4">
 
                 <!-- Active Users -->
                 <app-active-users [data]="open" />
 
             </div>
-            <div class="col-md-6 col-xxxl-3">
+            <div class="col-md-6 col-xl-4">
 
                 <!-- Revenue Growth -->
                 <app-revenue-growth [data]="ongoing" />
 
             </div>
-            <div class="col-md-6 col-xxxl-3">
+            <div class="col-md-6 col-xl-4">
                 <!-- <app-revenue-growth [data]="ongoing" /> -->
 
                 <!-- Lead Conversation -->
                 <app-lead-conversation [data]="completed" />
+
+            </div>
+
+            <div class="col-md-6 col-xl-4">
+                <!-- <app-revenue-growth [data]="ongoing" /> -->
+
+                <!-- Lead Conversation -->
+                <total-data-collected [data]="completed" [ />
+
+            </div>
+            <div class="col-md-6 col-xl-4">
+                <!-- <app-revenue-growth [data]="ongoing" /> -->
+
+                <!-- Lead Conversation -->
+                <total-data-collected [data]="completed"/>
 
             </div>
         </div>
