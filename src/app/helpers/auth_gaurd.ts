@@ -6,14 +6,16 @@ export const AuthGuard = () => {
     const platformId = inject(PLATFORM_ID);
     const router = inject(Router);
 
-    // Skip server-side redirects so SSR doesn't flicker to login
-    if (!isPlatformBrowser(platformId)) {
-        return true;
+    let token: string | null = null;
+
+    if (isPlatformBrowser(platformId)) {
+        token = localStorage.getItem('token');
     }
 
-    const token = localStorage.getItem('token');
     if (!token) {
-        return router.createUrlTree(['/authentication']);
+        console.log('No token found, redirecting to login');
+        router.navigate(['/authentication']);
+        return false;
     }
 
     return true;
