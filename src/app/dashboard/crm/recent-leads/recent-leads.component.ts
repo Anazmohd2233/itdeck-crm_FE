@@ -101,22 +101,17 @@ filterEndDate: any;
     }
 
     ngOnInit(): void {
-        if (!this.isBrowser) {
-            return;
+        if (this.isBrowser) {
+            this.user_type = localStorage.getItem('user_type');
         }
 
-        this.user_type = localStorage.getItem('user_type');
-
         this.getDashboardView();
-        this.getSchoolList();
+              this.getSchoolList();
         this.getUserList();
         this.getLocationList();
     }
 
   ngAfterViewInit() {
-        if (!this.isBrowser) {
-            return;
-        }
         // listen to paginator changes
         console.log('**********page changed**********');
         this.paginator.page.subscribe((event) => {

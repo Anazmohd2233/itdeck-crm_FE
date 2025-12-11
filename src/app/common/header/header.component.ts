@@ -70,11 +70,10 @@ export class HeaderComponent {
 
     ngOnInit(): void {
         console.log('************Header loaded*************')
-        if (!isPlatformBrowser(this.platformId)) {
-            return;
+        if (isPlatformBrowser(this.platformId)) {
+            this.user_type = localStorage.getItem('user_type');
         }
-        this.user_type = localStorage.getItem('user_type');
-        this.getProfile(); // call once on app load
+         this.getProfile(); // call once on app load
 
   
   this.authService.loginSuccess$.subscribe(() => {
