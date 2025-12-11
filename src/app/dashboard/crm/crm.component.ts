@@ -85,6 +85,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
     styleUrl: './crm.component.scss',
 })
 export class CrmComponent {
+    private isBrowser: boolean;
     dashboardData: any;
     school: any;
     users: any;
@@ -126,10 +127,14 @@ export class CrmComponent {
         private toastr: ToastrService,
         private authService: AuthService,
         private dialog: MatDialog
-    ) {}
+    ) {
+        this.isBrowser = isPlatformBrowser(this.platformId);
+    }
 
     ngOnInit(): void {
-        this.user_type = localStorage.getItem('user_type');
+        if (this.isBrowser) {
+            this.user_type = localStorage.getItem('user_type');
+        }
 
         this.getProfile();
 

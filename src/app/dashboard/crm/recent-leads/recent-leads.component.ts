@@ -1,5 +1,5 @@
-import { formatDate, NgFor, NgIf } from '@angular/common';
-import { Component, ViewChild } from '@angular/core';
+import { formatDate, NgFor, NgIf, isPlatformBrowser } from '@angular/common';
+import { Component, Inject, PLATFORM_ID, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
@@ -50,6 +50,7 @@ import { MatIconModule } from '@angular/material/icon';
     styleUrl: './recent-leads.component.scss',
 })
 export class RecentLeadsComponent {
+    private isBrowser: boolean;
     ELEMENT_DATA: PeriodicElement[] = [];
     taskData: any;
     startDate: Date | null = null;
@@ -93,11 +94,16 @@ filterEndDate: any;
         public themeService: CustomizerSettingsService,
         private dashboardService: DashboardService,
         private schoolService: SchoolService,
-        private usersService: UsersService
-    ) {}
+        private usersService: UsersService,
+        @Inject(PLATFORM_ID) private platformId: Object
+    ) {
+        this.isBrowser = isPlatformBrowser(this.platformId);
+    }
 
     ngOnInit(): void {
-                this.user_type = localStorage.getItem('user_type');
+        if (this.isBrowser) {
+            this.user_type = localStorage.getItem('user_type');
+        }
 
         this.getDashboardView();
               this.getSchoolList();
