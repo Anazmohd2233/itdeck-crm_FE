@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { RevenueGrowthService } from './revenue-growth.service';
 import { CustomizerSettingsService } from '../../../../customizer-settings/customizer-settings.service';
 
 @Component({
@@ -10,16 +9,11 @@ import { CustomizerSettingsService } from '../../../../customizer-settings/custo
 })
 export class RevenueGrowthComponent {
 
-        @Input() data: any;
+    @Input() data: any;
 
 
     constructor(
-        public themeService: CustomizerSettingsService,
-        private revenueGrowthService: RevenueGrowthService
+        public themeService: CustomizerSettingsService
     ) {}
-
-    ngOnInit(): void {
-        this.revenueGrowthService.loadChart();
-    }
 
 }

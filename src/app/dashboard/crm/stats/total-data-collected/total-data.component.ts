@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { TotalDataCollectedService } from './total-data.service';
 import { CustomizerSettingsService } from '../../../../customizer-settings/customizer-settings.service';
 
 @Component({
@@ -10,17 +9,11 @@ import { CustomizerSettingsService } from '../../../../customizer-settings/custo
 })
 export class TotalDataCollectedComponent {
 
-        @Input() data: any;
-        @Input() chartId = 'crm_total_data_collected_chart';
+    @Input() data: any;
 
 
     constructor(
-        public themeService: CustomizerSettingsService,
-        private totalDataCollectedService: TotalDataCollectedService
+        public themeService: CustomizerSettingsService
     ) {}
-
-    ngOnInit(): void {
-        this.totalDataCollectedService.loadChart(this.chartId);
-    }
 
 }

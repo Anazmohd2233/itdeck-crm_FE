@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { LeadConversationService } from './lead-conversation.service';
 import { CustomizerSettingsService } from '../../../../customizer-settings/customizer-settings.service';
 
 @Component({
@@ -10,16 +9,11 @@ import { CustomizerSettingsService } from '../../../../customizer-settings/custo
 })
 export class LeadConversationComponent {
 
-        @Input() data: any;
+    @Input() data: any;
 
 
     constructor(
-        public themeService: CustomizerSettingsService,
-        private leadConversationService: LeadConversationService
+        public themeService: CustomizerSettingsService
     ) {}
-
-    ngOnInit(): void {
-        this.leadConversationService.loadChart();
-    }
 
 }

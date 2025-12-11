@@ -1,7 +1,5 @@
 .stat-item {
-    padding-bottom: 50px;
     border-color: #dae0ec;
-    border-right: 1px solid #dae0ec;
 
     h5 {
         margin-bottom: 10px;
@@ -13,19 +11,19 @@
     .chart {
         top: 50%;
         right: 15px;
-        max-width: 150px;
-        text-align: right;
-        margin-top: -30px;
+        width: 64px;
+        height: 64px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 16px;
+        margin-top: 0;
         position: absolute;
         transform: translateY(-50%);
-
-        .title {
-            font-size: 14px;
-            margin: {
-                top: -5px;
-                right: 10px;
-            };
-        }
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+        background: #fff4e5;
+        color: #f48a24;
+        font-size: 28px;
     }
     &.component-dark-theme {
         border-color: rgba(255, 255, 255, 0.09);
@@ -39,14 +37,6 @@
         .chart {
             left: 15px;
             right: auto;
-            text-align: left;
-    
-            .title {
-                margin: {
-                    left: 10px;
-                    right: 0;
-                };
-            }
         }
     }
 }
@@ -77,23 +67,15 @@
         .chart {
             top: 0;
             right: 0;
-            max-width: 100%;
-            text-align: left;
+            width: 56px;
+            height: 56px;
+            text-align: center;
             position: relative;
             transform: translateY(0);
             margin: {
-                top: 0;
-                bottom: -30px;
+                top: 10px;
+                bottom: 0;
             };
-            .title {
-                left: 0;
-                top: 20px;
-                position: absolute;
-                margin: {
-                    top: 0;
-                    right: 0;
-                };
-            }
         }
         &.component-dark-theme {
             border-color: rgba(255, 255, 255, 0.09);
@@ -105,15 +87,6 @@
             .chart {
                 left: 0;
                 right: auto;
-                text-align: right;
-                
-                .title {
-                    left: auto;
-                    right: 0;
-                    margin: {
-                        left: 0;
-                    };
-                }
             }
         }
     }
@@ -130,11 +103,7 @@
         padding-bottom: 30px;
         
         .chart {
-            margin-top: -35px;
-        
-            .title {
-                margin-top: -10px;
-            }
+            margin-top: 0;
         }
     }
 

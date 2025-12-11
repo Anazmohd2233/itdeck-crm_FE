@@ -11,32 +11,24 @@
     .chart {
         top: 50%;
         right: 15px;
-        max-width: 150px;
-        text-align: right;
-        margin-top: -12px;
+        width: 64px;
+        height: 64px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 16px;
+        margin-top: 0;
         position: absolute;
         transform: translateY(-50%);
-
-        .title {
-            font-size: 14px;
-            margin: {
-                top: -5px;
-                right: 10px;
-            };
-        }
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+        background: #e6f2ff;
+        color: #0f79f1;
+        font-size: 28px;
     }
     &.rtl-enabled {
         .chart {
             left: 15px;
             right: auto;
-            text-align: left;
-    
-            .title {
-                margin: {
-                    right: 0;
-                    left: 10px;
-                };
-            }
         }
     }
 }
@@ -58,23 +50,15 @@
         .chart {
             top: 0;
             right: 0;
-            max-width: 100%;
-            text-align: left;
+            width: 56px;
+            height: 56px;
+            text-align: center;
             position: relative;
             transform: translateY(0);
             margin: {
-                top: 15px;
-                bottom: -30px;
+                top: 10px;
+                bottom: 0;
             };
-            .title {
-                top: 0;
-                left: 0;
-                position: absolute;
-                margin: {
-                    top: 0;
-                    right: 0;
-                };
-            }
         }
         &.component-dark-theme {
             border-color: rgba(255, 255, 255, 0.09);
@@ -84,14 +68,6 @@
                 left: 0;
                 right: auto;
                 text-align: right;
-                
-                .title {
-                    left: auto;
-                    right: 0;
-                    margin: {
-                        left: 0;
-                    };
-                }
             }
         }
     }
@@ -106,11 +82,7 @@
 
     .stat-item {
         .chart {
-            margin-top: -13px;
-        
-            .title {
-                margin-top: -10px;
-            }
+            margin-top: 0;
         }
     }
 

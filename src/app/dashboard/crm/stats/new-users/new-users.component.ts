@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { NewUsersService } from './new-users.service';
 import { CustomizerSettingsService } from '../../../../customizer-settings/customizer-settings.service';
 
 @Component({
@@ -10,16 +9,11 @@ import { CustomizerSettingsService } from '../../../../customizer-settings/custo
 })
 export class NewUsersComponent {
 
-        @Input() data: any;
+    @Input() data: any;
 
 
     constructor(
-        public themeService: CustomizerSettingsService,
-        private newUsersService: NewUsersService
+        public themeService: CustomizerSettingsService
     ) {}
-
-    ngOnInit(): void {
-        this.newUsersService.loadChart(this.data);
-    }
 
 }
