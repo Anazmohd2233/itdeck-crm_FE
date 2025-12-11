@@ -132,9 +132,11 @@ export class CrmComponent {
     }
 
     ngOnInit(): void {
-        if (this.isBrowser) {
-            this.user_type = localStorage.getItem('user_type');
+        if (!this.isBrowser) {
+            return;
         }
+
+        this.user_type = localStorage.getItem('user_type');
 
         this.getProfile();
 
