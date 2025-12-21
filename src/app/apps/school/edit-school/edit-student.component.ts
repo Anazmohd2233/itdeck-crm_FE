@@ -144,7 +144,7 @@ export class AddSchoolComponent implements OnInit {
         this.studentForm = this.formBuilder.group({
             school_name: ['', [Validators.required]],
             location: ['', [Validators.required]],
-            strength: ['', [Validators.required]],
+            strength: [''],
             representative_name: [''],
             representative_role: [''],
             representative_number: [''],
