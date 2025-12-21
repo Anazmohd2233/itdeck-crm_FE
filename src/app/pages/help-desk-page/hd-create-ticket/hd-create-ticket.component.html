@@ -364,12 +364,16 @@
 
 
                         <mat-card-content class="example-badges mt-15 mb-25">
-                            <span class="badge text-bg-primary me-2" *ngIf="taskData?.school_visited">School
-                                visited</span>
-                            <span class="badge text-bg-success me-2" *ngIf="taskData?.class_conducted">Class
-                                conducted</span>
-                            <span class="badge text-bg-warning" *ngIf="taskData?.data_collected">Data
-                                collected</span>
+                            <span class="badge text-bg-primary me-2" *ngIf="taskData?.need_Followup">Need Follow Up
+                                </span>
+                            <span class="badge text-bg-danger me-2" *ngIf="taskData?.revisit">
+                                Revisit</span>
+                            <span class="badge text-bg-success" *ngIf="taskData?.completed">Completed
+                                </span>
+                            <span class="badge text-bg-warning" *ngIf="taskData?.confirmed">
+                                Confirmed</span>
+                            <span class="badge text-bg-info" *ngIf="taskData?.intrested">Interested
+                                </span>
                         </mat-card-content>
                     </div>
 
@@ -582,13 +586,3 @@
         <button mat-button mat-dialog-close>Cancel</button>
     </mat-dialog-actions>
 </ng-template>
-
-
-
-
-
-
-
-
-
-

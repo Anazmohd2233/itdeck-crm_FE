@@ -10,9 +10,11 @@ export enum LeadStatus {
 }
 
 export enum TaskActivity {
-  SCHOOL_VISTED = "SCHOOL_VISTED",
-  CLASS_CONDUCTED = "CLASS_CONDUCTED",
-    LEAD_COLLECTED = "LEAD_COLLECTED",
+    Intrested = "Intrested",
+  Confirmed = "Confirmed",
+  Need_Followup = "Need_Followup",
+  Revisit = "Revisit",
+  Completed = "Completed",
 
 
 
