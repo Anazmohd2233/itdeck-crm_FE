@@ -145,6 +145,9 @@ export class AddSchoolComponent implements OnInit {
             school_name: ['', [Validators.required]],
             location: ['', [Validators.required]],
             strength: ['', [Validators.required]],
+            representative_name: [''],
+            representative_role: [''],
+            representative_number: [''],
             type: [''],
             district: [''],
             status: [''],
@@ -164,6 +167,9 @@ export class AddSchoolComponent implements OnInit {
                         school_name: student.school_name || '',
                         location: student?.location?.id || '',
                         strength: student.strength || '',
+                        representative_name: student.representative_name || '',
+                        representative_role: student.representative_role || '',
+                        representative_number: student.representative_number || '',
                         district: student.district || '',
 
                         type: student.type || '',
@@ -194,7 +200,19 @@ export class AddSchoolComponent implements OnInit {
             formData.append('location', this.studentForm.value.location);
             formData.append('type', this.studentForm.value.type);
             formData.append('strength', this.studentForm.value.strength);
-                        formData.append('district', this.studentForm.value.district);
+            formData.append(
+                'representative_name',
+                this.studentForm.value.representative_name
+            );
+            formData.append(
+                'representative_role',
+                this.studentForm.value.representative_role
+            );
+            formData.append(
+                'representative_number',
+                this.studentForm.value.representative_number
+            );
+            formData.append('district', this.studentForm.value.district);
 
 
             if (this.editMode) {

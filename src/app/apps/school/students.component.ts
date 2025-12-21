@@ -67,6 +67,8 @@ export class SchoolComponent {
         // 'select',
 
         'school_name',
+        'representative_name',
+        'representative_number',
         'location',
         'district',
 
@@ -182,6 +184,8 @@ export class SchoolComponent {
                     this.ELEMENT_DATA = location.map((u: any) => ({
                         id: u.id,
                         school_name: u.school_name || 'N/A',
+                        representative_name: u.representative_name || 'N/A',
+                        representative_number: u.representative_number || 'N/A',
                         location: u?.location?.name || 'N/A',
                         district: u?.district || 'N/A',
 
@@ -268,6 +272,8 @@ export class SchoolComponent {
 export interface PeriodicElement {
     id: any;
     school_name: any;
+    representative_name: any;
+    representative_number: any;
     location: any;
     district: any;
 

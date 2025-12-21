@@ -122,6 +122,22 @@
                             {{element.school_name}}
                         </td>
                     </ng-container>
+                    <ng-container matColumnDef="representative_name">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Representative Name
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.representative_name}}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="representative_number">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Representative Number
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.representative_number}}
+                        </td>
+                    </ng-container>
 
 
 
