@@ -217,6 +217,27 @@
             </mat-form-field>
 
 
+                <mat-form-field appearance="fill" class="small-form-field">
+                <mat-label>Activity</mat-label>
+                <mat-select (selectionChange)="filterActivity($event)">
+                    <mat-option value="">All</mat-option>
+                   
+                    <mat-option value="intrested">Intrested</mat-option>
+
+                    <mat-option value="confirmed">Confirmed</mat-option>
+
+                    <mat-option value="need_Followup">Need_Followup</mat-option>
+
+                    <mat-option value="revisit">Revisit</mat-option>
+                    <mat-option value="completed">Completed</mat-option>
+
+
+
+
+                </mat-select>
+            </mat-form-field>
+
+
 
             <a mat-button class="add-new-btn" routerLink="/task/create-task">
                 + Add Task

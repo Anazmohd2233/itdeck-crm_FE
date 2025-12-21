@@ -102,6 +102,8 @@ export class HdTicketsComponent implements OnInit {
     filterUserValue: any;
     filterLocationValue: any;
     filterStatusValue: any;
+        filterActivityValue: any;
+
 
     constructor(
         public themeService: CustomizerSettingsService,
@@ -195,6 +197,9 @@ export class HdTicketsComponent implements OnInit {
             params = params.set('location', this.filterLocationValue);
         if (this.filterStatusValue)
             params = params.set('status', this.filterStatusValue);
+
+         if (this.filterActivityValue)
+            params = params.set('activity', this.filterActivityValue);
         this.isLoading = true;
         this.taskService.getTasks(this.page, params).subscribe({
             next: (response: any) => {
@@ -299,6 +304,11 @@ export class HdTicketsComponent implements OnInit {
 
     filterStatus(event: any) {
         this.filterStatusValue = event.value;
+        this.loadTasks();
+    }
+
+      filterActivity(event: any) {
+        this.filterActivityValue = event.value;
         this.loadTasks();
     }
 
