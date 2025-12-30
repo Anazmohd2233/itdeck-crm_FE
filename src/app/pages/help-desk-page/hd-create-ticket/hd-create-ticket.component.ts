@@ -5,6 +5,7 @@ import {
     PLATFORM_ID,
     TemplateRef,
     ViewChild,
+    ElementRef,
 } from '@angular/core';
 import { CommonModule, isPlatformBrowser, NgIf } from '@angular/common';
 import {
@@ -208,6 +209,9 @@ export class HdCreateTicketComponent {
 
     @ViewChild(GoogleMap, { static: false }) map!: GoogleMap;
     @ViewChild('checkoutDialog') checkoutDialog!: TemplateRef<any>;
+    @ViewChild('checkoutImageInput') checkoutImageInput!: ElementRef<HTMLInputElement>;
+
+    checkoutImagePreview: string | null = null;
 
     zoom = 14;
     center: google.maps.LatLngLiteral = { lat: 10.0, lng: 76.0 }; // default
@@ -678,11 +682,11 @@ export class HdCreateTicketComponent {
         this.dialogRef.afterClosed().subscribe((result) => {
             if (result) {
                 if (title === 'Check In') {
-                    console.log('Check In confirmed');
-                    // TODO: perform actual check-in action here
+                    // confirm and perform check-in
+                    this.submitCheck('CHECKIN');
                 } else if (title === 'Check Out') {
-                    console.log('Check Out confirmed');
-                    // TODO: perform actual check-out action here
+                    // confirm check-out (no collected_data provided here)
+                    this.submitCheck('CHECKOUT');
                 }
             }
         });
@@ -711,12 +715,123 @@ export class HdCreateTicketComponent {
     onCheckoutImageChange(event: Event): void {
         const input = event.target as HTMLInputElement;
         if (input.files && input.files.length > 0) {
-            this.checkoutImageFile = input.files[0];
-            this.checkoutForm.patchValue({ image: this.checkoutImageFile });
+            const file = input.files[0];
+            this.checkoutImageFile = file;
+            this.checkoutForm.patchValue({ image: file });
+
+            const reader = new FileReader();
+            reader.onload = () => {
+                this.checkoutImagePreview = reader.result as string;
+            };
+            reader.readAsDataURL(file);
         } else {
             this.checkoutImageFile = null;
             this.checkoutForm.patchValue({ image: null });
+            this.checkoutImagePreview = null;
         }
+    }
+
+    removeCheckoutImage(): void {
+        this.checkoutImageFile = null;
+        this.checkoutImagePreview = null;
+        this.checkoutForm.patchValue({ image: null });
+        if (this.checkoutImageInput && this.checkoutImageInput.nativeElement) {
+            this.checkoutImageInput.nativeElement.value = '';
+        }
+    }
+
+    checkinSubmitting: boolean = false;
+
+    getCurrentPosition(timeout = 5000): Promise<GeolocationPosition | null> {
+        return new Promise((resolve) => {
+            if (!isPlatformBrowser(this.platformId) || !('geolocation' in navigator)) {
+                resolve(null);
+                return;
+            }
+
+            const options: PositionOptions = {
+                enableHighAccuracy: true,
+                timeout,
+                maximumAge: 0,
+            };
+
+            navigator.geolocation.getCurrentPosition(
+                (pos) => resolve(pos),
+                (err) => {
+                    console.warn('Geolocation error:', err);
+                    resolve(null);
+                },
+                options
+            );
+        });
+    }
+
+    async submitCheck(type: 'CHECKIN' | 'CHECKOUT', collected_data?: string) {
+        if (!this.taskId) {
+            this.toastr.error('Missing task id. Cannot perform check-in/out.', 'Error');
+            return;
+        }
+
+        this.checkinSubmitting = true;
+
+        let latitude: number | null = null;
+        let longitude: number | null = null;
+
+        try {
+            const pos = await this.getCurrentPosition(5000);
+            if (pos) {
+                latitude = pos.coords.latitude;
+                longitude = pos.coords.longitude;
+            }
+        } catch (err) {
+            console.warn('Error fetching location:', err);
+        }
+
+        const fd = new FormData();
+        fd.append('type', type);
+        fd.append('task_id', String(this.taskId));
+        if (latitude !== null) fd.append('latitude', String(latitude));
+        if (longitude !== null) fd.append('longitude', String(longitude));
+        if (collected_data) fd.append('collected_data', collected_data);
+
+        // attach image only when present
+        if (this.checkoutImageFile) {
+            fd.append('image', this.checkoutImageFile, this.checkoutImageFile.name);
+        }
+
+        this.taskService.createTaskCheckin(fd).subscribe({
+            next: (response) => {
+                if (response && response.success) {
+                    this.toastr.success(response.message || 'Saved.', 'Success');
+                    if (type === 'CHECKOUT' && this.dialogRefCheckout) {
+                        this.dialogRefCheckout.close();
+                    }
+                    // close confirm dialog if open
+                    if (this.dialogRef) this.dialogRef.close();
+
+                    // reset checkout form on success
+                    this.resetCheckoutForm();
+                } else {
+                    this.toastr.error(response?.message || 'Failed to save.', 'Error');
+                }
+            },
+            error: (err) => {
+                console.error('Checkin API error:', err);
+                this.toastr.error(err?.message || 'Network or server error', 'Error');
+            },
+            complete: () => {
+                this.checkinSubmitting = false;
+            },
+        });
+    }
+
+    resetCheckoutForm(): void {
+        try {
+            this.checkoutForm.reset({ collected_data: '', image: null });
+        } catch (err) {
+            // ignore if form not initialized
+        }
+        this.removeCheckoutImage();
     }
 
     submitCheckout(): void {
@@ -724,11 +839,10 @@ export class HdCreateTicketComponent {
             this.toastr.error('Please fill required fields', 'Error');
             return;
         }
-        console.log('checkout clicked');
-        // TODO: perform checkout action (API call) if needed
-        if (this.dialogRefCheckout) {
-            this.dialogRefCheckout.close();
-        }
+
+        const collected = this.checkoutForm.get('collected_data')?.value || '';
+        // reuse submitCheck logic for checkout
+        this.submitCheck('CHECKOUT', collected);
     }
 
     onCheckin(): void {

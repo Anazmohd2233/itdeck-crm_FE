@@ -62,6 +62,12 @@ export class TaskService {
         return this.http.post<any>(apiUrl, formData);
     }
 
+    /** Create task checkin/check-out (supports optional image upload) */
+    createTaskCheckin(formData: any): Observable<any> {
+        const apiUrl = `${this.apiUrl}/admin/task/checkin`;
+        return this.http.post<any>(apiUrl, formData);
+    }
+
         updateAttendence(formData: any): Observable<any> {
         const apiUrl = `${this.apiUrl}/admin/expence/updateAttendence`;
         return this.http.patch<any>(apiUrl, formData);

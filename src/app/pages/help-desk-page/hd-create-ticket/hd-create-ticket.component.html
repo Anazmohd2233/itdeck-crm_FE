@@ -5,16 +5,16 @@
         {{ editMode ? 'Edit Task' : 'Create Task' }}
     </h5>
 
-   <div class="d-flex align-items-center ms-3" style="gap:8px;">
+    <div class="d-flex align-items-center ms-3" style="gap:8px;">
         <button mat-raised-button class="success-btn me-2" type="button" (click)="onCheckin()">Checkin</button>
-           <button mat-raised-button class="warn-btn" type="button" (click)="openCheckoutDialog()">Checkout</button>
+        <button mat-raised-button class="warn-btn" type="button" (click)="openCheckoutDialog()">Checkout</button>
 
-        </div>
-    
-
+    </div>
 
 
-     
+
+
+
 
     <!-- <mat-slide-toggle 
   *ngIf="editMode"
@@ -376,15 +376,15 @@
 
                         <mat-card-content class="example-badges mt-15 mb-25">
                             <span class="badge text-bg-primary me-2" *ngIf="taskData?.need_Followup">Need Follow Up
-                                </span>
+                            </span>
                             <span class="badge text-bg-danger me-2" *ngIf="taskData?.revisit">
                                 Revisit</span>
                             <span class="badge text-bg-success" *ngIf="taskData?.completed">Completed
-                                </span>
+                            </span>
                             <span class="badge text-bg-warning" *ngIf="taskData?.confirmed">
                                 Confirmed</span>
                             <span class="badge text-bg-info" *ngIf="taskData?.intrested">Interested
-                                </span>
+                            </span>
                         </mat-card-content>
                     </div>
 
@@ -413,7 +413,7 @@
                     <span>Add Student</span>
                 </button> -->
 
-                     <!-- <button mat-button type="button" *ngIf="editMode">
+                <!-- <button mat-button type="button" *ngIf="editMode">
 
                     <span>Add Log</span>
                 </button> -->
@@ -604,37 +604,61 @@
 </ng-template>
 
 <ng-template #checkoutDialog>
-  <h2 mat-dialog-title>Checkout</h2>
-  <mat-dialog-content>
-    <form [formGroup]="checkoutForm" (ngSubmit)="submitCheckout()">
-      <mat-form-field class="w-100">
-        <mat-label>Collected Data</mat-label>
-        <textarea matInput formControlName="collected_data" rows="4" placeholder="Enter collected data"></textarea>
-        <mat-error *ngIf="checkoutForm.get('collected_data')?.invalid && checkoutForm.get('collected_data')?.touched">
-          Collected data is required
-        </mat-error>
-      </mat-form-field>
+    <h2 mat-dialog-title>Checkout</h2>
+    <mat-dialog-content>
+        <form [formGroup]="checkoutForm" (ngSubmit)="submitCheckout()">
 
-      <mat-form-field class="w-100">
-        <mat-label>Image (optional)</mat-label>
-        <input type="file" (change)="onCheckoutImageChange($event)" />
-      </mat-form-field>
+            <div class="row">
+                <div class="col-md-12 col-sm-12 mb-25">
+                    <mat-form-field class="w-100">
+                        <mat-label>Collected Data</mat-label>
+                                                <input matInput type="number"  placeholder="Enter collected data" formControlName="collected_data">
 
-      <mat-dialog-actions align="end" class="w-100">
-        <button mat-button type="button" (click)="closeDialog()">Cancel</button>
-        <button mat-raised-button class="success-btn" type="submit">Checkout</button>
-      </mat-dialog-actions>
-    </form>
-  </mat-dialog-content>
+                        <mat-error *ngIf="checkoutForm.get('collected_data')?.invalid && checkoutForm.get('collected_data')?.touched">
+                            Collected data is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-md-12 col-sm-12 mb-25">
+                    <label class="main-label d-block lh-1 text-black">Image (optional)</label>
+                    <div>
+                        <input #checkoutImageInput type="file" accept="image/*" (change)="onCheckoutImageChange($event)" />
+                    </div>
+                    <div *ngIf="checkoutImagePreview" class="d-flex align-items-center mt-2">
+                        <img [src]="checkoutImagePreview" alt="Preview" class="rounded me-3" style="max-width:120px; max-height:90px; object-fit:cover;" />
+                        <div>
+                            <div class="mb-2">{{ checkoutImageFile?.name }}</div>
+                            <button mat-button color="warn" type="button" (click)="removeCheckoutImage()">Remove</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <mat-dialog-actions align="end" class="w-100">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 mb-25 me-25">
+                        <button mat-button type="button" (click)="closeDialog()">Cancel</button>
+                    </div>
+                    <div class="col-md-6 col-sm-6 mb-25 me-25">
+                        <button mat-raised-button class="success-btn" type="submit">Checkout</button>
+                    </div>
+                </div>
+            </mat-dialog-actions>
+        </form>
+    </mat-dialog-content>
+
+
 </ng-template>
 
 <ng-template #confirmDialog let-data>
-  <h1 mat-dialog-title class="confirm-title">{{ data?.title || 'Confirm' }}</h1>
-  <div mat-dialog-content class="confirm-content">
-    <p>{{ data?.message || 'Are you sure?' }}</p>
-  </div>
-  <div mat-dialog-actions class="confirm-actions">
-    <button mat-flat-button color="warn" class="confirm-btn" (click)="dialogRef.close(false)">No</button>
-    <button mat-flat-button color="primary" class="confirm-btn" cdkFocusInitial (click)="dialogRef.close(true)">Yes</button>
-  </div>
+    <h1 mat-dialog-title class="confirm-title">{{ data?.title || 'Confirm' }}</h1>
+    <div mat-dialog-content class="confirm-content">
+        <p>{{ data?.message || 'Are you sure?' }}</p>
+    </div>
+    <div mat-dialog-actions class="confirm-actions">
+        <button mat-flat-button color="warn" class="confirm-btn" (click)="dialogRef.close(false)">No</button>
+        <button mat-flat-button color="primary" class="confirm-btn" cdkFocusInitial
+            (click)="dialogRef.close(true)">Yes</button>
+    </div>
 </ng-template>
