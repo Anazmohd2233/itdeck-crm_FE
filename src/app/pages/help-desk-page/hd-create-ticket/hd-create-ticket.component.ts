@@ -202,8 +202,12 @@ export class HdCreateTicketComponent {
     taskData: any;
     dialogRef!: MatDialogRef<any>; // store reference
     dialogRef_Students!: MatDialogRef<any>; // store reference
+    dialogRefCheckout!: MatDialogRef<any>; // checkout dialog reference
+    checkoutForm!: FormGroup;
+    checkoutImageFile: File | null = null;
 
     @ViewChild(GoogleMap, { static: false }) map!: GoogleMap;
+    @ViewChild('checkoutDialog') checkoutDialog!: TemplateRef<any>;
 
     zoom = 14;
     center: google.maps.LatLngLiteral = { lat: 10.0, lng: 76.0 }; // default
@@ -212,6 +216,7 @@ export class HdCreateTicketComponent {
 
     @ViewChild('taskDialog') taskDialog!: TemplateRef<any>;
     @ViewChild('taskDialog_student') taskDialog_student!: TemplateRef<any>;
+    @ViewChild('confirmDialog') confirmDialog!: TemplateRef<any>;
 
     searchFieldSchool: string = '';
     searchFieldUser: string = '';
@@ -657,6 +662,32 @@ export class HdCreateTicketComponent {
         });
     }
 
+    openCheckoutDialog() {
+        this.initializeCheckoutForm();
+        this.dialogRefCheckout = this.dialog.open(this.checkoutDialog, {
+            width: '40%',
+            maxWidth: '100vw',
+        });
+    }
+
+    openConfirmDialog(title: string, message: string) {
+        this.dialogRef = this.dialog.open(this.confirmDialog, {
+            data: { title, message },
+        });
+
+        this.dialogRef.afterClosed().subscribe((result) => {
+            if (result) {
+                if (title === 'Check In') {
+                    console.log('Check In confirmed');
+                    // TODO: perform actual check-in action here
+                } else if (title === 'Check Out') {
+                    console.log('Check Out confirmed');
+                    // TODO: perform actual check-out action here
+                }
+            }
+        });
+    }
+
     closeDialog() {
         if (this.dialogRef) {
             this.dialogRef.close();
@@ -664,6 +695,44 @@ export class HdCreateTicketComponent {
         if (this.dialogRef_Students) {
             this.dialogRef_Students.close();
         }
+        if (this.dialogRefCheckout) {
+            this.dialogRefCheckout.close();
+        }
+    }
+
+    initializeCheckoutForm(): void {
+        this.checkoutForm = this.formBuilder.group({
+            collected_data: ['', Validators.required],
+            image: [null],
+        });
+        this.checkoutImageFile = null;
+    }
+
+    onCheckoutImageChange(event: Event): void {
+        const input = event.target as HTMLInputElement;
+        if (input.files && input.files.length > 0) {
+            this.checkoutImageFile = input.files[0];
+            this.checkoutForm.patchValue({ image: this.checkoutImageFile });
+        } else {
+            this.checkoutImageFile = null;
+            this.checkoutForm.patchValue({ image: null });
+        }
+    }
+
+    submitCheckout(): void {
+        if (this.checkoutForm.invalid) {
+            this.toastr.error('Please fill required fields', 'Error');
+            return;
+        }
+        console.log('checkout clicked');
+        // TODO: perform checkout action (API call) if needed
+        if (this.dialogRefCheckout) {
+            this.dialogRefCheckout.close();
+        }
+    }
+
+    onCheckin(): void {
+        this.openConfirmDialog('Check In', 'Are you sure you want to Check In?');
     }
 
     // component.ts

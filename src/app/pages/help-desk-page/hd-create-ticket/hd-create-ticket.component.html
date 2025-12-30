@@ -5,6 +5,17 @@
         {{ editMode ? 'Edit Task' : 'Create Task' }}
     </h5>
 
+   <div class="d-flex align-items-center ms-3" style="gap:8px;">
+        <button mat-raised-button class="success-btn me-2" type="button" (click)="onCheckin()">Checkin</button>
+           <button mat-raised-button class="warn-btn" type="button" (click)="openCheckoutDialog()">Checkout</button>
+
+        </div>
+    
+
+
+
+     
+
     <!-- <mat-slide-toggle 
   *ngIf="editMode"
     [checked]="tracking"
@@ -397,10 +408,15 @@
                     <span>Add Expence</span>
                 </button> -->
 
-                <button mat-button type="button" (click)="openDialog_add_student()" *ngIf="editMode">
+                <!-- <button mat-button type="button" (click)="openDialog_add_student()" *ngIf="editMode">
 
                     <span>Add Student</span>
-                </button>
+                </button> -->
+
+                     <!-- <button mat-button type="button" *ngIf="editMode">
+
+                    <span>Add Log</span>
+                </button> -->
                 <!-- <button mat-button type="button" (click)="onCancel()">
                     Cancel
                 </button> -->
@@ -585,4 +601,40 @@
     <mat-dialog-actions>
         <button mat-button mat-dialog-close>Cancel</button>
     </mat-dialog-actions>
+</ng-template>
+
+<ng-template #checkoutDialog>
+  <h2 mat-dialog-title>Checkout</h2>
+  <mat-dialog-content>
+    <form [formGroup]="checkoutForm" (ngSubmit)="submitCheckout()">
+      <mat-form-field class="w-100">
+        <mat-label>Collected Data</mat-label>
+        <textarea matInput formControlName="collected_data" rows="4" placeholder="Enter collected data"></textarea>
+        <mat-error *ngIf="checkoutForm.get('collected_data')?.invalid && checkoutForm.get('collected_data')?.touched">
+          Collected data is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="w-100">
+        <mat-label>Image (optional)</mat-label>
+        <input type="file" (change)="onCheckoutImageChange($event)" />
+      </mat-form-field>
+
+      <mat-dialog-actions align="end" class="w-100">
+        <button mat-button type="button" (click)="closeDialog()">Cancel</button>
+        <button mat-raised-button class="success-btn" type="submit">Checkout</button>
+      </mat-dialog-actions>
+    </form>
+  </mat-dialog-content>
+</ng-template>
+
+<ng-template #confirmDialog let-data>
+  <h1 mat-dialog-title class="confirm-title">{{ data?.title || 'Confirm' }}</h1>
+  <div mat-dialog-content class="confirm-content">
+    <p>{{ data?.message || 'Are you sure?' }}</p>
+  </div>
+  <div mat-dialog-actions class="confirm-actions">
+    <button mat-flat-button color="warn" class="confirm-btn" (click)="dialogRef.close(false)">No</button>
+    <button mat-flat-button color="primary" class="confirm-btn" cdkFocusInitial (click)="dialogRef.close(true)">Yes</button>
+  </div>
 </ng-template>
