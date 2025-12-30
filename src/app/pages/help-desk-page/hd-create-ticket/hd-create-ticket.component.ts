@@ -32,7 +32,8 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { Router } from '@angular/router';
 import { TaskService } from '../../../services/task.service';
 import { UsersService } from '../../../services/users.service';
-import { HttpParams } from '@angular/common/http';
+import { HttpParams, HttpClient } from '@angular/common/http';
+import { lastValueFrom } from 'rxjs';
 import { MatDividerModule } from '@angular/material/divider';
 import { Division, TaskActivity } from '../../../services/enums';
 import { ToastrService } from 'ngx-toastr';
@@ -245,7 +246,8 @@ export class HdCreateTicketComponent {
         private toastr: ToastrService,
         private route: ActivatedRoute,
         private dialog: MatDialog,
-        private schoolService: SchoolService
+        private schoolService: SchoolService,
+        private http: HttpClient
     ) {
         this.initializeForm();
         this.initializeExpenceForm();
@@ -863,6 +865,82 @@ export class HdCreateTicketComponent {
             // ignore if form not initialized
         }
         this.removeCheckoutImage();
+    }
+
+    @ViewChild('imagePreview') imagePreview!: TemplateRef<any>;
+
+    // Extract filename from URL
+    getImageFilename(url: string): string {
+        try {
+            const parts = String(url).split('/');
+            const last = parts.pop() || 'image.jpg';
+            return last.split('?')[0];
+        } catch (err) {
+            return 'image.jpg';
+        }
+    }
+
+    // Open a preview dialog after fetching image as a blob using credentials
+    async openImagePreview(url: string) {
+        if (!url) return;
+        try {
+            // Use HttpClient so interceptors (JWT) and headers are attached
+            const blob = await lastValueFrom(this.http.get(url, { responseType: 'blob', withCredentials: true }));
+            const blobUrl = URL.createObjectURL(blob);
+            const filename = this.getImageFilename(url);
+            const dialogRef = this.dialog.open(this.imagePreview, { data: { blobUrl, filename }, width: '80%', maxWidth: '90vw' });
+            dialogRef.afterClosed().subscribe(() => {
+                // Clean up blob URL
+                try { URL.revokeObjectURL(blobUrl); } catch (e) { /* ignore */ }
+            });
+        } catch (err) {
+            console.error('Image fetch failed via HttpClient', err);
+            this.toastr.error('Could not load preview. Opening in new tab.', 'Image load failed');
+            // Fall back to opening the image URL which may redirect to auth
+            window.open(url, '_blank', 'noopener');
+        }
+    }
+
+    // Download via authenticated fetch, falls back to opening URL
+    async downloadImage(url: string) {
+        try {
+            // Use HttpClient to ensure auth headers (via interceptor) are attached
+            const blob = await lastValueFrom(this.http.get(url, { responseType: 'blob', withCredentials: true }));
+            const blobUrl = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = blobUrl;
+            a.download = this.getImageFilename(url);
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            URL.revokeObjectURL(blobUrl);
+        } catch (err) {
+            console.error('Download failed via HttpClient', err);
+            this.toastr.error('Unable to download file. Opening in new tab.', 'Download failed');
+            // Last resort: open the original URL (may redirect to auth)
+            window.open(url, '_blank', 'noopener');
+        }
+    }
+
+    // Used by the preview template
+    downloadBlob(blobUrl: string | null | undefined, filename?: string) {
+        if (!blobUrl) return;
+        const a = document.createElement('a');
+        a.href = blobUrl;
+        a.download = filename || 'image.jpg';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+    }
+
+    openBlobInNewTab(blobUrl: string | null | undefined) {
+        if (!blobUrl) return;
+        window.open(blobUrl, '_blank');
+    }
+
+    // Called from template (public) to close preview dialog(s)
+    public closeImagePreviewDialog(): void {
+        this.dialog.closeAll();
     }
 
     submitCheckout(): void {

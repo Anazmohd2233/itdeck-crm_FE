@@ -473,13 +473,17 @@
         <td mat-cell *matCellDef="let c"> {{ c.collected_data ?? '-' }} </td>
       </ng-container>
 
-      <!-- Image Column -->
+      <!-- Image Column (click to preview; click download to save) -->
       <ng-container matColumnDef="image_url">
         <th mat-header-cell *matHeaderCellDef> Image </th>
         <td mat-cell *matCellDef="let c">
-          <a *ngIf="c.image_url" [href]="c.image_url" target="_blank" rel="noopener">
-            <img [src]="c.image_url" alt="img" style="max-width:48px;max-height:48px;object-fit:cover;border-radius:4px" />
-          </a>
+          <img *ngIf="c.image_url" [src]="c.image_url" alt="img" (click)="openImagePreview(c.image_url)" style="max-width:48px;max-height:48px;object-fit:cover;border-radius:4px;cursor:pointer" />
+
+          <!-- Download button (uses authenticated fetch) -->
+          <button *ngIf="c.image_url" mat-icon-button color="primary" type="button" aria-label="Download image" (click)="$event.stopPropagation(); downloadImage(c.image_url)">
+            <mat-icon>file_download</mat-icon>
+          </button>
+
           <span *ngIf="!c.image_url">-</span>
         </td>
       </ng-container>
@@ -491,6 +495,18 @@
     <mat-paginator #checkinPaginator [pageSizeOptions]="[5,10,20]" showFirstLastButtons></mat-paginator>
   </mat-card-content>
 </mat-card>
+
+<!-- Image preview dialog template -->
+<ng-template #imagePreview let-data>
+  <div style="text-align:center; padding: 8px;">
+    <img [src]="data?.blobUrl || data?.url" alt="preview" style="max-width:100%; max-height:80vh; display:block; margin: 0 auto;" />
+  </div>
+  <mat-dialog-actions align="end">
+    <button mat-button (click)="downloadBlob(data?.blobUrl, data?.filename)">Download</button>
+    <button mat-button (click)="openBlobInNewTab(data?.blobUrl)">Open in new tab</button>
+    <button mat-button (click)="closeImagePreviewDialog()">Close</button>
+  </mat-dialog-actions>
+</ng-template>
 
 
 
