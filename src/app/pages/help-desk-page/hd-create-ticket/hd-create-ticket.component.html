@@ -6,8 +6,8 @@
     </h5>
 
     <div class="d-flex align-items-center ms-3" style="gap:8px;">
-        <button mat-raised-button class="success-btn me-2" type="button" (click)="onCheckin()">Checkin</button>
-        <button mat-raised-button class="warn-btn" type="button" (click)="openCheckoutDialog()">Checkout</button>
+        <button mat-raised-button class="success-btn me-2" type="button" (click)="onCheckin()" [disabled]="checkinSubmitting">Checkin</button>
+        <button mat-raised-button class="warn-btn" type="button" (click)="openCheckoutDialog()" [disabled]="checkinSubmitting">Checkout</button>
 
     </div>
 

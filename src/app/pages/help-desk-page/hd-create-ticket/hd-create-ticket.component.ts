@@ -778,10 +778,22 @@ export class HdCreateTicketComponent {
         let longitude: number | null = null;
 
         try {
-            const pos = await this.getCurrentPosition(5000);
+            // Try with short timeout first
+            let pos = await this.getCurrentPosition(5000);
+
+            // If not found, try a longer timeout (user may need more time to approve)
+            if (!pos) {
+                console.warn('Geolocation first attempt failed — retrying with longer timeout');
+                pos = await this.getCurrentPosition(10000);
+            }
+
             if (pos) {
                 latitude = pos.coords.latitude;
                 longitude = pos.coords.longitude;
+            } else {
+                // Inform user we couldn't fetch location; still proceed if they want
+                console.warn('Geolocation unavailable or permission denied');
+                this.toastr.warning('Could not get current location. Please enable location permissions or try again.', 'Location unavailable');
             }
         } catch (err) {
             console.warn('Error fetching location:', err);
@@ -797,6 +809,13 @@ export class HdCreateTicketComponent {
         // attach image only when present
         if (this.checkoutImageFile) {
             fd.append('image', this.checkoutImageFile, this.checkoutImageFile.name);
+        }
+
+        // Debug: log what we're about to send
+        console.log('Submitting task check:', { type, task_id: this.taskId, latitude, longitude, collected_data, hasImage: !!this.checkoutImageFile });
+        // Log FormData entries (for debugging; File will show File object)
+        for (const pair of (fd as any).entries()) {
+            console.log('FormData entry:', pair[0], pair[1]);
         }
 
         this.taskService.createTaskCheckin(fd).subscribe({
