@@ -184,6 +184,8 @@ export class HdCreateTicketComponent {
     isSubmitting = false;
     users: any;
     location: any;
+    // Track geolocation permission state when available
+    locationPermission: 'granted' | 'denied' | 'prompt' | null = null;
 
     school: any;
     user_type: any;
@@ -793,7 +795,7 @@ export class HdCreateTicketComponent {
             } else {
                 // Inform user we couldn't fetch location; still proceed if they want
                 console.warn('Geolocation unavailable or permission denied');
-                this.toastr.warning('Could not get current location. Please enable location permissions or try again.', 'Location unavailable');
+                // this.toastr.warning('Could not get current location. Please enable location permissions or try again.', 'Location unavailable');
             }
         } catch (err) {
             console.warn('Error fetching location:', err);
