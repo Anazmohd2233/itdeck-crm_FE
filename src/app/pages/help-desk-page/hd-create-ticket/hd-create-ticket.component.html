@@ -427,6 +427,71 @@
 </mat-card>
 
 
+<!-- Check-in history table (visible in Edit mode) -->
+<mat-card *ngIf="editMode" class="daxa-card mb-25 border-radius bg-white border-none d-block">
+  <mat-card-header>
+    <mat-card-title>
+      <h5 class="mb-0">Check-in History</h5>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <table mat-table [dataSource]="checkinDataSource" class="mat-elevation-z8 w-100">
+
+      <!-- ID Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> ID </th>
+        <td mat-cell *matCellDef="let c"> {{ c.id }} </td>
+      </ng-container>
+
+      <!-- Type Column -->
+      <ng-container matColumnDef="type">
+        <th mat-header-cell *matHeaderCellDef> Type </th>
+        <td mat-cell *matCellDef="let c"> {{ c.type }} </td>
+      </ng-container>
+
+      <!-- Latitude Column -->
+      <ng-container matColumnDef="latitude">
+        <th mat-header-cell *matHeaderCellDef> Latitude </th>
+        <td mat-cell *matCellDef="let c"> {{ c.latitude ?? '-' }} </td>
+      </ng-container>
+
+      <!-- Longitude Column -->
+      <ng-container matColumnDef="longitude">
+        <th mat-header-cell *matHeaderCellDef> Longitude </th>
+        <td mat-cell *matCellDef="let c"> {{ c.longitude ?? '-' }} </td>
+      </ng-container>
+
+      <!-- Time Column -->
+      <ng-container matColumnDef="time">
+        <th mat-header-cell *matHeaderCellDef> Time </th>
+        <td mat-cell *matCellDef="let c"> {{ c.time | date:'short' }} </td>
+      </ng-container>
+
+      <!-- Collected Data Column -->
+      <ng-container matColumnDef="collected_data">
+        <th mat-header-cell *matHeaderCellDef> Collected </th>
+        <td mat-cell *matCellDef="let c"> {{ c.collected_data ?? '-' }} </td>
+      </ng-container>
+
+      <!-- Image Column -->
+      <ng-container matColumnDef="image_url">
+        <th mat-header-cell *matHeaderCellDef> Image </th>
+        <td mat-cell *matCellDef="let c">
+          <a *ngIf="c.image_url" [href]="c.image_url" target="_blank" rel="noopener">
+            <img [src]="c.image_url" alt="img" style="max-width:48px;max-height:48px;object-fit:cover;border-radius:4px" />
+          </a>
+          <span *ngIf="!c.image_url">-</span>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="checkinDisplayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: checkinDisplayedColumns;"></tr>
+    </table>
+
+    <mat-paginator #checkinPaginator [pageSizeOptions]="[5,10,20]" showFirstLastButtons></mat-paginator>
+  </mat-card-content>
+</mat-card>
+
 
 
 <!-- Angular Material Dialog Template -->

@@ -101,7 +101,11 @@ export class HdCreateTicketComponent {
         'action',
     ];
     expenceDataSource = new MatTableDataSource<Expence>([]);
-    expandedElement: Expence | null = null;
+    // Check-in table
+    checkinDisplayedColumns: string[] = ['id','type','latitude','longitude','time','collected_data','image_url'];
+    checkinDataSource = new MatTableDataSource<any>([]);
+
+    expandedElement: Expence | null = null; 
     // Text Editor
     editor!: Editor | null;
     editorContent: string = '';
@@ -134,11 +138,14 @@ export class HdCreateTicketComponent {
     selection = new SelectionModel<PeriodicElement>(true, []);
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
+    @ViewChild('checkinPaginator') checkinPaginator!: MatPaginator;
     progress: number = 0;
 
     ngAfterViewInit() {
         this.dataSource.paginator = this.paginator;
         this.expenceDataSource.paginator = this.paginator;
+        // separate paginator for check-in table
+        if (this.checkinPaginator) this.checkinDataSource.paginator = this.checkinPaginator;
     }
 
     /** Whether the number of selected elements matches the total number of rows. */
@@ -585,6 +592,9 @@ export class HdCreateTicketComponent {
                     }));
 
                     this.dataSource.data = this.ELEMENT_DATA;
+
+                    // Populate check-in table if available
+                    this.checkinDataSource.data = response.task?.checkin || [];
                 } else {
                     console.log('Customer not found.');
                     // this.toastr.error('Customer not found.', 'Error');
