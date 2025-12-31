@@ -103,10 +103,17 @@ export class HdCreateTicketComponent {
     ];
     expenceDataSource = new MatTableDataSource<Expence>([]);
     // Check-in table
-    checkinDisplayedColumns: string[] = ['id','type','latitude','longitude','time','collected_data','image_url'];
+    checkinDisplayedColumns: string[] = [
+        'date',
+        'checkin_time',
+        'checkout_time',
+        'location',
+        'collected_data',
+        'image_url',
+    ];
     checkinDataSource = new MatTableDataSource<any>([]);
 
-    expandedElement: Expence | null = null; 
+    expandedElement: Expence | null = null;
     // Text Editor
     editor!: Editor | null;
     editorContent: string = '';
@@ -141,12 +148,14 @@ export class HdCreateTicketComponent {
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild('checkinPaginator') checkinPaginator!: MatPaginator;
     progress: number = 0;
+    isCheckedIn: boolean = false;
 
     ngAfterViewInit() {
         this.dataSource.paginator = this.paginator;
         this.expenceDataSource.paginator = this.paginator;
         // separate paginator for check-in table
-        if (this.checkinPaginator) this.checkinDataSource.paginator = this.checkinPaginator;
+        if (this.checkinPaginator)
+            this.checkinDataSource.paginator = this.checkinPaginator;
     }
 
     /** Whether the number of selected elements matches the total number of rows. */
@@ -219,7 +228,8 @@ export class HdCreateTicketComponent {
 
     @ViewChild(GoogleMap, { static: false }) map!: GoogleMap;
     @ViewChild('checkoutDialog') checkoutDialog!: TemplateRef<any>;
-    @ViewChild('checkoutImageInput') checkoutImageInput!: ElementRef<HTMLInputElement>;
+    @ViewChild('checkoutImageInput')
+    checkoutImageInput!: ElementRef<HTMLInputElement>;
 
     checkoutImagePreview: string | null = null;
 
@@ -557,6 +567,8 @@ export class HdCreateTicketComponent {
                     this.contactCount = response.contactCount;
                     this.taskData = response.task;
                     const task = response.task;
+                    this.isCheckedIn = response.isCheckedIn;
+
                     const expence = response.task.expence;
                     this.taskSchool = response.task.school;
                     this.getSchoolList(response?.task?.school?.school_name);
@@ -595,8 +607,28 @@ export class HdCreateTicketComponent {
 
                     this.dataSource.data = this.ELEMENT_DATA;
 
-                    // Populate check-in table if available
-                    this.checkinDataSource.data = response.task?.checkin || [];
+                    // Populate daily check-in/out table if available
+                    this.checkinDataSource.data =
+                        response.dailyCheckins?.map((item: any) => ({
+                            date: item?.date || '-',
+                            checkin_time: item?.checkin?.time || null,
+                            checkout_time: item?.checkout?.time || null,
+                            location: (() => {
+                                const lat =
+                                    item?.checkout?.latitude ??
+                                    item?.checkin?.latitude ??
+                                    null;
+                                const lng =
+                                    item?.checkout?.longitude ??
+                                    item?.checkin?.longitude ??
+                                    null;
+                                if (lat === null && lng === null) return '-';
+                                return `${lat ?? '-'}, ${lng ?? '-'}`;
+                            })(),
+                            collected_data:
+                                item?.checkout?.collected_data ?? '-',
+                            image_url: item?.checkout?.image_url ?? null,
+                        })) || [];
                 } else {
                     console.log('Customer not found.');
                     // this.toastr.error('Customer not found.', 'Error');
@@ -662,7 +694,6 @@ export class HdCreateTicketComponent {
             this.markFormGroupTouched();
         }
     }
-
 
     openDialog() {
         this.initializeExpenceForm();
@@ -758,7 +789,10 @@ export class HdCreateTicketComponent {
 
     getCurrentPosition(timeout = 5000): Promise<GeolocationPosition | null> {
         return new Promise((resolve) => {
-            if (!isPlatformBrowser(this.platformId) || !('geolocation' in navigator)) {
+            if (
+                !isPlatformBrowser(this.platformId) ||
+                !('geolocation' in navigator)
+            ) {
                 resolve(null);
                 return;
             }
@@ -782,7 +816,10 @@ export class HdCreateTicketComponent {
 
     async submitCheck(type: 'CHECKIN' | 'CHECKOUT', collected_data?: string) {
         if (!this.taskId) {
-            this.toastr.error('Missing task id. Cannot perform check-in/out.', 'Error');
+            this.toastr.error(
+                'Missing task id. Cannot perform check-in/out.',
+                'Error'
+            );
             return;
         }
 
@@ -797,7 +834,9 @@ export class HdCreateTicketComponent {
 
             // If not found, try a longer timeout (user may need more time to approve)
             if (!pos) {
-                console.warn('Geolocation first attempt failed — retrying with longer timeout');
+                console.warn(
+                    'Geolocation first attempt failed — retrying with longer timeout'
+                );
                 pos = await this.getCurrentPosition(10000);
             }
 
@@ -822,11 +861,22 @@ export class HdCreateTicketComponent {
 
         // attach image only when present
         if (this.checkoutImageFile) {
-            fd.append('image', this.checkoutImageFile, this.checkoutImageFile.name);
+            fd.append(
+                'image',
+                this.checkoutImageFile,
+                this.checkoutImageFile.name
+            );
         }
 
         // Debug: log what we're about to send
-        console.log('Submitting task check:', { type, task_id: this.taskId, latitude, longitude, collected_data, hasImage: !!this.checkoutImageFile });
+        console.log('Submitting task check:', {
+            type,
+            task_id: this.taskId,
+            latitude,
+            longitude,
+            collected_data,
+            hasImage: !!this.checkoutImageFile,
+        });
         // Log FormData entries (for debugging; File will show File object)
         for (const pair of (fd as any).entries()) {
             console.log('FormData entry:', pair[0], pair[1]);
@@ -835,22 +885,36 @@ export class HdCreateTicketComponent {
         this.taskService.createTaskCheckin(fd).subscribe({
             next: (response) => {
                 if (response && response.success) {
-                    this.toastr.success(response.message || 'Saved.', 'Success');
+                    this.loadTaskDetails();
+
+                    this.toastr.success(
+                        response.message || 'Saved.',
+                        'Success'
+                    );
                     if (type === 'CHECKOUT' && this.dialogRefCheckout) {
                         this.dialogRefCheckout.close();
                     }
+
                     // close confirm dialog if open
                     if (this.dialogRef) this.dialogRef.close();
 
                     // reset checkout form on success
                     this.resetCheckoutForm();
                 } else {
-                    this.toastr.error(response?.message || 'Failed to save.', 'Error');
+                    this.toastr.error(
+                        response?.message || 'Failed to save.',
+                        'Error'
+                    );
                 }
             },
             error: (err) => {
                 console.error('Checkin API error:', err);
-                this.toastr.error(err?.message || 'Network or server error', 'Error');
+                this.toastr.error(
+                    err?.error?.message ||
+                        err?.message ||
+                        'Network or server error',
+                    'Error'
+                );
             },
             complete: () => {
                 this.checkinSubmitting = false;
@@ -885,17 +949,33 @@ export class HdCreateTicketComponent {
         if (!url) return;
         try {
             // Use HttpClient so interceptors (JWT) and headers are attached
-            const blob = await lastValueFrom(this.http.get(url, { responseType: 'blob', withCredentials: true }));
+            const blob = await lastValueFrom(
+                this.http.get(url, {
+                    responseType: 'blob',
+                    withCredentials: true,
+                })
+            );
             const blobUrl = URL.createObjectURL(blob);
             const filename = this.getImageFilename(url);
-            const dialogRef = this.dialog.open(this.imagePreview, { data: { blobUrl, filename }, width: '80%', maxWidth: '90vw' });
+            const dialogRef = this.dialog.open(this.imagePreview, {
+                data: { blobUrl, filename },
+                width: '80%',
+                maxWidth: '90vw',
+            });
             dialogRef.afterClosed().subscribe(() => {
                 // Clean up blob URL
-                try { URL.revokeObjectURL(blobUrl); } catch (e) { /* ignore */ }
+                try {
+                    URL.revokeObjectURL(blobUrl);
+                } catch (e) {
+                    /* ignore */
+                }
             });
         } catch (err) {
             console.error('Image fetch failed via HttpClient', err);
-            this.toastr.error('Could not load preview. Opening in new tab.', 'Image load failed');
+            this.toastr.error(
+                'Could not load preview. Opening in new tab.',
+                'Image load failed'
+            );
             // Fall back to opening the image URL which may redirect to auth
             window.open(url, '_blank', 'noopener');
         }
@@ -905,7 +985,12 @@ export class HdCreateTicketComponent {
     async downloadImage(url: string) {
         try {
             // Use HttpClient to ensure auth headers (via interceptor) are attached
-            const blob = await lastValueFrom(this.http.get(url, { responseType: 'blob', withCredentials: true }));
+            const blob = await lastValueFrom(
+                this.http.get(url, {
+                    responseType: 'blob',
+                    withCredentials: true,
+                })
+            );
             const blobUrl = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = blobUrl;
@@ -916,7 +1001,10 @@ export class HdCreateTicketComponent {
             URL.revokeObjectURL(blobUrl);
         } catch (err) {
             console.error('Download failed via HttpClient', err);
-            this.toastr.error('Unable to download file. Opening in new tab.', 'Download failed');
+            this.toastr.error(
+                'Unable to download file. Opening in new tab.',
+                'Download failed'
+            );
             // Last resort: open the original URL (may redirect to auth)
             window.open(url, '_blank', 'noopener');
         }
@@ -955,7 +1043,10 @@ export class HdCreateTicketComponent {
     }
 
     onCheckin(): void {
-        this.openConfirmDialog('Check In', 'Are you sure you want to Check In?');
+        this.openConfirmDialog(
+            'Check In',
+            'Are you sure you want to Check In?'
+        );
     }
 
     // component.ts
@@ -967,122 +1058,119 @@ export class HdCreateTicketComponent {
             expenses: this.formBuilder.array([this.createExpenseGroup()]),
         });
     }
-initializeStudentForm(): void {
-  this.studentForm = this.formBuilder.group({
-    students: this.formBuilder.array([this.createStudentGroup()]),
-  });
+    initializeStudentForm(): void {
+        this.studentForm = this.formBuilder.group({
+            students: this.formBuilder.array([this.createStudentGroup()]),
+        });
 
-  // 👇 subscribe to changes of the students array
-  this.students.valueChanges.subscribe((students) => {
-    const lastIndex = students.length - 1;
-    const lastStudent = students[lastIndex];
+        // 👇 subscribe to changes of the students array
+        this.students.valueChanges.subscribe((students) => {
+            const lastIndex = students.length - 1;
+            const lastStudent = students[lastIndex];
 
-    // ✅ Only add if last row is FULLY valid
-    if (
-      lastStudent &&
-      lastStudent.student_name?.trim() &&
-      /^\d{10}$/.test(lastStudent.student_phone)
-    ) {
-      const control = this.students.at(lastIndex);
-      if (control.valid) {
-        this.onStudentFilled(lastIndex, lastStudent);
-      }
+            // ✅ Only add if last row is FULLY valid
+            if (
+                lastStudent &&
+                lastStudent.student_name?.trim() &&
+                /^\d{10}$/.test(lastStudent.student_phone)
+            ) {
+                const control = this.students.at(lastIndex);
+                if (control.valid) {
+                    this.onStudentFilled(lastIndex, lastStudent);
+                }
+            }
+        });
     }
-  });
-}
 
+    createStudent(): void {
+        let students: Students[] = this.studentForm.value.students;
 
-createStudent(): void {
-  let students: Students[] = this.studentForm.value.students;
-
-  // ✅ Remove empty rows
-  students = students.filter(
-    (s) => s.student_name?.trim() || s.student_phone?.toString().trim()
-  );
-
-  if (students.length === 0) {
-    this.toastr.error('Please enter at least one student', 'Error');
-    return;
-  }
-
-  // ✅ Now build a temporary FormArray just for validation
-  const tempArray = this.formBuilder.array(
-    students.map((s) =>
-      this.formBuilder.group({
-        student_name: [s.student_name, Validators.required],
-        student_phone: [
-          s.student_phone,
-          [Validators.required, Validators.pattern(/^\d{10}$/)],
-        ],
-      })
-    )
-  );
-
-  if (tempArray.invalid) {
-    this.toastr.error('Missing mandatory fields', 'Error');
-    return;
-  }
-
-  const payload = {
-    task_id: this.taskId,
-    school_id: this.taskSchool.id,
-    assigned_to: this.taskData.assigned_to.id,
-    students: students,
-  };
-
-  console.log('payload', JSON.stringify(payload));
-
-  this.isSubmitting = true;
-  this.taskService.createBulkContact(payload).subscribe({
-    next: (response) => {
-      if (response.success) {
-        this.loadTaskDetails();
-        this.isSubmitting = false;
-        this.closeDialog();
-        this.toastr.success('Students Added successfully', 'Success');
-      } else {
-        this.isSubmitting = false;
-        this.toastr.error(
-          response.message || 'Failed to Add Students.',
-          'Error'
+        // ✅ Remove empty rows
+        students = students.filter(
+            (s) => s.student_name?.trim() || s.student_phone?.toString().trim()
         );
-      }
-    },
-    error: (error) => {
-      this.isSubmitting = false;
-      this.toastr.error('Something went wrong.', 'Error');
-      console.error('❌ API error:', error);
-    },
-  });
-}
 
+        if (students.length === 0) {
+            this.toastr.error('Please enter at least one student', 'Error');
+            return;
+        }
 
-onStudentFilled(index: number, student: any) {
-  const lastIndex = this.students.length - 1;
+        // ✅ Now build a temporary FormArray just for validation
+        const tempArray = this.formBuilder.array(
+            students.map((s) =>
+                this.formBuilder.group({
+                    student_name: [s.student_name, Validators.required],
+                    student_phone: [
+                        s.student_phone,
+                        [Validators.required, Validators.pattern(/^\d{10}$/)],
+                    ],
+                })
+            )
+        );
 
-  if (index === lastIndex) {
-    this.students.push(this.createStudentGroup());
-    console.log('✅ New blank row added automatically', index, student);
-  }
-}
+        if (tempArray.invalid) {
+            this.toastr.error('Missing mandatory fields', 'Error');
+            return;
+        }
 
+        const payload = {
+            task_id: this.taskId,
+            school_id: this.taskSchool.id,
+            assigned_to: this.taskData.assigned_to.id,
+            students: students,
+        };
 
+        console.log('payload', JSON.stringify(payload));
 
-removeStudent(index: number): void {
-  const student = this.students.at(index).value;
+        this.isSubmitting = true;
+        this.taskService.createBulkContact(payload).subscribe({
+            next: (response) => {
+                if (response.success) {
+                    this.loadTaskDetails();
+                    this.isSubmitting = false;
+                    this.closeDialog();
+                    this.toastr.success(
+                        'Students Added successfully',
+                        'Success'
+                    );
+                } else {
+                    this.isSubmitting = false;
+                    this.toastr.error(
+                        response.message || 'Failed to Add Students.',
+                        'Error'
+                    );
+                }
+            },
+            error: (error) => {
+                this.isSubmitting = false;
+                this.toastr.error('Something went wrong.', 'Error');
+                console.error('❌ API error:', error);
+            },
+        });
+    }
 
-  // Remove blank row without side effects
-  if (!student.student_name && !student.student_phone) {
-    console.log('Removing blank row silentyly', index);
-    this.students.removeAt(index);
-    return;
-  }
+    onStudentFilled(index: number, student: any) {
+        const lastIndex = this.students.length - 1;
 
-  // Remove normally
-  this.students.removeAt(index);
-}
+        if (index === lastIndex) {
+            this.students.push(this.createStudentGroup());
+            console.log('✅ New blank row added automatically', index, student);
+        }
+    }
 
+    removeStudent(index: number): void {
+        const student = this.students.at(index).value;
 
+        // Remove blank row without side effects
+        if (!student.student_name && !student.student_phone) {
+            console.log('Removing blank row silentyly', index);
+            this.students.removeAt(index);
+            return;
+        }
+
+        // Remove normally
+        this.students.removeAt(index);
+    }
 
     createExpenseGroup(): FormGroup {
         return this.formBuilder.group({
@@ -1132,7 +1220,6 @@ removeStudent(index: number): void {
         this.students.push(this.createStudentGroup());
     }
 
- 
     private getExpenceList(): void {
         this.taskService.getExpences(this.page).subscribe({
             next: (response) => {
