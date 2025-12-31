@@ -107,11 +107,14 @@ export class HdCreateTicketComponent {
         'date',
         'checkin_time',
         'checkout_time',
-        'location',
+        'checkin_location',
+        'checkout_location',
         'collected_data',
         'image_url',
     ];
     checkinDataSource = new MatTableDataSource<any>([]);
+    private checkinImageCache = new Map<string, string>();
+    private checkinImageUrls: string[] = [];
 
     expandedElement: Expence | null = null;
     // Text Editor
@@ -241,6 +244,7 @@ export class HdCreateTicketComponent {
     @ViewChild('taskDialog') taskDialog!: TemplateRef<any>;
     @ViewChild('taskDialog_student') taskDialog_student!: TemplateRef<any>;
     @ViewChild('confirmDialog') confirmDialog!: TemplateRef<any>;
+    @ViewChild('locationDialog') locationDialog!: TemplateRef<any>;
 
     searchFieldSchool: string = '';
     searchFieldUser: string = '';
@@ -291,6 +295,14 @@ export class HdCreateTicketComponent {
     ngOnDestroy(): void {
         if (isPlatformBrowser(this.platformId) && this.editor) {
             this.editor.destroy();
+        }
+        // Clean up any blob URLs created for check-in thumbnails
+        for (const url of this.checkinImageUrls) {
+            try {
+                URL.revokeObjectURL(url);
+            } catch (err) {
+                /* ignore */
+            }
         }
     }
 
@@ -609,26 +621,44 @@ export class HdCreateTicketComponent {
 
                     // Populate daily check-in/out table if available
                     this.checkinDataSource.data =
-                        response.dailyCheckins?.map((item: any) => ({
+                        response.dailyCheckins?.map((item: any) => {
+                            const checkinLat = this.parseCoord(
+                                item?.checkin?.latitude
+                            );
+                            const checkinLng = this.parseCoord(
+                                item?.checkin?.longitude
+                            );
+                            const checkoutLat = this.parseCoord(
+                                item?.checkout?.latitude
+                            );
+                            const checkoutLng = this.parseCoord(
+                                item?.checkout?.longitude
+                            );
+
+                            return {
                             date: item?.date || '-',
                             checkin_time: item?.checkin?.time || null,
                             checkout_time: item?.checkout?.time || null,
-                            location: (() => {
-                                const lat =
-                                    item?.checkout?.latitude ??
-                                    item?.checkin?.latitude ??
-                                    null;
-                                const lng =
-                                    item?.checkout?.longitude ??
-                                    item?.checkin?.longitude ??
-                                    null;
-                                if (lat === null && lng === null) return '-';
-                                return `${lat ?? '-'}, ${lng ?? '-'}`;
-                            })(),
+                            checkin_latitude: checkinLat,
+                            checkin_longitude: checkinLng,
+                            checkout_latitude: checkoutLat,
+                            checkout_longitude: checkoutLng,
+                            checkin_location:
+                                checkinLat !== null && checkinLng !== null
+                                    ? `${checkinLat}, ${checkinLng}`
+                                    : '-',
+                            checkout_location:
+                                checkoutLat !== null && checkoutLng !== null
+                                    ? `${checkoutLat}, ${checkoutLng}`
+                                    : '-',
                             collected_data:
                                 item?.checkout?.collected_data ?? '-',
                             image_url: item?.checkout?.image_url ?? null,
-                        })) || [];
+                            image_thumb_url: null,
+                        };
+                        }) || [];
+
+                    this.prepareCheckinThumbnails();
                 } else {
                     console.log('Customer not found.');
                     // this.toastr.error('Customer not found.', 'Error');
@@ -639,6 +669,57 @@ export class HdCreateTicketComponent {
                 // this.toastr.error('Failed to load contact details.', 'Error');
             },
         });
+    }
+
+    private parseCoord(value: any): number | null {
+        if (value === null || value === undefined || value === '') return null;
+        const num = Number(value);
+        return Number.isFinite(num) ? num : null;
+    }
+
+    openLocationDialog(
+        latitude: number,
+        longitude: number,
+        title: string
+    ): void {
+        if (latitude === null || longitude === null) return;
+        this.dialog.open(this.locationDialog, {
+            data: { latitude, longitude, title },
+            width: '70%',
+            maxWidth: '90vw',
+        });
+    }
+
+    private prepareCheckinThumbnails(): void {
+        const rows = this.checkinDataSource.data || [];
+        for (const row of rows) {
+            const url = row?.image_url;
+            if (!url) continue;
+            const cached = this.checkinImageCache.get(url);
+            if (cached) {
+                row.image_thumb_url = cached;
+                continue;
+            }
+            this.loadCheckinThumbnail(url, row);
+        }
+    }
+
+    private async loadCheckinThumbnail(url: string, row: any): Promise<void> {
+        try {
+            const blob = await lastValueFrom(
+                this.http.get(url, {
+                    responseType: 'blob',
+                    withCredentials: true,
+                })
+            );
+            const blobUrl = URL.createObjectURL(blob);
+            this.checkinImageCache.set(url, blobUrl);
+            this.checkinImageUrls.push(blobUrl);
+            row.image_thumb_url = blobUrl;
+        } catch (err) {
+            console.error('Thumbnail fetch failed', err);
+            row.image_thumb_url = null;
+        }
     }
 
     createExpence(): void {
@@ -973,11 +1054,9 @@ export class HdCreateTicketComponent {
         } catch (err) {
             console.error('Image fetch failed via HttpClient', err);
             this.toastr.error(
-                'Could not load preview. Opening in new tab.',
+                'Could not load preview.',
                 'Image load failed'
             );
-            // Fall back to opening the image URL which may redirect to auth
-            window.open(url, '_blank', 'noopener');
         }
     }
 
@@ -1002,11 +1081,9 @@ export class HdCreateTicketComponent {
         } catch (err) {
             console.error('Download failed via HttpClient', err);
             this.toastr.error(
-                'Unable to download file. Opening in new tab.',
+                'Unable to download file.',
                 'Download failed'
             );
-            // Last resort: open the original URL (may redirect to auth)
-            window.open(url, '_blank', 'noopener');
         }
     }
 

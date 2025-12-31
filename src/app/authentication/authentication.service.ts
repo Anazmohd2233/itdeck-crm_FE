@@ -9,7 +9,7 @@ export class AuthenticationService {
 
     logout(): void {
         // remove user from session storage to log user out
-        localStorage.removeItem('Authorization'); 
+        localStorage.removeItem('token');
         sessionStorage.clear(); 
     }
 }

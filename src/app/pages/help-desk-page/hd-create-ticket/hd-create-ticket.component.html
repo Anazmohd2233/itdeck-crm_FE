@@ -455,10 +455,40 @@
         <td mat-cell *matCellDef="let c"> {{ c.checkout_time ? (c.checkout_time | date:'shortTime') : '-' }} </td>
       </ng-container>
 
-      <!-- Location Column -->
-      <ng-container matColumnDef="location">
-        <th mat-header-cell *matHeaderCellDef> Location </th>
-        <td mat-cell *matCellDef="let c"> {{ c.location ?? '-' }} </td>
+      <!-- Check-in Location Column -->
+      <ng-container matColumnDef="checkin_location">
+        <th mat-header-cell *matHeaderCellDef> Check-in Location </th>
+        <td mat-cell *matCellDef="let c">
+          <button
+            *ngIf="c.checkin_latitude !== null && c.checkin_longitude !== null"
+            mat-icon-button
+            type="button"
+            aria-label="View check-in location"
+            [matTooltip]="c.checkin_location"
+            (click)="openLocationDialog(c.checkin_latitude, c.checkin_longitude, 'Check-in Location')"
+          >
+            <mat-icon>location_on</mat-icon>
+          </button>
+          <span *ngIf="c.checkin_latitude === null || c.checkin_longitude === null">-</span>
+        </td>
+      </ng-container>
+
+      <!-- Checkout Location Column -->
+      <ng-container matColumnDef="checkout_location">
+        <th mat-header-cell *matHeaderCellDef> Checkout Location </th>
+        <td mat-cell *matCellDef="let c">
+          <button
+            *ngIf="c.checkout_latitude !== null && c.checkout_longitude !== null"
+            mat-icon-button
+            type="button"
+            aria-label="View checkout location"
+            [matTooltip]="c.checkout_location"
+            (click)="openLocationDialog(c.checkout_latitude, c.checkout_longitude, 'Checkout Location')"
+          >
+            <mat-icon>location_on</mat-icon>
+          </button>
+          <span *ngIf="c.checkout_latitude === null || c.checkout_longitude === null">-</span>
+        </td>
       </ng-container>
 
       <!-- Collected Data Column -->
@@ -471,7 +501,7 @@
       <ng-container matColumnDef="image_url">
         <th mat-header-cell *matHeaderCellDef> Image </th>
         <td mat-cell *matCellDef="let c">
-          <img *ngIf="c.image_url" [src]="c.image_url" alt="img" (click)="openImagePreview(c.image_url)" style="max-width:48px;max-height:48px;object-fit:cover;border-radius:4px;cursor:pointer" />
+          <img *ngIf="c.image_thumb_url" [src]="c.image_thumb_url" alt="img" (click)="openImagePreview(c.image_url)" style="max-width:48px;max-height:48px;object-fit:cover;border-radius:4px;cursor:pointer" />
 
           <!-- Download button (uses authenticated fetch) -->
           <button *ngIf="c.image_url" mat-icon-button color="primary" type="button" aria-label="Download image" (click)="$event.stopPropagation(); downloadImage(c.image_url)">
@@ -498,6 +528,27 @@
   <mat-dialog-actions align="end">
     <button mat-button (click)="downloadBlob(data?.blobUrl, data?.filename)">Download</button>
     <button mat-button (click)="openBlobInNewTab(data?.blobUrl)">Open in new tab</button>
+    <button mat-button (click)="closeImagePreviewDialog()">Close</button>
+  </mat-dialog-actions>
+</ng-template>
+
+<!-- Location map dialog template -->
+<ng-template #locationDialog let-data>
+  <h2 mat-dialog-title>{{ data?.title || 'Location' }}</h2>
+  <mat-dialog-content>
+    <div class="mb-10">
+      <strong>Lat:</strong> {{ data?.latitude }} &nbsp; <strong>Lng:</strong> {{ data?.longitude }}
+    </div>
+    <google-map
+      [height]="'360px'"
+      [width]="'100%'"
+      [zoom]="15"
+      [center]="{ lat: data?.latitude, lng: data?.longitude }"
+    >
+      <map-marker [position]="{ lat: data?.latitude, lng: data?.longitude }"></map-marker>
+    </google-map>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
     <button mat-button (click)="closeImagePreviewDialog()">Close</button>
   </mat-dialog-actions>
 </ng-template>
