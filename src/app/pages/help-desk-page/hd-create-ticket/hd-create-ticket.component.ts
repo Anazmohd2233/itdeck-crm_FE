@@ -834,7 +834,7 @@ export class HdCreateTicketComponent {
 
     initializeCheckoutForm(): void {
         this.checkoutForm = this.formBuilder.group({
-            collected_data: ['', Validators.required],
+            collected_data: [''],
             image: [null],
         });
         this.checkoutImageFile = null;
