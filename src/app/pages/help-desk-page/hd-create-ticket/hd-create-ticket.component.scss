@@ -243,3 +243,20 @@
   overflow: hidden;
 }
 
+.table-scroll-x {
+  overflow-x: auto;
+}
+
+.table-scroll-x .mat-mdc-table {
+  min-width: 1200px;
+}
+
+.btn-spinner {
+  vertical-align: middle;
+}
+
+.success-btn .btn-spinner,
+.warn-btn .btn-spinner {
+  margin-right: 6px;
+}
+

@@ -55,6 +55,7 @@ import {
 } from '@angular/material/slide-toggle';
 import { GoogleMap } from '@angular/google-maps';
 import { GoogleMapsModule } from '@angular/google-maps';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
     selector: 'app-hd-create-ticket',
@@ -87,6 +88,7 @@ import { GoogleMapsModule } from '@angular/google-maps';
 
         MatSlideToggleModule,
         GoogleMapsModule,
+        MatProgressSpinnerModule,
     ],
     templateUrl: './hd-create-ticket.component.html',
     styleUrls: ['./hd-create-ticket.component.scss'],

@@ -6,8 +6,14 @@
     </h5>
 
     <div class="d-flex align-items-center ms-3" style="gap:8px;">
-        <button *ngIf="!isCheckedIn" mat-raised-button class="success-btn me-2" type="button" (click)="onCheckin()" [disabled]="checkinSubmitting">Checkin</button>
-        <button *ngIf="isCheckedIn" mat-raised-button class="warn-btn" type="button" (click)="openCheckoutDialog()" [disabled]="checkinSubmitting">Checkout</button>
+        <button *ngIf="!isCheckedIn" mat-raised-button class="success-btn me-2" type="button" (click)="onCheckin()" [disabled]="checkinSubmitting">
+          <mat-progress-spinner *ngIf="checkinSubmitting" class="btn-spinner" diameter="16" mode="indeterminate"></mat-progress-spinner>
+          <span *ngIf="!checkinSubmitting">Checkin</span>
+        </button>
+        <button *ngIf="isCheckedIn" mat-raised-button class="warn-btn" type="button" (click)="openCheckoutDialog()" [disabled]="checkinSubmitting">
+          <mat-progress-spinner *ngIf="checkinSubmitting" class="btn-spinner" diameter="16" mode="indeterminate"></mat-progress-spinner>
+          <span *ngIf="!checkinSubmitting">Checkout</span>
+        </button>
 
     </div>
 
@@ -435,7 +441,8 @@
     </mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <table mat-table [dataSource]="checkinDataSource" class="mat-elevation-z8 w-100">
+    <div class="table-scroll-x">
+      <table mat-table [dataSource]="checkinDataSource" class="mat-elevation-z8 w-100">
 
       <!-- Date Column -->
       <ng-container matColumnDef="date">
@@ -514,7 +521,8 @@
 
       <tr mat-header-row *matHeaderRowDef="checkinDisplayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: checkinDisplayedColumns;"></tr>
-    </table>
+      </table>
+    </div>
 
     <mat-paginator #checkinPaginator [pageSizeOptions]="[5,10,20]" showFirstLastButtons></mat-paginator>
   </mat-card-content>
