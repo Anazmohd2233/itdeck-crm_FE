@@ -3,11 +3,11 @@ export const environment = {
 
     //Backend url
     // apiBaseUrl: 'http://localhost:5007',
-    apiBaseUrl: 'https://catalyst.nestcrm.app',
+    apiBaseUrl: 'http://catalyst.itdeck.online',
 
 
     //Domain name
     //for ip rulers
     // baseBaseUrl: 'http://localhost:4200',
-    baseBaseUrl: 'https://catalyst.nestcrm.app',
+    baseBaseUrl: 'http://catalyst.itdeck.online',
 };
